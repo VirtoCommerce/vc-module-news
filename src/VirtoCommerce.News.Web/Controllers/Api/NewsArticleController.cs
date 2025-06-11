@@ -1,6 +1,7 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using VirtoCommerce.News.Core;
 using VirtoCommerce.News.Core.Models;
 using VirtoCommerce.News.Core.Services;
 
@@ -19,16 +20,9 @@ public class NewsArticleController : Controller
         _newsArticleSearchService = newsArticleSearchService;
     }
 
-    [HttpGet]
-    [Route("hello-world")]
-    public ActionResult<string> HelloWorld()
-    {
-        return Ok(new { result = "Hello world!" });
-    }
-
     [HttpPost]
     [Route("save")]
-    //[Authorize(ModuleConstants.Security.Permissions.Create)]
+    [Authorize(ModuleConstants.Security.Permissions.Create)]
     public async Task<ActionResult<NewsArticle>> Save([FromBody] NewsArticle newsArticle)
     {
         await _newsArticleService.SaveChangesAsync([newsArticle]);
@@ -38,7 +32,7 @@ public class NewsArticleController : Controller
 
     [HttpDelete]
     [Route("delete")]
-    //[Authorize(ModuleConstants.Security.Permissions.Delete)]
+    [Authorize(ModuleConstants.Security.Permissions.Delete)]
     public async Task<ActionResult<NewsArticle>> Delete([FromQuery] string[] ids)
     {
         await _newsArticleService.DeleteAsync(ids);
@@ -48,7 +42,7 @@ public class NewsArticleController : Controller
 
     [HttpGet]
     [Route("get")]
-    //[Authorize(ModuleConstants.Security.Permissions.Read)]
+    [Authorize(ModuleConstants.Security.Permissions.Read)]
     public async Task<ActionResult<NewsArticleSearchResult>> Get([FromQuery] string[] ids)
     {
         var result = await _newsArticleService.GetAsync(ids);
@@ -58,7 +52,7 @@ public class NewsArticleController : Controller
 
     [HttpGet]
     [Route("get-all")]
-    //[Authorize(ModuleConstants.Security.Permissions.Read)]
+    [Authorize(ModuleConstants.Security.Permissions.Read)]
     public async Task<ActionResult<NewsArticleSearchResult>> GetAll()
     {
         var result = await _newsArticleSearchService.SearchAsync(new NewsArticleSearchCriteria());
