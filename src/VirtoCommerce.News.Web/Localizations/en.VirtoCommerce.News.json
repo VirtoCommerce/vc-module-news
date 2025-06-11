@@ -1,0 +1,24 @@
+{
+  "News": {
+    "blades": {
+      "hello-world": {
+        "title": "Hello world blade"
+      }
+    }
+  },
+  "permissions": {
+    "news:access": "Open News menu",
+    "news:create": "Create News related data",
+    "news:read": "View News related data",
+    "news:update": "Update News related data",
+    "news:delete": "Delete News related data"
+  },
+  "settings": {
+    "News": {
+      "Enabled": {
+        "title": "News Enabled",
+        "description": "News Enabled setting"
+      }
+    }
+  }
+}
