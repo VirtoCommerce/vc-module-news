@@ -1,12 +1,14 @@
-using GraphQL.MicrosoftDI;
+using System;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using VirtoCommerce.News.Core;
+using VirtoCommerce.News.Core.Services;
 using VirtoCommerce.News.Data.MySql;
 using VirtoCommerce.News.Data.PostgreSql;
 using VirtoCommerce.News.Data.Repositories;
+using VirtoCommerce.News.Data.Services;
 using VirtoCommerce.News.Data.SqlServer;
 using VirtoCommerce.News.ExperienceApi;
 using VirtoCommerce.Platform.Core.Modularity;
@@ -46,14 +48,17 @@ public class Module : IModule, IHasConfiguration
             }
         });
 
-        // Register services
-        //serviceCollection.AddTransient<IMyService, MyService>();
+        serviceCollection.AddTransient<NewsArticleRepository>();
+        serviceCollection.AddTransient<Func<NewsArticleRepository>>(provider => () => provider.CreateScope().ServiceProvider.GetRequiredService<NewsArticleRepository>());
+
+        serviceCollection.AddTransient<INewsArticleService, NewsArticleService>();
+        serviceCollection.AddTransient<INewsArticleSearchService, NewsArticleSearchService>();
 
         // Register GraphQL schema
-        _ = new GraphQLBuilder(serviceCollection, builder =>
-        {
-            builder.AddSchema(serviceCollection, typeof(XapiAssemblyMarker));
-        });
+        //_ = new GraphQLBuilder(serviceCollection, builder =>
+        //{
+        //    builder.AddSchema(serviceCollection, typeof(XapiAssemblyMarker));
+        //});
 
         serviceCollection.AddSingleton<ScopedSchemaFactory<XapiAssemblyMarker>>();
     }

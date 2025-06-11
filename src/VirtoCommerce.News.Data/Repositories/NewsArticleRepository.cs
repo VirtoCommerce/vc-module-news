@@ -8,9 +8,9 @@ using VirtoCommerce.Platform.Data.Infrastructure;
 
 namespace VirtoCommerce.News.Data.Repositories;
 
-public class NewsRepository : DbContextRepositoryBase<NewsDbContext>
+public class NewsArticleRepository : DbContextRepositoryBase<NewsDbContext>
 {
-    public NewsRepository(NewsDbContext dbContext, IUnitOfWork unitOfWork = null)
+    public NewsArticleRepository(NewsDbContext dbContext, IUnitOfWork unitOfWork = null)
         : base(dbContext, unitOfWork)
     {
     }
