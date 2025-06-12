@@ -38,7 +38,7 @@ public class NewsArticleSearchService : SearchService<NewsArticleSearchCriteria,
         {
             sortInfos =
             [
-                new SortInfo { SortColumn = nameof(NewsArticle.CreatedBy), SortDirection = SortDirection.Descending },
+                new SortInfo { SortColumn = nameof(NewsArticle.CreatedDate), SortDirection = SortDirection.Descending },
             ];
         }
 
