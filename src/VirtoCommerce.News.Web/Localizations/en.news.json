@@ -1,8 +1,9 @@
 {
-  "News": {
+  "news": {
+    "main-menu-title": "News (menu)",
     "blades": {
-      "hello-world": {
-        "title": "Hello world blade"
+      "news-list": {
+        "title": "News (list)"
       }
     }
   },

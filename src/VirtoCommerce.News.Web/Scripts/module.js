@@ -16,9 +16,9 @@ angular.module(moduleName, [])
                         'platformWebApp.bladeNavigationService',
                         function (bladeNavigationService) {
                             var newBlade = {
-                                id: 'blade1',
-                                controller: 'VirtoCommerce.News.helloWorldController',
-                                template: 'Modules/$(VirtoCommerce.News)/Scripts/blades/hello-world.html',
+                                id: 'newsList',
+                                controller: 'VirtoCommerce.News.newsArticleController',
+                                template: 'Modules/$(VirtoCommerce.News)/Scripts/blades/news-list.tpl.html',
                                 isClosingDisabled: true,
                             };
                             bladeNavigationService.showBlade(newBlade);
@@ -33,7 +33,7 @@ angular.module(moduleName, [])
             var menuItem = {
                 path: 'browse/news',
                 icon: 'fa fa-cube',
-                title: 'News',
+                title: 'news.main-menu-title',
                 priority: 100,
                 action: function () { $state.go('workspace.NewsState'); },
                 permission: 'news:access',
