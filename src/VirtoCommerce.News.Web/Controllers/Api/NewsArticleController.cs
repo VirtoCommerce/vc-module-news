@@ -23,27 +23,27 @@ public class NewsArticleController : Controller
     [HttpPost]
     [Route("create")]
     [Authorize(ModuleConstants.Security.Permissions.Create)]
-    public async Task<ActionResult<NewsArticle>> Create([FromBody] NewsArticle newsArticle)
+    public async Task<ActionResult<string>> Create([FromBody] NewsArticle newsArticle)
     {
         await _newsArticleService.SaveChangesAsync([newsArticle]);
 
-        return NoContent();
+        return Ok(newsArticle.Id);
     }
 
     [HttpPost]
     [Route("update")]
     [Authorize(ModuleConstants.Security.Permissions.Update)]
-    public async Task<ActionResult<NewsArticle>> Update([FromBody] NewsArticle newsArticle)
+    public async Task<ActionResult> Update([FromBody] NewsArticle newsArticle)
     {
         await _newsArticleService.SaveChangesAsync([newsArticle]);
 
-        return NoContent();
+        return Ok();
     }
 
     [HttpDelete]
     [Route("delete")]
     [Authorize(ModuleConstants.Security.Permissions.Delete)]
-    public async Task<ActionResult<NewsArticle>> Delete([FromQuery] string[] ids)
+    public async Task<ActionResult> Delete([FromQuery] string[] ids)
     {
         await _newsArticleService.DeleteAsync(ids);
 
@@ -53,7 +53,7 @@ public class NewsArticleController : Controller
     [HttpGet]
     [Route("get")]
     [Authorize(ModuleConstants.Security.Permissions.Read)]
-    public async Task<ActionResult<NewsArticleSearchResult>> Get([FromQuery] string[] ids)
+    public async Task<ActionResult<NewsArticle[]>> Get([FromQuery] string[] ids)
     {
         var result = await _newsArticleService.GetAsync(ids);
 
