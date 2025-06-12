@@ -23,21 +23,21 @@ public class NewsArticleController : Controller
     [HttpPost]
     [Route("create")]
     [Authorize(ModuleConstants.Security.Permissions.Create)]
-    public async Task<ActionResult<string>> Create([FromBody] NewsArticle newsArticle)
+    public async Task<ActionResult<NewsArticle>> Create([FromBody] NewsArticle newsArticle)
     {
         await _newsArticleService.SaveChangesAsync([newsArticle]);
 
-        return Ok(newsArticle.Id);
+        return Ok(newsArticle);
     }
 
     [HttpPost]
     [Route("update")]
     [Authorize(ModuleConstants.Security.Permissions.Update)]
-    public async Task<ActionResult> Update([FromBody] NewsArticle newsArticle)
+    public async Task<ActionResult<NewsArticle>> Update([FromBody] NewsArticle newsArticle)
     {
         await _newsArticleService.SaveChangesAsync([newsArticle]);
 
-        return Ok();
+        return Ok(newsArticle);
     }
 
     [HttpDelete]
