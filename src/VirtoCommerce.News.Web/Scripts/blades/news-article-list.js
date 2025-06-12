@@ -5,7 +5,7 @@ angular.module('VirtoCommerce.News')
 
         blade.refresh = function () {
             api.getAll(function (data) {
-                blade.title = 'news.blades.news-list.title';
+                blade.title = 'news.blades.news-article-list.title';
                 blade.data = data.results;
                 blade.isLoading = false;
             });

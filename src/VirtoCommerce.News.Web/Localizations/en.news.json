@@ -2,7 +2,7 @@
   "news": {
     "main-menu-title": "News (menu)",
     "blades": {
-      "news-list": {
+      "news-article-list": {
         "title": "News (list)"
       }
     }

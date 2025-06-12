@@ -18,7 +18,7 @@ angular.module(moduleName, [])
                             var newBlade = {
                                 id: 'newsList',
                                 controller: 'VirtoCommerce.News.newsArticleController',
-                                template: 'Modules/$(VirtoCommerce.News)/Scripts/blades/news-list.tpl.html',
+                                template: 'Modules/$(VirtoCommerce.News)/Scripts/blades/news-article-list.tpl.html',
                                 isClosingDisabled: true,
                             };
                             bladeNavigationService.showBlade(newBlade);
