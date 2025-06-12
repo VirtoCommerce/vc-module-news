@@ -3,7 +3,23 @@
     "main-menu-title": "News (menu)",
     "blades": {
       "news-article-list": {
-        "title": "News (list)"
+        "title": "News (list)",
+        "labels": {
+          "name": "Name"
+        }
+      },
+      "news-article-details": {
+        "title-add": "News (add)",
+        "title-edit": "News (edit) '{{name}}'",
+        "labels": {
+          "name": "Name"
+        }
+      }
+    },
+    "dialogs": {
+      "news-article-delete": {
+        "title": "News (delete confirmation)",
+        "message": "News (delete message) '{{name}}'"
       }
     }
   },

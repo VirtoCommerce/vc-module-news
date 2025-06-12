@@ -4,7 +4,7 @@ angular.module('VirtoCommerce.News')
             create: { method: 'POST', url: 'api/news/create' },
             update: { method: 'POST', url: 'api/news/update' },
             delete: { method: 'DELETE', url: 'api/news/delete' },
-            get: { method: 'GET', url: 'api/news/get' },
+            get: { method: 'GET', url: 'api/news/get', isArray: true },
             getAll: { method: 'GET', url: 'api/news/get-all' },
         });
     }]);

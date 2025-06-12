@@ -1,15 +1,108 @@
 angular.module('VirtoCommerce.News')
-    .controller('VirtoCommerce.News.newsArticleController', ['$scope', 'VirtoCommerce.News.WebApi', function ($scope, api) {
-        var blade = $scope.blade;
-        blade.title = 'VirtoCommerce.News';
-
-        blade.refresh = function () {
-            api.getAll(function (data) {
+    .controller(
+        'VirtoCommerce.News.newsArticleListController',
+        ['$scope', 'VirtoCommerce.News.WebApi', 'platformWebApp.authService', 'platformWebApp.bladeNavigationService', 'platformWebApp.uiGridHelper', 'platformWebApp.bladeUtils', 'platformWebApp.dialogService',
+            function ($scope, api, authService, bladeNavigationService, uiGridHelper, bladeUtils, dialogService) {
+                var blade = $scope.blade;
                 blade.title = 'news.blades.news-article-list.title';
-                blade.data = data.results;
-                blade.isLoading = false;
-            });
-        };
 
-        blade.refresh();
-    }]);
+                blade.refresh = function () {
+                    //todo: search
+                    api.getAll(function (apiResult) {
+                        blade.data = apiResult.results;
+                        blade.isLoading = false;
+                    });
+                };
+
+                blade.add = function () {
+                    if (!authService.checkPermission('news:create')) {
+                        return;
+                    }
+
+                    selectedNode = undefined;
+                    $scope.selectedNodeId = undefined;
+
+                    var detailsBlade = {
+                        id: 'newsArticleAdd',
+                        isEdit: false,
+                        title: 'news.blades.news-article-details.title-add',
+                        controller: 'VirtoCommerce.News.newsArticleDetailsController',
+                        template: 'Modules/$(VirtoCommerce.News)/Scripts/blades/news-article-details.tpl.html'
+                    };
+
+                    bladeNavigationService.showBlade(detailsBlade, blade);
+                };
+
+                blade.edit = function (item) {
+                    if (!authService.checkPermission('news:update')) {
+                        return;
+                    }
+
+                    var detailsBlade = {
+                        id: 'newsArticleEdit',
+                        isEdit: true,
+                        itemId: item.id,
+                        title: 'news.blades.news-article-details.title-edit',
+                        titleValues: { name: item.name },
+                        controller: 'VirtoCommerce.News.newsArticleDetailsController',
+                        template: 'Modules/$(VirtoCommerce.News)/Scripts/blades/news-article-details.tpl.html'
+                    };
+                    bladeNavigationService.showBlade(detailsBlade, blade);
+                };
+
+                blade.delete = function (item) { 
+                    if (!authService.checkPermission('news:delete')) {
+                        return;
+                    }
+
+                    var dialog = {
+                        id: "confirmDeleteNewsArticle",
+                        title: "news.dialogs.news-article-delete.title",
+                        message: "news.dialogs.news-article-delete.message",
+                        messageValues: { name: item.name },
+                        callback: function (dialogConfirmed) {
+                            if (dialogConfirmed) {
+                                blade.isLoading = true;
+                                api.delete({ ids: [item.id] }, function () { 
+                                    blade.refresh();
+                                });
+                            }
+                        }
+                    };
+                    dialogService.showConfirmationDialog(dialog);
+                };
+
+                blade.toolbarCommands = [
+                    {
+                        name: "platform.commands.refresh",
+                        icon: 'fa fa-refresh',
+                        executeMethod: blade.refresh,
+                        canExecuteMethod: function () {
+                            return true;
+                        }
+                    }
+                ];
+
+                if (authService.checkPermission('news:create')) {
+                    blade.toolbarCommands.splice(1,
+                        0,
+                        {
+                            name: "platform.commands.add",
+                            icon: 'fas fa-plus',
+                            executeMethod: blade.add,
+                            canExecuteMethod: function () {
+                                return true;
+                            }
+                        });
+                }
+
+                // ui-grid
+                $scope.setGridOptions = function (gridOptions) {
+                    uiGridHelper.initialize($scope, gridOptions, function (gridApi) {
+                        //uiGridHelper.bindRefreshOnSortChanged($scope);
+                    });
+                    //bladeUtils.initializePagination($scope);
+                };
+
+                blade.refresh();
+            }]);
