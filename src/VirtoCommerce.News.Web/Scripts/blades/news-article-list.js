@@ -7,9 +7,9 @@ angular.module('VirtoCommerce.News')
                 blade.title = 'news.blades.news-article-list.title';
 
                 blade.refresh = function () {
-                    //todo: search
-                    api.getAll(function (apiResult) {
+                    api.search(getSearchCriteria(), function (apiResult) {
                         blade.data = apiResult.results;
+                        $scope.pageSettings.totalItems = apiResult.totalCount;
                         blade.isLoading = false;
                     });
                 };
@@ -50,7 +50,7 @@ angular.module('VirtoCommerce.News')
                     bladeNavigationService.showBlade(detailsBlade, blade);
                 };
 
-                blade.delete = function (item) { 
+                blade.delete = function (item) {
                     if (!authService.checkPermission('news:delete')) {
                         return;
                     }
@@ -63,7 +63,7 @@ angular.module('VirtoCommerce.News')
                         callback: function (dialogConfirmed) {
                             if (dialogConfirmed) {
                                 blade.isLoading = true;
-                                api.delete({ ids: [item.id] }, function () { 
+                                api.delete({ ids: [item.id] }, function () {
                                     blade.refresh();
                                 });
                             }
@@ -96,13 +96,28 @@ angular.module('VirtoCommerce.News')
                         });
                 }
 
+                function getSearchCriteria() {
+                    return {
+                        searchPhrase: filter.keyword ? filter.keyword : undefined,
+                        sort: uiGridHelper.getSortExpression($scope),
+                        skip: ($scope.pageSettings.currentPage - 1) * $scope.pageSettings.itemsPerPageCount,
+                        take: $scope.pageSettings.itemsPerPageCount
+                    };
+                }
+
+                var filter = $scope.filter = blade.filter || {};
+                filter.criteriaChanged = function () {
+                    if ($scope.pageSettings.currentPage > 1) {
+                        $scope.pageSettings.currentPage = 1;
+                    }
+                    blade.refresh();
+                };
+
                 // ui-grid
                 $scope.setGridOptions = function (gridOptions) {
                     uiGridHelper.initialize($scope, gridOptions, function (gridApi) {
-                        //uiGridHelper.bindRefreshOnSortChanged($scope);
+                        uiGridHelper.bindRefreshOnSortChanged($scope);
                     });
-                    //bladeUtils.initializePagination($scope);
-                };
-
-                blade.refresh();
+                    bladeUtils.initializePagination($scope);
+                }; 
             }]);

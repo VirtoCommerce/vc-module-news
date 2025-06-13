@@ -60,12 +60,12 @@ public class NewsArticleController : Controller
         return Ok(result);
     }
 
-    [HttpGet]
-    [Route("get-all")]
+    [HttpPost]
+    [Route("search")]
     [Authorize(ModuleConstants.Security.Permissions.Read)]
-    public async Task<ActionResult<NewsArticleSearchResult>> GetAll()
+    public async Task<ActionResult<NewsArticleSearchResult>> Search([FromBody] NewsArticleSearchCriteria criteria)
     {
-        var result = await _newsArticleSearchService.SearchAsync(new NewsArticleSearchCriteria());
+        var result = await _newsArticleSearchService.SearchAsync(criteria, false);
 
         return Ok(result);
     }

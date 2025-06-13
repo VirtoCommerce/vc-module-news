@@ -27,6 +27,12 @@ public class NewsArticleSearchService : SearchService<NewsArticleSearchCriteria,
     protected override IQueryable<NewsArticleEntity> BuildQuery(IRepository repository, NewsArticleSearchCriteria criteria)
     {
         var query = ((NewsArticleRepository)repository).NewsArticles;
+
+        if (!criteria.SearchPhrase.IsNullOrEmpty())
+        {
+            query = query.Where(x => x.Name.Contains(criteria.SearchPhrase));
+        }
+
         return query;
     }
 
@@ -36,10 +42,7 @@ public class NewsArticleSearchService : SearchService<NewsArticleSearchCriteria,
 
         if (sortInfos.IsNullOrEmpty())
         {
-            sortInfos =
-            [
-                new SortInfo { SortColumn = nameof(NewsArticle.CreatedDate), SortDirection = SortDirection.Descending },
-            ];
+            sortInfos = [new SortInfo { SortColumn = nameof(NewsArticle.CreatedDate), SortDirection = SortDirection.Descending }];
         }
 
         return sortInfos;
