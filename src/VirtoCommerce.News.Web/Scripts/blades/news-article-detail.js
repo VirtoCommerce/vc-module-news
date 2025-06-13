@@ -53,8 +53,8 @@ angular.module('VirtoCommerce.News')
                         api.create(blade.currentEntity, function (apiResult) {
                             blade.isEdit = true;
                             blade.itemId = apiResult.id;
-
-                            blade.currentEntity = angular.copy(apiResult);
+                            blade.currentEntity.id = apiResult.id;
+                            //blade.currentEntity = angular.copy(apiResult);
                             blade.title = 'news.blades.news-article-detail.title-edit';
                             blade.titleValues = { name: apiResult.name };
                             initializeToolbar();
@@ -67,7 +67,7 @@ angular.module('VirtoCommerce.News')
                     }
                     else {
                         api.update(blade.currentEntity, function (apiResult) {
-                            blade.currentEntity = angular.copy(apiResult);
+                            //blade.currentEntity = angular.copy(apiResult);
                             blade.titleValues = { name: apiResult.name };
                             blade.isLoading = false;
                             blade.parentBlade.refresh(true);

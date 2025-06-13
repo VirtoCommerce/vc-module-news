@@ -34,8 +34,12 @@
         "title-edit": "News content (edit)",
         "labels": {
           "language": "Language",
+          "title": "Title",
           "content": "Content",
           "content-preview": "Content (user preview)"
+        },
+        "placeholders": {
+          "language": "Language"
         }
       }
     },
