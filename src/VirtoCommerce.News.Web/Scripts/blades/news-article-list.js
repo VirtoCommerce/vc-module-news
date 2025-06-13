@@ -14,7 +14,7 @@ angular.module('VirtoCommerce.News')
                     });
                 };
 
-                blade.add = function () {
+                $scope.add = function () {
                     if (!authService.checkPermission('news:create')) {
                         return;
                     }
@@ -33,7 +33,7 @@ angular.module('VirtoCommerce.News')
                     bladeNavigationService.showBlade(detailsBlade, blade);
                 };
 
-                blade.edit = function (item) {
+                $scope.edit = function (item) {
                     if (!authService.checkPermission('news:update')) {
                         return;
                     }
@@ -50,7 +50,8 @@ angular.module('VirtoCommerce.News')
                     bladeNavigationService.showBlade(detailsBlade, blade);
                 };
 
-                blade.delete = function (item) {
+                $scope.delete = function (item) {
+                    console.warn('delete-article', item);
                     if (!authService.checkPermission('news:delete')) {
                         return;
                     }
@@ -89,7 +90,7 @@ angular.module('VirtoCommerce.News')
                         {
                             name: "platform.commands.add",
                             icon: 'fas fa-plus',
-                            executeMethod: blade.add,
+                            executeMethod: $scope.add,
                             canExecuteMethod: function () {
                                 return true;
                             }

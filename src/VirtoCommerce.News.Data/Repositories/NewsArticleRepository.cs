@@ -19,7 +19,11 @@ public class NewsArticleRepository : DbContextRepositoryBase<NewsDbContext>
 
     public virtual async Task<IList<NewsArticleEntity>> GetNewsArticlesByIdsAsync(IList<string> ids)
     {
-        var result = await NewsArticles.Where(x => ids.Contains(x.Id)).ToListAsync();
+        var result = await NewsArticles
+            .Include(na => na.LocalizedContents)
+            .Where(na => ids.Contains(na.Id))
+            .AsSplitQuery()
+            .ToListAsync();
 
         return result;
     }

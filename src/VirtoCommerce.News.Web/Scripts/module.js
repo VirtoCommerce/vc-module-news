@@ -16,7 +16,7 @@ angular.module(moduleName, [])
                         'platformWebApp.bladeNavigationService',
                         function (bladeNavigationService) {
                             var newBlade = {
-                                id: 'newsList',
+                                id: 'newsArticleList',
                                 controller: 'VirtoCommerce.News.newsArticleListController',
                                 template: 'Modules/$(VirtoCommerce.News)/Scripts/blades/news-article-list.tpl.html',
                                 isClosingDisabled: true,
@@ -27,8 +27,8 @@ angular.module(moduleName, [])
                 });
         }
     ])
-    .run(['platformWebApp.mainMenuService', '$state', 'platformWebApp.metaFormsService',
-        function (mainMenuService, $state, metaFormsService) {
+    .run(['platformWebApp.mainMenuService', '$state', 'platformWebApp.metaFormsService', 'platformWebApp.widgetService',
+        function (mainMenuService, $state, metaFormsService, widgetService) {
             var menuItem = {
                 path: 'browse/news',
                 icon: 'fa fa-cube',
@@ -39,6 +39,11 @@ angular.module(moduleName, [])
             };
             mainMenuService.addMenuItem(menuItem);
 
+            var contentWidget = {
+                controller: 'VirtoCommerce.News.contentWidgetController',
+                template: 'Modules/$(VirtoCommerce.News)/Scripts/widgets/contentWidget.tpl.html'
+            };
+            widgetService.registerWidget(contentWidget, 'newsArticleDetail');
 
             metaFormsService.registerMetaFields("newsArticleDetail", [{
                 name: 'name',

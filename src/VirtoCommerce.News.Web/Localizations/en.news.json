@@ -5,7 +5,7 @@
       "news-article-list": {
         "title": "News (list)",
         "labels": {
-          "name": "Name", 
+          "name": "Name",
           "is-published": "Is published"
         }
       },
@@ -22,12 +22,36 @@
           "publish-date": "Publish date",
           "is-published": "Is published"
         }
+      },
+      "news-article-content-list": {
+        "title": "News content (list)",
+        "labels": {
+          "language": "Language"
+        }
+      },
+      "news-article-content-detail": {
+        "title-add": "News content (add)",
+        "title-edit": "News content (edit)",
+        "labels": {
+          "language": "Language",
+          "content": "Content",
+          "content-preview": "Content (user preview)"
+        }
       }
     },
     "dialogs": {
       "news-article-delete": {
         "title": "News (delete confirmation)",
         "message": "News (delete message) '{{name}}'"
+      },
+      "news-article-content-delete": {
+        "title": "News content (delete confirmation)",
+        "message": "News content (delete message) '{{language}}'"
+      }
+    },
+    "widgets": {
+      "localized-contents": {
+        "title": "News content (widget)"
       }
     }
   },
