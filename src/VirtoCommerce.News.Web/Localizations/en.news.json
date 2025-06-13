@@ -5,17 +5,22 @@
       "news-article-list": {
         "title": "News (list)",
         "labels": {
-          "name": "Name"
+          "name": "Name", 
+          "is-published": "Is published"
         }
       },
       "news-article-detail": {
         "title-add": "News (add)",
         "title-edit": "News (edit) '{{name}}'",
         "labels": {
-          "name": "Name"
+          "name": "Name",
+          "publish-date": "Publish date",
+          "is-published": "Is published"
         },
         "placeholders": {
-          "name": "Name"
+          "name": "Name",
+          "publish-date": "Publish date",
+          "is-published": "Is published"
         }
       }
     },

@@ -28,7 +28,7 @@ angular.module(moduleName, [])
         }
     ])
     .run(['platformWebApp.mainMenuService', '$state', 'platformWebApp.metaFormsService',
-        function (mainMenuService, $state, metaFormsService) { 
+        function (mainMenuService, $state, metaFormsService) {
             var menuItem = {
                 path: 'browse/news',
                 icon: 'fa fa-cube',
@@ -39,7 +39,7 @@ angular.module(moduleName, [])
             };
             mainMenuService.addMenuItem(menuItem);
 
-             
+
             metaFormsService.registerMetaFields("newsArticleDetail", [{
                 name: 'name',
                 title: "news.blades.news-article-detail.labels.name",
@@ -47,6 +47,21 @@ angular.module(moduleName, [])
                 colSpan: 2,
                 isRequired: true,
                 valueType: "ShortText"
+            },
+            {
+                name: 'publishDate',
+                title: "news.blades.news-article-detail.labels.publish-date",
+                placeholder: "news.blades.news-article-detail.placeholders.publish-date",
+                colSpan: 1,
+                valueType: "DateTime"
+            },
+            {
+                name: 'isPublished',
+                title: "news.blades.news-article-detail.labels.is-published",
+                placeholder: "news.blades.news-article-detail.placeholders.is-published",
+                colSpan: 1,
+                isRequired: true,
+                valueType: "Boolean"
             }]);
         }
     ]);
