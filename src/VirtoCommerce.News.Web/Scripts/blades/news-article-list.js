@@ -56,7 +56,7 @@ angular.module('VirtoCommerce.News')
                     }
 
                     var dialog = {
-                        id: "confirmDeleteNewsArticle",
+                        id: "newsArticleDeleteDialog",
                         title: "news.dialogs.news-article-delete.title",
                         message: "news.dialogs.news-article-delete.message",
                         messageValues: { name: item.name },
