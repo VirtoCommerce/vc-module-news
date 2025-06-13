@@ -8,7 +8,7 @@
           "name": "Name"
         }
       },
-      "news-article-details": {
+      "news-article-detail": {
         "title-add": "News (add)",
         "title-edit": "News (edit) '{{name}}'",
         "labels": {

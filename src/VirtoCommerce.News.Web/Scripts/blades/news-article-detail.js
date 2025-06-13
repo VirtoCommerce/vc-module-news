@@ -55,7 +55,7 @@ angular.module('VirtoCommerce.News')
                             blade.itemId = apiResult.id;
 
                             blade.currentEntity = angular.copy(apiResult);
-                            blade.title = 'news.blades.news-article-details.title-edit';
+                            blade.title = 'news.blades.news-article-detail.title-edit';
                             blade.titleValues = { name: apiResult.name };
                             initializeToolbar();
                             blade.isLoading = false;

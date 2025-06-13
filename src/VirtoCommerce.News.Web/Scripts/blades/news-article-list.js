@@ -25,9 +25,9 @@ angular.module('VirtoCommerce.News')
                     var detailsBlade = {
                         id: 'newsArticleAdd',
                         isEdit: false,
-                        title: 'news.blades.news-article-details.title-add',
+                        title: 'news.blades.news-article-detail.title-add',
                         controller: 'VirtoCommerce.News.newsArticleDetailsController',
-                        template: 'Modules/$(VirtoCommerce.News)/Scripts/blades/news-article-details.tpl.html'
+                        template: 'Modules/$(VirtoCommerce.News)/Scripts/blades/news-article-detail.tpl.html'
                     };
 
                     bladeNavigationService.showBlade(detailsBlade, blade);
@@ -42,10 +42,10 @@ angular.module('VirtoCommerce.News')
                         id: 'newsArticleEdit',
                         isEdit: true,
                         itemId: item.id,
-                        title: 'news.blades.news-article-details.title-edit',
+                        title: 'news.blades.news-article-detail.title-edit',
                         titleValues: { name: item.name },
                         controller: 'VirtoCommerce.News.newsArticleDetailsController',
-                        template: 'Modules/$(VirtoCommerce.News)/Scripts/blades/news-article-details.tpl.html'
+                        template: 'Modules/$(VirtoCommerce.News)/Scripts/blades/news-article-detail.tpl.html'
                     };
                     bladeNavigationService.showBlade(detailsBlade, blade);
                 };

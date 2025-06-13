@@ -42,8 +42,8 @@ angular.module(moduleName, [])
              
             metaFormsService.registerMetaFields("newsArticleDetail", [{
                 name: 'name',
-                title: "news.blades.news-article-details.labels.name",
-                placeholder: "news.blades.news-article-details.placeholders.name",
+                title: "news.blades.news-article-detail.labels.name",
+                placeholder: "news.blades.news-article-detail.placeholders.name",
                 colSpan: 2,
                 isRequired: true,
                 valueType: "ShortText"
