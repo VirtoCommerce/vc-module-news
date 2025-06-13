@@ -27,9 +27,8 @@ angular.module(moduleName, [])
                 });
         }
     ])
-    .run(['platformWebApp.mainMenuService', '$state',
-        function (mainMenuService, $state) {
-            //Register module in main menu
+    .run(['platformWebApp.mainMenuService', '$state', 'platformWebApp.metaFormsService',
+        function (mainMenuService, $state, metaFormsService) { 
             var menuItem = {
                 path: 'browse/news',
                 icon: 'fa fa-cube',
@@ -39,5 +38,15 @@ angular.module(moduleName, [])
                 permission: 'news:access',
             };
             mainMenuService.addMenuItem(menuItem);
+
+             
+            metaFormsService.registerMetaFields("newsArticleDetail", [{
+                name: 'name',
+                title: "news.blades.news-article-details.labels.name",
+                placeholder: "news.blades.news-article-details.placeholders.name",
+                colSpan: 2,
+                isRequired: true,
+                valueType: "ShortText"
+            }]);
         }
     ]);

@@ -1,13 +1,15 @@
 angular.module('VirtoCommerce.News')
     .controller('VirtoCommerce.News.newsArticleDetailsController',
-        ['$scope', 'VirtoCommerce.News.WebApi', 'platformWebApp.authService',
-            function ($scope, api, authService) {
+        ['$scope', 'VirtoCommerce.News.WebApi', 'platformWebApp.authService', 'platformWebApp.bladeNavigationService', 'platformWebApp.metaFormsService',
+            function ($scope, api, authService, bladeNavigationService, metaFormsService) {
                 var blade = $scope.blade;
+
+                blade.metaFields = metaFormsService.getMetaFields("newsArticleDetail");
 
                 blade.refresh = function () {
                     if (blade.isEdit) {
                         api.get({ ids: [blade.itemId] }, function (apiResult) {
-                            blade.item = angular.copy(apiResult[0]);
+                            blade.currentEntity = angular.copy(apiResult[0]);
                             blade.isLoading = false;
                         });
                     }
@@ -48,11 +50,11 @@ angular.module('VirtoCommerce.News')
                     blade.isLoading = true;
 
                     if (!blade.isEdit) {
-                        api.create(blade.item, function (apiResult) {
+                        api.create(blade.currentEntity, function (apiResult) {
                             blade.isEdit = true;
                             blade.itemId = apiResult.id;
 
-                            blade.item = angular.copy(apiResult);
+                            blade.currentEntity = angular.copy(apiResult);
                             blade.title = 'news.blades.news-article-details.title-edit';
                             blade.titleValues = { name: apiResult.name };
                             initializeToolbar();
@@ -64,8 +66,8 @@ angular.module('VirtoCommerce.News')
                         });
                     }
                     else {
-                        api.update(blade.item, function (apiResult) {
-                            blade.item = angular.copy(apiResult);
+                        api.update(blade.currentEntity, function (apiResult) {
+                            blade.currentEntity = angular.copy(apiResult);
                             blade.titleValues = { name: apiResult.name };
                             blade.isLoading = false;
                             blade.parentBlade.refresh(true);

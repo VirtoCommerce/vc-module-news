@@ -13,6 +13,9 @@
         "title-edit": "News (edit) '{{name}}'",
         "labels": {
           "name": "Name"
+        },
+        "placeholders": {
+          "name": "Name"
         }
       }
     },
