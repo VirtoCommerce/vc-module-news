@@ -1,5 +1,5 @@
 angular.module('VirtoCommerce.News')
-    .controller('VirtoCommerce.News.newsArticleDetailsController',
+    .controller('VirtoCommerce.News.newsArticleDetailController',
         ['$scope', 'VirtoCommerce.News.WebApi', 'platformWebApp.authService', 'platformWebApp.bladeNavigationService', 'platformWebApp.metaFormsService',
             function ($scope, api, authService, bladeNavigationService, metaFormsService) {
                 var blade = $scope.blade;

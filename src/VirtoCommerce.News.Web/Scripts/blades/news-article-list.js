@@ -26,7 +26,7 @@ angular.module('VirtoCommerce.News')
                         id: 'newsArticleAdd',
                         isEdit: false,
                         title: 'news.blades.news-article-detail.title-add',
-                        controller: 'VirtoCommerce.News.newsArticleDetailsController',
+                        controller: 'VirtoCommerce.News.newsArticleDetailController',
                         template: 'Modules/$(VirtoCommerce.News)/Scripts/blades/news-article-detail.tpl.html'
                     };
 
@@ -44,7 +44,7 @@ angular.module('VirtoCommerce.News')
                         itemId: item.id,
                         title: 'news.blades.news-article-detail.title-edit',
                         titleValues: { name: item.name },
-                        controller: 'VirtoCommerce.News.newsArticleDetailsController',
+                        controller: 'VirtoCommerce.News.newsArticleDetailController',
                         template: 'Modules/$(VirtoCommerce.News)/Scripts/blades/news-article-detail.tpl.html'
                     };
                     bladeNavigationService.showBlade(detailsBlade, blade);
