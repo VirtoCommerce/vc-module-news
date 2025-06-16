@@ -46,9 +46,9 @@ angular.module('VirtoCommerce.News')
 
                 $scope.delete = function (item) {
                     const dialog = {
-                        id: "newsArticleContentDeleteDialog",
-                        title: "news.dialogs.news-article-content-delete.title",
-                        message: "news.dialogs.news-article-content-delete.message",
+                        id: 'newsArticleContentDeleteDialog',
+                        title: 'news.dialogs.news-article-content-delete.title',
+                        message: 'news.dialogs.news-article-content-delete.message',
                         messageValues: { language: item.languageCode },
                         callback: function (dialogConfirmed) {
                             if (dialogConfirmed) {
@@ -67,7 +67,7 @@ angular.module('VirtoCommerce.News')
                 //local functions
                 function initializeToolbar() {
                     blade.toolbarCommands = [{
-                        name: "platform.commands.add",
+                        name: 'platform.commands.add',
                         icon: 'fas fa-plus',
                         executeMethod: $scope.add,
                         canExecuteMethod: function () {

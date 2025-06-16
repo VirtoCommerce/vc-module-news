@@ -5,7 +5,7 @@ angular.module('VirtoCommerce.News')
                 const blade = $scope.blade;
 
                 //blade properties
-                blade.metaFields = metaFormsService.getMetaFields("newsArticleDetails");
+                blade.metaFields = metaFormsService.getMetaFields('newsArticleDetails');
 
                 //blade functions
                 blade.refresh = function () {
@@ -68,7 +68,8 @@ angular.module('VirtoCommerce.News')
                 function initializeToolbar() {
                     blade.toolbarCommands = [
                         {
-                            name: "platform.commands.save", icon: 'fas fa-save',
+                            name: 'platform.commands.save',
+                            icon: 'fas fa-save',
                             executeMethod: function () {
                                 $scope.saveChanges();
                             },

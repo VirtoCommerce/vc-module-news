@@ -60,9 +60,9 @@ angular.module('VirtoCommerce.News')
                     }
 
                     const dialog = {
-                        id: "newsArticleDeleteDialog",
-                        title: "news.dialogs.news-article-delete.title",
-                        message: "news.dialogs.news-article-delete.message",
+                        id: 'newsArticleDeleteDialog',
+                        title: 'news.dialogs.news-article-delete.title',
+                        message: 'news.dialogs.news-article-delete.message',
                         messageValues: { name: item.name },
                         callback: function (dialogConfirmed) {
                             if (dialogConfirmed) {
@@ -106,7 +106,7 @@ angular.module('VirtoCommerce.News')
                 function initializeToolbar() {
                     blade.toolbarCommands = [
                         {
-                            name: "platform.commands.refresh",
+                            name: 'platform.commands.refresh',
                             icon: 'fa fa-refresh',
                             executeMethod: blade.refresh,
                             canExecuteMethod: function () {
@@ -118,7 +118,7 @@ angular.module('VirtoCommerce.News')
                         blade.toolbarCommands.splice(1,
                             0,
                             {
-                                name: "platform.commands.add",
+                                name: 'platform.commands.add',
                                 icon: 'fas fa-plus',
                                 executeMethod: $scope.add,
                                 canExecuteMethod: function () {

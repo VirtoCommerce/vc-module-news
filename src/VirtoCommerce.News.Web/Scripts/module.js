@@ -45,28 +45,28 @@ angular.module(moduleName, [])
             };
             widgetService.registerWidget(contentWidget, 'newsArticleDetails');
 
-            metaFormsService.registerMetaFields("newsArticleDetails", [{
+            metaFormsService.registerMetaFields('newsArticleDetails', [{
                 name: 'name',
-                title: "news.blades.news-article-details.labels.name",
-                placeholder: "news.blades.news-article-details.placeholders.name",
+                title: 'news.blades.news-article-details.labels.name',
+                placeholder: 'news.blades.news-article-details.placeholders.name',
                 colSpan: 2,
                 isRequired: true,
-                valueType: "ShortText"
+                valueType: 'ShortText'
             },
             {
                 name: 'publishDate',
-                title: "news.blades.news-article-details.labels.publish-date",
-                placeholder: "news.blades.news-article-details.placeholders.publish-date",
+                title: 'news.blades.news-article-details.labels.publish-date',
+                placeholder: 'news.blades.news-article-details.placeholders.publish-date',
                 colSpan: 1,
-                valueType: "DateTime"
+                valueType: 'DateTime'
             },
             {
                 name: 'isPublished',
-                title: "news.blades.news-article-details.labels.is-published",
-                placeholder: "news.blades.news-article-details.placeholders.is-published",
+                title: 'news.blades.news-article-details.labels.is-published',
+                placeholder: 'news.blades.news-article-details.placeholders.is-published',
                 colSpan: 1,
                 isRequired: true,
-                valueType: "Boolean"
+                valueType: 'Boolean'
             }]);
         }
     ]);
