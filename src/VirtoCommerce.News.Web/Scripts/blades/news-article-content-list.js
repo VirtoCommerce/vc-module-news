@@ -69,14 +69,16 @@ angular.module('VirtoCommerce.News')
 
                 //local functions
                 function initializeToolbar() {
-                    blade.toolbarCommands = [{
-                        name: 'platform.commands.add',
-                        icon: 'fas fa-plus',
-                        executeMethod: $scope.add,
-                        canExecuteMethod: function () {
-                            return true;
+                    blade.toolbarCommands = [
+                        {
+                            name: 'platform.commands.add',
+                            icon: 'fas fa-plus',
+                            executeMethod: $scope.add,
+                            canExecuteMethod: function () {
+                                return true;
+                            }
                         }
-                    }];
+                    ];
                 }
 
                 //calls

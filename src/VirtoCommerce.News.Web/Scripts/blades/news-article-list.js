@@ -118,20 +118,17 @@ angular.module('VirtoCommerce.News')
                             canExecuteMethod: function () {
                                 return true;
                             }
+                        },
+                        {
+                            name: 'platform.commands.add',
+                            icon: 'fas fa-plus',
+                            executeMethod: $scope.add,
+                            canExecuteMethod: function () {
+                                return true;
+                            },
+                            permission: 'news:create'
                         }
                     ];
-                    if (authService.checkPermission('news:create')) {
-                        blade.toolbarCommands.splice(1,
-                            0,
-                            {
-                                name: 'platform.commands.add',
-                                icon: 'fas fa-plus',
-                                executeMethod: $scope.add,
-                                canExecuteMethod: function () {
-                                    return true;
-                                }
-                            });
-                    }
                 }
 
                 //calls
