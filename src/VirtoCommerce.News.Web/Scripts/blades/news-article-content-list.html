@@ -9,12 +9,12 @@
                           { name: 'actions', displayName: '', enableColumnResizing: false, enableSorting: false, width: 30, cellTemplate: 'news-article-content-list-actions.cell.html', pinnedLeft: true },
                           { name: 'languageCode', displayName: 'news.blades.news-article-content-list.labels.language' },
               ]})">
-        <div ui-grid="gridOptions" ui-grid-auto-resize ui-grid-save-state ui-grid-resize-columns ui-grid-move-columns ui-grid-pinning ui-grid-height> </div>
+        <div ui-grid="gridOptions" ui-grid-auto-resize ui-grid-save-state ui-grid-selection ui-grid-resize-columns ui-grid-move-columns ui-grid-pinning ui-grid-height> </div>
         <ul class="menu __context" role="menu" id="content_list_menu">
           <li class="menu-item" ng-click='edit(contextMenuEntity)' va-permission="news:update">
             <i class="menu-ico fa fa-edit"></i> {{ 'platform.commands.manage' | translate }}
           </li>
-          <li class="menu-item" ng-click='delete(contextMenuEntity)' va-permission="news:update">
+          <li class="menu-item" ng-click='delete([contextMenuEntity])' va-permission="news:update">
             <i class="menu-ico fas fa-trash-alt"></i> {{ 'platform.commands.delete' | translate }}
           </li>
         </ul>

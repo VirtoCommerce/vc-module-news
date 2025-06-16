@@ -44,7 +44,7 @@ angular.module('VirtoCommerce.News')
                     showDetailsBlade(false, item.id);
                 };
 
-                $scope.delete = function (item) {
+                $scope.delete = function (items) {
                     if (!authService.checkPermission('news:delete')) {
                         return;
                     }
@@ -52,23 +52,25 @@ angular.module('VirtoCommerce.News')
                     const dialog = {
                         id: 'newsArticleDeleteDialog',
                         title: 'news.dialogs.news-article-delete.title',
-                        message: 'news.dialogs.news-article-delete.message',
-                        messageValues: { name: item.name },
+                        message: items.length == 1 ? 'news.dialogs.news-article-delete.message-single' : 'news.dialogs.news-article-delete.message-many',
+                        messageValues: items.length == 1 ? { name: items[0].name } : { count: items.length },
                         callback: function (dialogConfirmed) {
                             if (dialogConfirmed) {
                                 blade.isLoading = true;
-                                newsApi.delete({ ids: [item.id] }, function () {
+                                var ids = _.pluck(items, 'id');
+                                newsApi.delete({ ids: ids }, function () {
                                     blade.refresh();
                                 });
                             }
                         }
                     };
                     dialogService.showConfirmationDialog(dialog);
-                };
+                }
 
                 // ui-grid
                 $scope.setGridOptions = function (gridOptions) {
                     uiGridHelper.initialize($scope, gridOptions, function (gridApi) {
+                        $scope.gridApi = gridApi;
                         uiGridHelper.bindRefreshOnSortChanged($scope);
                     });
                     bladeUtils.initializePagination($scope);
@@ -111,8 +113,21 @@ angular.module('VirtoCommerce.News')
                                 return true;
                             },
                             permission: 'news:create'
+                        },
+                        {
+                            name: 'platform.commands.delete',
+                            icon: 'fas fa-trash-alt',
+                            executeMethod: function () {
+                                $scope.delete($scope.gridApi.selection.getSelectedRows())
+                            },
+                            canExecuteMethod: hasSelectedItems,
+                            permission: 'news:delete'
                         }
                     ];
+                }
+
+                function hasSelectedItems() {
+                    return $scope.gridApi && _.any($scope.gridApi.selection.getSelectedRows());
                 }
 
                 function showDetailsBlade(isNew, itemId) {

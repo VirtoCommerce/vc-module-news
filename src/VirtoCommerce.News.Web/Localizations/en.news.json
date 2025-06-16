@@ -46,11 +46,13 @@
     "dialogs": {
       "news-article-delete": {
         "title": "News (delete confirmation)",
-        "message": "News (delete message) '{{name}}'"
+        "message-single": "News (delete message) '{{name}}'",
+        "message-many": "News (delete many message) '{{count}}' items"
       },
       "news-article-content-delete": {
         "title": "News content (delete confirmation)",
-        "message": "News content (delete message) '{{language}}'"
+        "message-single": "News content (delete message) '{{language}}'",
+        "message-many": "News content (delete many message) '{{count}}' items"
       }
     },
     "widgets": {

@@ -29,15 +29,19 @@ angular.module('VirtoCommerce.News')
                     showDetailsBlade(false, item);
                 };
 
-                $scope.delete = function (item) {
+                $scope.delete = function (items) {
                     const dialog = {
                         id: 'newsArticleContentDeleteDialog',
                         title: 'news.dialogs.news-article-content-delete.title',
-                        message: 'news.dialogs.news-article-content-delete.message',
-                        messageValues: { language: item.languageCode },
+                        message: items.length == 1 ? 'news.dialogs.news-article-content-delete.message-single' : 'news.dialogs.news-article-content-delete.message-many',
+                        messageValues: items.length == 1 ? { language: items[0].languageCode } : { count: items.length },
                         callback: function (dialogConfirmed) {
                             if (dialogConfirmed) {
-                                blade.item.localizedContents.splice(blade.item.localizedContents.indexOf(item), 1);
+                                angular.forEach(
+                                    items,
+                                    function (item) {
+                                        blade.item.localizedContents.splice(blade.item.localizedContents.indexOf(item), 1);
+                                    });
                             }
                         }
                     };
@@ -46,7 +50,9 @@ angular.module('VirtoCommerce.News')
 
                 // ui-grid
                 $scope.setGridOptions = function (gridOptions) {
-                    uiGridHelper.initialize($scope, gridOptions);
+                    uiGridHelper.initialize($scope, gridOptions, function (gridApi) {
+                        $scope.gridApi = gridApi;
+                    });
                 };
 
                 //local functions
@@ -59,8 +65,20 @@ angular.module('VirtoCommerce.News')
                             canExecuteMethod: function () {
                                 return true;
                             }
+                        },
+                        {
+                            name: 'platform.commands.delete',
+                            icon: 'fas fa-trash-alt',
+                            executeMethod: function () {
+                                $scope.delete($scope.gridApi.selection.getSelectedRows())
+                            },
+                            canExecuteMethod: hasSelectedItems
                         }
                     ];
+                }
+
+                function hasSelectedItems() {
+                    return $scope.gridApi && _.any($scope.gridApi.selection.getSelectedRows());
                 }
 
                 function showDetailsBlade(isNew, item) {
