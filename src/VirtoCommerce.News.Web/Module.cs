@@ -54,12 +54,6 @@ public class Module : IModule, IHasConfiguration
         serviceCollection.AddTransient<INewsArticleService, NewsArticleService>();
         serviceCollection.AddTransient<INewsArticleSearchService, NewsArticleSearchService>();
 
-        // Register GraphQL schema
-        //_ = new GraphQLBuilder(serviceCollection, builder =>
-        //{
-        //    builder.AddSchema(serviceCollection, typeof(XapiAssemblyMarker));
-        //});
-
         serviceCollection.AddSingleton<ScopedSchemaFactory<XapiAssemblyMarker>>();
     }
 
