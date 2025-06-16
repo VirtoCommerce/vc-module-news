@@ -25,10 +25,11 @@ public class NewsArticleController : Controller
     [HttpPost]
     [Route("")]
     [Authorize(ModuleConstants.Security.Permissions.Create)]
-    public async Task<ActionResult<NewsArticle>> Create([FromBody] NewsArticle newsArticle)
+    [ProducesResponseType(typeof(void), StatusCodes.Status204NoContent)]
+    public async Task<ActionResult> Create([FromBody] NewsArticle newsArticle)
     {
         await _newsArticleService.SaveChangesAsync([newsArticle]);
-        return Ok(newsArticle);
+        return NoContent();
     }
 
     [HttpPut]

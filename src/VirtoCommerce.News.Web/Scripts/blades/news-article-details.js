@@ -41,14 +41,10 @@ angular.module('VirtoCommerce.News')
                     blade.isLoading = true;
 
                     if (blade.isNew) {
-                        newsApi.create(blade.currentEntity, function (createResult) {
-                            blade.isNew = false;
-                            blade.itemId = createResult.id;
-                            blade.currentEntity.id = createResult.id;
-                            blade.title = 'news.blades.news-article-details.title-edit';
-                            initializeToolbar();
+                        newsApi.create(blade.currentEntity, function () {
                             blade.isLoading = false;
                             blade.parentBlade.refresh(true);
+                            $scope.bladeClose();
                         }, function (error) {
                             bladeNavigationService.setError('Error ' + error.status, blade);
                             blade.isLoading = false;
