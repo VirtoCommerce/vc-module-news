@@ -33,8 +33,8 @@ angular.module('VirtoCommerce.News')
                     const dialog = {
                         id: 'newsArticleContentDeleteDialog',
                         title: 'news.dialogs.news-article-content-delete.title',
-                        message: items.length == 1 ? 'news.dialogs.news-article-content-delete.message-single' : 'news.dialogs.news-article-content-delete.message-many',
-                        messageValues: items.length == 1 ? { language: items[0].languageCode } : { count: items.length },
+                        message: items.length === 1 ? 'news.dialogs.news-article-content-delete.message-single' : 'news.dialogs.news-article-content-delete.message-many',
+                        messageValues: items.length === 1 ? { language: items[0].languageCode } : { count: items.length },
                         callback: function (dialogConfirmed) {
                             if (dialogConfirmed) {
                                 angular.forEach(

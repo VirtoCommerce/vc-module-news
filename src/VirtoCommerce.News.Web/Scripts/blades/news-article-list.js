@@ -52,8 +52,8 @@ angular.module('VirtoCommerce.News')
                     const dialog = {
                         id: 'newsArticleDeleteDialog',
                         title: 'news.dialogs.news-article-delete.title',
-                        message: items.length == 1 ? 'news.dialogs.news-article-delete.message-single' : 'news.dialogs.news-article-delete.message-many',
-                        messageValues: items.length == 1 ? { name: items[0].name } : { count: items.length },
+                        message: items.length === 1 ? 'news.dialogs.news-article-delete.message-single' : 'news.dialogs.news-article-delete.message-many',
+                        messageValues: items.length === 1 ? { name: items[0].name } : { count: items.length },
                         callback: function (dialogConfirmed) {
                             if (dialogConfirmed) {
                                 blade.isLoading = true;
