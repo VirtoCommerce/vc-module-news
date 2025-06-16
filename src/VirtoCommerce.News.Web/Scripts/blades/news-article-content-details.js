@@ -2,13 +2,13 @@ angular.module('VirtoCommerce.News')
     .controller('VirtoCommerce.News.newsArticleContentDetailsController',
         ['$scope', 'platformWebApp.settings', 'platformWebApp.bladeNavigationService', 'FileUploader',
             function ($scope, settings, bladeNavigationService, FileUploader) {
-                var blade = $scope.blade;
+                const blade = $scope.blade;
 
                 //blade properties
                 blade.isLoading = false;
 
                 //scope properties
-                var languagesPromise = settings.getValues({ id: 'VirtoCommerce.Core.General.Languages' }).$promise;
+                const languagesPromise = settings.getValues({ id: 'VirtoCommerce.Core.General.Languages' }).$promise;
                 $scope.languages = [];
 
                 $scope.fileUploader = new FileUploader({
@@ -40,7 +40,7 @@ angular.module('VirtoCommerce.News')
                 };
 
                 //scope functions
-                var formScope;
+                let formScope;
                 $scope.setForm = function (form) { formScope = form; }
 
                 $scope.saveChanges = function () {
@@ -51,7 +51,7 @@ angular.module('VirtoCommerce.News')
                         blade.title = 'news.blades.news-article-content-details.title-edit';
                     }
                     else {
-                        var existing = _.find(blade.newsArticle.localizedContents, function (x) { return x === blade.originalEntity; });
+                        const existing = _.find(blade.newsArticle.localizedContents, function (x) { return x === blade.originalEntity; });
                         angular.copy(blade.currentEntity, existing);
                     }
                 };

@@ -2,7 +2,7 @@ angular.module('VirtoCommerce.News')
     .controller('VirtoCommerce.News.newsArticleDetailsController',
         ['$scope', 'VirtoCommerce.News.WebApi', 'platformWebApp.authService', 'platformWebApp.bladeNavigationService', 'platformWebApp.metaFormsService',
             function ($scope, api, authService, bladeNavigationService, metaFormsService) {
-                var blade = $scope.blade;
+                const blade = $scope.blade;
 
                 //blade properties
                 blade.metaFields = metaFormsService.getMetaFields("newsArticleDetails");
@@ -21,7 +21,7 @@ angular.module('VirtoCommerce.News')
                 };
 
                 //scope functions
-                var formScope;
+                let formScope;
                 $scope.setForm = function (form) { formScope = form; }
 
                 $scope.saveChanges = function () {

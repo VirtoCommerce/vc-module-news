@@ -3,7 +3,7 @@ angular.module('VirtoCommerce.News')
         'VirtoCommerce.News.newsArticleListController',
         ['$scope', 'VirtoCommerce.News.WebApi', 'platformWebApp.authService', 'platformWebApp.bladeNavigationService', 'platformWebApp.uiGridHelper', 'platformWebApp.bladeUtils', 'platformWebApp.dialogService',
             function ($scope, api, authService, bladeNavigationService, uiGridHelper, bladeUtils, dialogService) {
-                var blade = $scope.blade;
+                const blade = $scope.blade;
 
                 //blade properties
                 blade.title = 'news.blades.news-article-list.title';
@@ -26,7 +26,7 @@ angular.module('VirtoCommerce.News')
                     selectedNode = undefined;
                     $scope.selectedNodeId = undefined;
 
-                    var detailsBlade = {
+                    const detailsBlade = {
                         id: 'newsArticleAdd',
                         isEdit: false,
                         title: 'news.blades.news-article-details.title-add',
@@ -42,7 +42,7 @@ angular.module('VirtoCommerce.News')
                         return;
                     }
 
-                    var detailsBlade = {
+                    const detailsBlade = {
                         id: 'newsArticleEdit',
                         isEdit: true,
                         itemId: item.id,
@@ -55,12 +55,11 @@ angular.module('VirtoCommerce.News')
                 };
 
                 $scope.delete = function (item) {
-                    console.warn('delete-article', item);
                     if (!authService.checkPermission('news:delete')) {
                         return;
                     }
 
-                    var dialog = {
+                    const dialog = {
                         id: "newsArticleDeleteDialog",
                         title: "news.dialogs.news-article-delete.title",
                         message: "news.dialogs.news-article-delete.message",
@@ -86,7 +85,7 @@ angular.module('VirtoCommerce.News')
                 };
 
                 //other functions
-                var filter = $scope.filter = blade.filter || {};
+                const filter = $scope.filter = blade.filter || {};
                 filter.criteriaChanged = function () {
                     if ($scope.pageSettings.currentPage > 1) {
                         $scope.pageSettings.currentPage = 1;

@@ -3,13 +3,12 @@ angular.module('VirtoCommerce.News')
         $scope.currentBlade = $scope.widget.blade;
 
         $scope.openBlade = function () {
-            var listBlade = {
+            const listBlade = {
                 id: "newsArticleContentList",
                 item: $scope.currentBlade.currentEntity,
                 controller: 'VirtoCommerce.News.newsArticleContentListController',
                 template: 'Modules/$(VirtoCommerce.News)/Scripts/blades/news-article-content-list.html'
             };
-
             bladeNavigationService.showBlade(listBlade, $scope.currentBlade);
         };
 

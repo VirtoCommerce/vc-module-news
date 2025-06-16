@@ -3,7 +3,7 @@ angular.module('VirtoCommerce.News')
         'VirtoCommerce.News.newsArticleContentListController',
         ['$scope', 'platformWebApp.bladeNavigationService', 'platformWebApp.uiGridHelper', 'platformWebApp.dialogService',
             function ($scope, bladeNavigationService, uiGridHelper, dialogService) {
-                var blade = $scope.blade;
+                const blade = $scope.blade;
 
                 //blade properties
                 blade.title = 'news.blades.news-article-content-list.title';
@@ -19,7 +19,7 @@ angular.module('VirtoCommerce.News')
                     selectedNode = undefined;
                     $scope.selectedNodeId = undefined;
 
-                    var detailsBlade = {
+                    const detailsBlade = {
                         id: 'newsArticleContentAdd',
                         isEdit: false,
                         newsArticle: blade.item,
@@ -27,14 +27,11 @@ angular.module('VirtoCommerce.News')
                         controller: 'VirtoCommerce.News.newsArticleContentDetailsController',
                         template: 'Modules/$(VirtoCommerce.News)/Scripts/blades/news-article-content-details.html'
                     };
-
-                    console.warn('scope.add');
                     bladeNavigationService.showBlade(detailsBlade, blade);
-                    console.warn('scope.add - after show');
                 };
 
                 $scope.edit = function (item) {
-                    var detailsBlade = {
+                    const detailsBlade = {
                         id: 'newsArticleContentEdit',
                         isEdit: true,
                         itemId: item.id,
@@ -48,7 +45,7 @@ angular.module('VirtoCommerce.News')
                 };
 
                 $scope.delete = function (item) {
-                    var dialog = {
+                    const dialog = {
                         id: "newsArticleContentDeleteDialog",
                         title: "news.dialogs.news-article-content-delete.title",
                         message: "news.dialogs.news-article-content-delete.message",
