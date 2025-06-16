@@ -18,6 +18,7 @@ angular.module('VirtoCommerce.News')
                 blade.refresh = function () {
                     if (!blade.isNew) {
                         newsApi.get({ id: [blade.itemId] }, function (getResult) {
+                            blade.originalEntity = angular.copy(getResult);
                             blade.currentEntity = angular.copy(getResult);
                             blade.isLoading = false;
                         });
@@ -25,6 +26,10 @@ angular.module('VirtoCommerce.News')
                     else {
                         blade.isLoading = false;
                     }
+                };
+
+                blade.onClose = function (closeCallback) {
+                    bladeNavigationService.showConfirmationIfNeeded(isDirty(), canSave(), blade, $scope.saveChanges, closeCallback, "news.dialogs.news-article-save.title", "news.dialogs.news-article-save.message");
                 };
 
                 //scope functions
@@ -44,6 +49,7 @@ angular.module('VirtoCommerce.News')
                         newsApi.create(blade.currentEntity, function () {
                             blade.isLoading = false;
                             blade.parentBlade.refresh(true);
+                            blade.originalEntity = angular.copy(blade.currentEntity);
                             $scope.bladeClose();
                         }, function (error) {
                             bladeNavigationService.setError('Error ' + error.status, blade);
@@ -54,6 +60,7 @@ angular.module('VirtoCommerce.News')
                         newsApi.update(blade.currentEntity, function () {
                             blade.isLoading = false;
                             blade.parentBlade.refresh(true);
+                            blade.originalEntity = angular.copy(blade.currentEntity);
                         }, function (error) {
                             bladeNavigationService.setError('Error ' + error.status, blade);
                             blade.isLoading = false;
@@ -62,8 +69,12 @@ angular.module('VirtoCommerce.News')
                 };
 
                 //local functions
+                function isDirty() {
+                    return !angular.equals(blade.currentEntity, blade.originalEntity);
+                }
+
                 function canSave() {
-                    return formScope && formScope.$valid;
+                    return isDirty() && formScope && formScope.$valid;
                 }
 
                 function initializeToolbar() {

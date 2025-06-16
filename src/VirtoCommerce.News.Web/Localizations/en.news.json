@@ -44,10 +44,18 @@
       }
     },
     "dialogs": {
+      "news-article-save": {
+        "title": "News (not saved warning title)",
+        "message": "News (not saved warning message)"
+      },
       "news-article-delete": {
         "title": "News (delete confirmation)",
         "message-single": "News (delete message) '{{name}}'",
         "message-many": "News (delete many message) '{{count}}' items"
+      },
+      "news-article-content-save": {
+        "title": "News content (not saved warning title)",
+        "message": "News content (not saved warning message)"
       },
       "news-article-content-delete": {
         "title": "News content (delete confirmation)",

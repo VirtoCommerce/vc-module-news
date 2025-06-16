@@ -5,7 +5,7 @@
         <div class="form-group" ng-init="setForm(newsArticleContentForm)">
           <label class="form-label">{{ 'news.blades.news-article-content-details.labels.language' | translate }}</label>
           <div class="form-input">
-            <ui-select ng-model="blade.currentEntity.languageCode" ng-disabled="disabled">
+            <ui-select ng-model="blade.currentEntity.languageCode" ng-disabled="disabled" required>
               <ui-select-match allow-clear="true" placeholder="{{ 'news.blades.news-article-content-details.placeholders.language' | translate }}">{{ $select.selected }}</ui-select-match>
               <ui-select-choices repeat="l in languages | filter: $select.search">
                 <span ng-bind-html="l | highlight: $select.search"></span>
@@ -16,13 +16,13 @@
         <div class="form-group">
           <label class="form-label">{{ 'news.blades.news-article-content-details.labels.title' | translate }}</label>
           <div class="form-input">
-            <input class="__small" ng-model="blade.currentEntity.title" focus-on="" required rows="2" />
+            <input class="__small" ng-model="blade.currentEntity.title" focus-on="" rows="2" required />
           </div>
         </div>
         <div class="form-group">
           <label class="form-label">{{ 'news.blades.news-article-content-details.labels.content' | translate }}</label>
           <input id="fileUploader" type="file" multiple style="display: none;" uploader="fileUploader" nv-file-select />
-          <textarea vc-uk-htmleditor ng-model="blade.currentEntity.content" file-uploader="fileUploader"></textarea>
+          <textarea vc-uk-htmleditor ng-model="blade.currentEntity.content" file-uploader="fileUploader" required></textarea>
         </div>
       </form>
     </div>
