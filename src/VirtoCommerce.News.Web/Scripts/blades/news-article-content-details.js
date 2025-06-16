@@ -1,5 +1,5 @@
 angular.module('VirtoCommerce.News')
-    .controller('VirtoCommerce.News.newsArticleContentDetailController',
+    .controller('VirtoCommerce.News.newsArticleContentDetailsController',
         ['$scope', 'platformWebApp.settings', 'platformWebApp.bladeNavigationService', 'FileUploader',
             function ($scope, settings, bladeNavigationService, FileUploader) {
                 var blade = $scope.blade;
@@ -59,7 +59,7 @@ angular.module('VirtoCommerce.News')
                         blade.newsArticle.localizedContents.push(blade.currentEntity);
                         blade.originalEntity = blade.currentEntity;
                         blade.isEdit = true;
-                        blade.title = 'news.blades.news-article-content-detail.title-edit';
+                        blade.title = 'news.blades.news-article-content-details.title-edit';
                     }
                     else {
                         var existing = _.find(blade.newsArticle.localizedContents, function (x) { return x === blade.originalEntity; });

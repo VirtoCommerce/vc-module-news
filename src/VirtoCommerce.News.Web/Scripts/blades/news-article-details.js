@@ -1,10 +1,10 @@
 angular.module('VirtoCommerce.News')
-    .controller('VirtoCommerce.News.newsArticleDetailController',
+    .controller('VirtoCommerce.News.newsArticleDetailsController',
         ['$scope', 'VirtoCommerce.News.WebApi', 'platformWebApp.authService', 'platformWebApp.bladeNavigationService', 'platformWebApp.metaFormsService',
             function ($scope, api, authService, bladeNavigationService, metaFormsService) {
                 var blade = $scope.blade;
 
-                blade.metaFields = metaFormsService.getMetaFields("newsArticleDetail");
+                blade.metaFields = metaFormsService.getMetaFields("newsArticleDetails");
 
                 blade.refresh = function () {
                     if (blade.isEdit) {
@@ -55,7 +55,7 @@ angular.module('VirtoCommerce.News')
                             blade.itemId = apiResult.id;
                             blade.currentEntity.id = apiResult.id;
                             //blade.currentEntity = angular.copy(apiResult);
-                            blade.title = 'news.blades.news-article-detail.title-edit';
+                            blade.title = 'news.blades.news-article-details.title-edit';
                             blade.titleValues = { name: apiResult.name };
                             initializeToolbar();
                             blade.isLoading = false;

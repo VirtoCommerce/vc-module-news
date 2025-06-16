@@ -25,9 +25,9 @@ angular.module('VirtoCommerce.News')
                     var detailsBlade = {
                         id: 'newsArticleAdd',
                         isEdit: false,
-                        title: 'news.blades.news-article-detail.title-add',
-                        controller: 'VirtoCommerce.News.newsArticleDetailController',
-                        template: 'Modules/$(VirtoCommerce.News)/Scripts/blades/news-article-detail.tpl.html'
+                        title: 'news.blades.news-article-details.title-add',
+                        controller: 'VirtoCommerce.News.newsArticleDetailsController',
+                        template: 'Modules/$(VirtoCommerce.News)/Scripts/blades/news-article-details.html'
                     };
 
                     bladeNavigationService.showBlade(detailsBlade, blade);
@@ -42,10 +42,10 @@ angular.module('VirtoCommerce.News')
                         id: 'newsArticleEdit',
                         isEdit: true,
                         itemId: item.id,
-                        title: 'news.blades.news-article-detail.title-edit',
+                        title: 'news.blades.news-article-details.title-edit',
                         titleValues: { name: item.name },
-                        controller: 'VirtoCommerce.News.newsArticleDetailController',
-                        template: 'Modules/$(VirtoCommerce.News)/Scripts/blades/news-article-detail.tpl.html'
+                        controller: 'VirtoCommerce.News.newsArticleDetailsController',
+                        template: 'Modules/$(VirtoCommerce.News)/Scripts/blades/news-article-details.html'
                     };
                     bladeNavigationService.showBlade(detailsBlade, blade);
                 };
@@ -120,5 +120,5 @@ angular.module('VirtoCommerce.News')
                         uiGridHelper.bindRefreshOnSortChanged($scope);
                     });
                     bladeUtils.initializePagination($scope);
-                }; 
+                };
             }]);

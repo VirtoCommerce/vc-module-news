@@ -18,7 +18,7 @@ angular.module(moduleName, [])
                             var newBlade = {
                                 id: 'newsArticleList',
                                 controller: 'VirtoCommerce.News.newsArticleListController',
-                                template: 'Modules/$(VirtoCommerce.News)/Scripts/blades/news-article-list.tpl.html',
+                                template: 'Modules/$(VirtoCommerce.News)/Scripts/blades/news-article-list.html',
                                 isClosingDisabled: true,
                             };
                             bladeNavigationService.showBlade(newBlade);
@@ -41,29 +41,29 @@ angular.module(moduleName, [])
 
             var contentWidget = {
                 controller: 'VirtoCommerce.News.contentWidgetController',
-                template: 'Modules/$(VirtoCommerce.News)/Scripts/widgets/contentWidget.tpl.html'
+                template: 'Modules/$(VirtoCommerce.News)/Scripts/widgets/contentWidget.html'
             };
-            widgetService.registerWidget(contentWidget, 'newsArticleDetail');
+            widgetService.registerWidget(contentWidget, 'newsArticleDetails');
 
-            metaFormsService.registerMetaFields("newsArticleDetail", [{
+            metaFormsService.registerMetaFields("newsArticleDetails", [{
                 name: 'name',
-                title: "news.blades.news-article-detail.labels.name",
-                placeholder: "news.blades.news-article-detail.placeholders.name",
+                title: "news.blades.news-article-details.labels.name",
+                placeholder: "news.blades.news-article-details.placeholders.name",
                 colSpan: 2,
                 isRequired: true,
                 valueType: "ShortText"
             },
             {
                 name: 'publishDate',
-                title: "news.blades.news-article-detail.labels.publish-date",
-                placeholder: "news.blades.news-article-detail.placeholders.publish-date",
+                title: "news.blades.news-article-details.labels.publish-date",
+                placeholder: "news.blades.news-article-details.placeholders.publish-date",
                 colSpan: 1,
                 valueType: "DateTime"
             },
             {
                 name: 'isPublished',
-                title: "news.blades.news-article-detail.labels.is-published",
-                placeholder: "news.blades.news-article-detail.placeholders.is-published",
+                title: "news.blades.news-article-details.labels.is-published",
+                placeholder: "news.blades.news-article-details.placeholders.is-published",
                 colSpan: 1,
                 isRequired: true,
                 valueType: "Boolean"

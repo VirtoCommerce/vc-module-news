@@ -4,14 +4,14 @@ angular.module('VirtoCommerce.News')
         ['$scope', 'platformWebApp.bladeNavigationService', 'platformWebApp.uiGridHelper', 'platformWebApp.dialogService',
             function ($scope, bladeNavigationService, uiGridHelper, dialogService) {
                 var blade = $scope.blade;
-                blade.title = 'news.blades.news-article-content-list.title'; 
+                blade.title = 'news.blades.news-article-content-list.title';
                 blade.isLoading = false;
 
                 blade.refresh = function () {
 
                 };
 
-                $scope.add = function () { 
+                $scope.add = function () {
                     selectedNode = undefined;
                     $scope.selectedNodeId = undefined;
 
@@ -19,29 +19,29 @@ angular.module('VirtoCommerce.News')
                         id: 'newsArticleContentAdd',
                         isEdit: false,
                         newsArticle: blade.item,
-                        title: 'news.blades.news-article-content-detail.title-add',
-                        controller: 'VirtoCommerce.News.newsArticleContentDetailController',
-                        template: 'Modules/$(VirtoCommerce.News)/Scripts/blades/news-article-content-detail.tpl.html'
+                        title: 'news.blades.news-article-content-details.title-add',
+                        controller: 'VirtoCommerce.News.newsArticleContentDetailsController',
+                        template: 'Modules/$(VirtoCommerce.News)/Scripts/blades/news-article-content-details.html'
                     };
 
                     bladeNavigationService.showBlade(detailsBlade, blade);
                 };
 
-                $scope.edit = function (item) { 
+                $scope.edit = function (item) {
                     var detailsBlade = {
                         id: 'newsArticleContentEdit',
                         isEdit: true,
                         itemId: item.id,
                         newsArticle: blade.item,
                         currentEntity: item,
-                        title: 'news.blades.news-article-content-detail.title-edit',
-                        controller: 'VirtoCommerce.News.newsArticleContentDetailController',
-                        template: 'Modules/$(VirtoCommerce.News)/Scripts/blades/news-article-content-detail.tpl.html'
+                        title: 'news.blades.news-article-content-details.title-edit',
+                        controller: 'VirtoCommerce.News.newsArticleContentDetailsController',
+                        template: 'Modules/$(VirtoCommerce.News)/Scripts/blades/news-article-content-details.html'
                     };
                     bladeNavigationService.showBlade(detailsBlade, blade);
                 };
 
-                $scope.delete = function (item) { 
+                $scope.delete = function (item) {
                     var dialog = {
                         id: "newsArticleContentDeleteDialog",
                         title: "news.dialogs.news-article-content-delete.title",
@@ -63,7 +63,7 @@ angular.module('VirtoCommerce.News')
                     canExecuteMethod: function () {
                         return true;
                     }
-                }]; 
+                }];
 
                 // ui-grid
                 $scope.setGridOptions = function (gridOptions) {

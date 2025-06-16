@@ -9,7 +9,7 @@
           "is-published": "Is published"
         }
       },
-      "news-article-detail": {
+      "news-article-details": {
         "title-add": "News (add)",
         "title-edit": "News (edit) '{{name}}'",
         "labels": {
@@ -29,7 +29,7 @@
           "language": "Language"
         }
       },
-      "news-article-content-detail": {
+      "news-article-content-details": {
         "title-add": "News content (add)",
         "title-edit": "News content (edit)",
         "labels": {
