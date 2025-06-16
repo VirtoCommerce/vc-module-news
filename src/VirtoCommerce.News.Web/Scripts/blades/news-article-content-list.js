@@ -19,9 +19,7 @@ angular.module('VirtoCommerce.News')
                 };
 
                 //scope functions
-                let selectedNode;
                 $scope.add = function () {
-                    selectedNode = undefined;
                     $scope.selectedNodeId = undefined;
 
                     const detailsBlade = {

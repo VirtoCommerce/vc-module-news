@@ -26,13 +26,11 @@ angular.module('VirtoCommerce.News')
                 };
 
                 //scope functions
-                let selectedNode;
                 $scope.add = function () {
                     if (!authService.checkPermission('news:create')) {
                         return;
                     }
 
-                    selectedNode = undefined;
                     $scope.selectedNodeId = undefined;
 
                     const detailsBlade = {
