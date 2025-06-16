@@ -1,8 +1,12 @@
 angular.module('VirtoCommerce.News')
     .controller(
         'VirtoCommerce.News.newsArticleContentListController',
-        ['$scope', 'platformWebApp.bladeNavigationService', 'platformWebApp.uiGridHelper', 'platformWebApp.dialogService',
-            function ($scope, bladeNavigationService, uiGridHelper, dialogService) {
+        [
+            '$scope',
+            'platformWebApp.bladeNavigationService', 'platformWebApp.uiGridHelper', 'platformWebApp.dialogService',
+            function (
+                $scope,
+                bladeNavigationService, uiGridHelper, dialogService) {
                 const blade = $scope.blade;
 
                 //blade properties

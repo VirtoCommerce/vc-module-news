@@ -1,7 +1,14 @@
 angular.module('VirtoCommerce.News')
-    .controller('VirtoCommerce.News.newsArticleContentDetailsController',
-        ['$scope', 'platformWebApp.settings', 'platformWebApp.bladeNavigationService', 'FileUploader',
-            function ($scope, settings, bladeNavigationService, FileUploader) {
+    .controller(
+        'VirtoCommerce.News.newsArticleContentDetailsController',
+        [
+            '$scope',
+            'platformWebApp.settings', 'platformWebApp.bladeNavigationService',
+            'FileUploader',
+            function (
+                $scope,
+                settings, bladeNavigationService,
+                FileUploader) {
                 const blade = $scope.blade;
 
                 //blade properties
