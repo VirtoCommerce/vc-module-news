@@ -22,29 +22,11 @@ angular.module('VirtoCommerce.News')
                 $scope.add = function () {
                     $scope.selectedNodeId = undefined;
 
-                    const detailsBlade = {
-                        id: 'newsArticleContentAdd',
-                        isNew: true,
-                        newsArticle: blade.item,
-                        title: 'news.blades.news-article-content-details.title-add',
-                        controller: 'VirtoCommerce.News.newsArticleContentDetailsController',
-                        template: 'Modules/$(VirtoCommerce.News)/Scripts/blades/news-article-content-details.html'
-                    };
-                    bladeNavigationService.showBlade(detailsBlade, blade);
+                    showDetailsBlade(true);
                 };
 
                 $scope.edit = function (item) {
-                    const detailsBlade = {
-                        id: 'newsArticleContentEdit',
-                        isNew: false,
-                        itemId: item.id,
-                        newsArticle: blade.item,
-                        currentEntity: item,
-                        title: 'news.blades.news-article-content-details.title-edit',
-                        controller: 'VirtoCommerce.News.newsArticleContentDetailsController',
-                        template: 'Modules/$(VirtoCommerce.News)/Scripts/blades/news-article-content-details.html'
-                    };
-                    bladeNavigationService.showBlade(detailsBlade, blade);
+                    showDetailsBlade(false, item);
                 };
 
                 $scope.delete = function (item) {
@@ -79,6 +61,19 @@ angular.module('VirtoCommerce.News')
                             }
                         }
                     ];
+                }
+
+                function showDetailsBlade(isNew, item) {
+                    const detailsBlade = {
+                        id: 'newsArticleContentDetails',
+                        isNew: isNew,
+                        newsArticle: blade.item,
+                        currentEntity: item,
+                        title: isNew ? 'news.blades.news-article-content-details.title-add' : 'news.blades.news-article-content-details.title-edit',
+                        controller: 'VirtoCommerce.News.newsArticleContentDetailsController',
+                        template: 'Modules/$(VirtoCommerce.News)/Scripts/blades/news-article-content-details.html'
+                    };
+                    bladeNavigationService.showBlade(detailsBlade, blade);
                 }
 
                 //calls

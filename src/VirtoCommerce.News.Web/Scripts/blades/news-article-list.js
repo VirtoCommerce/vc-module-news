@@ -33,15 +33,7 @@ angular.module('VirtoCommerce.News')
 
                     $scope.selectedNodeId = undefined;
 
-                    const detailsBlade = {
-                        id: 'newsArticleAdd',
-                        isNew: true,
-                        title: 'news.blades.news-article-details.title-add',
-                        controller: 'VirtoCommerce.News.newsArticleDetailsController',
-                        template: 'Modules/$(VirtoCommerce.News)/Scripts/blades/news-article-details.html'
-                    };
-
-                    bladeNavigationService.showBlade(detailsBlade, blade);
+                    showDetailsBlade(true);
                 };
 
                 $scope.edit = function (item) {
@@ -49,15 +41,7 @@ angular.module('VirtoCommerce.News')
                         return;
                     }
 
-                    const detailsBlade = {
-                        id: 'newsArticleEdit',
-                        isNew: false,
-                        itemId: item.id,
-                        title: 'news.blades.news-article-details.title-edit',
-                        controller: 'VirtoCommerce.News.newsArticleDetailsController',
-                        template: 'Modules/$(VirtoCommerce.News)/Scripts/blades/news-article-details.html'
-                    };
-                    bladeNavigationService.showBlade(detailsBlade, blade);
+                    showDetailsBlade(false, item.id);
                 };
 
                 $scope.delete = function (item) {
@@ -129,6 +113,19 @@ angular.module('VirtoCommerce.News')
                             permission: 'news:create'
                         }
                     ];
+                }
+
+                function showDetailsBlade(isNew, itemId) {
+                    const detailsBlade = {
+                        id: 'newsArticleDetails',
+                        isNew: isNew,
+                        itemId: itemId,
+                        title: isNew ? 'news.blades.news-article-details.title-add' : 'news.blades.news-article-details.title-edit',
+                        controller: 'VirtoCommerce.News.newsArticleDetailsController',
+                        template: 'Modules/$(VirtoCommerce.News)/Scripts/blades/news-article-details.html'
+                    };
+
+                    bladeNavigationService.showBlade(detailsBlade, blade);
                 }
 
                 //calls
