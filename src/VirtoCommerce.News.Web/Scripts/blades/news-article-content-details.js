@@ -47,7 +47,15 @@ angular.module('VirtoCommerce.News')
                 };
 
                 blade.onClose = function (closeCallback) {
-                    bladeNavigationService.showConfirmationIfNeeded(isDirty(), canSave(), blade, $scope.saveChanges, closeCallback, "news.dialogs.news-article-content-save.title", "news.dialogs.news-article-content-save.message");
+                    bladeNavigationService.showConfirmationIfNeeded(
+                        isDirty(),
+                        canSave(),
+                        blade,
+                        $scope.saveChanges,
+                        closeCallback,
+                        "news.dialogs.news-article-content-save.title",
+                        "news.dialogs.news-article-content-save.message"
+                    );
                 };
 
                 //scope functions
