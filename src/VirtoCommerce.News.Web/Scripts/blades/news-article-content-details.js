@@ -3,34 +3,13 @@ angular.module('VirtoCommerce.News')
         ['$scope', 'platformWebApp.settings', 'platformWebApp.bladeNavigationService', 'FileUploader',
             function ($scope, settings, bladeNavigationService, FileUploader) {
                 var blade = $scope.blade;
+
+                //blade properties
                 blade.isLoading = false;
 
+                //scope properties
                 var languagesPromise = settings.getValues({ id: 'VirtoCommerce.Core.General.Languages' }).$promise;
                 $scope.languages = [];
-
-                blade.refresh = function () {
-                    languagesPromise.then(function (promiseResult) {
-                        $scope.languages = promiseResult;
-                    });
-                    blade.originalEntity = blade.currentEntity;
-                    blade.currentEntity = angular.copy(blade.currentEntity);
-                };
-
-                function canSave() {
-                    return formScope && formScope.$valid;
-                };
-
-                function initializeToolbar() {
-                    blade.toolbarCommands = [
-                        {
-                            name: "platform.commands.save", icon: 'fas fa-save',
-                            executeMethod: function () {
-                                $scope.saveChanges();
-                            },
-                            canExecuteMethod: canSave
-                        }
-                    ];
-                };
 
                 $scope.fileUploader = new FileUploader({
                     url: 'api/assets?folderUrl=news-articles/' + blade.newsArticle.id,
@@ -51,6 +30,16 @@ angular.module('VirtoCommerce.News')
                     }
                 });
 
+                //blade functions
+                blade.refresh = function () {
+                    languagesPromise.then(function (promiseResult) {
+                        $scope.languages = promiseResult;
+                    });
+                    blade.originalEntity = blade.currentEntity;
+                    blade.currentEntity = angular.copy(blade.currentEntity);
+                };
+
+                //scope functions
                 var formScope;
                 $scope.setForm = function (form) { formScope = form; }
 
@@ -67,6 +56,24 @@ angular.module('VirtoCommerce.News')
                     }
                 };
 
+                //local functions
+                function canSave() {
+                    return formScope && formScope.$valid;
+                };
+
+                function initializeToolbar() {
+                    blade.toolbarCommands = [
+                        {
+                            name: "platform.commands.save", icon: 'fas fa-save',
+                            executeMethod: function () {
+                                $scope.saveChanges();
+                            },
+                            canExecuteMethod: canSave
+                        }
+                    ];
+                };
+
+                //calls
                 initializeToolbar();
                 blade.refresh();
             }]);

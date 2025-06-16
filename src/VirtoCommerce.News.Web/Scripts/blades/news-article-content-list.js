@@ -4,13 +4,17 @@ angular.module('VirtoCommerce.News')
         ['$scope', 'platformWebApp.bladeNavigationService', 'platformWebApp.uiGridHelper', 'platformWebApp.dialogService',
             function ($scope, bladeNavigationService, uiGridHelper, dialogService) {
                 var blade = $scope.blade;
+
+                //blade properties
                 blade.title = 'news.blades.news-article-content-list.title';
                 blade.isLoading = false;
 
+                //blade functions
                 blade.refresh = function () {
 
                 };
 
+                //scope functions
                 $scope.add = function () {
                     selectedNode = undefined;
                     $scope.selectedNodeId = undefined;
@@ -24,7 +28,9 @@ angular.module('VirtoCommerce.News')
                         template: 'Modules/$(VirtoCommerce.News)/Scripts/blades/news-article-content-details.html'
                     };
 
+                    console.warn('scope.add');
                     bladeNavigationService.showBlade(detailsBlade, blade);
+                    console.warn('scope.add - after show');
                 };
 
                 $scope.edit = function (item) {
@@ -56,17 +62,23 @@ angular.module('VirtoCommerce.News')
                     dialogService.showConfirmationDialog(dialog);
                 };
 
-                blade.toolbarCommands = [{
-                    name: "platform.commands.add",
-                    icon: 'fas fa-plus',
-                    executeMethod: $scope.add,
-                    canExecuteMethod: function () {
-                        return true;
-                    }
-                }];
-
                 // ui-grid
                 $scope.setGridOptions = function (gridOptions) {
                     uiGridHelper.initialize($scope, gridOptions);
                 };
+
+                //local functions
+                function initializeToolbar() {
+                    blade.toolbarCommands = [{
+                        name: "platform.commands.add",
+                        icon: 'fas fa-plus',
+                        executeMethod: $scope.add,
+                        canExecuteMethod: function () {
+                            return true;
+                        }
+                    }];
+                }
+
+                //calls
+                initializeToolbar();
             }]);

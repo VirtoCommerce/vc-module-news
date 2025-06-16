@@ -4,8 +4,10 @@ angular.module('VirtoCommerce.News')
             function ($scope, api, authService, bladeNavigationService, metaFormsService) {
                 var blade = $scope.blade;
 
+                //blade properties
                 blade.metaFields = metaFormsService.getMetaFields("newsArticleDetails");
 
+                //blade functions
                 blade.refresh = function () {
                     if (blade.isEdit) {
                         api.get({ ids: [blade.itemId] }, function (apiResult) {
@@ -18,27 +20,7 @@ angular.module('VirtoCommerce.News')
                     }
                 };
 
-                function canSave() {
-                    return formScope && formScope.$valid;
-                };
-
-                function initializeToolbar() {
-                    blade.toolbarCommands = [
-                        {
-                            name: "platform.commands.save", icon: 'fas fa-save',
-                            executeMethod: function () {
-                                $scope.saveChanges();
-                            },
-                            canExecuteMethod: canSave,
-                            permission: getSavePermission()
-                        }
-                    ];
-                };
-
-                function getSavePermission() {
-                    return blade.isEdit ? 'news:update' : 'news:create';
-                };
-
+                //scope functions
                 var formScope;
                 $scope.setForm = function (form) { formScope = form; }
 
@@ -78,6 +60,29 @@ angular.module('VirtoCommerce.News')
                     }
                 };
 
+                //local functions
+                function canSave() {
+                    return formScope && formScope.$valid;
+                };
+
+                function initializeToolbar() {
+                    blade.toolbarCommands = [
+                        {
+                            name: "platform.commands.save", icon: 'fas fa-save',
+                            executeMethod: function () {
+                                $scope.saveChanges();
+                            },
+                            canExecuteMethod: canSave,
+                            permission: getSavePermission()
+                        }
+                    ];
+                };
+
+                function getSavePermission() {
+                    return blade.isEdit ? 'news:update' : 'news:create';
+                };
+
+                //calls
                 initializeToolbar();
                 blade.refresh();
             }]);

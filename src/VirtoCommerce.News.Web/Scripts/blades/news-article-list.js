@@ -4,8 +4,11 @@ angular.module('VirtoCommerce.News')
         ['$scope', 'VirtoCommerce.News.WebApi', 'platformWebApp.authService', 'platformWebApp.bladeNavigationService', 'platformWebApp.uiGridHelper', 'platformWebApp.bladeUtils', 'platformWebApp.dialogService',
             function ($scope, api, authService, bladeNavigationService, uiGridHelper, bladeUtils, dialogService) {
                 var blade = $scope.blade;
+
+                //blade properties
                 blade.title = 'news.blades.news-article-list.title';
 
+                //blade functions
                 blade.refresh = function () {
                     api.search(getSearchCriteria(), function (apiResult) {
                         blade.data = apiResult.results;
@@ -14,6 +17,7 @@ angular.module('VirtoCommerce.News')
                     });
                 };
 
+                //scope functions
                 $scope.add = function () {
                     if (!authService.checkPermission('news:create')) {
                         return;
@@ -73,30 +77,24 @@ angular.module('VirtoCommerce.News')
                     dialogService.showConfirmationDialog(dialog);
                 };
 
-                blade.toolbarCommands = [
-                    {
-                        name: "platform.commands.refresh",
-                        icon: 'fa fa-refresh',
-                        executeMethod: blade.refresh,
-                        canExecuteMethod: function () {
-                            return true;
-                        }
+                // ui-grid
+                $scope.setGridOptions = function (gridOptions) {
+                    uiGridHelper.initialize($scope, gridOptions, function (gridApi) {
+                        uiGridHelper.bindRefreshOnSortChanged($scope);
+                    });
+                    bladeUtils.initializePagination($scope);
+                };
+
+                //other functions
+                var filter = $scope.filter = blade.filter || {};
+                filter.criteriaChanged = function () {
+                    if ($scope.pageSettings.currentPage > 1) {
+                        $scope.pageSettings.currentPage = 1;
                     }
-                ];
+                    blade.refresh();
+                };
 
-                if (authService.checkPermission('news:create')) {
-                    blade.toolbarCommands.splice(1,
-                        0,
-                        {
-                            name: "platform.commands.add",
-                            icon: 'fas fa-plus',
-                            executeMethod: $scope.add,
-                            canExecuteMethod: function () {
-                                return true;
-                            }
-                        });
-                }
-
+                //local functions
                 function getSearchCriteria() {
                     return {
                         searchPhrase: filter.keyword ? filter.keyword : undefined,
@@ -106,19 +104,31 @@ angular.module('VirtoCommerce.News')
                     };
                 }
 
-                var filter = $scope.filter = blade.filter || {};
-                filter.criteriaChanged = function () {
-                    if ($scope.pageSettings.currentPage > 1) {
-                        $scope.pageSettings.currentPage = 1;
+                function initializeToolbar() {
+                    blade.toolbarCommands = [
+                        {
+                            name: "platform.commands.refresh",
+                            icon: 'fa fa-refresh',
+                            executeMethod: blade.refresh,
+                            canExecuteMethod: function () {
+                                return true;
+                            }
+                        }
+                    ];
+                    if (authService.checkPermission('news:create')) {
+                        blade.toolbarCommands.splice(1,
+                            0,
+                            {
+                                name: "platform.commands.add",
+                                icon: 'fas fa-plus',
+                                executeMethod: $scope.add,
+                                canExecuteMethod: function () {
+                                    return true;
+                                }
+                            });
                     }
-                    blade.refresh();
-                };
+                }
 
-                // ui-grid
-                $scope.setGridOptions = function (gridOptions) {
-                    uiGridHelper.initialize($scope, gridOptions, function (gridApi) {
-                        uiGridHelper.bindRefreshOnSortChanged($scope);
-                    });
-                    bladeUtils.initializePagination($scope);
-                };
+                //calls
+                initializeToolbar();
             }]);
