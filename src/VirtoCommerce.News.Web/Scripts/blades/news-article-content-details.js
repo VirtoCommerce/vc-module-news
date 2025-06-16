@@ -30,7 +30,7 @@ angular.module('VirtoCommerce.News')
                         $scope.$broadcast('filesUploaded', { items: response });
                     },
                     onErrorItem: function (fileItem, response, status) {
-                        bladeNavigationService.setError(fileItem._file.name + ' failed: ' + (response.message ? response.message : status), blade);
+                        bladeNavigationService.setError(`${fileItem._file.name} failed: ${(response.message ? response.message : status)}`, blade);
                     },
                     onCompleteAll: function () {
                         blade.isLoading = false;
@@ -48,7 +48,9 @@ angular.module('VirtoCommerce.News')
 
                 //scope functions
                 let formScope;
-                $scope.setForm = function (form) { formScope = form; }
+                $scope.setForm = function (form) {
+                    formScope = form;
+                }
 
                 $scope.saveChanges = function () {
                     if (!blade.isEdit) {
@@ -58,7 +60,10 @@ angular.module('VirtoCommerce.News')
                         blade.title = 'news.blades.news-article-content-details.title-edit';
                     }
                     else {
-                        const existing = _.find(blade.newsArticle.localizedContents, function (x) { return x === blade.originalEntity; });
+                        const existing = _.find(
+                            blade.newsArticle.localizedContents,
+                            function (x) { return x === blade.originalEntity; }
+                        );
                         angular.copy(blade.currentEntity, existing);
                     }
                 };
@@ -66,7 +71,7 @@ angular.module('VirtoCommerce.News')
                 //local functions
                 function canSave() {
                     return formScope && formScope.$valid;
-                };
+                }
 
                 function initializeToolbar() {
                     blade.toolbarCommands = [
@@ -79,7 +84,7 @@ angular.module('VirtoCommerce.News')
                             canExecuteMethod: canSave
                         }
                     ];
-                };
+                }
 
                 //calls
                 initializeToolbar();

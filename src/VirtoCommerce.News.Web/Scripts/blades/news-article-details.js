@@ -29,7 +29,9 @@ angular.module('VirtoCommerce.News')
 
                 //scope functions
                 let formScope;
-                $scope.setForm = function (form) { formScope = form; }
+                $scope.setForm = function (form) {
+                    formScope = form;
+                }
 
                 $scope.saveChanges = function () {
                     if (!authService.checkPermission(getSavePermission())) {
@@ -43,7 +45,6 @@ angular.module('VirtoCommerce.News')
                             blade.isEdit = true;
                             blade.itemId = createResult.id;
                             blade.currentEntity.id = createResult.id;
-                            //blade.currentEntity = angular.copy(createResult);
                             blade.title = 'news.blades.news-article-details.title-edit';
                             blade.titleValues = { name: createResult.name };
                             initializeToolbar();
@@ -56,7 +57,6 @@ angular.module('VirtoCommerce.News')
                     }
                     else {
                         newsApi.update(blade.currentEntity, function (updateResult) {
-                            //blade.currentEntity = angular.copy(updateResult);
                             blade.titleValues = { name: updateResult.name };
                             blade.isLoading = false;
                             blade.parentBlade.refresh(true);
@@ -70,7 +70,7 @@ angular.module('VirtoCommerce.News')
                 //local functions
                 function canSave() {
                     return formScope && formScope.$valid;
-                };
+                }
 
                 function initializeToolbar() {
                     blade.toolbarCommands = [
@@ -84,11 +84,11 @@ angular.module('VirtoCommerce.News')
                             permission: getSavePermission()
                         }
                     ];
-                };
+                }
 
                 function getSavePermission() {
                     return blade.isEdit ? 'news:update' : 'news:create';
-                };
+                }
 
                 //calls
                 initializeToolbar();
