@@ -1,7 +1,7 @@
 angular.module('VirtoCommerce.News')
     .controller('VirtoCommerce.News.newsArticleDetailsController',
         ['$scope', 'VirtoCommerce.News.WebApi', 'platformWebApp.authService', 'platformWebApp.bladeNavigationService', 'platformWebApp.metaFormsService',
-            function ($scope, api, authService, bladeNavigationService, metaFormsService) {
+            function ($scope, newsApi, authService, bladeNavigationService, metaFormsService) {
                 const blade = $scope.blade;
 
                 //blade properties
@@ -10,8 +10,8 @@ angular.module('VirtoCommerce.News')
                 //blade functions
                 blade.refresh = function () {
                     if (blade.isEdit) {
-                        api.get({ ids: [blade.itemId] }, function (apiResult) {
-                            blade.currentEntity = angular.copy(apiResult[0]);
+                        newsApi.get({ ids: [blade.itemId] }, function (getResult) {
+                            blade.currentEntity = angular.copy(getResult[0]);
                             blade.isLoading = false;
                         });
                     }
@@ -32,13 +32,13 @@ angular.module('VirtoCommerce.News')
                     blade.isLoading = true;
 
                     if (!blade.isEdit) {
-                        api.create(blade.currentEntity, function (apiResult) {
+                        newsApi.create(blade.currentEntity, function (createResult) {
                             blade.isEdit = true;
-                            blade.itemId = apiResult.id;
-                            blade.currentEntity.id = apiResult.id;
-                            //blade.currentEntity = angular.copy(apiResult);
+                            blade.itemId = createResult.id;
+                            blade.currentEntity.id = createResult.id;
+                            //blade.currentEntity = angular.copy(createResult);
                             blade.title = 'news.blades.news-article-details.title-edit';
-                            blade.titleValues = { name: apiResult.name };
+                            blade.titleValues = { name: createResult.name };
                             initializeToolbar();
                             blade.isLoading = false;
                             blade.parentBlade.refresh(true);
@@ -48,9 +48,9 @@ angular.module('VirtoCommerce.News')
                         });
                     }
                     else {
-                        api.update(blade.currentEntity, function (apiResult) {
-                            //blade.currentEntity = angular.copy(apiResult);
-                            blade.titleValues = { name: apiResult.name };
+                        newsApi.update(blade.currentEntity, function (updateResult) {
+                            //blade.currentEntity = angular.copy(updateResult);
+                            blade.titleValues = { name: updateResult.name };
                             blade.isLoading = false;
                             blade.parentBlade.refresh(true);
                         }, function (error) {

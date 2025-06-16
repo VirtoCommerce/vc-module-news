@@ -2,7 +2,7 @@ angular.module('VirtoCommerce.News')
     .controller(
         'VirtoCommerce.News.newsArticleListController',
         ['$scope', 'VirtoCommerce.News.WebApi', 'platformWebApp.authService', 'platformWebApp.bladeNavigationService', 'platformWebApp.uiGridHelper', 'platformWebApp.bladeUtils', 'platformWebApp.dialogService',
-            function ($scope, api, authService, bladeNavigationService, uiGridHelper, bladeUtils, dialogService) {
+            function ($scope, newsApi, authService, bladeNavigationService, uiGridHelper, bladeUtils, dialogService) {
                 const blade = $scope.blade;
 
                 //blade properties
@@ -10,9 +10,9 @@ angular.module('VirtoCommerce.News')
 
                 //blade functions
                 blade.refresh = function () {
-                    api.search(getSearchCriteria(), function (apiResult) {
-                        blade.data = apiResult.results;
-                        $scope.pageSettings.totalItems = apiResult.totalCount;
+                    newsApi.search(getSearchCriteria(), function (searchResult) {
+                        blade.data = searchResult.results;
+                        $scope.pageSettings.totalItems = searchResult.totalCount;
                         blade.isLoading = false;
                     });
                 };
@@ -67,7 +67,7 @@ angular.module('VirtoCommerce.News')
                         callback: function (dialogConfirmed) {
                             if (dialogConfirmed) {
                                 blade.isLoading = true;
-                                api.delete({ ids: [item.id] }, function () {
+                                newsApi.delete({ ids: [item.id] }, function () {
                                     blade.refresh();
                                 });
                             }
