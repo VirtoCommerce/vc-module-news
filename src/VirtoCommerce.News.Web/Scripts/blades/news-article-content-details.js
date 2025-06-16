@@ -53,10 +53,10 @@ angular.module('VirtoCommerce.News')
                 }
 
                 $scope.saveChanges = function () {
-                    if (!blade.isEdit) {
+                    if (blade.isNew) {
                         blade.newsArticle.localizedContents.push(blade.currentEntity);
                         blade.originalEntity = blade.currentEntity;
-                        blade.isEdit = true;
+                        blade.isNew = false;
                         blade.title = 'news.blades.news-article-content-details.title-edit';
                     }
                     else {

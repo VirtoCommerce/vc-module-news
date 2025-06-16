@@ -16,7 +16,7 @@ angular.module('VirtoCommerce.News')
 
                 //blade functions
                 blade.refresh = function () {
-                    if (blade.isEdit) {
+                    if (!blade.isNew) {
                         newsApi.get({ id: [blade.itemId] }, function (getResult) {
                             blade.currentEntity = angular.copy(getResult);
                             blade.isLoading = false;
@@ -40,9 +40,9 @@ angular.module('VirtoCommerce.News')
 
                     blade.isLoading = true;
 
-                    if (!blade.isEdit) {
+                    if (blade.isNew) {
                         newsApi.create(blade.currentEntity, function (createResult) {
-                            blade.isEdit = true;
+                            blade.isNew = false;
                             blade.itemId = createResult.id;
                             blade.currentEntity.id = createResult.id;
                             blade.title = 'news.blades.news-article-details.title-edit';
@@ -85,7 +85,7 @@ angular.module('VirtoCommerce.News')
                 }
 
                 function getSavePermission() {
-                    return blade.isEdit ? 'news:update' : 'news:create';
+                    return blade.isNew ? 'news:create' : 'news:update';
                 }
 
                 //calls

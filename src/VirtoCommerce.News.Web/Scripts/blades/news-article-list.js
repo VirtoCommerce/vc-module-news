@@ -35,7 +35,7 @@ angular.module('VirtoCommerce.News')
 
                     const detailsBlade = {
                         id: 'newsArticleAdd',
-                        isEdit: false,
+                        isNew: true,
                         title: 'news.blades.news-article-details.title-add',
                         controller: 'VirtoCommerce.News.newsArticleDetailsController',
                         template: 'Modules/$(VirtoCommerce.News)/Scripts/blades/news-article-details.html'
@@ -51,7 +51,7 @@ angular.module('VirtoCommerce.News')
 
                     const detailsBlade = {
                         id: 'newsArticleEdit',
-                        isEdit: true,
+                        isNew: false,
                         itemId: item.id,
                         title: 'news.blades.news-article-details.title-edit',
                         controller: 'VirtoCommerce.News.newsArticleDetailsController',

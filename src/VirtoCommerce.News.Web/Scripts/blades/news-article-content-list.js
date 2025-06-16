@@ -24,7 +24,7 @@ angular.module('VirtoCommerce.News')
 
                     const detailsBlade = {
                         id: 'newsArticleContentAdd',
-                        isEdit: false,
+                        isNew: true,
                         newsArticle: blade.item,
                         title: 'news.blades.news-article-content-details.title-add',
                         controller: 'VirtoCommerce.News.newsArticleContentDetailsController',
@@ -36,7 +36,7 @@ angular.module('VirtoCommerce.News')
                 $scope.edit = function (item) {
                     const detailsBlade = {
                         id: 'newsArticleContentEdit',
-                        isEdit: true,
+                        isNew: false,
                         itemId: item.id,
                         newsArticle: blade.item,
                         currentEntity: item,
