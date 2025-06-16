@@ -17,8 +17,8 @@ angular.module('VirtoCommerce.News')
                 //blade functions
                 blade.refresh = function () {
                     if (blade.isEdit) {
-                        newsApi.get({ ids: [blade.itemId] }, function (getResult) {
-                            blade.currentEntity = angular.copy(getResult[0]);
+                        newsApi.get({ id: [blade.itemId] }, function (getResult) {
+                            blade.currentEntity = angular.copy(getResult);
                             blade.isLoading = false;
                         });
                     }
@@ -46,7 +46,6 @@ angular.module('VirtoCommerce.News')
                             blade.itemId = createResult.id;
                             blade.currentEntity.id = createResult.id;
                             blade.title = 'news.blades.news-article-details.title-edit';
-                            blade.titleValues = { name: createResult.name };
                             initializeToolbar();
                             blade.isLoading = false;
                             blade.parentBlade.refresh(true);
@@ -56,8 +55,7 @@ angular.module('VirtoCommerce.News')
                         });
                     }
                     else {
-                        newsApi.update(blade.currentEntity, function (updateResult) {
-                            blade.titleValues = { name: updateResult.name };
+                        newsApi.update(blade.currentEntity, function () {
                             blade.isLoading = false;
                             blade.parentBlade.refresh(true);
                         }, function (error) {

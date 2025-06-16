@@ -11,7 +11,7 @@
       },
       "news-article-details": {
         "title-add": "News (add)",
-        "title-edit": "News (edit) '{{name}}'",
+        "title-edit": "News (edit)",
         "labels": {
           "name": "Name",
           "publish-date": "Publish date",

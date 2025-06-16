@@ -54,7 +54,6 @@ angular.module('VirtoCommerce.News')
                         isEdit: true,
                         itemId: item.id,
                         title: 'news.blades.news-article-details.title-edit',
-                        titleValues: { name: item.name },
                         controller: 'VirtoCommerce.News.newsArticleDetailsController',
                         template: 'Modules/$(VirtoCommerce.News)/Scripts/blades/news-article-details.html'
                     };

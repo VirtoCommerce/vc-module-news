@@ -1,3 +1,4 @@
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -21,7 +22,7 @@ public class NewsArticleController : Controller
     }
 
     [HttpPost]
-    [Route("create")]
+    [Route("")]
     [Authorize(ModuleConstants.Security.Permissions.Create)]
     public async Task<ActionResult<NewsArticle>> Create([FromBody] NewsArticle newsArticle)
     {
@@ -30,18 +31,18 @@ public class NewsArticleController : Controller
         return Ok(newsArticle);
     }
 
-    [HttpPost]
-    [Route("update")]
+    [HttpPut]
+    [Route("")]
     [Authorize(ModuleConstants.Security.Permissions.Update)]
-    public async Task<ActionResult<NewsArticle>> Update([FromBody] NewsArticle newsArticle)
+    public async Task<ActionResult> Update([FromBody] NewsArticle newsArticle)
     {
         await _newsArticleService.SaveChangesAsync([newsArticle]);
 
-        return Ok(newsArticle);
+        return Ok();
     }
 
     [HttpDelete]
-    [Route("delete")]
+    [Route("")]
     [Authorize(ModuleConstants.Security.Permissions.Delete)]
     public async Task<ActionResult> Delete([FromQuery] string[] ids)
     {
@@ -51,13 +52,13 @@ public class NewsArticleController : Controller
     }
 
     [HttpGet]
-    [Route("get")]
+    [Route("{id}")]
     [Authorize(ModuleConstants.Security.Permissions.Read)]
-    public async Task<ActionResult<NewsArticle[]>> Get([FromQuery] string[] ids)
+    public async Task<ActionResult<NewsArticle>> Get(string id)
     {
-        var result = await _newsArticleService.GetAsync(ids);
+        var result = await _newsArticleService.GetAsync([id]);
 
-        return Ok(result);
+        return Ok(result.FirstOrDefault());
     }
 
     [HttpPost]
