@@ -1,6 +1,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using VirtoCommerce.News.Core;
 using VirtoCommerce.News.Core.Models;
@@ -27,27 +28,26 @@ public class NewsArticleController : Controller
     public async Task<ActionResult<NewsArticle>> Create([FromBody] NewsArticle newsArticle)
     {
         await _newsArticleService.SaveChangesAsync([newsArticle]);
-
         return Ok(newsArticle);
     }
 
     [HttpPut]
     [Route("")]
     [Authorize(ModuleConstants.Security.Permissions.Update)]
+    [ProducesResponseType(typeof(void), StatusCodes.Status204NoContent)]
     public async Task<ActionResult> Update([FromBody] NewsArticle newsArticle)
     {
         await _newsArticleService.SaveChangesAsync([newsArticle]);
-
-        return Ok();
+        return NoContent();
     }
 
     [HttpDelete]
     [Route("")]
     [Authorize(ModuleConstants.Security.Permissions.Delete)]
+    [ProducesResponseType(typeof(void), StatusCodes.Status204NoContent)]
     public async Task<ActionResult> Delete([FromQuery] string[] ids)
     {
         await _newsArticleService.DeleteAsync(ids);
-
         return NoContent();
     }
 
@@ -57,7 +57,6 @@ public class NewsArticleController : Controller
     public async Task<ActionResult<NewsArticle>> Get(string id)
     {
         var result = await _newsArticleService.GetAsync([id]);
-
         return Ok(result.FirstOrDefault());
     }
 
@@ -67,7 +66,6 @@ public class NewsArticleController : Controller
     public async Task<ActionResult<NewsArticleSearchResult>> Search([FromBody] NewsArticleSearchCriteria criteria)
     {
         var result = await _newsArticleSearchService.SearchAsync(criteria, false);
-
         return Ok(result);
     }
 }
