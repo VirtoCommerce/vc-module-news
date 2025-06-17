@@ -36,11 +36,10 @@ public class NewsArticleController : Controller
     [HttpPut]
     [Route("")]
     [Authorize(ModuleConstants.Security.Permissions.Update)]
-    [ProducesResponseType(typeof(void), StatusCodes.Status204NoContent)]
-    public async Task<ActionResult> Update([FromBody] NewsArticle newsArticle)
+    public async Task<ActionResult<NewsArticle>> Update([FromBody] NewsArticle newsArticle)
     {
         await _newsArticleService.SaveChangesAsync([newsArticle]);
-        return NoContent();
+        return Ok(newsArticle);
     }
 
     [HttpDelete]

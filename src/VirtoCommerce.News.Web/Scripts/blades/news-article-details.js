@@ -55,9 +55,9 @@ angular.module('VirtoCommerce.News')
 
                     if (blade.isNew) {
                         newsApi.create(blade.currentEntity, function () {
-                            blade.isLoading = false;
                             blade.parentBlade.refresh(true);
                             blade.originalEntity = angular.copy(blade.currentEntity);
+                            blade.isLoading = false;
                             $scope.bladeClose();
                         }, function (error) {
                             bladeNavigationService.setError('Error ' + error.status, blade);
@@ -65,10 +65,11 @@ angular.module('VirtoCommerce.News')
                         });
                     }
                     else {
-                        newsApi.update(blade.currentEntity, function () {
-                            blade.isLoading = false;
+                        newsApi.update(blade.currentEntity, function (updateResult) {
                             blade.parentBlade.refresh(true);
-                            blade.originalEntity = angular.copy(blade.currentEntity);
+                            blade.originalEntity = angular.copy(updateResult);
+                            blade.currentEntity = angular.copy(updateResult);
+                            blade.isLoading = false;
                         }, function (error) {
                             bladeNavigationService.setError('Error ' + error.status, blade);
                             blade.isLoading = false;
