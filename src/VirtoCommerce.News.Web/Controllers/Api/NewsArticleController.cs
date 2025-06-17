@@ -28,6 +28,7 @@ public class NewsArticleController : Controller
     [ProducesResponseType(typeof(void), StatusCodes.Status204NoContent)]
     public async Task<ActionResult> Create([FromBody] NewsArticle newsArticle)
     {
+        newsArticle.Id = null;
         await _newsArticleService.SaveChangesAsync([newsArticle]);
         return NoContent();
     }
