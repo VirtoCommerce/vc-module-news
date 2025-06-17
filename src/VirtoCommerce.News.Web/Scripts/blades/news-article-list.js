@@ -135,7 +135,6 @@ angular.module('VirtoCommerce.News')
                         id: 'newsArticleDetails',
                         isNew: isNew,
                         itemId: itemId,
-                        title: isNew ? 'news.blades.news-article-details.title-add' : 'news.blades.news-article-details.title-edit',
                         controller: 'VirtoCommerce.News.newsArticleDetailsController',
                         template: 'Modules/$(VirtoCommerce.News)/Scripts/blades/news-article-details.html'
                     };

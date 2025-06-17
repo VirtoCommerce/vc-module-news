@@ -12,6 +12,7 @@ angular.module('VirtoCommerce.News')
                 const blade = $scope.blade;
 
                 //blade properties
+                blade.title = blade.isNew ? 'news.blades.news-article-content-details.title-add' : 'news.blades.news-article-content-details.title-edit';
                 blade.isLoading = false;
 
                 //scope properties
