@@ -68,8 +68,7 @@ angular.module('VirtoCommerce.News')
                     else {
                         newsApi.update(blade.currentEntity, function (updateResult) {
                             blade.parentBlade.refresh(true);
-                            blade.originalEntity = angular.copy(updateResult);
-                            blade.currentEntity = angular.copy(updateResult);
+                            blade.originalEntity = angular.copy(blade.currentEntity);
                             blade.isLoading = false;
                         }, function (error) {
                             bladeNavigationService.setError('Error ' + error.status, blade);
