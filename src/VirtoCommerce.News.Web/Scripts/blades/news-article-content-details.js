@@ -53,8 +53,8 @@ angular.module('VirtoCommerce.News')
                         blade,
                         $scope.saveChanges,
                         closeCallback,
-                        "news.dialogs.news-article-content-save.title",
-                        "news.dialogs.news-article-content-save.message"
+                        'news.dialogs.news-article-content-save.title',
+                        'news.dialogs.news-article-content-save.message'
                     );
                 };
 
