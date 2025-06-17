@@ -1,4 +1,3 @@
-using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -6,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using VirtoCommerce.News.Core;
 using VirtoCommerce.News.Core.Models;
 using VirtoCommerce.News.Core.Services;
+using VirtoCommerce.Platform.Core.Common;
 
 namespace VirtoCommerce.News.Web.Controllers.Api;
 
@@ -56,10 +56,10 @@ public class NewsArticleController : Controller
     [HttpGet]
     [Route("{id}")]
     [Authorize(ModuleConstants.Security.Permissions.Read)]
-    public async Task<ActionResult<NewsArticle>> Get(string id)
+    public async Task<ActionResult<NewsArticle>> Get([FromRoute] string id)
     {
-        var result = await _newsArticleService.GetAsync([id]);
-        return Ok(result.FirstOrDefault());
+        var result = await _newsArticleService.GetByIdAsync(id);
+        return Ok(result);
     }
 
     [HttpPost]
