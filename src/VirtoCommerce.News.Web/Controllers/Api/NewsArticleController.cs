@@ -11,17 +11,8 @@ namespace VirtoCommerce.News.Web.Controllers.Api;
 
 [Authorize]
 [Route("api/news")]
-public class NewsArticleController : Controller
+public class NewsArticleController(INewsArticleService newsArticleService, INewsArticleSearchService newsArticleSearchService) : Controller
 {
-    private readonly INewsArticleService _newsArticleService;
-    private readonly INewsArticleSearchService _newsArticleSearchService;
-
-    public NewsArticleController(INewsArticleService newsArticleService, INewsArticleSearchService newsArticleSearchService)
-    {
-        _newsArticleService = newsArticleService;
-        _newsArticleSearchService = newsArticleSearchService;
-    }
-
     [HttpPost]
     [Route("")]
     [Authorize(ModuleConstants.Security.Permissions.Create)]
@@ -29,7 +20,7 @@ public class NewsArticleController : Controller
     public async Task<ActionResult> Create([FromBody] NewsArticle newsArticle)
     {
         newsArticle.Id = null;
-        await _newsArticleService.SaveChangesAsync([newsArticle]);
+        await newsArticleService.SaveChangesAsync([newsArticle]);
         return NoContent();
     }
 
@@ -38,7 +29,7 @@ public class NewsArticleController : Controller
     [Authorize(ModuleConstants.Security.Permissions.Update)]
     public async Task<ActionResult<NewsArticle>> Update([FromBody] NewsArticle newsArticle)
     {
-        await _newsArticleService.SaveChangesAsync([newsArticle]);
+        await newsArticleService.SaveChangesAsync([newsArticle]);
         return Ok(newsArticle);
     }
 
@@ -48,7 +39,7 @@ public class NewsArticleController : Controller
     [ProducesResponseType(typeof(void), StatusCodes.Status204NoContent)]
     public async Task<ActionResult> Delete([FromQuery] string[] ids)
     {
-        await _newsArticleService.DeleteAsync(ids);
+        await newsArticleService.DeleteAsync(ids);
         return NoContent();
     }
 
@@ -57,7 +48,7 @@ public class NewsArticleController : Controller
     [Authorize(ModuleConstants.Security.Permissions.Read)]
     public async Task<ActionResult<NewsArticle>> Get([FromRoute] string id)
     {
-        var result = await _newsArticleService.GetByIdAsync(id);
+        var result = await newsArticleService.GetByIdAsync(id);
         return Ok(result);
     }
 
@@ -66,7 +57,7 @@ public class NewsArticleController : Controller
     [Authorize(ModuleConstants.Security.Permissions.Read)]
     public async Task<ActionResult<NewsArticleSearchResult>> Search([FromBody] NewsArticleSearchCriteria criteria)
     {
-        var result = await _newsArticleSearchService.SearchAsync(criteria, false);
+        var result = await newsArticleSearchService.SearchAsync(criteria, false);
         return Ok(result);
     }
 }
