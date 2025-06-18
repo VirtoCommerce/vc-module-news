@@ -11,6 +11,7 @@ using VirtoCommerce.News.Data.Repositories;
 using VirtoCommerce.News.Data.Services;
 using VirtoCommerce.News.Data.SqlServer;
 using VirtoCommerce.News.ExperienceApi;
+using VirtoCommerce.News.ExperienceApi.Extensions;
 using VirtoCommerce.Platform.Core.Modularity;
 using VirtoCommerce.Platform.Core.Security;
 using VirtoCommerce.Platform.Core.Settings;
@@ -55,6 +56,9 @@ public class Module : IModule, IHasConfiguration
         serviceCollection.AddTransient<INewsArticleSearchService, NewsArticleSearchService>();
 
         serviceCollection.AddSingleton<ScopedSchemaFactory<XapiAssemblyMarker>>();
+
+        // GraphQL
+        serviceCollection.AddExperienceApi();
     }
 
     public void PostInitialize(IApplicationBuilder appBuilder)
