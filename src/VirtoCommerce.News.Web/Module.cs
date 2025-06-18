@@ -54,6 +54,7 @@ public class Module : IModule, IHasConfiguration
 
         serviceCollection.AddTransient<INewsArticleService, NewsArticleService>();
         serviceCollection.AddTransient<INewsArticleSearchService, NewsArticleSearchService>();
+        serviceCollection.AddTransient<IPublishedNewsArticleContentSearchService, PublishedNewsArticleContentSearchService>();
 
         serviceCollection.AddSingleton<ScopedSchemaFactory<XapiAssemblyMarker>>();
 

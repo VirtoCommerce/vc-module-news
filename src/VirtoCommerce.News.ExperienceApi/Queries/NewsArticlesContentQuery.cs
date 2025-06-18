@@ -1,13 +1,14 @@
 using System.Collections.Generic;
 using GraphQL;
 using GraphQL.Types;
-using VirtoCommerce.News.Core.Models;
+using VirtoCommerce.News.ExperienceApi.Models;
 using VirtoCommerce.Xapi.Core.BaseQueries;
 
 namespace VirtoCommerce.News.ExperienceApi.Queries;
 
-public class NewsArticlesQuery : SearchQuery<NewsArticleSearchResult>
+public class NewsArticlesContentQuery : SearchQuery<NewsArticleContentSearchResult>
 {
+    public string Id { get; set; }
     public string LanguageCode { get; set; }
 
     public override IEnumerable<QueryArgument> GetArguments()
@@ -16,13 +17,15 @@ public class NewsArticlesQuery : SearchQuery<NewsArticleSearchResult>
         {
             yield return argument;
         }
-        yield return Argument<StringGraphType>(nameof(LanguageCode));
+        yield return Argument<StringGraphType>(nameof(Id));
+        yield return Argument<NonNullGraphType<StringGraphType>>(nameof(LanguageCode));
     }
 
     public override void Map(IResolveFieldContext context)
     {
         base.Map(context);
 
+        Id = context.GetArgument<string>(nameof(Id));
         LanguageCode = context.GetArgument<string>(nameof(LanguageCode));
     }
 }
