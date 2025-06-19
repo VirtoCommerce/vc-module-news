@@ -7,11 +7,11 @@ using VirtoCommerce.Xapi.Core.Infrastructure;
 
 namespace VirtoCommerce.News.ExperienceApi.Queries;
 
-public class NewsArticleContentsQueryHandler(INewsArticleSearchService newsArticleSearchService, NewsArticleLocalizedContentService newsArticleLocalizedContentService) : IQueryHandler<NewsArticleContentsQuery, NewsArticleSearchResult>
+public class NewsArticleContentsQueryHandler(INewsArticleSearchService newsArticleSearchService, NewsArticleLocalizationService newsArticleLocalizationService)
+    : IQueryHandler<NewsArticleContentsQuery, NewsArticleSearchResult>
 {
     public async Task<NewsArticleSearchResult> Handle(NewsArticleContentsQuery request, CancellationToken cancellationToken)
     {
-        //TODO: user lang then store default lang
         var searchCriteria = new NewsArticleSearchCriteria
         {
             LanguageCode = request.LanguageCode,
@@ -29,9 +29,8 @@ public class NewsArticleContentsQueryHandler(INewsArticleSearchService newsArtic
         return result;
     }
 
-    protected virtual Task PostProcessResultAsync(NewsArticleContentsQuery request, NewsArticleSearchResult searchResult)
+    protected virtual async Task PostProcessResultAsync(NewsArticleContentsQuery request, NewsArticleSearchResult searchResult)
     {
-        newsArticleLocalizedContentService.FilterLanguages(searchResult.Results, request.LanguageCode);
-        return Task.CompletedTask;
+        await newsArticleLocalizationService.FilterLanguagesAsync(searchResult.Results, request.LanguageCode, request.StoreId);
     }
 }

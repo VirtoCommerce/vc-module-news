@@ -8,6 +8,7 @@ namespace VirtoCommerce.News.ExperienceApi.Queries;
 
 public class NewsArticleContentsQuery : SearchQuery<NewsArticleSearchResult>
 {
+    public string StoreId { get; set; }
     public string LanguageCode { get; set; }
 
     public override IEnumerable<QueryArgument> GetArguments()
@@ -16,6 +17,7 @@ public class NewsArticleContentsQuery : SearchQuery<NewsArticleSearchResult>
         {
             yield return argument;
         }
+        yield return Argument<NonNullGraphType<StringGraphType>>(nameof(StoreId));
         yield return Argument<NonNullGraphType<StringGraphType>>(nameof(LanguageCode));
     }
 
@@ -23,6 +25,7 @@ public class NewsArticleContentsQuery : SearchQuery<NewsArticleSearchResult>
     {
         base.Map(context);
 
+        StoreId = context.GetArgument<string>(nameof(StoreId));
         LanguageCode = context.GetArgument<string>(nameof(LanguageCode));
     }
 }
