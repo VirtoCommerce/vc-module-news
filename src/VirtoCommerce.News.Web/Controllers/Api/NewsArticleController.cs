@@ -60,4 +60,24 @@ public class NewsArticleController(INewsArticleService newsArticleService, INews
         var result = await newsArticleSearchService.SearchAsync(criteria, false);
         return Ok(result);
     }
+
+    [HttpPost]
+    [Route("publish")]
+    [Authorize(ModuleConstants.Security.Permissions.Publish)]
+    [ProducesResponseType(typeof(void), StatusCodes.Status204NoContent)]
+    public async Task<ActionResult> Publish([FromBody] string[] ids)
+    {
+        await newsArticleService.PublishAsync(ids);
+        return NoContent();
+    }
+
+    [HttpPost]
+    [Route("unpublish")]
+    [Authorize(ModuleConstants.Security.Permissions.Publish)]
+    [ProducesResponseType(typeof(void), StatusCodes.Status204NoContent)]
+    public async Task<ActionResult> Unpublish([FromBody] string[] ids)
+    {
+        await newsArticleService.UnpublishAsync(ids);
+        return NoContent();
+    }
 }

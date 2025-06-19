@@ -27,4 +27,30 @@ public class NewsArticleService(
     {
         return ((NewsArticleRepository)repository).GetNewsArticlesByIdsAsync(ids);
     }
+
+    public async Task PublishAsync(IList<string> ids)
+    {
+        await ChangeIsPublishedAsync(ids, true);
+    }
+
+    public async Task UnpublishAsync(IList<string> ids)
+    {
+        await ChangeIsPublishedAsync(ids, false);
+    }
+
+    private async Task ChangeIsPublishedAsync(IList<string> ids, bool isPublished)
+    {
+        using var repository = repositoryFactory();
+        var newArticles = await repository.GetNewsArticlesByIdsAsync(ids);
+        foreach (var newArticle in newArticles)
+        {
+            newArticle.IsPublished = isPublished;
+        }
+        await repository.UnitOfWork.CommitAsync();
+
+        //Question: cache
+        var changed = await GetAsync(ids);
+        ClearCache(changed);
+        ClearSearchCache(changed);
+    }
 }

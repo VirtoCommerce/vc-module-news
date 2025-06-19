@@ -14,13 +14,15 @@
         "title-edit": "News (edit)",
         "labels": {
           "name": "Name",
-          "publish-date": "Publish date",
-          "is-published": "Is published"
+          "publish-date": "Publish date"
         },
         "placeholders": {
           "name": "Name",
-          "publish-date": "Publish date",
-          "is-published": "Is published"
+          "publish-date": "Publish date"
+        },
+        "toolbar": {
+          "publish": "publish",
+          "unpublish": "unpublish"
         }
       },
       "news-article-content-list": {

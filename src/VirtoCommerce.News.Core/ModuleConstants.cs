@@ -14,6 +14,7 @@ public static class ModuleConstants
             public const string Read = "news:read";
             public const string Update = "news:update";
             public const string Delete = "news:delete";
+            public const string Publish = "news:publish";
 
             public static string[] AllPermissions { get; } =
             [
@@ -22,6 +23,7 @@ public static class ModuleConstants
                 Read,
                 Update,
                 Delete,
+                Publish,
             ];
         }
     }

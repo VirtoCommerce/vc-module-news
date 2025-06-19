@@ -9,6 +9,8 @@ angular.module('VirtoCommerce.News')
                 $scope,
                 newsApi,
                 authService, bladeNavigationService, metaFormsService) {
+                const publishPermission = 'news:publish';
+
                 const blade = $scope.blade;
 
                 //blade properties
@@ -77,6 +79,31 @@ angular.module('VirtoCommerce.News')
                     }
                 };
 
+                $scope.publish = function () {
+                    //Question: save first?
+                    if (!authService.checkPermission(publishPermission)) {
+                        return;
+                    }
+
+                    newsApi.publish([blade.itemId], function () {
+                        blade.currentEntity.isPublished = true;
+                        blade.originalEntity.isPublished = true;
+                        blade.parentBlade.refresh(true);
+                    });
+                };
+
+                $scope.unpublish = function () {
+                    if (!authService.checkPermission(publishPermission)) {
+                        return;
+                    }
+
+                    newsApi.unpublish([blade.itemId], function () {
+                        blade.currentEntity.isPublished = false;
+                        blade.originalEntity.isPublished = false;
+                        blade.parentBlade.refresh(true);
+                    });
+                };
+
                 //local functions
                 function isDirty() {
                     return !angular.equals(blade.currentEntity, blade.originalEntity);
@@ -84,6 +111,14 @@ angular.module('VirtoCommerce.News')
 
                 function canSave() {
                     return isDirty() && formScope && formScope.$valid;
+                }
+
+                function canPublish() {
+                    return !blade.isNew && blade.originalEntity && !blade.originalEntity.isPublished && blade.originalEntity.localizedContents && blade.originalEntity.localizedContents.length > 0;
+                }
+
+                function canUnpublish() {
+                    return !blade.isNew && blade.originalEntity && blade.originalEntity.isPublished;
                 }
 
                 function initializeToolbar() {
@@ -96,6 +131,24 @@ angular.module('VirtoCommerce.News')
                             },
                             canExecuteMethod: canSave,
                             permission: getSavePermission()
+                        },
+                        {
+                            name: 'news.blades.news-article-details.toolbar.publish',
+                            icon: 'fas fa-eye',
+                            executeMethod: function () {
+                                $scope.publish();
+                            },
+                            canExecuteMethod: canPublish,
+                            permission: publishPermission
+                        },
+                        {
+                            name: 'news.blades.news-article-details.toolbar.unpublish',
+                            icon: 'fas fa-eye-slash',
+                            executeMethod: function () {
+                                $scope.unpublish();
+                            },
+                            canExecuteMethod: canUnpublish,
+                            permission: publishPermission
                         }
                     ];
                 }

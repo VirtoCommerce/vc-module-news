@@ -70,7 +70,8 @@ public class NewsArticleEntity : AuditableEntity, IDataEntity<NewsArticleEntity,
         ArgumentNullException.ThrowIfNull(target);
 
         target.Name = Name;
-        target.IsPublished = IsPublished;
+        //Question: update\publish
+        //target.IsPublished = IsPublished;
         target.PublishDate = PublishDate;
 
         if (!LocalizedContents.IsNullCollection())

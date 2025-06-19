@@ -6,5 +6,7 @@ angular.module('VirtoCommerce.News')
             delete: { method: 'DELETE', url: 'api/news' },
             get: { method: 'GET', url: 'api/news/:id' },
             search: { method: 'POST', url: 'api/news/search' },
+            publish: { method: 'POST', url: 'api/news/publish' },
+            unpublish: { method: 'POST', url: 'api/news/unpublish' },
         });
     }]);
