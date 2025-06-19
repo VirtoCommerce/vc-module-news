@@ -6,11 +6,15 @@ using System.Linq;
 using VirtoCommerce.News.Core.Models;
 using VirtoCommerce.Platform.Core.Common;
 using VirtoCommerce.Platform.Core.Domain;
+using VirtoCommerce.Platform.Data.Infrastructure;
 
 namespace VirtoCommerce.News.Data.Models;
 
 public class NewsArticleEntity : AuditableEntity, IDataEntity<NewsArticleEntity, NewsArticle>
 {
+    [StringLength(DbContextBase.IdLength)]//Q: required?
+    public string StoreId { get; set; }
+
     [Required]
     [StringLength(1024)]
     public string Name { get; set; }
@@ -32,6 +36,7 @@ public class NewsArticleEntity : AuditableEntity, IDataEntity<NewsArticleEntity,
         model.CreatedBy = CreatedBy;
         model.ModifiedBy = ModifiedBy;
 
+        model.StoreId = StoreId;
         model.Name = Name;
         model.IsPublished = IsPublished;
         model.PublishDate = PublishDate;
@@ -53,6 +58,7 @@ public class NewsArticleEntity : AuditableEntity, IDataEntity<NewsArticleEntity,
         CreatedBy = model.CreatedBy;
         ModifiedBy = model.ModifiedBy;
 
+        StoreId = model.StoreId;
         Name = model.Name;
         IsPublished = model.IsPublished;
         PublishDate = model.PublishDate;
@@ -69,6 +75,7 @@ public class NewsArticleEntity : AuditableEntity, IDataEntity<NewsArticleEntity,
     {
         ArgumentNullException.ThrowIfNull(target);
 
+        target.StoreId = StoreId;
         target.Name = Name;
         //Question: update\publish
         //target.IsPublished = IsPublished;

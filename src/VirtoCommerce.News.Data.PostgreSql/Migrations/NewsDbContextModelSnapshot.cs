@@ -54,6 +54,10 @@ namespace VirtoCommerce.News.Data.PostgreSql.Migrations
                     b.Property<DateTime?>("PublishDate")
                         .HasColumnType("timestamp with time zone");
 
+                    b.Property<string>("StoreId")
+                        .HasMaxLength(128)
+                        .HasColumnType("character varying(128)");
+
                     b.HasKey("Id");
 
                     b.ToTable("NewsArticle", (string)null);

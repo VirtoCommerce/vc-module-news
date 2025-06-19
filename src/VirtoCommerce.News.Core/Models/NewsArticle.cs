@@ -7,6 +7,7 @@ namespace VirtoCommerce.News.Core.Models;
 
 public class NewsArticle : AuditableEntity, ICloneable
 {
+    public string StoreId { get; set; }
     public string Name { get; set; }
     public bool IsPublished { get; set; }
     public DateTime? PublishDate { get; set; }

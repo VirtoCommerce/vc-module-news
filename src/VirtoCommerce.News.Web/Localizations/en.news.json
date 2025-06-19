@@ -5,6 +5,7 @@
       "news-article-list": {
         "title": "News (list)",
         "labels": {
+          "store": "Store",
           "name": "Name",
           "is-published": "Is published"
         }
@@ -13,10 +14,12 @@
         "title-add": "News (add)",
         "title-edit": "News (edit)",
         "labels": {
+          "store": "Store",
           "name": "Name",
           "publish-date": "Publish date"
         },
         "placeholders": {
+          "store": "Store",
           "name": "Name",
           "publish-date": "Publish date"
         },

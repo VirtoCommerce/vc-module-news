@@ -54,6 +54,14 @@ angular.module(moduleName, [])
                 valueType: 'ShortText'
             },
             {
+                name: 'storeId',
+                title: 'news.blades.news-article-details.labels.store',
+                placeholder: 'news.blades.news-article-details.placeholders.store',
+                colSpan: 1,
+                isRequired: true,
+                valueType: 'ShortText'
+            },
+            {
                 name: 'publishDate',
                 title: 'news.blades.news-article-details.labels.publish-date',
                 placeholder: 'news.blades.news-article-details.placeholders.publish-date',

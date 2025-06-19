@@ -54,6 +54,10 @@ namespace VirtoCommerce.News.Data.MySql.Migrations
                     b.Property<DateTime?>("PublishDate")
                         .HasColumnType("datetime(6)");
 
+                    b.Property<string>("StoreId")
+                        .HasMaxLength(128)
+                        .HasColumnType("varchar(128)");
+
                     b.HasKey("Id");
 
                     b.ToTable("NewsArticle", (string)null);
