@@ -17,13 +17,20 @@ public class NewsArticleRepository : DbContextRepositoryBase<NewsDbContext>
 
     public IQueryable<NewsArticleEntity> NewsArticles => DbContext.Set<NewsArticleEntity>();
 
+    public IQueryable<NewsArticleLocalizedContentEntity> NewsArticleLocalizedContents => DbContext.Set<NewsArticleLocalizedContentEntity>();
+
     public virtual async Task<IList<NewsArticleEntity>> GetNewsArticlesByIdsAsync(IList<string> ids)
     {
         var result = await NewsArticles
-            .Include(na => na.LocalizedContents)
             .Where(na => ids.Contains(na.Id))
-            .AsSplitQuery()
             .ToListAsync();
+
+        if (result.Any())
+        {
+            await NewsArticleLocalizedContents
+                .Where(lc => ids.Contains(lc.NewsArticleId))
+                .LoadAsync();
+        }
 
         return result;
     }
