@@ -13,17 +13,18 @@ using VirtoCommerce.Platform.Data.GenericCrud;
 
 namespace VirtoCommerce.News.Data.Services;
 
-public class NewsArticleSearchService : SearchService<NewsArticleSearchCriteria, NewsArticleSearchResult, NewsArticle, NewsArticleEntity>, INewsArticleSearchService
-{
-    public NewsArticleSearchService(
+public class NewsArticleSearchService(
         Func<NewsArticleRepository> repositoryFactory,
         IPlatformMemoryCache platformMemoryCache,
         INewsArticleService crudService,
         IOptions<CrudOptions> crudOptions)
-        : base(repositoryFactory, platformMemoryCache, crudService, crudOptions)
-    {
-    }
-
+    : SearchService<NewsArticleSearchCriteria, NewsArticleSearchResult, NewsArticle, NewsArticleEntity>(
+        repositoryFactory,
+        platformMemoryCache,
+        crudService,
+        crudOptions),
+    INewsArticleSearchService
+{
     protected override IQueryable<NewsArticleEntity> BuildQuery(IRepository repository, NewsArticleSearchCriteria criteria)
     {
         var query = ((NewsArticleRepository)repository).NewsArticles;

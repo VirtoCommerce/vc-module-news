@@ -13,16 +13,16 @@ using VirtoCommerce.Platform.Data.GenericCrud;
 
 namespace VirtoCommerce.News.Data.Services;
 
-public class NewsArticleService : CrudService<NewsArticle, NewsArticleEntity, NewsArticleChangingEvent, NewsArticleChangedEvent>, INewsArticleService
-{
-    public NewsArticleService(
+public class NewsArticleService(
         Func<NewsArticleRepository> repositoryFactory,
         IPlatformMemoryCache platformMemoryCache,
         IEventPublisher eventPublisher)
-        : base(repositoryFactory, platformMemoryCache, eventPublisher)
-    {
-    }
-
+    : CrudService<NewsArticle, NewsArticleEntity, NewsArticleChangingEvent, NewsArticleChangedEvent>(
+        repositoryFactory,
+        platformMemoryCache,
+        eventPublisher),
+    INewsArticleService
+{
     protected override Task<IList<NewsArticleEntity>> LoadEntities(IRepository repository, IList<string> ids, string responseGroup)
     {
         return ((NewsArticleRepository)repository).GetNewsArticlesByIdsAsync(ids);
