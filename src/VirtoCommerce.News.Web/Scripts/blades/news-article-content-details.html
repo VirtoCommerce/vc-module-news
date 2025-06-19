@@ -21,8 +21,13 @@
         </div>
         <div class="form-group">
           <label class="form-label">{{ 'news.blades.news-article-content-details.labels.content' | translate }}</label>
-          <input id="fileUploader" type="file" multiple style="display: none;" uploader="fileUploader" nv-file-select />
-          <textarea vc-uk-htmleditor ng-model="blade.currentEntity.content" file-uploader="fileUploader" required></textarea>
+          <input id="contentFileUploader" type="file" multiple style="display: none;" uploader="contentFileUploader" nv-file-select />
+          <textarea vc-uk-htmleditor ng-model="blade.currentEntity.content" file-uploader="contentFileUploader" required></textarea>
+        </div>
+        <div class="form-group">
+          <label class="form-label">{{ 'news.blades.news-article-content-details.labels.content-preview' | translate }}</label>
+          <input id="contentPreviewFileUploader" type="file" multiple style="display: none;" uploader="contentPreviewFileUploader" nv-file-select />
+          <textarea vc-uk-htmleditor ng-model="blade.currentEntity.contentPreview" file-uploader="contentPreviewFileUploader"></textarea>
         </div>
       </form>
     </div>

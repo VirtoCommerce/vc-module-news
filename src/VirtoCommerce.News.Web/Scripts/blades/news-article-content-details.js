@@ -19,24 +19,9 @@ angular.module('VirtoCommerce.News')
                 const languagesPromise = settings.getValues({ id: 'VirtoCommerce.Core.General.Languages' }).$promise;
                 $scope.languages = [];
 
-                $scope.fileUploader = new FileUploader({
-                    url: 'api/assets?folderUrl=news-articles/' + blade.newsArticle.id,
-                    headers: { Accept: 'application/json' },
-                    autoUpload: true,
-                    removeAfterUpload: true,
-                    onBeforeUploadItem: function (fileItem) {
-                        blade.isLoading = true;
-                    },
-                    onSuccessItem: function (fileItem, response) {
-                        $scope.$broadcast('filesUploaded', { items: response });
-                    },
-                    onErrorItem: function (fileItem, response, status) {
-                        bladeNavigationService.setError(`${fileItem._file.name} failed: ${(response.message ? response.message : status)}`, blade);
-                    },
-                    onCompleteAll: function () {
-                        blade.isLoading = false;
-                    }
-                });
+                $scope.contentFileUploader = createFileUploader();
+
+                $scope.contentPreviewFileUploader = createFileUploader();
 
                 //blade functions
                 blade.refresh = function () {
@@ -102,6 +87,27 @@ angular.module('VirtoCommerce.News')
                             canExecuteMethod: canSave
                         }
                     ];
+                }
+
+                function createFileUploader() {
+                    return new FileUploader({
+                        url: 'api/assets?folderUrl=news-articles/' + blade.newsArticle.id,
+                        headers: { Accept: 'application/json' },
+                        autoUpload: true,
+                        removeAfterUpload: true,
+                        onBeforeUploadItem: function (fileItem) {
+                            blade.isLoading = true;
+                        },
+                        onSuccessItem: function (fileItem, response) {
+                            $scope.$broadcast('filesUploaded', { items: response });
+                        },
+                        onErrorItem: function (fileItem, response, status) {
+                            bladeNavigationService.setError(`${fileItem._file.name} failed: ${(response.message ? response.message : status)}`, blade);
+                        },
+                        onCompleteAll: function () {
+                            blade.isLoading = false;
+                        }
+                    });
                 }
 
                 //calls
