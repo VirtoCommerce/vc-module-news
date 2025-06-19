@@ -33,6 +33,18 @@ public class NewsArticleSearchService : SearchService<NewsArticleSearchCriteria,
             query = query.Where(x => x.Name.Contains(criteria.SearchPhrase));
         }
 
+        if (criteria.Published.HasValue)
+        {
+            if (criteria.Published.Value)
+            {
+                query = query.Where(na => na.IsPublished && (!na.PublishDate.HasValue || na.PublishDate >= DateTime.UtcNow));
+            }
+            else
+            {
+                query = query.Where(na => !na.IsPublished || (na.PublishDate.HasValue && na.PublishDate < DateTime.UtcNow));
+            }
+        }
+
         return query;
     }
 
@@ -42,7 +54,14 @@ public class NewsArticleSearchService : SearchService<NewsArticleSearchCriteria,
 
         if (sortInfos.IsNullOrEmpty())
         {
-            sortInfos = [new SortInfo { SortColumn = nameof(NewsArticle.CreatedDate), SortDirection = SortDirection.Descending }];
+            if (criteria.Published.GetValueOrDefault())
+            {
+                sortInfos = [new SortInfo { SortColumn = nameof(NewsArticle.PublishDate), SortDirection = SortDirection.Descending }];
+            }
+            else
+            {
+                sortInfos = [new SortInfo { SortColumn = nameof(NewsArticle.CreatedDate), SortDirection = SortDirection.Descending }];
+            }
         }
 
         return sortInfos;

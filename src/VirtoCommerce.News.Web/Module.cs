@@ -1,4 +1,5 @@
 using System;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -11,6 +12,7 @@ using VirtoCommerce.News.Data.Repositories;
 using VirtoCommerce.News.Data.Services;
 using VirtoCommerce.News.Data.SqlServer;
 using VirtoCommerce.News.ExperienceApi;
+using VirtoCommerce.News.ExperienceApi.Authorization;
 using VirtoCommerce.News.ExperienceApi.Extensions;
 using VirtoCommerce.Platform.Core.Modularity;
 using VirtoCommerce.Platform.Core.Security;
@@ -54,8 +56,8 @@ public class Module : IModule, IHasConfiguration
 
         serviceCollection.AddTransient<INewsArticleService, NewsArticleService>();
         serviceCollection.AddTransient<INewsArticleSearchService, NewsArticleSearchService>();
-        serviceCollection.AddTransient<IPublishedNewsArticleContentSearchService, PublishedNewsArticleContentSearchService>();
 
+        serviceCollection.AddSingleton<IAuthorizationHandler, NewsArticleContentAuthorizationHandler>();
         serviceCollection.AddSingleton<ScopedSchemaFactory<XapiAssemblyMarker>>();
 
         // GraphQL

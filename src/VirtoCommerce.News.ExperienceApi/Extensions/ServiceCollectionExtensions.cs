@@ -1,5 +1,6 @@
 using GraphQL.MicrosoftDI;
 using Microsoft.Extensions.DependencyInjection;
+using VirtoCommerce.News.ExperienceApi.Services;
 using VirtoCommerce.Xapi.Core.Extensions;
 using VirtoCommerce.Xapi.Core.Infrastructure;
 
@@ -15,6 +16,7 @@ public static class ServiceCollectionExtensions
         });
 
         serviceCollection.AddSingleton<ScopedSchemaFactory<XapiAssemblyMarker>>();
+        serviceCollection.AddSingleton<NewsArticleLocalizedContentService>();
 
         return serviceCollection;
     }
