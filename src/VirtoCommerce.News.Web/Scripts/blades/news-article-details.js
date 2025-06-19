@@ -3,11 +3,11 @@ angular.module('VirtoCommerce.News')
         'VirtoCommerce.News.newsArticleDetailsController',
         [
             '$scope',
-            'VirtoCommerce.News.WebApi',
+            'VirtoCommerce.News.WebApi', 'virtoCommerce.storeModule.stores',
             'platformWebApp.authService', 'platformWebApp.bladeNavigationService', 'platformWebApp.metaFormsService',
             function (
                 $scope,
-                newsApi,
+                newsApi, storeApi,
                 authService, bladeNavigationService, metaFormsService) {
                 const publishPermission = 'news:publish';
 
@@ -16,6 +16,7 @@ angular.module('VirtoCommerce.News')
                 //blade properties
                 blade.title = blade.isNew ? 'news.blades.news-article-details.title-add' : 'news.blades.news-article-details.title-edit';
                 blade.metaFields = metaFormsService.getMetaFields('newsArticleDetails');
+                blade.stores = storeApi.query();
 
                 //blade functions
                 blade.refresh = function () {

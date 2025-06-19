@@ -56,9 +56,8 @@ angular.module(moduleName, [])
             {
                 name: 'storeId',
                 title: 'news.blades.news-article-details.labels.store',
-                placeholder: 'news.blades.news-article-details.placeholders.store',
+                templateUrl: 'storeSelector.html',
                 colSpan: 1,
-                isRequired: true,
                 valueType: 'ShortText'
             },
             {
