@@ -21,6 +21,7 @@ public class NewsArticleLocalizationService(IStoreService storeService)
         foreach (var newsArticle in newsArticles)
         {
             var allLocalizedContents = newsArticle.LocalizedContents;
+
             newsArticle.LocalizedContents = allLocalizedContents
                 .Where(lc => lc.LanguageCode.EqualsIgnoreCase(languageCode))
                 .ToList();
