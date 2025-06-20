@@ -22,8 +22,7 @@ public class NewsArticleEntity : AuditableEntity, IDataEntity<NewsArticleEntity,
 
     [Required]
     public bool IsPublished { get; set; }
-
-    private bool? _isPublishedValue { get; set; }
+    private bool? _isPublishedValue;
 
     public DateTime? PublishDate { get; set; }
 
