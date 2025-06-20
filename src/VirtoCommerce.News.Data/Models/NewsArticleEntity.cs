@@ -7,6 +7,7 @@ using VirtoCommerce.News.Core.Models;
 using VirtoCommerce.Platform.Core.Common;
 using VirtoCommerce.Platform.Core.Domain;
 using VirtoCommerce.Platform.Data.Infrastructure;
+using VirtoCommerce.Seo.Core.Models;
 
 namespace VirtoCommerce.News.Data.Models;
 
@@ -28,6 +29,8 @@ public class NewsArticleEntity : AuditableEntity, IDataEntity<NewsArticleEntity,
 
     public virtual IList<NewsArticleLocalizedContentEntity> LocalizedContents { get; set; } = new NullCollection<NewsArticleLocalizedContentEntity>();
 
+    public virtual ObservableCollection<SeoInfoEntity> SeoInfos { get; set; } = new NullCollection<SeoInfoEntity>();
+
     public NewsArticle ToModel(NewsArticle model)
     {
         ArgumentNullException.ThrowIfNull(model);
@@ -44,6 +47,7 @@ public class NewsArticleEntity : AuditableEntity, IDataEntity<NewsArticleEntity,
         model.PublishDate = PublishDate;
 
         model.LocalizedContents = LocalizedContents.Select(lc => lc.ToModel(AbstractTypeFactory<NewsArticleLocalizedContent>.TryCreateInstance())).ToList();
+        model.SeoInfos = SeoInfos.Select(x => x.ToModel(AbstractTypeFactory<SeoInfo>.TryCreateInstance())).ToList();
 
         return model;
     }
@@ -63,10 +67,10 @@ public class NewsArticleEntity : AuditableEntity, IDataEntity<NewsArticleEntity,
         StoreId = model.StoreId;
         Name = model.Name;
         if (model.IsPublishedValue.HasValue)
+        //Question #IsPublished1
         {
             IsPublished = model.IsPublishedValue.Value;
             _isPublishedValue = model.IsPublishedValue;
-            //Question
         }
 
         PublishDate = model.PublishDate;
@@ -74,6 +78,11 @@ public class NewsArticleEntity : AuditableEntity, IDataEntity<NewsArticleEntity,
         if (model.LocalizedContents != null)
         {
             LocalizedContents = new ObservableCollection<NewsArticleLocalizedContentEntity>(model.LocalizedContents.Select(lc => AbstractTypeFactory<NewsArticleLocalizedContentEntity>.TryCreateInstance().FromModel(lc, pkMap)));
+        }
+
+        if (model.SeoInfos != null)
+        {
+            SeoInfos = new ObservableCollection<SeoInfoEntity>(model.SeoInfos.Select(x => AbstractTypeFactory<SeoInfoEntity>.TryCreateInstance().FromModel(x, pkMap)));
         }
 
         return this;
@@ -94,6 +103,10 @@ public class NewsArticleEntity : AuditableEntity, IDataEntity<NewsArticleEntity,
         if (!LocalizedContents.IsNullCollection())
         {
             LocalizedContents.Patch(target.LocalizedContents, (source, target) => source.Patch(target));
+        }
+        if (!SeoInfos.IsNullCollection())
+        {
+            SeoInfos.Patch(target.SeoInfos, (sourceSeoInfo, targetSeoInfo) => sourceSeoInfo.Patch(targetSeoInfo));
         }
     }
 }

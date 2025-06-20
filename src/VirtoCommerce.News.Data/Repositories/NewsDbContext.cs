@@ -29,6 +29,11 @@ public class NewsDbContext : DbContextBase
         modelBuilder.Entity<NewsArticleLocalizedContentEntity>().HasOne(x => x.NewsArticle).WithMany(x => x.LocalizedContents)
              .HasForeignKey(x => x.NewsArticleId).IsRequired().OnDelete(DeleteBehavior.Cascade);
 
+        modelBuilder.Entity<SeoInfoEntity>().ToTable("NewsArticleSeoInfo").HasKey(x => x.Id);
+        modelBuilder.Entity<SeoInfoEntity>().Property(x => x.Id).HasMaxLength(IdLength).ValueGeneratedOnAdd();
+        modelBuilder.Entity<SeoInfoEntity>().HasOne(x => x.NewsArticle).WithMany(x => x.SeoInfos)
+             .HasForeignKey(x => x.NewsArticleId).IsRequired().OnDelete(DeleteBehavior.Cascade);
+
         switch (Database.ProviderName)
         {
             case "Pomelo.EntityFrameworkCore.MySql":
