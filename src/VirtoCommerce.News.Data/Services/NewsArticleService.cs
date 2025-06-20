@@ -1,11 +1,13 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using FluentValidation;
 using VirtoCommerce.News.Core.Events;
 using VirtoCommerce.News.Core.Models;
 using VirtoCommerce.News.Core.Services;
 using VirtoCommerce.News.Data.Models;
 using VirtoCommerce.News.Data.Repositories;
+using VirtoCommerce.News.Data.Validation;
 using VirtoCommerce.Platform.Core.Caching;
 using VirtoCommerce.Platform.Core.Common;
 using VirtoCommerce.Platform.Core.Events;
@@ -26,6 +28,22 @@ public class NewsArticleService(
     protected override Task<IList<NewsArticleEntity>> LoadEntities(IRepository repository, IList<string> ids, string responseGroup)
     {
         return ((NewsArticleRepository)repository).GetNewsArticlesByIdsAsync(ids);
+    }
+
+    protected override async Task BeforeSaveChanges(IList<NewsArticle> models)
+    {
+        await base.BeforeSaveChanges(models);
+        await Validate(models);
+    }
+
+    protected virtual async Task Validate(IList<NewsArticle> newsArticles)
+    {
+        var validator = new NewsArticleValidator();
+
+        foreach (var newsArticle in newsArticles)
+        {
+            await validator.ValidateAndThrowAsync(newsArticle);
+        }
     }
 
     public async Task PublishAsync(IList<string> ids)
