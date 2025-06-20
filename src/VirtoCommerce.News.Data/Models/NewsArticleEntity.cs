@@ -38,7 +38,7 @@ public class NewsArticleEntity : AuditableEntity, IDataEntity<NewsArticleEntity,
 
         model.StoreId = StoreId;
         model.Name = Name;
-        model.IsPublished = IsPublished;
+        model.SetIsPublished(IsPublished);
         model.PublishDate = PublishDate;
 
         model.LocalizedContents = LocalizedContents.Select(lc => lc.ToModel(AbstractTypeFactory<NewsArticleLocalizedContent>.TryCreateInstance())).ToList();
@@ -77,8 +77,7 @@ public class NewsArticleEntity : AuditableEntity, IDataEntity<NewsArticleEntity,
 
         target.StoreId = StoreId;
         target.Name = Name;
-        //Question: update\publish
-        //target.IsPublished = IsPublished;
+        target.IsPublished = IsPublished;
         target.PublishDate = PublishDate;
 
         if (!LocalizedContents.IsNullCollection())

@@ -40,17 +40,11 @@ public class NewsArticleService(
 
     private async Task ChangeIsPublishedAsync(IList<string> ids, bool isPublished)
     {
-        using var repository = repositoryFactory();
-        var newArticles = await repository.GetNewsArticlesByIdsAsync(ids);
-        foreach (var newArticle in newArticles)
+        var newsArticles = await GetAsync(ids);
+        foreach (var newsArticle in newsArticles)
         {
-            newArticle.IsPublished = isPublished;
+            newsArticle.SetIsPublished(isPublished);
         }
-        await repository.UnitOfWork.CommitAsync();
-
-        //Question: cache
-        var changed = await GetAsync(ids);
-        ClearCache(changed);
-        ClearSearchCache(changed);
+        await SaveChangesAsync(newsArticles);
     }
 }
