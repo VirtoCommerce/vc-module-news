@@ -76,6 +76,10 @@ angular.module('VirtoCommerce.News')
                     return isDirty() && formScope && formScope.$valid;
                 }
 
+                function reset() {
+                    angular.copy(blade.originalEntity, blade.currentEntity);
+                }
+
                 function initializeToolbar() {
                     blade.toolbarCommands = [
                         {
@@ -87,6 +91,15 @@ angular.module('VirtoCommerce.News')
                             canExecuteMethod: canSave
                         }
                     ];
+
+                    if (!blade.isNew) {
+                        blade.toolbarCommands.push({
+                            name: "platform.commands.reset",
+                            icon: 'fa fa-undo',
+                            executeMethod: reset,
+                            canExecuteMethod: isDirty
+                        });
+                    }
                 }
 
                 function createFileUploader() {

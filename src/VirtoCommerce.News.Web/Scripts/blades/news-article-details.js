@@ -122,6 +122,10 @@ angular.module('VirtoCommerce.News')
                     return !blade.isNew && blade.originalEntity && blade.originalEntity.isPublished;
                 }
 
+                function reset() {
+                    angular.copy(blade.originalEntity, blade.currentEntity);
+                }
+
                 function initializeToolbar() {
                     blade.toolbarCommands = [
                         {
@@ -132,8 +136,17 @@ angular.module('VirtoCommerce.News')
                             },
                             canExecuteMethod: canSave,
                             permission: getSavePermission()
-                        },
-                        {
+                        }
+                    ];
+
+                    if (!blade.isNew) {
+                        blade.toolbarCommands.push({
+                            name: "platform.commands.reset",
+                            icon: 'fa fa-undo',
+                            executeMethod: reset,
+                            canExecuteMethod: isDirty
+                        });
+                        blade.toolbarCommands.push({
                             name: 'news.blades.news-article-details.toolbar.publish',
                             icon: 'fas fa-eye',
                             executeMethod: function () {
@@ -141,8 +154,8 @@ angular.module('VirtoCommerce.News')
                             },
                             canExecuteMethod: canPublish,
                             permission: publishPermission
-                        },
-                        {
+                        });
+                        blade.toolbarCommands.push({
                             name: 'news.blades.news-article-details.toolbar.unpublish',
                             icon: 'fas fa-eye-slash',
                             executeMethod: function () {
@@ -150,8 +163,8 @@ angular.module('VirtoCommerce.News')
                             },
                             canExecuteMethod: canUnpublish,
                             permission: publishPermission
-                        }
-                    ];
+                        });
+                    }
                 }
 
                 function getSavePermission() {
