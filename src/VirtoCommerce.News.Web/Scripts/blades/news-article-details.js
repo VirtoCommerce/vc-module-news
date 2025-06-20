@@ -115,11 +115,19 @@ angular.module('VirtoCommerce.News')
                 }
 
                 function canPublish() {
-                    return !blade.isNew && blade.originalEntity && !blade.originalEntity.isPublished && blade.originalEntity.localizedContents && blade.originalEntity.localizedContents.length > 0;
+                    return !isDirty() && hasPublishedState(false) && hasContent();
                 }
 
                 function canUnpublish() {
-                    return !blade.isNew && blade.originalEntity && blade.originalEntity.isPublished;
+                    return !isDirty() && hasPublishedState(true);
+                }
+
+                function hasContent() {
+                    return blade.originalEntity && blade.originalEntity.localizedContents && (blade.originalEntity.localizedContents.length > 0);
+                }
+
+                function hasPublishedState(isPublished) {
+                    return blade.originalEntity && (blade.originalEntity.isPublished === isPublished);
                 }
 
                 function reset() {

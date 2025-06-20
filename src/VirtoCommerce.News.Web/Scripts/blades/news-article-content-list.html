@@ -14,7 +14,7 @@
           <li class="menu-item" ng-click='edit(contextMenuEntity)' va-permission="news:update">
             <i class="menu-ico fa fa-edit"></i> {{ 'platform.commands.manage' | translate }}
           </li>
-          <li class="menu-item" ng-click='delete([contextMenuEntity])' va-permission="news:update">
+          <li class="menu-item" ng-if="canDelete()" ng-click='delete([contextMenuEntity])' va-permission="news:update">
             <i class="menu-ico fas fa-trash-alt"></i> {{ 'platform.commands.delete' | translate }}
           </li>
         </ul>

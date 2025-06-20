@@ -72,9 +72,15 @@ angular.module('VirtoCommerce.News')
                             executeMethod: function () {
                                 $scope.delete($scope.gridApi.selection.getSelectedRows())
                             },
-                            canExecuteMethod: hasSelectedItems
+                            canExecuteMethod: function () {
+                                return hasSelectedItems() && canDelete();
+                            }
                         }
                     ];
+                }
+
+                function canDelete() {
+                    return blade.item && !blade.item.isPublished;
                 }
 
                 function hasSelectedItems() {
