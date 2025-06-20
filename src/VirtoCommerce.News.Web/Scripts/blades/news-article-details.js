@@ -71,6 +71,7 @@ angular.module('VirtoCommerce.News')
                     else {
                         newsApi.update(blade.currentEntity, function (updateResult) {
                             blade.parentBlade.refresh(true);
+                            angular.copy(blade.currentEntity, updateResult);
                             blade.originalEntity = angular.copy(blade.currentEntity);
                             blade.isLoading = false;
                         }, function (error) {
@@ -81,7 +82,6 @@ angular.module('VirtoCommerce.News')
                 };
 
                 $scope.publish = function () {
-                    //Question: save first?
                     if (!authService.checkPermission(publishPermission)) {
                         return;
                     }

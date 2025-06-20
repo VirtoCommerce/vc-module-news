@@ -23,6 +23,8 @@ public class NewsArticleEntity : AuditableEntity, IDataEntity<NewsArticleEntity,
     [Required]
     public bool IsPublished { get; set; }
 
+    private bool? _isPublishedValue { get; set; }
+
     public DateTime? PublishDate { get; set; }
 
     public virtual IList<NewsArticleLocalizedContentEntity> LocalizedContents { get; set; } = new NullCollection<NewsArticleLocalizedContentEntity>();
@@ -39,7 +41,7 @@ public class NewsArticleEntity : AuditableEntity, IDataEntity<NewsArticleEntity,
 
         model.StoreId = StoreId;
         model.Name = Name;
-        model.SetIsPublished(IsPublished);
+        model.IsPublished = IsPublished;
         model.PublishDate = PublishDate;
 
         model.LocalizedContents = LocalizedContents.Select(lc => lc.ToModel(AbstractTypeFactory<NewsArticleLocalizedContent>.TryCreateInstance())).ToList();
@@ -61,7 +63,13 @@ public class NewsArticleEntity : AuditableEntity, IDataEntity<NewsArticleEntity,
 
         StoreId = model.StoreId;
         Name = model.Name;
-        IsPublished = model.IsPublished;
+        if (model.IsPublishedValue.HasValue)
+        {
+            IsPublished = model.IsPublishedValue.Value;
+            _isPublishedValue = model.IsPublishedValue;
+            //Question
+        }
+
         PublishDate = model.PublishDate;
 
         if (model.LocalizedContents != null)
@@ -78,7 +86,10 @@ public class NewsArticleEntity : AuditableEntity, IDataEntity<NewsArticleEntity,
 
         target.StoreId = StoreId;
         target.Name = Name;
-        target.IsPublished = IsPublished;
+        if (_isPublishedValue.HasValue)
+        {
+            target.IsPublished = _isPublishedValue.Value;
+        }
         target.PublishDate = PublishDate;
 
         if (!LocalizedContents.IsNullCollection())

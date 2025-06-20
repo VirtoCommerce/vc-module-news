@@ -9,7 +9,8 @@ public class NewsArticle : AuditableEntity, ICloneable
 {
     public string StoreId { get; set; }
     public string Name { get; set; }
-    public bool IsPublished { get; private set; }
+    public bool IsPublished { get; set; }
+    public bool? IsPublishedValue { get; private set; }
     public DateTime? PublishDate { get; set; }
     public IList<NewsArticleLocalizedContent> LocalizedContents { get; set; }
 
@@ -24,6 +25,6 @@ public class NewsArticle : AuditableEntity, ICloneable
 
     public void SetIsPublished(bool isPublished)
     {
-        IsPublished = isPublished;
+        IsPublishedValue = isPublished;
     }
 }
