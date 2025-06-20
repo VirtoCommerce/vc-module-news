@@ -1,4 +1,4 @@
-using Microsoft.EntityFrameworkCore.Migrations;
+﻿using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
@@ -11,9 +11,9 @@ namespace VirtoCommerce.News.Data.MySql.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AlterColumn<string>(
-                name: "LanguageCodeFOO",
-                table: "NewsArticleLocalizedContentFOO",
-                type: "varchar(5)FOO",
+                name: "LanguageCode",
+                table: "NewsArticleLocalizedContent",
+                type: "varchar(5)",
                 maxLength: 5,
                 nullable: false,
                 oldClrType: typeof(string),
