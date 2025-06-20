@@ -14,6 +14,7 @@ public class NewsArticleLocalizedContentEntity : AuditableEntity, IDataEntity<Ne
     public string NewsArticleId { get; set; }
 
     [Required]
+    [StringLength(5)]
     public string LanguageCode { get; set; }
 
     [Required]

@@ -87,7 +87,8 @@ namespace VirtoCommerce.News.Data.PostgreSql.Migrations
 
                     b.Property<string>("LanguageCode")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasMaxLength(5)
+                        .HasColumnType("character varying(5)");
 
                     b.Property<string>("ModifiedBy")
                         .HasMaxLength(64)

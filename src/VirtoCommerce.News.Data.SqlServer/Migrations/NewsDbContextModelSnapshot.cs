@@ -87,7 +87,8 @@ namespace VirtoCommerce.News.Data.SqlServer.Migrations
 
                     b.Property<string>("LanguageCode")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(5)
+                        .HasColumnType("nvarchar(5)");
 
                     b.Property<string>("ModifiedBy")
                         .HasMaxLength(64)
