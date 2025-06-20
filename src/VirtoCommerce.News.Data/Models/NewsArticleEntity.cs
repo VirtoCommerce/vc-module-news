@@ -12,6 +12,7 @@ namespace VirtoCommerce.News.Data.Models;
 
 public class NewsArticleEntity : AuditableEntity, IDataEntity<NewsArticleEntity, NewsArticle>
 {
+    [Required]
     [StringLength(DbContextBase.IdLength)]//Q: required?
     public string StoreId { get; set; }
 

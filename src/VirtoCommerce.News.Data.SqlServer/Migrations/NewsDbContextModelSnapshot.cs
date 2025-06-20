@@ -55,6 +55,7 @@ namespace VirtoCommerce.News.Data.SqlServer.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("StoreId")
+                        .IsRequired()
                         .HasMaxLength(128)
                         .HasColumnType("nvarchar(128)");
 

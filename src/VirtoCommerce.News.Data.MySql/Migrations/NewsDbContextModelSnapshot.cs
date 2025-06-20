@@ -55,6 +55,7 @@ namespace VirtoCommerce.News.Data.MySql.Migrations
                         .HasColumnType("datetime(6)");
 
                     b.Property<string>("StoreId")
+                        .IsRequired()
                         .HasMaxLength(128)
                         .HasColumnType("varchar(128)");
 
