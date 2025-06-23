@@ -114,6 +114,71 @@ namespace VirtoCommerce.News.Data.PostgreSql.Migrations
                     b.ToTable("NewsArticleLocalizedContent", (string)null);
                 });
 
+            modelBuilder.Entity("VirtoCommerce.News.Data.Models.SeoInfoEntity", b =>
+                {
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(128)
+                        .HasColumnType("character varying(128)");
+
+                    b.Property<string>("CreatedBy")
+                        .HasMaxLength(64)
+                        .HasColumnType("character varying(64)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("ImageAltDescription")
+                        .HasMaxLength(255)
+                        .HasColumnType("character varying(255)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("Keyword")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("character varying(255)");
+
+                    b.Property<string>("Language")
+                        .HasMaxLength(5)
+                        .HasColumnType("character varying(5)");
+
+                    b.Property<string>("MetaDescription")
+                        .HasMaxLength(1024)
+                        .HasColumnType("character varying(1024)");
+
+                    b.Property<string>("MetaKeywords")
+                        .HasMaxLength(255)
+                        .HasColumnType("character varying(255)");
+
+                    b.Property<string>("ModifiedBy")
+                        .HasMaxLength(64)
+                        .HasColumnType("character varying(64)");
+
+                    b.Property<DateTime?>("ModifiedDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("NewsArticleId")
+                        .IsRequired()
+                        .HasMaxLength(128)
+                        .HasColumnType("character varying(128)");
+
+                    b.Property<string>("StoreId")
+                        .HasMaxLength(128)
+                        .HasColumnType("character varying(128)");
+
+                    b.Property<string>("Title")
+                        .HasMaxLength(255)
+                        .HasColumnType("character varying(255)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NewsArticleId");
+
+                    b.ToTable("NewsArticleSeoInfo", (string)null);
+                });
+
             modelBuilder.Entity("VirtoCommerce.News.Data.Models.NewsArticleLocalizedContentEntity", b =>
                 {
                     b.HasOne("VirtoCommerce.News.Data.Models.NewsArticleEntity", "NewsArticle")
@@ -125,9 +190,22 @@ namespace VirtoCommerce.News.Data.PostgreSql.Migrations
                     b.Navigation("NewsArticle");
                 });
 
+            modelBuilder.Entity("VirtoCommerce.News.Data.Models.SeoInfoEntity", b =>
+                {
+                    b.HasOne("VirtoCommerce.News.Data.Models.NewsArticleEntity", "NewsArticle")
+                        .WithMany("SeoInfos")
+                        .HasForeignKey("NewsArticleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("NewsArticle");
+                });
+
             modelBuilder.Entity("VirtoCommerce.News.Data.Models.NewsArticleEntity", b =>
                 {
                     b.Navigation("LocalizedContents");
+
+                    b.Navigation("SeoInfos");
                 });
 #pragma warning restore 612, 618
         }
