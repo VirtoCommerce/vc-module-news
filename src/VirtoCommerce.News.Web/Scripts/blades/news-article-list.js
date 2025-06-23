@@ -56,6 +56,7 @@ angular.module('VirtoCommerce.News')
                         messageValues: items.length === 1 ? { name: items[0].name } : { count: items.length },
                         callback: function (dialogConfirmed) {
                             if (dialogConfirmed) {
+                                bladeNavigationService.closeChildrenBlades(blade);
                                 blade.isLoading = true;
                                 var ids = _.pluck(items, 'id');
                                 newsApi.delete({ ids: ids }, function () {

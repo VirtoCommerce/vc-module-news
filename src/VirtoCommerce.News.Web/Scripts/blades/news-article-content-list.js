@@ -37,6 +37,7 @@ angular.module('VirtoCommerce.News')
                         messageValues: items.length === 1 ? { language: items[0].languageCode } : { count: items.length },
                         callback: function (dialogConfirmed) {
                             if (dialogConfirmed) {
+                                bladeNavigationService.closeChildrenBlades(blade);
                                 angular.forEach(
                                     items,
                                     function (item) {
