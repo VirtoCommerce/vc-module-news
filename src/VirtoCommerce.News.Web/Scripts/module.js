@@ -45,6 +45,15 @@ angular.module(moduleName, [])
             };
             widgetService.registerWidget(contentWidget, 'newsArticleDetails');
 
+            var seoWidget = {
+                controller: 'virtoCommerce.coreModule.seo.seoWidgetController',
+                template: 'Modules/$(VirtoCommerce.Core)/Scripts/SEO/widgets/seoWidget.tpl.html',
+                objectType: 'NewsArticle',
+                //getDefaultContainerId: function (blade) { return undefined; },
+                //getLanguages: function (blade) { return _.pluck(blade.catalog.languages, 'languageCode'); }
+            };
+            widgetService.registerWidget(seoWidget, 'newsArticleDetails');
+
             metaFormsService.registerMetaFields('newsArticleDetails', [
                 {
                     name: 'name',

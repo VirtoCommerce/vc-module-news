@@ -14,7 +14,7 @@ namespace VirtoCommerce.News.Data.Models;
 public class NewsArticleEntity : AuditableEntity, IDataEntity<NewsArticleEntity, NewsArticle>
 {
     [Required]
-    [StringLength(DbContextBase.IdLength)]//Q: required?
+    [StringLength(DbContextBase.IdLength)]
     public string StoreId { get; set; }
 
     [Required]
@@ -67,7 +67,6 @@ public class NewsArticleEntity : AuditableEntity, IDataEntity<NewsArticleEntity,
         StoreId = model.StoreId;
         Name = model.Name;
         if (model.IsPublishedValue.HasValue)
-        //Question #IsPublished1
         {
             IsPublished = model.IsPublishedValue.Value;
             _isPublishedValue = model.IsPublishedValue;
