@@ -14,15 +14,20 @@ public class NewsArticleRepository(NewsDbContext dbContext, IUnitOfWork unitOfWo
 
     public IQueryable<NewsArticleLocalizedContentEntity> NewsArticleLocalizedContents => DbContext.Set<NewsArticleLocalizedContentEntity>();
 
+    public IQueryable<SeoInfoEntity> NewsArticleSeoInfos => DbContext.Set<SeoInfoEntity>();
+
     public virtual async Task<IList<NewsArticleEntity>> GetNewsArticlesByIdsAsync(IList<string> ids)
     {
         var result = await NewsArticles
             .Where(na => ids.Contains(na.Id))
             .ToListAsync();
 
-        if (result.Any())
+        if (result.Count > 0)
         {
             await NewsArticleLocalizedContents
+                .Where(lc => ids.Contains(lc.NewsArticleId))
+                .LoadAsync();
+            await NewsArticleSeoInfos
                 .Where(lc => ids.Contains(lc.NewsArticleId))
                 .LoadAsync();
         }

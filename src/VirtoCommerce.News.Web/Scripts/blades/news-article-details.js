@@ -4,11 +4,11 @@ angular.module('VirtoCommerce.News')
         [
             '$scope',
             'VirtoCommerce.News.WebApi', 'virtoCommerce.storeModule.stores',
-            'platformWebApp.authService', 'platformWebApp.bladeNavigationService', 'platformWebApp.metaFormsService',
+            'platformWebApp.settings', 'platformWebApp.authService', 'platformWebApp.bladeNavigationService', 'platformWebApp.metaFormsService',
             function (
                 $scope,
                 newsApi, storeApi,
-                authService, bladeNavigationService, metaFormsService) {
+                settings, authService, bladeNavigationService, metaFormsService) {
                 const publishPermission = 'news:publish';
 
                 const blade = $scope.blade;
@@ -18,8 +18,15 @@ angular.module('VirtoCommerce.News')
                 blade.metaFields = metaFormsService.getMetaFields('newsArticleDetails');
                 blade.stores = storeApi.query();
 
+                const languagesPromise = settings.getValues({ id: 'VirtoCommerce.Core.General.Languages' }).$promise;
+                blade.languages = [];
+
                 //blade functions
                 blade.refresh = function () {
+                    languagesPromise.then(function (promiseResult) {
+                        blade.languages = promiseResult;
+                    });
+
                     if (!blade.isNew) {
                         newsApi.get({ id: [blade.itemId] }, function (getResult) {
                             blade.originalEntity = angular.copy(getResult);
