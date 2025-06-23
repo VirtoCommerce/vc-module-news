@@ -16,12 +16,10 @@ angular.module('VirtoCommerce.News')
                 blade.metaFields = metaFormsService.getMetaFields('newsArticleContentDetails');
                 blade.isLoading = false;
 
-                //scope properties
                 const languagesPromise = settings.getValues({ id: 'VirtoCommerce.Core.General.Languages' }).$promise;
                 blade.languages = [];
 
                 blade.contentFileUploader = createFileUploader();
-
                 blade.contentPreviewFileUploader = createFileUploader();
 
                 //blade functions
