@@ -21,8 +21,15 @@ angular.module('VirtoCommerce.News')
                 const languagesPromise = settings.getValues({ id: 'VirtoCommerce.Core.General.Languages' }).$promise;
                 blade.languages = [];
 
+                const userGroupsPromise = settings.getValues({ id: 'Customer.MemberGroups' }).$promise;
+                blade.userGroups = [];
+
                 //blade functions
                 blade.refresh = function () {
+                    userGroupsPromise.then(function (promiseResult) {
+                        blade.userGroups = promiseResult;
+                    });
+
                     languagesPromise.then(function (promiseResult) {
                         blade.languages = promiseResult;
                     });

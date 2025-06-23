@@ -16,12 +16,14 @@
         "labels": {
           "store": "Store",
           "name": "Name",
-          "publish-date": "Publish date"
+          "publish-date": "Publish date",
+          "user-groups": "User groups"
         },
         "placeholders": {
           "store": "Store",
           "name": "Name",
-          "publish-date": "Publish date"
+          "publish-date": "Publish date",
+          "user-groups": "User groups"
         },
         "toolbar": {
           "publish": "publish",

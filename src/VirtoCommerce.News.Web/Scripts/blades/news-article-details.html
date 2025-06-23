@@ -7,7 +7,7 @@
       </form>
     </div>
   </div>
-</div> 
+</div>
 
 <script type="text/ng-template" id="storeSelector.html">
   <div class="form-input">
@@ -17,5 +17,19 @@
         <span ng-bind-html="store.name | highlight: $select.search"></span>
       </ui-select-choices>
     </ui-select>
+  </div>
+</script>
+
+<script type="text/ng-template" id="userGroups.html">
+  <div class="form-group">
+    <label class="form-label">{{'news.blades.news-article-details.labels.user-groups' | translate}}</label>
+    <div class="form-input" data-role="input-control">
+      <ui-select multiple ng-model="blade.currentEntity.userGroups">
+        <ui-select-match placeholder="{{'news.blades.news-article-details.placeholders.user-groups' | translate}}">{{$item}}</ui-select-match>
+        <ui-select-choices repeat="g in blade.userGroups | filter: $select.search">
+          <span ng-bind-html="g | highlight: $select.search"></span>
+        </ui-select-choices>
+      </ui-select>
+    </div>
   </div>
 </script>

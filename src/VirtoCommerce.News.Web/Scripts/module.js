@@ -76,6 +76,10 @@ angular.module(moduleName, [])
                     placeholder: 'news.blades.news-article-details.placeholders.publish-date',
                     colSpan: 1,
                     valueType: 'DateTime'
+                },
+                {
+                    templateUrl: "userGroups.html",
+                    colSpan: 2
                 }
             ]);
 
