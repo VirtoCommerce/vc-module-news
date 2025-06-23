@@ -16,6 +16,8 @@ public class NewsArticleRepository(NewsDbContext dbContext, IUnitOfWork unitOfWo
 
     public IQueryable<SeoInfoEntity> NewsArticleSeoInfos => DbContext.Set<SeoInfoEntity>();
 
+    public IQueryable<SeoInfoEntity> NewsArticleUserGroups => DbContext.Set<SeoInfoEntity>();
+
     public virtual async Task<IList<NewsArticleEntity>> GetNewsArticlesByIdsAsync(IList<string> ids)
     {
         var result = await NewsArticles
@@ -28,6 +30,9 @@ public class NewsArticleRepository(NewsDbContext dbContext, IUnitOfWork unitOfWo
                 .Where(lc => ids.Contains(lc.NewsArticleId))
                 .LoadAsync();
             await NewsArticleSeoInfos
+                .Where(lc => ids.Contains(lc.NewsArticleId))
+                .LoadAsync();
+            await NewsArticleUserGroups
                 .Where(lc => ids.Contains(lc.NewsArticleId))
                 .LoadAsync();
         }

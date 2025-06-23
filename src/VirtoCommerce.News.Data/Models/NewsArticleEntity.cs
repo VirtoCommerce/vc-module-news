@@ -31,6 +31,8 @@ public class NewsArticleEntity : AuditableEntity, IDataEntity<NewsArticleEntity,
 
     public virtual ObservableCollection<SeoInfoEntity> SeoInfos { get; set; } = new NullCollection<SeoInfoEntity>();
 
+    public virtual ObservableCollection<NewsArticleUserGroupEntity> UserGroups { get; set; } = new NullCollection<NewsArticleUserGroupEntity>();
+
     public NewsArticle ToModel(NewsArticle model)
     {
         ArgumentNullException.ThrowIfNull(model);
@@ -48,6 +50,7 @@ public class NewsArticleEntity : AuditableEntity, IDataEntity<NewsArticleEntity,
 
         model.LocalizedContents = LocalizedContents.Select(lc => lc.ToModel(AbstractTypeFactory<NewsArticleLocalizedContent>.TryCreateInstance())).ToList();
         model.SeoInfos = SeoInfos.Select(x => x.ToModel(AbstractTypeFactory<SeoInfo>.TryCreateInstance())).ToList();
+        model.UserGroups = UserGroups.OrderBy(x => x.Id).Select(x => x.Group).ToList();
 
         return model;
     }
@@ -84,6 +87,18 @@ public class NewsArticleEntity : AuditableEntity, IDataEntity<NewsArticleEntity,
             SeoInfos = new ObservableCollection<SeoInfoEntity>(model.SeoInfos.Select(x => AbstractTypeFactory<SeoInfoEntity>.TryCreateInstance().FromModel(x, pkMap)));
         }
 
+        if (model.UserGroups != null)
+        {
+            UserGroups = new ObservableCollection<NewsArticleUserGroupEntity>();
+            foreach (var group in model.UserGroups)
+            {
+                var userGroupEntity = AbstractTypeFactory<NewsArticleUserGroupEntity>.TryCreateInstance();
+                userGroupEntity.Group = group;
+                userGroupEntity.NewsArticleId = model.Id;
+                UserGroups.Add(userGroupEntity);
+            }
+        }
+
         return this;
     }
 
@@ -93,6 +108,7 @@ public class NewsArticleEntity : AuditableEntity, IDataEntity<NewsArticleEntity,
 
         target.StoreId = StoreId;
         target.Name = Name;
+
         if (_isPublishedValue.HasValue)
         {
             target.IsPublished = _isPublishedValue.Value;
@@ -106,6 +122,11 @@ public class NewsArticleEntity : AuditableEntity, IDataEntity<NewsArticleEntity,
         if (!SeoInfos.IsNullCollection())
         {
             SeoInfos.Patch(target.SeoInfos, (sourceSeoInfo, targetSeoInfo) => sourceSeoInfo.Patch(targetSeoInfo));
+        }
+        if (!UserGroups.IsNullCollection())
+        {
+            var userGroupComparer = AnonymousComparer.Create((NewsArticleUserGroupEntity x) => x.Group);
+            UserGroups.Patch(target.UserGroups, userGroupComparer, (sourceGroup, targetGroup) => targetGroup.Group = sourceGroup.Group);
         }
     }
 }

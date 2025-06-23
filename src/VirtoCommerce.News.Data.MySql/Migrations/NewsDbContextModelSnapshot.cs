@@ -114,6 +114,29 @@ namespace VirtoCommerce.News.Data.MySql.Migrations
                     b.ToTable("NewsArticleLocalizedContent", (string)null);
                 });
 
+            modelBuilder.Entity("VirtoCommerce.News.Data.Models.NewsArticleUserGroupEntity", b =>
+                {
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(128)
+                        .HasColumnType("varchar(128)");
+
+                    b.Property<string>("Group")
+                        .HasMaxLength(64)
+                        .HasColumnType("varchar(64)");
+
+                    b.Property<string>("NewsArticleId")
+                        .IsRequired()
+                        .HasMaxLength(128)
+                        .HasColumnType("varchar(128)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NewsArticleId");
+
+                    b.ToTable("NewsArticleUserGroup", (string)null);
+                });
+
             modelBuilder.Entity("VirtoCommerce.News.Data.Models.SeoInfoEntity", b =>
                 {
                     b.Property<string>("Id")
@@ -190,6 +213,17 @@ namespace VirtoCommerce.News.Data.MySql.Migrations
                     b.Navigation("NewsArticle");
                 });
 
+            modelBuilder.Entity("VirtoCommerce.News.Data.Models.NewsArticleUserGroupEntity", b =>
+                {
+                    b.HasOne("VirtoCommerce.News.Data.Models.NewsArticleEntity", "NewsArticle")
+                        .WithMany("UserGroups")
+                        .HasForeignKey("NewsArticleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("NewsArticle");
+                });
+
             modelBuilder.Entity("VirtoCommerce.News.Data.Models.SeoInfoEntity", b =>
                 {
                     b.HasOne("VirtoCommerce.News.Data.Models.NewsArticleEntity", "NewsArticle")
@@ -206,6 +240,8 @@ namespace VirtoCommerce.News.Data.MySql.Migrations
                     b.Navigation("LocalizedContents");
 
                     b.Navigation("SeoInfos");
+
+                    b.Navigation("UserGroups");
                 });
 #pragma warning restore 612, 618
         }

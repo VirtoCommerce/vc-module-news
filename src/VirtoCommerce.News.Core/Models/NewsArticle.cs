@@ -26,6 +26,8 @@ public class NewsArticle : AuditableEntity, ICloneable, ISeoSupport
 
     public IList<SeoInfo> SeoInfos { get; set; }
 
+    public IList<string> UserGroups { get; set; }
+
     public object Clone()
     {
         var result = (NewsArticle)MemberwiseClone();
