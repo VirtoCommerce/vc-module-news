@@ -26,5 +26,10 @@ public class NewsArticleContentType : ExtendableGraphType<NewsArticle>
         {
             return context.Source.LocalizedContents.FirstOrDefault()?.ContentPreview;
         });
+
+        ExtendableField<NonNullGraphType<SeoInfoType>>("seoInfo", resolve: context =>
+        {
+            return context.Source.SeoInfos.FirstOrDefault();
+        });
     }
 }

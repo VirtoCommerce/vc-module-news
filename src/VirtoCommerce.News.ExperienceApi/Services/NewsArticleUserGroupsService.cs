@@ -10,9 +10,10 @@ namespace VirtoCommerce.News.ExperienceApi.Services;
 
 public class NewsArticleUserGroupsService(IMemberResolver memberResolver, IMemberService memberService)
 {
-    public async Task<IEnumerable<string>> GetUserGroups(string userId)
+    public async Task<IList<string>> GetUserGroups(string userId)
     {
-        var result = new List<string> { "__any" };//Question #UserGroups1
+        var result = new List<string>();
+        //var result = new List<string> { "__any" };//Question #UserGroups1
 
         if (!string.IsNullOrEmpty(userId) && !ModuleConstants.AnonymousUser.UserName.EqualsIgnoreCase(userId))
         {

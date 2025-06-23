@@ -8,7 +8,10 @@ using VirtoCommerce.Xapi.Core.Infrastructure;
 
 namespace VirtoCommerce.News.ExperienceApi.Queries;
 
-public class NewsArticleContentQueryHandler(INewsArticleService newsArticleService, NewsArticleLocalizationService newsArticleLocalizationService)
+public class NewsArticleContentQueryHandler(
+    INewsArticleService newsArticleService,
+    NewsArticleLocalizationService newsArticleLocalizationService,
+    NewsArticleSeoService newsArticleSeoService)
     : IQueryHandler<NewsArticleContentQuery, NewsArticle>
 {
     public async Task<NewsArticle> Handle(NewsArticleContentQuery request, CancellationToken cancellationToken)
@@ -23,5 +26,6 @@ public class NewsArticleContentQueryHandler(INewsArticleService newsArticleServi
     protected virtual async Task PostProcessResultAsync(NewsArticleContentQuery request, NewsArticle newsArticle)
     {
         await newsArticleLocalizationService.FilterLanguagesAsync([newsArticle], request.LanguageCode, request.StoreId);
+        await newsArticleSeoService.FilterSeoInfosAsync([newsArticle], request.LanguageCode, request.StoreId);
     }
 }

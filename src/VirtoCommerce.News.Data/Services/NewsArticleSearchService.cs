@@ -51,7 +51,7 @@ public class NewsArticleSearchService(
             query = query.Where(na => na.StoreId == criteria.StoreId);
         }
 
-        if ((criteria.UserGroups != null) && criteria.UserGroups.Any())
+        if (!criteria.UserGroups.IsNullOrEmpty())
         {
             query = query.Where(na => na.UserGroups.Any(ug => criteria.UserGroups.Contains(ug.Group)));
         }

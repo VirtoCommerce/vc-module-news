@@ -17,6 +17,7 @@ public static class ServiceCollectionExtensions
 
         serviceCollection.AddSingleton<ScopedSchemaFactory<XapiAssemblyMarker>>();
         serviceCollection.AddSingleton<NewsArticleLocalizationService>();
+        serviceCollection.AddSingleton<NewsArticleSeoService>();
         serviceCollection.AddSingleton<NewsArticleUserGroupsService>();
 
         return serviceCollection;
