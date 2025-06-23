@@ -16,12 +16,11 @@ public class NewsArticleController(INewsArticleService newsArticleService, INews
     [HttpPost]
     [Route("")]
     [Authorize(ModuleConstants.Security.Permissions.Create)]
-    [ProducesResponseType(typeof(void), StatusCodes.Status204NoContent)]
-    public async Task<ActionResult> Create([FromBody] NewsArticle newsArticle)
+    public async Task<ActionResult<NewsArticle>> Create([FromBody] NewsArticle newsArticle)
     {
         newsArticle.Id = null;
         await newsArticleService.SaveChangesAsync([newsArticle]);
-        return NoContent();
+        return Ok(newsArticle);
     }
 
     [HttpPut]

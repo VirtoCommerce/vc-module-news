@@ -58,11 +58,12 @@ angular.module('VirtoCommerce.News')
                     blade.isLoading = true;
 
                     if (blade.isNew) {
-                        newsApi.create(blade.currentEntity, function () {
+                        newsApi.create(blade.currentEntity, function (createResult) {
                             blade.parentBlade.refresh(true);
-                            blade.originalEntity = angular.copy(blade.currentEntity);
+                            blade.isNew = false;
+                            blade.itemId = createResult.id;
+                            blade.refresh();
                             blade.isLoading = false;
-                            $scope.bladeClose();
                         }, function (error) {
                             bladeNavigationService.setError('Error ' + error.status, blade);
                             blade.isLoading = false;
