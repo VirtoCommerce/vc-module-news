@@ -7,11 +7,13 @@ using VirtoCommerce.Xapi.Core.Infrastructure;
 
 namespace VirtoCommerce.News.ExperienceApi.Queries;
 
-public class NewsArticleContentsQueryHandler(INewsArticleSearchService newsArticleSearchService, NewsArticleLocalizationService newsArticleLocalizationService)
+public class NewsArticleContentsQueryHandler(INewsArticleSearchService newsArticleSearchService, NewsArticleLocalizationService newsArticleLocalizationService, NewsArticleUserGroupsService newsArticleUserGroupsService)
     : IQueryHandler<NewsArticleContentsQuery, NewsArticleSearchResult>
 {
     public async Task<NewsArticleSearchResult> Handle(NewsArticleContentsQuery request, CancellationToken cancellationToken)
     {
+        var userGroups = newsArticleUserGroupsService.GetUserGroups(request.UserId);
+
         var searchCriteria = new NewsArticleSearchCriteria
         {
             LanguageCode = request.LanguageCode,

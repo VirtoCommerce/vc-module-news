@@ -10,6 +10,7 @@ public class NewsArticleContentsQuery : SearchQuery<NewsArticleSearchResult>
 {
     public string StoreId { get; set; }
     public string LanguageCode { get; set; }
+    public string UserId { get; set; }
 
     public override IEnumerable<QueryArgument> GetArguments()
     {
@@ -19,6 +20,7 @@ public class NewsArticleContentsQuery : SearchQuery<NewsArticleSearchResult>
         }
         yield return Argument<NonNullGraphType<StringGraphType>>(nameof(StoreId));
         yield return Argument<NonNullGraphType<StringGraphType>>(nameof(LanguageCode));
+        yield return Argument<NonNullGraphType<StringGraphType>>(nameof(UserId));
     }
 
     public override void Map(IResolveFieldContext context)
@@ -27,5 +29,6 @@ public class NewsArticleContentsQuery : SearchQuery<NewsArticleSearchResult>
 
         StoreId = context.GetArgument<string>(nameof(StoreId));
         LanguageCode = context.GetArgument<string>(nameof(LanguageCode));
+        UserId = context.GetArgument<string>(nameof(UserId));
     }
 }

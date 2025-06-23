@@ -1,0 +1,47 @@
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using VirtoCommerce.CustomerModule.Core.Model;
+using VirtoCommerce.CustomerModule.Core.Services;
+using VirtoCommerce.Platform.Core.Common;
+using VirtoCommerce.Xapi.Core;
+
+namespace VirtoCommerce.News.ExperienceApi.Services;
+
+public class NewsArticleUserGroupsService(IMemberResolver memberResolver, IMemberService memberService)
+{
+    public async Task<IEnumerable<string>> GetUserGroups(string userId)
+    {
+        var result = new List<string> { "__any" };//Question #UserGroups1
+
+        if (!string.IsNullOrEmpty(userId) && !ModuleConstants.AnonymousUser.UserName.EqualsIgnoreCase(userId))
+        {
+            var member = await memberResolver.ResolveMemberByIdAsync(userId);
+
+            if (member is Contact contact)
+            {
+                result.AddRange(await GetUserGroupsInheritedAsync(contact));
+            }
+        }
+
+        return result;
+    }
+
+    private async Task<IList<string>> GetUserGroupsInheritedAsync(Contact contact)
+    {
+        var userGroups = new List<string>();
+
+        if (!contact.Groups.IsNullOrEmpty())
+        {
+            userGroups.AddRange(contact.Groups);
+        }
+
+        if (!contact.Organizations.IsNullOrEmpty())
+        {
+            var organizations = await memberService.GetByIdsAsync(contact.Organizations.ToArray(), MemberResponseGroup.WithGroups.ToString());
+            userGroups.AddRange(organizations.OfType<Organization>().SelectMany(x => x.Groups));
+        }
+
+        return userGroups;
+    }
+}
