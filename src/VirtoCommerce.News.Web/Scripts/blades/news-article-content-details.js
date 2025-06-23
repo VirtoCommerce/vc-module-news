@@ -3,30 +3,31 @@ angular.module('VirtoCommerce.News')
         'VirtoCommerce.News.newsArticleContentDetailsController',
         [
             '$scope',
-            'platformWebApp.settings', 'platformWebApp.bladeNavigationService',
+            'platformWebApp.settings', 'platformWebApp.bladeNavigationService', 'platformWebApp.metaFormsService',
             'FileUploader',
             function (
                 $scope,
-                settings, bladeNavigationService,
+                settings, bladeNavigationService, metaFormsService,
                 FileUploader) {
                 const blade = $scope.blade;
 
                 //blade properties
                 blade.title = blade.isNew ? 'news.blades.news-article-content-details.title-add' : 'news.blades.news-article-content-details.title-edit';
+                blade.metaFields = metaFormsService.getMetaFields('newsArticleContentDetails');
                 blade.isLoading = false;
 
                 //scope properties
                 const languagesPromise = settings.getValues({ id: 'VirtoCommerce.Core.General.Languages' }).$promise;
-                $scope.languages = [];
+                blade.languages = [];
 
-                $scope.contentFileUploader = createFileUploader();
+                blade.contentFileUploader = createFileUploader();
 
-                $scope.contentPreviewFileUploader = createFileUploader();
+                blade.contentPreviewFileUploader = createFileUploader();
 
                 //blade functions
                 blade.refresh = function () {
                     languagesPromise.then(function (promiseResult) {
-                        $scope.languages = promiseResult;
+                        blade.languages = promiseResult;
                     });
                     blade.originalEntity = blade.currentEntity;
                     blade.currentEntity = angular.copy(blade.currentEntity);

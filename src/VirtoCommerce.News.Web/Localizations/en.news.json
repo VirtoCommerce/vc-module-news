@@ -44,7 +44,8 @@
           "content-preview": "Content (user preview)"
         },
         "placeholders": {
-          "language": "Language"
+          "language": "Language",
+          "title": "Title"
         }
       }
     },

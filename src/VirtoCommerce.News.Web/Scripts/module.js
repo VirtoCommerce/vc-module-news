@@ -45,27 +45,61 @@ angular.module(moduleName, [])
             };
             widgetService.registerWidget(contentWidget, 'newsArticleDetails');
 
-            metaFormsService.registerMetaFields('newsArticleDetails', [{
-                name: 'name',
-                title: 'news.blades.news-article-details.labels.name',
-                placeholder: 'news.blades.news-article-details.placeholders.name',
-                colSpan: 2,
-                isRequired: true,
-                valueType: 'ShortText'
-            },
-            {
-                name: 'storeId',
-                title: 'news.blades.news-article-details.labels.store',
-                templateUrl: 'storeSelector.html',
-                colSpan: 1,
-                valueType: 'ShortText'
-            },
-            {
-                name: 'publishDate',
-                title: 'news.blades.news-article-details.labels.publish-date',
-                placeholder: 'news.blades.news-article-details.placeholders.publish-date',
-                colSpan: 1,
-                valueType: 'DateTime'
-            }]);
+            metaFormsService.registerMetaFields('newsArticleDetails', [
+                {
+                    name: 'name',
+                    title: 'news.blades.news-article-details.labels.name',
+                    placeholder: 'news.blades.news-article-details.placeholders.name',
+                    colSpan: 2,
+                    isRequired: true,
+                    valueType: 'ShortText'
+                },
+                {
+                    name: 'storeId',
+                    title: 'news.blades.news-article-details.labels.store',
+                    templateUrl: 'storeSelector.html',
+                    colSpan: 1,
+                    isRequired: true
+                },
+                {
+                    name: 'publishDate',
+                    title: 'news.blades.news-article-details.labels.publish-date',
+                    placeholder: 'news.blades.news-article-details.placeholders.publish-date',
+                    colSpan: 1,
+                    valueType: 'DateTime'
+                }
+            ]);
+
+            metaFormsService.registerMetaFields('newsArticleContentDetails', [
+                {
+                    name: 'language',
+                    title: 'news.blades.news-article-content-details.labels.language',
+                    placeholder: 'news.blades.news-article-content-details.placeholders.language',
+                    templateUrl: 'languageSelector.html',
+                    colSpan: 2,
+                    isRequired: true
+                },
+                {
+                    name: 'title',
+                    title: 'news.blades.news-article-content-details.labels.title',
+                    placeholder: 'news.blades.news-article-content-details.placeholders.title',
+                    colSpan: 2,
+                    isRequired: true,
+                    valueType: 'ShortText'
+                },
+                {
+                    name: 'content',
+                    title: 'news.blades.news-article-content-details.labels.content',
+                    templateUrl: 'contentRichEdit.html',
+                    colSpan: 2,
+                    isRequired: true
+                },
+                {
+                    name: 'contentPreview',
+                    title: 'news.blades.news-article-content-details.labels.content-preview',
+                    templateUrl: 'contentPreviewRichEdit.html',
+                    colSpan: 2
+                }
+            ]);
         }
     ]);
