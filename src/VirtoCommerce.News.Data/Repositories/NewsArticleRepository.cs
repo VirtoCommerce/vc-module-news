@@ -16,7 +16,7 @@ public class NewsArticleRepository(NewsDbContext dbContext, IUnitOfWork unitOfWo
 
     public IQueryable<SeoInfoEntity> NewsArticleSeoInfos => DbContext.Set<SeoInfoEntity>();
 
-    public IQueryable<SeoInfoEntity> NewsArticleUserGroups => DbContext.Set<SeoInfoEntity>();
+    public IQueryable<NewsArticleUserGroupEntity> NewsArticleUserGroups => DbContext.Set<NewsArticleUserGroupEntity>();
 
     public virtual async Task<IList<NewsArticleEntity>> GetNewsArticlesByIdsAsync(IList<string> ids)
     {
