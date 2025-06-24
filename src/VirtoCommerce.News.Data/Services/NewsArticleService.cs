@@ -56,7 +56,7 @@ public class NewsArticleService(
         await ChangeIsPublishedAsync(ids, false);
     }
 
-    private async Task ChangeIsPublishedAsync(IList<string> ids, bool isPublished)
+    protected virtual async Task ChangeIsPublishedAsync(IList<string> ids, bool isPublished)
     {
         var newsArticles = await GetAsync(ids);
         foreach (var newsArticle in newsArticles)

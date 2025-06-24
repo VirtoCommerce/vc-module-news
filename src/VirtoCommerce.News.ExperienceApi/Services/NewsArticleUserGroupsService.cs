@@ -10,7 +10,7 @@ namespace VirtoCommerce.News.ExperienceApi.Services;
 
 public class NewsArticleUserGroupsService(IMemberResolver memberResolver, IMemberService memberService) : INewsArticleUserGroupsService
 {
-    public async Task<IList<string>> GetUserGroups(string userId)
+    public virtual async Task<IList<string>> GetUserGroups(string userId)
     {
         var result = new List<string>();
 
