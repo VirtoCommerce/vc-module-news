@@ -18,9 +18,9 @@ public class NewsArticleContentsQuery : SearchQuery<NewsArticleSearchResult>
         {
             yield return argument;
         }
-        yield return Argument<NonNullGraphType<StringGraphType>>(nameof(StoreId));//Question #UserGroups2 required?
+        yield return Argument<NonNullGraphType<StringGraphType>>(nameof(StoreId));
         yield return Argument<NonNullGraphType<StringGraphType>>(nameof(LanguageCode));
-        yield return Argument<StringGraphType>(nameof(UserId));//Question #UserGroups2 required?
+        yield return Argument<StringGraphType>(nameof(UserId));
     }
 
     public override void Map(IResolveFieldContext context)

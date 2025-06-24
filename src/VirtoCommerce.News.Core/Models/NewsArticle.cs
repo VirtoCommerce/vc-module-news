@@ -22,7 +22,7 @@ public class NewsArticle : AuditableEntity, ICloneable, ISeoSupport
 
     public IList<NewsArticleLocalizedContent> LocalizedContents { get; set; }
 
-    public string SeoObjectType => nameof(NewsArticle);//Question #SEO1
+    public string SeoObjectType => nameof(NewsArticle);
 
     public IList<SeoInfo> SeoInfos { get; set; }
 

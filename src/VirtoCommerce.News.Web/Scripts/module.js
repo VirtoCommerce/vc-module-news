@@ -48,7 +48,7 @@ angular.module(moduleName, [])
             var seoWidget = {
                 controller: 'virtoCommerce.coreModule.seo.seoWidgetController',
                 template: 'Modules/$(VirtoCommerce.Core)/Scripts/SEO/widgets/seoWidget.tpl.html',
-                objectType: 'NewsArticle',//Question #SEO1
+                objectType: 'NewsArticle',
                 getDefaultContainerId: function (blade) { return undefined; },
                 getLanguages: function (blade) { return blade.languages; }
             };

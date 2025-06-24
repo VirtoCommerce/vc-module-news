@@ -13,7 +13,7 @@ public class SeoInfoEntity : AuditableEntity, IDataEntity<SeoInfoEntity, SeoInfo
     public string NewsArticleId { get; set; }
 
     [StringLength(128)]
-    public string StoreId { get; set; }//Question #SEO2 required?
+    public string StoreId { get; set; }
 
     [StringLength(255)]
     [Required]
@@ -55,7 +55,7 @@ public class SeoInfoEntity : AuditableEntity, IDataEntity<SeoInfoEntity, SeoInfo
         seoInfo.MetaDescription = MetaDescription;
         seoInfo.MetaKeywords = MetaKeywords;
         seoInfo.ObjectId = NewsArticleId;
-        seoInfo.ObjectType = nameof(NewsArticle);//Question #SEO1
+        seoInfo.ObjectType = nameof(NewsArticle);
         seoInfo.StoreId = StoreId;
 
         return seoInfo;

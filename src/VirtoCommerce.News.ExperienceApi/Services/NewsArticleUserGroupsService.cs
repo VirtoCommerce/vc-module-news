@@ -13,7 +13,6 @@ public class NewsArticleUserGroupsService(IMemberResolver memberResolver, IMembe
     public async Task<IList<string>> GetUserGroups(string userId)
     {
         var result = new List<string>();
-        //var result = new List<string> { "__any" };//Question #UserGroups1
 
         if (!string.IsNullOrEmpty(userId) && !ModuleConstants.AnonymousUser.UserName.EqualsIgnoreCase(userId))
         {
