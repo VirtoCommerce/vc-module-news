@@ -8,7 +8,7 @@ using VirtoCommerce.Platform.Data.Infrastructure;
 
 namespace VirtoCommerce.News.Data.Repositories;
 
-public class NewsArticleRepository(NewsDbContext dbContext, IUnitOfWork unitOfWork = null) : DbContextRepositoryBase<NewsDbContext>(dbContext, unitOfWork)
+public class NewsArticleRepository(NewsDbContext dbContext, IUnitOfWork unitOfWork = null) : DbContextRepositoryBase<NewsDbContext>(dbContext, unitOfWork), INewsArticleRepository
 {
     public IQueryable<NewsArticleEntity> NewsArticles => DbContext.Set<NewsArticleEntity>();
 

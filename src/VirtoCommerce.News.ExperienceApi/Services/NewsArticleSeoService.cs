@@ -8,7 +8,7 @@ using VirtoCommerce.StoreModule.Core.Services;
 
 namespace VirtoCommerce.News.ExperienceApi.Services;
 
-public class NewsArticleSeoService(IStoreService storeService)
+public class NewsArticleSeoService(IStoreService storeService) : INewsArticleSeoService
 {
     public async Task FilterSeoInfosAsync(IEnumerable<NewsArticle> newsArticles, string languageCode, string storeId)
     {

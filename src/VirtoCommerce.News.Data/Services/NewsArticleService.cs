@@ -16,7 +16,7 @@ using VirtoCommerce.Platform.Data.GenericCrud;
 namespace VirtoCommerce.News.Data.Services;
 
 public class NewsArticleService(
-        Func<NewsArticleRepository> repositoryFactory,
+        Func<INewsArticleRepository> repositoryFactory,
         IPlatformMemoryCache platformMemoryCache,
         IEventPublisher eventPublisher)
     : CrudService<NewsArticle, NewsArticleEntity, NewsArticleChangingEvent, NewsArticleChangedEvent>(
@@ -27,7 +27,7 @@ public class NewsArticleService(
 {
     protected override Task<IList<NewsArticleEntity>> LoadEntities(IRepository repository, IList<string> ids, string responseGroup)
     {
-        return ((NewsArticleRepository)repository).GetNewsArticlesByIdsAsync(ids);
+        return ((INewsArticleRepository)repository).GetNewsArticlesByIdsAsync(ids);
     }
 
     protected override async Task BeforeSaveChanges(IList<NewsArticle> models)

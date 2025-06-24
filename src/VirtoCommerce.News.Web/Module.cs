@@ -51,8 +51,8 @@ public class Module : IModule, IHasConfiguration
             }
         });
 
-        serviceCollection.AddTransient<NewsArticleRepository>();
-        serviceCollection.AddTransient<Func<NewsArticleRepository>>(provider => () => provider.CreateScope().ServiceProvider.GetRequiredService<NewsArticleRepository>());
+        serviceCollection.AddTransient<INewsArticleRepository, NewsArticleRepository>();
+        serviceCollection.AddTransient<Func<INewsArticleRepository>>(provider => () => provider.CreateScope().ServiceProvider.GetRequiredService<INewsArticleRepository>());
 
         serviceCollection.AddTransient<INewsArticleService, NewsArticleService>();
         serviceCollection.AddTransient<INewsArticleSearchService, NewsArticleSearchService>();

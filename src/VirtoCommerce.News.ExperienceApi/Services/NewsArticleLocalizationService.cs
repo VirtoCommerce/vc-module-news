@@ -7,7 +7,7 @@ using VirtoCommerce.StoreModule.Core.Services;
 
 namespace VirtoCommerce.News.ExperienceApi.Services;
 
-public class NewsArticleLocalizationService(IStoreService storeService)
+public class NewsArticleLocalizationService(IStoreService storeService) : INewsArticleLocalizationService
 {
     public async Task FilterLanguagesAsync(IEnumerable<NewsArticle> newsArticles, string languageCode, string storeId)
     {

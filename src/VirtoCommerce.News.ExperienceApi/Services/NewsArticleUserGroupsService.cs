@@ -8,7 +8,7 @@ using VirtoCommerce.Xapi.Core;
 
 namespace VirtoCommerce.News.ExperienceApi.Services;
 
-public class NewsArticleUserGroupsService(IMemberResolver memberResolver, IMemberService memberService)
+public class NewsArticleUserGroupsService(IMemberResolver memberResolver, IMemberService memberService) : INewsArticleUserGroupsService
 {
     public async Task<IList<string>> GetUserGroups(string userId)
     {
@@ -27,7 +27,7 @@ public class NewsArticleUserGroupsService(IMemberResolver memberResolver, IMembe
         return result;
     }
 
-    private async Task<IList<string>> GetUserGroupsInheritedAsync(Contact contact)
+    protected virtual async Task<IList<string>> GetUserGroupsInheritedAsync(Contact contact)
     {
         var userGroups = new List<string>();
 

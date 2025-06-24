@@ -10,8 +10,8 @@ namespace VirtoCommerce.News.ExperienceApi.Queries;
 
 public class NewsArticleContentQueryHandler(
     INewsArticleService newsArticleService,
-    NewsArticleLocalizationService newsArticleLocalizationService,
-    NewsArticleSeoService newsArticleSeoService)
+    INewsArticleLocalizationService newsArticleLocalizationService,
+    INewsArticleSeoService newsArticleSeoService)
     : IQueryHandler<NewsArticleContentQuery, NewsArticle>
 {
     public async Task<NewsArticle> Handle(NewsArticleContentQuery request, CancellationToken cancellationToken)

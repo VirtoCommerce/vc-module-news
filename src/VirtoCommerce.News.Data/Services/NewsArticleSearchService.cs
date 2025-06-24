@@ -14,7 +14,7 @@ using VirtoCommerce.Platform.Data.GenericCrud;
 namespace VirtoCommerce.News.Data.Services;
 
 public class NewsArticleSearchService(
-        Func<NewsArticleRepository> repositoryFactory,
+        Func<INewsArticleRepository> repositoryFactory,
         IPlatformMemoryCache platformMemoryCache,
         INewsArticleService crudService,
         IOptions<CrudOptions> crudOptions)
@@ -27,7 +27,7 @@ public class NewsArticleSearchService(
 {
     protected override IQueryable<NewsArticleEntity> BuildQuery(IRepository repository, NewsArticleSearchCriteria criteria)
     {
-        var query = ((NewsArticleRepository)repository).NewsArticles;
+        var query = ((INewsArticleRepository)repository).NewsArticles;
 
         if (!criteria.SearchPhrase.IsNullOrEmpty())
         {
