@@ -76,6 +76,7 @@ angular.module('VirtoCommerce.News')
                             blade.parentBlade.refresh(true);
                             blade.isNew = false;
                             blade.itemId = createResult.id;
+                            initializeToolbar();
                             blade.refresh();
                             blade.isLoading = false;
                         }, function (error) {
