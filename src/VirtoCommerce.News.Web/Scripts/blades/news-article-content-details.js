@@ -60,7 +60,7 @@ angular.module('VirtoCommerce.News')
                             function (x) { return x === blade.originalEntity; }
                         );
                         angular.copy(blade.currentEntity, existing);
-                        blade.originalEntity = angular.copy(blade.currentEntity);
+                        angular.copy(blade.currentEntity, blade.originalEntity);
                     }
                 };
 
