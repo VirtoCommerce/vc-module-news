@@ -99,19 +99,6 @@ angular.module(moduleName, [])
                     colSpan: 2,
                     isRequired: true,
                     valueType: 'ShortText'
-                },
-                {
-                    name: 'content',
-                    title: 'news.blades.news-article-content-details.labels.content',
-                    templateUrl: 'contentRichEdit.html',
-                    colSpan: 2,
-                    isRequired: true
-                },
-                {
-                    name: 'contentPreview',
-                    title: 'news.blades.news-article-content-details.labels.content-preview',
-                    templateUrl: 'contentPreviewRichEdit.html',
-                    colSpan: 2
                 }
             ]);
         }

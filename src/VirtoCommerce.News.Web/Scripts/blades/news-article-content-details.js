@@ -19,8 +19,8 @@ angular.module('VirtoCommerce.News')
                 const languagesPromise = settings.getValues({ id: 'VirtoCommerce.Core.General.Languages' }).$promise;
                 blade.languages = [];
 
-                blade.contentFileUploader = createFileUploader();
-                blade.contentPreviewFileUploader = createFileUploader();
+                //scope properties
+                $scope.fileUploader = createFileUploader();
 
                 //blade functions
                 blade.refresh = function () {
@@ -77,6 +77,7 @@ angular.module('VirtoCommerce.News')
 
                 function reset() {
                     angular.copy(blade.originalEntity, blade.currentEntity);
+                    $scope.$broadcast('resetContent', { body: blade.currentEntity.content });
                 }
 
                 function initializeToolbar() {
