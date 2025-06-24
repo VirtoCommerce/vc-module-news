@@ -19,8 +19,7 @@ angular.module('VirtoCommerce.News')
                 const languagesPromise = settings.getValues({ id: 'VirtoCommerce.Core.General.Languages' }).$promise;
                 blade.languages = [];
 
-                //scope properties
-                $scope.fileUploader = createFileUploader();
+                blade.fileUploader = createFileUploader();
 
                 //blade functions
                 blade.refresh = function () {
