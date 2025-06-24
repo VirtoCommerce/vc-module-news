@@ -1,9 +1,9 @@
 {
   "news": {
-    "main-menu-title": "News (menu)",
+    "main-menu-title": "News",
     "blades": {
       "news-article-list": {
-        "title": "News (list)",
+        "title": "Articles",
         "labels": {
           "store": "Store",
           "name": "Name",
@@ -11,8 +11,8 @@
         }
       },
       "news-article-details": {
-        "title-add": "News (add)",
-        "title-edit": "News (edit)",
+        "title-add": "New article",
+        "title-edit": "Article",
         "labels": {
           "store": "Store",
           "name": "Name",
@@ -31,14 +31,14 @@
         }
       },
       "news-article-content-list": {
-        "title": "News content (list)",
+        "title": "Localized content",
         "labels": {
           "language": "Language"
         }
       },
       "news-article-content-details": {
-        "title-add": "News content (add)",
-        "title-edit": "News content (edit)",
+        "title-add": "New localized content",
+        "title-edit": "Localized content",
         "labels": {
           "language": "Language",
           "title": "Title",
@@ -53,27 +53,27 @@
     },
     "dialogs": {
       "news-article-save": {
-        "title": "News (not saved warning title)",
-        "message": "News (not saved warning message)"
+        "title": "Save changes",
+        "message": "The article has been modified. Do you want to save changes?"
       },
       "news-article-delete": {
-        "title": "News (delete confirmation)",
-        "message-single": "News (delete message) '{{name}}'",
-        "message-many": "News (delete many message) '{{count}}' items"
+        "title": "Confirm delete",
+        "message-single": "Are you sure you want to delete the '{{name}}' article?",
+        "message-many": "Are you sure you want to delete {{count}} articles?"
       },
       "news-article-content-save": {
-        "title": "News content (not saved warning title)",
-        "message": "News content (not saved warning message)"
+        "title": "Save changes",
+        "message": "The content has been modified. Do you want to save changes?"
       },
       "news-article-content-delete": {
-        "title": "News content (delete confirmation)",
-        "message-single": "News content (delete message) '{{language}}'",
-        "message-many": "News content (delete many message) '{{count}}' items"
+        "title": "Confirm delete",
+        "message-single": "Are you sure you want to delete this localized to '{{language}}' language content?",
+        "message-many": "Are you sure you want to delete {{count}} localized content items?"
       }
     },
     "widgets": {
       "localized-contents": {
-        "title": "News content (widget)"
+        "title": "Content"
       }
     }
   },
@@ -82,7 +82,8 @@
     "news:create": "Create News related data",
     "news:read": "View News related data",
     "news:update": "Update News related data",
-    "news:delete": "Delete News related data"
+    "news:delete": "Delete News related data",
+    "news:publish": "Publish News related data"
   },
   "settings": {
     "News": {
