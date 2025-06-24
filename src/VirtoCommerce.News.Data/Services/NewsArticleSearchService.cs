@@ -38,11 +38,11 @@ public class NewsArticleSearchService(
         {
             if (criteria.Published.Value)
             {
-                query = query.Where(na => na.IsPublished && (!na.PublishDate.HasValue || na.PublishDate >= DateTime.UtcNow));
+                query = query.Where(na => na.IsPublished && (!na.PublishDate.HasValue || na.PublishDate <= DateTime.UtcNow));
             }
             else
             {
-                query = query.Where(na => !na.IsPublished || (na.PublishDate.HasValue && na.PublishDate < DateTime.UtcNow));
+                query = query.Where(na => !na.IsPublished || (na.PublishDate.HasValue && na.PublishDate > DateTime.UtcNow));
             }
         }
 
