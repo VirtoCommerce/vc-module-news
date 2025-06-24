@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using VirtoCommerce.News.Core.Models;
@@ -32,7 +31,6 @@ public class NewsArticleSeoService(IStoreService storeService)
             if (seoInfo == null)
             {
                 seoInfo = SeoExtensions.GetFallbackSeoInfo(newsArticle.Id, newsArticle.Name, languageCode);
-                seoInfo.Id = String.Empty;//Question #SEO3 #XAPI
             }
 
             newsArticle.SeoInfos.Clear();
