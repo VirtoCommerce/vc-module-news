@@ -14,7 +14,6 @@ angular.module('VirtoCommerce.News')
                 const blade = $scope.blade;
 
                 //blade properties
-                blade.title = blade.isNew ? 'news.blades.news-article-details.title-add' : 'news.blades.news-article-details.title-edit';
                 blade.metaFields = metaFormsService.getMetaFields('newsArticleDetails');
                 blade.stores = storeApi.query();
 
@@ -77,6 +76,7 @@ angular.module('VirtoCommerce.News')
                             blade.isNew = false;
                             blade.itemId = createResult.id;
                             initializeToolbar();
+                            initializeTitle();
                             blade.refresh();
                             blade.isLoading = false;
                         }, function (error) {
@@ -191,11 +191,16 @@ angular.module('VirtoCommerce.News')
                     }
                 }
 
+                function initializeTitle() {
+                    blade.title = blade.isNew ? 'news.blades.news-article-details.title-add' : 'news.blades.news-article-details.title-edit';
+                }
+
                 function getSavePermission() {
                     return blade.isNew ? 'news:create' : 'news:update';
                 }
 
                 //calls
                 initializeToolbar();
+                initializeTitle();
                 blade.refresh();
             }]);

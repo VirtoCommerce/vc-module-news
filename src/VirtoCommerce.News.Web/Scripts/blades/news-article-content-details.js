@@ -12,7 +12,6 @@ angular.module('VirtoCommerce.News')
                 const blade = $scope.blade;
 
                 //blade properties
-                blade.title = blade.isNew ? 'news.blades.news-article-content-details.title-add' : 'news.blades.news-article-content-details.title-edit';
                 blade.metaFields = metaFormsService.getMetaFields('newsArticleContentDetails');
                 blade.isLoading = false;
 
@@ -101,6 +100,10 @@ angular.module('VirtoCommerce.News')
                     }
                 }
 
+                function initializeTitle() {
+                    blade.title = blade.isNew ? 'news.blades.news-article-content-details.title-add' : 'news.blades.news-article-content-details.title-edit';
+                }
+
                 function createFileUploader() {
                     return new FileUploader({
                         url: 'api/assets?folderUrl=news-articles/' + blade.newsArticle.id,
@@ -124,5 +127,6 @@ angular.module('VirtoCommerce.News')
 
                 //calls
                 initializeToolbar();
+                initializeTitle();
                 blade.refresh();
             }]);
