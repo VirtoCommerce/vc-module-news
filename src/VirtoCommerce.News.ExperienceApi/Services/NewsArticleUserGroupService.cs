@@ -29,7 +29,7 @@ public class NewsArticleUserGroupService(IMemberResolver memberResolver, IMember
 
     protected virtual async Task<IList<string>> GetUserGroupsInheritedAsync(Contact contact)
     {
-        var userGroups = new List<string>();
+        var userGroups = new HashSet<string>();
 
         if (!contact.Groups.IsNullOrEmpty())
         {
@@ -42,6 +42,6 @@ public class NewsArticleUserGroupService(IMemberResolver memberResolver, IMember
             userGroups.AddRange(organizations.OfType<Organization>().SelectMany(x => x.Groups));
         }
 
-        return userGroups.Distinct().ToList();
+        return userGroups.ToList();
     }
 }
