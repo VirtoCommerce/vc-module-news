@@ -12,12 +12,15 @@ namespace VirtoCommerce.News.Data.Models;
 
 public class NewsArticleEntity : AuditableEntity, IDataEntity<NewsArticleEntity, NewsArticle>
 {
+    public const int StoreIdLength = DbContextBase.IdLength;
+    public const int NameLength = DbContextBase.Length1024;
+
     [Required]
-    [StringLength(DbContextBase.IdLength)]
+    [StringLength(StoreIdLength)]
     public string StoreId { get; set; }
 
     [Required]
-    [StringLength(DbContextBase.Length1024)]
+    [StringLength(NameLength)]
     public string Name { get; set; }
 
     [Required]

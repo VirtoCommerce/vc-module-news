@@ -9,16 +9,19 @@ namespace VirtoCommerce.News.Data.Models;
 
 public class NewsArticleLocalizedContentEntity : AuditableEntity, IDataEntity<NewsArticleLocalizedContentEntity, NewsArticleLocalizedContent>
 {
+    public const int LanguageCodeLength = DbContextBase.CultureNameLength;
+    public const int TitleLength = DbContextBase.Length1024;
+
     [Required]
     [StringLength(DbContextBase.IdLength)]
     public string NewsArticleId { get; set; }
 
     [Required]
-    [StringLength(DbContextBase.CultureNameLength)]
+    [StringLength(LanguageCodeLength)]
     public string LanguageCode { get; set; }
 
     [Required]
-    [StringLength(DbContextBase.Length1024)]
+    [StringLength(TitleLength)]
     public string Title { get; set; }
 
     [Required]
