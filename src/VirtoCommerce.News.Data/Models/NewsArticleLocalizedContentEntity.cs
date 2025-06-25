@@ -14,11 +14,11 @@ public class NewsArticleLocalizedContentEntity : AuditableEntity, IDataEntity<Ne
     public string NewsArticleId { get; set; }
 
     [Required]
-    [StringLength(5)]
+    [StringLength(DbContextBase.CultureNameLength)]
     public string LanguageCode { get; set; }
 
     [Required]
-    [StringLength(1024)]
+    [StringLength(DbContextBase.Length1024)]
     public string Title { get; set; }
 
     [Required]

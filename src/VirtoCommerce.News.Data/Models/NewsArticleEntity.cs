@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -18,7 +17,7 @@ public class NewsArticleEntity : AuditableEntity, IDataEntity<NewsArticleEntity,
     public string StoreId { get; set; }
 
     [Required]
-    [StringLength(1024)]
+    [StringLength(DbContextBase.Length1024)]
     public string Name { get; set; }
 
     [Required]
@@ -27,7 +26,7 @@ public class NewsArticleEntity : AuditableEntity, IDataEntity<NewsArticleEntity,
 
     public DateTime? PublishDate { get; set; }
 
-    public virtual IList<NewsArticleLocalizedContentEntity> LocalizedContents { get; set; } = new NullCollection<NewsArticleLocalizedContentEntity>();
+    public virtual ObservableCollection<NewsArticleLocalizedContentEntity> LocalizedContents { get; set; } = new NullCollection<NewsArticleLocalizedContentEntity>();
 
     public virtual ObservableCollection<SeoInfoEntity> SeoInfos { get; set; } = new NullCollection<SeoInfoEntity>();
 

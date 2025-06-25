@@ -12,29 +12,29 @@ public class SeoInfoEntity : AuditableEntity, IDataEntity<SeoInfoEntity, SeoInfo
     [StringLength(DbContextBase.IdLength)]
     public string NewsArticleId { get; set; }
 
-    [StringLength(128)]
+    [StringLength(DbContextBase.IdLength)]
     public string StoreId { get; set; }
 
-    [StringLength(255)]
+    [StringLength(DbContextBase.Length256)]
     [Required]
     public string Keyword { get; set; }
 
     [Required]
     public bool IsActive { get; set; }
 
-    [StringLength(5)]
+    [StringLength(DbContextBase.CultureNameLength)]
     public string Language { get; set; }
 
-    [StringLength(255)]
+    [StringLength(DbContextBase.Length256)]
     public string Title { get; set; }
 
-    [StringLength(1024)]
+    [StringLength(DbContextBase.Length1024)]
     public string MetaDescription { get; set; }
 
-    [StringLength(255)]
+    [StringLength(DbContextBase.Length256)]
     public string MetaKeywords { get; set; }
 
-    [StringLength(255)]
+    [StringLength(DbContextBase.Length256)]
     public string ImageAltDescription { get; set; }
 
     public virtual NewsArticleEntity NewsArticle { get; set; }

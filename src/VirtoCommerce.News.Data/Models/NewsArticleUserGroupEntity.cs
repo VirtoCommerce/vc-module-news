@@ -10,7 +10,8 @@ public class NewsArticleUserGroupEntity : Entity
     [StringLength(DbContextBase.IdLength)]
     public string NewsArticleId { get; set; }
 
-    [StringLength(64)]
+    [Required]
+    [StringLength(DbContextBase.Length64)]
     public string Group { get; set; }
 
     public virtual NewsArticleEntity NewsArticle { get; set; }
