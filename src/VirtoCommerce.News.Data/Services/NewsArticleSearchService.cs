@@ -31,7 +31,7 @@ public class NewsArticleSearchService(
 
         if (!criteria.SearchPhrase.IsNullOrEmpty())
         {
-            query = query.Where(x => x.Name.ToLower().Contains(criteria.SearchPhrase.ToLower()));
+            query = query.Where(x => x.Name.Contains(criteria.SearchPhrase));
         }
 
         if (criteria.Published.HasValue)
