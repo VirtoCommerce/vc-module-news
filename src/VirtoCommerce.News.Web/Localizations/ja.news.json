@@ -1,0 +1,96 @@
+{
+  "news": {
+    "main-menu-title": "[ja] News",
+    "blades": {
+      "news-article-list": {
+        "title": "[ja] Articles",
+        "labels": {
+          "store": "[ja] Store",
+          "name": "[ja] Name",
+          "is-published": "[ja] Is published"
+        }
+      },
+      "news-article-details": {
+        "title-add": "[ja] New article",
+        "title-edit": "[ja] Article",
+        "labels": {
+          "store": "[ja] Store",
+          "name": "[ja] Name",
+          "publish-date": "[ja] Publish date",
+          "user-groups": "[ja] User groups"
+        },
+        "placeholders": {
+          "store": "[ja] Store",
+          "name": "[ja] Name",
+          "publish-date": "[ja] Publish date",
+          "user-groups": "[ja] User groups"
+        },
+        "toolbar": {
+          "publish": "[ja] publish",
+          "unpublish": "[ja] unpublish"
+        }
+      },
+      "news-article-content-list": {
+        "title": "[ja] Localized content",
+        "labels": {
+          "language": "[ja] Language"
+        }
+      },
+      "news-article-content-details": {
+        "title-add": "[ja] New localized content",
+        "title-edit": "[ja] Localized content",
+        "labels": {
+          "language": "[ja] Language",
+          "title": "[ja] Title",
+          "content": "[ja] Content",
+          "content-preview": "[ja] Content (user preview)"
+        },
+        "placeholders": {
+          "language": "[ja] Language",
+          "title": "[ja] Title"
+        }
+      }
+    },
+    "dialogs": {
+      "news-article-save": {
+        "title": "[ja] Save changes",
+        "message": "[ja] The article has been modified. Do you want to save changes?"
+      },
+      "news-article-delete": {
+        "title": "[ja] Confirm delete",
+        "message-single": "[ja] Are you sure you want to delete the '{{name}}' article?",
+        "message-many": "[ja] Are you sure you want to delete {{count}} articles?"
+      },
+      "news-article-content-save": {
+        "title": "[ja] Save changes",
+        "message": "[ja] The content has been modified. Do you want to save changes?"
+      },
+      "news-article-content-delete": {
+        "title": "[ja] Confirm delete",
+        "message-single": "[ja] Are you sure you want to delete this localized to '{{language}}' language content?",
+        "message-many": "[ja] Are you sure you want to delete {{count}} localized content items?"
+      }
+    },
+    "widgets": {
+      "localized-contents": {
+        "title": "[ja] Content"
+      }
+    }
+  },
+  "permissions": {
+    "news:access": "[ja] Open News menu",
+    "news:create": "[ja] Create News related data",
+    "news:read": "[ja] View News related data",
+    "news:update": "[ja] Update News related data",
+    "news:delete": "[ja] Delete News related data",
+    "news:publish": "[ja] Publish News related data"
+  },
+  "settings": {
+    "News": {
+      "Enabled": {
+        "title": "[ja] News Enabled",
+        "description": "[ja] News Enabled setting"
+      }
+    }
+  }
+}
