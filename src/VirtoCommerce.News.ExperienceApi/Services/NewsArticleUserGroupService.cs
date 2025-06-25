@@ -42,6 +42,6 @@ public class NewsArticleUserGroupService(IMemberResolver memberResolver, IMember
             userGroups.AddRange(organizations.OfType<Organization>().SelectMany(x => x.Groups));
         }
 
-        return userGroups;
+        return userGroups.Distinct().ToList();
     }
 }

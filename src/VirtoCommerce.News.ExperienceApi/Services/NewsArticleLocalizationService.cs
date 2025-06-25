@@ -14,7 +14,7 @@ public class NewsArticleLocalizationService(IStoreService storeService) : INewsA
         string storeDefaultLanguage = null;
         if (!storeId.IsNullOrEmpty())
         {
-            var store = await storeService.GetByIdAsync(storeId, null, false);
+            var store = await storeService.GetNoCloneAsync(storeId);
             storeDefaultLanguage = store?.DefaultLanguage;
         }
 
@@ -26,7 +26,7 @@ public class NewsArticleLocalizationService(IStoreService storeService) : INewsA
                 .Where(lc => lc.LanguageCode.EqualsIgnoreCase(languageCode))
                 .ToList();
 
-            if (!newsArticle.LocalizedContents.Any())
+            if (newsArticle.LocalizedContents.Count == 0)
             {
                 newsArticle.LocalizedContents = allLocalizedContents
                     .Where(lc => lc.LanguageCode.EqualsIgnoreCase(storeDefaultLanguage))
