@@ -47,7 +47,7 @@ public class NewsArticleController(INewsArticleService newsArticleService, INews
     [Authorize(ModuleConstants.Security.Permissions.Read)]
     public async Task<ActionResult<NewsArticle>> Get([FromRoute] string id)
     {
-        var result = await newsArticleService.GetByIdAsync(id);
+        var result = await newsArticleService.GetNoCloneAsync(id);
         return Ok(result);
     }
 
@@ -56,7 +56,7 @@ public class NewsArticleController(INewsArticleService newsArticleService, INews
     [Authorize(ModuleConstants.Security.Permissions.Read)]
     public async Task<ActionResult<NewsArticleSearchResult>> Search([FromBody] NewsArticleSearchCriteria criteria)
     {
-        var result = await newsArticleSearchService.SearchAsync(criteria, false);
+        var result = await newsArticleSearchService.SearchNoCloneAsync(criteria);
         return Ok(result);
     }
 
