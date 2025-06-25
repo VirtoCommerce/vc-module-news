@@ -8,7 +8,7 @@ using VirtoCommerce.Xapi.Core;
 
 namespace VirtoCommerce.News.ExperienceApi.Services;
 
-public class NewsArticleUserGroupsService(IMemberResolver memberResolver, IMemberService memberService) : INewsArticleUserGroupsService
+public class NewsArticleUserGroupService(IMemberResolver memberResolver, IMemberService memberService) : INewsArticleUserGroupService
 {
     public virtual async Task<IList<string>> GetUserGroups(string userId)
     {

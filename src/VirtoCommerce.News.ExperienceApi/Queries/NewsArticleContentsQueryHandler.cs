@@ -11,7 +11,7 @@ public class NewsArticleContentsQueryHandler(
     INewsArticleSearchService newsArticleSearchService,
     INewsArticleLocalizationService newsArticleLocalizationService,
     INewsArticleSeoService newsArticleSeoService,
-    INewsArticleUserGroupsService newsArticleUserGroupsService)
+    INewsArticleUserGroupService newsArticleUserGroupsService)
     : IQueryHandler<NewsArticleContentsQuery, NewsArticleSearchResult>
 {
     public async Task<NewsArticleSearchResult> Handle(NewsArticleContentsQuery request, CancellationToken cancellationToken)
