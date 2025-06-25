@@ -1,95 +1,95 @@
 {
   "news": {
-    "main-menu-title": "[es] News",
+    "main-menu-title": "Noticias",
     "blades": {
       "news-article-list": {
-        "title": "[es] Articles",
+        "title": "Artículos",
         "labels": {
-          "store": "[es] Store",
-          "name": "[es] Name",
-          "is-published": "[es] Is published"
+          "store": "Tienda",
+          "name": "Nombre",
+          "is-published": "Está publicado"
         }
       },
       "news-article-details": {
-        "title-add": "[es] New article",
-        "title-edit": "[es] Article",
+        "title-add": "Nuevo artículo",
+        "title-edit": "Artículo",
         "labels": {
-          "store": "[es] Store",
-          "name": "[es] Name",
-          "publish-date": "[es] Publish date",
-          "user-groups": "[es] User groups"
+          "store": "Tienda",
+          "name": "Nombre",
+          "publish-date": "Fecha de publicación",
+          "user-groups": "Grupos de usuarios"
         },
         "placeholders": {
-          "store": "[es] Store",
-          "name": "[es] Name",
-          "publish-date": "[es] Publish date",
-          "user-groups": "[es] User groups"
+          "store": "Tienda",
+          "name": "Nombre",
+          "publish-date": "Fecha de publicación",
+          "user-groups": "Grupos de usuarios"
         },
         "toolbar": {
-          "publish": "[es] publish",
-          "unpublish": "[es] unpublish"
+          "publish": "publicar",
+          "unpublish": "despublicar"
         }
       },
       "news-article-content-list": {
-        "title": "[es] Localized content",
+        "title": "Contenido localizado",
         "labels": {
-          "language": "[es] Language"
+          "language": "Idioma"
         }
       },
       "news-article-content-details": {
-        "title-add": "[es] New localized content",
-        "title-edit": "[es] Localized content",
+        "title-add": "Nuevo contenido localizado",
+        "title-edit": "Contenido localizado",
         "labels": {
-          "language": "[es] Language",
-          "title": "[es] Title",
-          "content": "[es] Content",
-          "content-preview": "[es] Content (user preview)"
+          "language": "Idioma",
+          "title": "Título",
+          "content": "Contenido",
+          "content-preview": "Contenido (vista previa del usuario)"
         },
         "placeholders": {
-          "language": "[es] Language",
-          "title": "[es] Title"
+          "language": "Idioma",
+          "title": "Título"
         }
       }
     },
     "dialogs": {
       "news-article-save": {
-        "title": "[es] Save changes",
-        "message": "[es] The article has been modified. Do you want to save changes?"
+        "title": "Guardar cambios",
+        "message": "El artículo ha sido modificado. ¿Desea guardar los cambios?"
       },
       "news-article-delete": {
-        "title": "[es] Confirm delete",
-        "message-single": "[es] Are you sure you want to delete the '{{name}}' article?",
-        "message-many": "[es] Are you sure you want to delete {{count}} articles?"
+        "title": "Confirmar eliminación",
+        "message-single": "¿Está seguro de que desea eliminar el artículo '{{name}}'?",
+        "message-many": "¿Está seguro de que desea eliminar {{count}} artículos?"
       },
       "news-article-content-save": {
-        "title": "[es] Save changes",
-        "message": "[es] The content has been modified. Do you want to save changes?"
+        "title": "Guardar cambios",
+        "message": "El contenido ha sido modificado. ¿Desea guardar los cambios?"
       },
       "news-article-content-delete": {
-        "title": "[es] Confirm delete",
-        "message-single": "[es] Are you sure you want to delete this localized to '{{language}}' language content?",
-        "message-many": "[es] Are you sure you want to delete {{count}} localized content items?"
+        "title": "Confirmar eliminación",
+        "message-single": "¿Está seguro de que desea eliminar este contenido localizado en el idioma '{{language}}'?",
+        "message-many": "¿Está seguro de que desea eliminar {{count}} contenidos localizados?"
       }
     },
     "widgets": {
       "localized-contents": {
-        "title": "[es] Content"
+        "title": "Contenido"
       }
     }
   },
   "permissions": {
-    "news:access": "[es] Open News menu",
-    "news:create": "[es] Create News related data",
-    "news:read": "[es] View News related data",
-    "news:update": "[es] Update News related data",
-    "news:delete": "[es] Delete News related data",
-    "news:publish": "[es] Publish News related data"
+    "news:access": "Abrir menú de Noticias",
+    "news:create": "Crear datos relacionados con Noticias",
+    "news:read": "Ver datos relacionados con Noticias",
+    "news:update": "Actualizar datos relacionados con Noticias",
+    "news:delete": "Eliminar datos relacionados con Noticias",
+    "news:publish": "Publicar datos relacionados con Noticias"
   },
   "settings": {
     "News": {
       "Enabled": {
-        "title": "[es] News Enabled",
-        "description": "[es] News Enabled setting"
+        "title": "Noticias habilitadas",
+        "description": "Configuración de Noticias habilitadas"
       }
     }
   }

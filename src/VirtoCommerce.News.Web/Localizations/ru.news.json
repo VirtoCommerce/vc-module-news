@@ -1,95 +1,95 @@
 {
   "news": {
-    "main-menu-title": "[ru] News",
+    "main-menu-title": "Новости",
     "blades": {
       "news-article-list": {
-        "title": "[ru] Articles",
+        "title": "Статьи",
         "labels": {
-          "store": "[ru] Store",
-          "name": "[ru] Name",
-          "is-published": "[ru] Is published"
+          "store": "Магазин",
+          "name": "Название",
+          "is-published": "Опубликовано"
         }
       },
       "news-article-details": {
-        "title-add": "[ru] New article",
-        "title-edit": "[ru] Article",
+        "title-add": "Новая статья",
+        "title-edit": "Статья",
         "labels": {
-          "store": "[ru] Store",
-          "name": "[ru] Name",
-          "publish-date": "[ru] Publish date",
-          "user-groups": "[ru] User groups"
+          "store": "Магазин",
+          "name": "Название",
+          "publish-date": "Дата публикации",
+          "user-groups": "Группы пользователей"
         },
         "placeholders": {
-          "store": "[ru] Store",
-          "name": "[ru] Name",
-          "publish-date": "[ru] Publish date",
-          "user-groups": "[ru] User groups"
+          "store": "Магазин",
+          "name": "Название",
+          "publish-date": "Дата публикации",
+          "user-groups": "Группы пользователей"
         },
         "toolbar": {
-          "publish": "[ru] publish",
-          "unpublish": "[ru] unpublish"
+          "publish": "опубликовать",
+          "unpublish": "снять с публикации"
         }
       },
       "news-article-content-list": {
-        "title": "[ru] Localized content",
+        "title": "Локализованный контент",
         "labels": {
-          "language": "[ru] Language"
+          "language": "Язык"
         }
       },
       "news-article-content-details": {
-        "title-add": "[ru] New localized content",
-        "title-edit": "[ru] Localized content",
+        "title-add": "Новый локализованный контент",
+        "title-edit": "Локализованный контент",
         "labels": {
-          "language": "[ru] Language",
-          "title": "[ru] Title",
-          "content": "[ru] Content",
-          "content-preview": "[ru] Content (user preview)"
+          "language": "Язык",
+          "title": "Заголовок",
+          "content": "Содержимое",
+          "content-preview": "Содержимое (предварительный просмотр)"
         },
         "placeholders": {
-          "language": "[ru] Language",
-          "title": "[ru] Title"
+          "language": "Язык",
+          "title": "Заголовок"
         }
       }
     },
     "dialogs": {
       "news-article-save": {
-        "title": "[ru] Save changes",
-        "message": "[ru] The article has been modified. Do you want to save changes?"
+        "title": "Сохранить изменения",
+        "message": "Статья была изменена. Хотите сохранить изменения?"
       },
       "news-article-delete": {
-        "title": "[ru] Confirm delete",
-        "message-single": "[ru] Are you sure you want to delete the '{{name}}' article?",
-        "message-many": "[ru] Are you sure you want to delete {{count}} articles?"
+        "title": "Подтвердите удаление",
+        "message-single": "Вы уверены, что хотите удалить статью '{{name}}'?",
+        "message-many": "Вы уверены, что хотите удалить {{count}} статей?"
       },
       "news-article-content-save": {
-        "title": "[ru] Save changes",
-        "message": "[ru] The content has been modified. Do you want to save changes?"
+        "title": "Сохранить изменения",
+        "message": "Контент был изменён. Хотите сохранить изменения?"
       },
       "news-article-content-delete": {
-        "title": "[ru] Confirm delete",
-        "message-single": "[ru] Are you sure you want to delete this localized to '{{language}}' language content?",
-        "message-many": "[ru] Are you sure you want to delete {{count}} localized content items?"
+        "title": "Подтвердите удаление",
+        "message-single": "Вы уверены, что хотите удалить контент, локализованный для языка '{{language}}'?",
+        "message-many": "Вы уверены, что хотите удалить {{count}} локализованных элементов?"
       }
     },
     "widgets": {
       "localized-contents": {
-        "title": "[ru] Content"
+        "title": "Содержимое"
       }
     }
   },
   "permissions": {
-    "news:access": "[ru] Open News menu",
-    "news:create": "[ru] Create News related data",
-    "news:read": "[ru] View News related data",
-    "news:update": "[ru] Update News related data",
-    "news:delete": "[ru] Delete News related data",
-    "news:publish": "[ru] Publish News related data"
+    "news:access": "Открыть меню Новостей",
+    "news:create": "Создать данные, связанные с Новостями",
+    "news:read": "Просмотреть данные, связанные с Новостями",
+    "news:update": "Обновить данные, связанные с Новостями",
+    "news:delete": "Удалить данные, связанные с Новостями",
+    "news:publish": "Опубликовать данные, связанные с Новостями"
   },
   "settings": {
     "News": {
       "Enabled": {
-        "title": "[ru] News Enabled",
-        "description": "[ru] News Enabled setting"
+        "title": "Новости включены",
+        "description": "Настройка включения Новостей"
       }
     }
   }

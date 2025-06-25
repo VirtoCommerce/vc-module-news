@@ -1,95 +1,95 @@
 {
   "news": {
-    "main-menu-title": "[zh] News",
+    "main-menu-title": "新闻",
     "blades": {
       "news-article-list": {
-        "title": "[zh] Articles",
+        "title": "文章",
         "labels": {
-          "store": "[zh] Store",
-          "name": "[zh] Name",
-          "is-published": "[zh] Is published"
+          "store": "商店",
+          "name": "名称",
+          "is-published": "已发布"
         }
       },
       "news-article-details": {
-        "title-add": "[zh] New article",
-        "title-edit": "[zh] Article",
+        "title-add": "新文章",
+        "title-edit": "文章",
         "labels": {
-          "store": "[zh] Store",
-          "name": "[zh] Name",
-          "publish-date": "[zh] Publish date",
-          "user-groups": "[zh] User groups"
+          "store": "商店",
+          "name": "名称",
+          "publish-date": "发布日期",
+          "user-groups": "用户组"
         },
         "placeholders": {
-          "store": "[zh] Store",
-          "name": "[zh] Name",
-          "publish-date": "[zh] Publish date",
-          "user-groups": "[zh] User groups"
+          "store": "商店",
+          "name": "名称",
+          "publish-date": "发布日期",
+          "user-groups": "用户组"
         },
         "toolbar": {
-          "publish": "[zh] publish",
-          "unpublish": "[zh] unpublish"
+          "publish": "发布",
+          "unpublish": "取消发布"
         }
       },
       "news-article-content-list": {
-        "title": "[zh] Localized content",
+        "title": "本地化内容",
         "labels": {
-          "language": "[zh] Language"
+          "language": "语言"
         }
       },
       "news-article-content-details": {
-        "title-add": "[zh] New localized content",
-        "title-edit": "[zh] Localized content",
+        "title-add": "新增本地化内容",
+        "title-edit": "本地化内容",
         "labels": {
-          "language": "[zh] Language",
-          "title": "[zh] Title",
-          "content": "[zh] Content",
-          "content-preview": "[zh] Content (user preview)"
+          "language": "语言",
+          "title": "标题",
+          "content": "内容",
+          "content-preview": "内容（用户预览）"
         },
         "placeholders": {
-          "language": "[zh] Language",
-          "title": "[zh] Title"
+          "language": "语言",
+          "title": "标题"
         }
       }
     },
     "dialogs": {
       "news-article-save": {
-        "title": "[zh] Save changes",
-        "message": "[zh] The article has been modified. Do you want to save changes?"
+        "title": "保存更改",
+        "message": "文章已被修改。您想保存更改吗？"
       },
       "news-article-delete": {
-        "title": "[zh] Confirm delete",
-        "message-single": "[zh] Are you sure you want to delete the '{{name}}' article?",
-        "message-many": "[zh] Are you sure you want to delete {{count}} articles?"
+        "title": "确认删除",
+        "message-single": "您确定要删除文章“{{name}}”吗？",
+        "message-many": "您确定要删除 {{count}} 篇文章吗？"
       },
       "news-article-content-save": {
-        "title": "[zh] Save changes",
-        "message": "[zh] The content has been modified. Do you want to save changes?"
+        "title": "保存更改",
+        "message": "内容已被修改。您想保存更改吗？"
       },
       "news-article-content-delete": {
-        "title": "[zh] Confirm delete",
-        "message-single": "[zh] Are you sure you want to delete this localized to '{{language}}' language content?",
-        "message-many": "[zh] Are you sure you want to delete {{count}} localized content items?"
+        "title": "确认删除",
+        "message-single": "您确定要删除“{{language}}”语言的本地化内容吗？",
+        "message-many": "您确定要删除 {{count}} 条本地化内容吗？"
       }
     },
     "widgets": {
       "localized-contents": {
-        "title": "[zh] Content"
+        "title": "内容"
       }
     }
   },
   "permissions": {
-    "news:access": "[zh] Open News menu",
-    "news:create": "[zh] Create News related data",
-    "news:read": "[zh] View News related data",
-    "news:update": "[zh] Update News related data",
-    "news:delete": "[zh] Delete News related data",
-    "news:publish": "[zh] Publish News related data"
+    "news:access": "打开新闻菜单",
+    "news:create": "创建新闻相关数据",
+    "news:read": "查看新闻相关数据",
+    "news:update": "更新新闻相关数据",
+    "news:delete": "删除新闻相关数据",
+    "news:publish": "发布新闻相关数据"
   },
   "settings": {
     "News": {
       "Enabled": {
-        "title": "[zh] News Enabled",
-        "description": "[zh] News Enabled setting"
+        "title": "启用新闻",
+        "description": "启用新闻的设置"
       }
     }
   }

@@ -1,95 +1,95 @@
 {
   "news": {
-    "main-menu-title": "[ja] News",
+    "main-menu-title": "ニュース",
     "blades": {
       "news-article-list": {
-        "title": "[ja] Articles",
+        "title": "記事",
         "labels": {
-          "store": "[ja] Store",
-          "name": "[ja] Name",
-          "is-published": "[ja] Is published"
+          "store": "ストア",
+          "name": "名前",
+          "is-published": "公開されています"
         }
       },
       "news-article-details": {
-        "title-add": "[ja] New article",
-        "title-edit": "[ja] Article",
+        "title-add": "新しい記事",
+        "title-edit": "記事",
         "labels": {
-          "store": "[ja] Store",
-          "name": "[ja] Name",
-          "publish-date": "[ja] Publish date",
-          "user-groups": "[ja] User groups"
+          "store": "ストア",
+          "name": "名前",
+          "publish-date": "公開日",
+          "user-groups": "ユーザーグループ"
         },
         "placeholders": {
-          "store": "[ja] Store",
-          "name": "[ja] Name",
-          "publish-date": "[ja] Publish date",
-          "user-groups": "[ja] User groups"
+          "store": "ストア",
+          "name": "名前",
+          "publish-date": "公開日",
+          "user-groups": "ユーザーグループ"
         },
         "toolbar": {
-          "publish": "[ja] publish",
-          "unpublish": "[ja] unpublish"
+          "publish": "公開",
+          "unpublish": "非公開"
         }
       },
       "news-article-content-list": {
-        "title": "[ja] Localized content",
+        "title": "ローカライズされたコンテンツ",
         "labels": {
-          "language": "[ja] Language"
+          "language": "言語"
         }
       },
       "news-article-content-details": {
-        "title-add": "[ja] New localized content",
-        "title-edit": "[ja] Localized content",
+        "title-add": "新しいローカライズコンテンツ",
+        "title-edit": "ローカライズされたコンテンツ",
         "labels": {
-          "language": "[ja] Language",
-          "title": "[ja] Title",
-          "content": "[ja] Content",
-          "content-preview": "[ja] Content (user preview)"
+          "language": "言語",
+          "title": "タイトル",
+          "content": "コンテンツ",
+          "content-preview": "コンテンツ（ユーザープレビュー）"
         },
         "placeholders": {
-          "language": "[ja] Language",
-          "title": "[ja] Title"
+          "language": "言語",
+          "title": "タイトル"
         }
       }
     },
     "dialogs": {
       "news-article-save": {
-        "title": "[ja] Save changes",
-        "message": "[ja] The article has been modified. Do you want to save changes?"
+        "title": "変更を保存",
+        "message": "記事が変更されました。変更を保存しますか？"
       },
       "news-article-delete": {
-        "title": "[ja] Confirm delete",
-        "message-single": "[ja] Are you sure you want to delete the '{{name}}' article?",
-        "message-many": "[ja] Are you sure you want to delete {{count}} articles?"
+        "title": "削除の確認",
+        "message-single": "「{{name}}」という記事を削除してもよろしいですか？",
+        "message-many": "{{count}} 件の記事を削除してもよろしいですか？"
       },
       "news-article-content-save": {
-        "title": "[ja] Save changes",
-        "message": "[ja] The content has been modified. Do you want to save changes?"
+        "title": "変更を保存",
+        "message": "コンテンツが変更されました。変更を保存しますか？"
       },
       "news-article-content-delete": {
-        "title": "[ja] Confirm delete",
-        "message-single": "[ja] Are you sure you want to delete this localized to '{{language}}' language content?",
-        "message-many": "[ja] Are you sure you want to delete {{count}} localized content items?"
+        "title": "削除の確認",
+        "message-single": "この「{{language}}」言語のローカライズコンテンツを削除してもよろしいですか？",
+        "message-many": "{{count}} 件のローカライズされたコンテンツを削除してもよろしいですか？"
       }
     },
     "widgets": {
       "localized-contents": {
-        "title": "[ja] Content"
+        "title": "コンテンツ"
       }
     }
   },
   "permissions": {
-    "news:access": "[ja] Open News menu",
-    "news:create": "[ja] Create News related data",
-    "news:read": "[ja] View News related data",
-    "news:update": "[ja] Update News related data",
-    "news:delete": "[ja] Delete News related data",
-    "news:publish": "[ja] Publish News related data"
+    "news:access": "ニュースメニューを開く",
+    "news:create": "ニュース関連データを作成",
+    "news:read": "ニュース関連データを表示",
+    "news:update": "ニュース関連データを更新",
+    "news:delete": "ニュース関連データを削除",
+    "news:publish": "ニュース関連データを公開"
   },
   "settings": {
     "News": {
       "Enabled": {
-        "title": "[ja] News Enabled",
-        "description": "[ja] News Enabled setting"
+        "title": "ニュース機能を有効化",
+        "description": "ニュース機能の有効化設定"
       }
     }
   }
