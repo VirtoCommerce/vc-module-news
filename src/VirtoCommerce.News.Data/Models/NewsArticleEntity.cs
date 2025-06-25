@@ -23,7 +23,6 @@ public class NewsArticleEntity : AuditableEntity, IDataEntity<NewsArticleEntity,
     [StringLength(NameLength)]
     public string Name { get; set; }
 
-    [Required]
     public bool IsPublished { get; set; }
     private bool? _isPublishedValue;
 

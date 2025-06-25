@@ -19,7 +19,6 @@ public class SeoInfoEntity : AuditableEntity, IDataEntity<SeoInfoEntity, SeoInfo
     [Required]
     public string Keyword { get; set; }
 
-    [Required]
     public bool IsActive { get; set; }
 
     [StringLength(DbContextBase.CultureNameLength)]
