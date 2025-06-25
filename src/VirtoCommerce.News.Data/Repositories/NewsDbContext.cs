@@ -1,6 +1,7 @@
 using System.Reflection;
 using Microsoft.EntityFrameworkCore;
 using VirtoCommerce.News.Data.Models;
+using VirtoCommerce.Platform.Data.Extensions;
 using VirtoCommerce.Platform.Data.Infrastructure;
 
 namespace VirtoCommerce.News.Data.Repositories;
@@ -21,22 +22,21 @@ public class NewsDbContext : DbContextBase
     {
         base.OnModelCreating(modelBuilder);
 
-        modelBuilder.Entity<NewsArticleEntity>().ToTable("NewsArticle").HasKey(x => x.Id);
+        modelBuilder.Entity<NewsArticleEntity>().ToAuditableEntityTable("NewsArticle").HasKey(x => x.Id);
         modelBuilder.Entity<NewsArticleEntity>().Property(x => x.Id).HasMaxLength(IdLength).ValueGeneratedOnAdd();
 
-        modelBuilder.Entity<NewsArticleLocalizedContentEntity>().ToTable("NewsArticleLocalizedContent").HasKey(x => x.Id);
+        modelBuilder.Entity<NewsArticleLocalizedContentEntity>().ToAuditableEntityTable("NewsArticleLocalizedContent").HasKey(x => x.Id);
         modelBuilder.Entity<NewsArticleLocalizedContentEntity>().Property(x => x.Id).HasMaxLength(IdLength).ValueGeneratedOnAdd();
         modelBuilder.Entity<NewsArticleLocalizedContentEntity>().HasOne(x => x.NewsArticle).WithMany(x => x.LocalizedContents)
              .HasForeignKey(x => x.NewsArticleId).IsRequired().OnDelete(DeleteBehavior.Cascade);
 
-        modelBuilder.Entity<SeoInfoEntity>().ToTable("NewsArticleSeoInfo").HasKey(x => x.Id);
+        modelBuilder.Entity<SeoInfoEntity>().ToAuditableEntityTable("NewsArticleSeoInfo").HasKey(x => x.Id);
         modelBuilder.Entity<SeoInfoEntity>().Property(x => x.Id).HasMaxLength(IdLength).ValueGeneratedOnAdd();
         modelBuilder.Entity<SeoInfoEntity>().HasOne(x => x.NewsArticle).WithMany(x => x.SeoInfos)
              .HasForeignKey(x => x.NewsArticleId).IsRequired().OnDelete(DeleteBehavior.Cascade);
 
-        modelBuilder.Entity<NewsArticleUserGroupEntity>().HasKey(x => x.Id);
+        modelBuilder.Entity<NewsArticleUserGroupEntity>().ToEntityTable("NewsArticleUserGroup").HasKey(x => x.Id);
         modelBuilder.Entity<NewsArticleUserGroupEntity>().Property(x => x.Id).HasMaxLength(IdLength).ValueGeneratedOnAdd();
-        modelBuilder.Entity<NewsArticleUserGroupEntity>().ToTable("NewsArticleUserGroup");
 
         modelBuilder.Entity<NewsArticleUserGroupEntity>().HasOne(m => m.NewsArticle).WithMany(m => m.UserGroups)
             .HasForeignKey(m => m.NewsArticleId).IsRequired().OnDelete(DeleteBehavior.Cascade);
