@@ -10,7 +10,8 @@ public class NewsArticleContentQueryBuilder : QueryBuilder<NewsArticleContentQue
 {
     protected override string Name => "newsArticleContent";
 
-    public NewsArticleContentQueryBuilder(IMediator mediator, IAuthorizationService authorizationService) : base(mediator, authorizationService)
+    public NewsArticleContentQueryBuilder(IMediator mediator, IAuthorizationService authorizationService)
+        : base(mediator, authorizationService)
     {
     }
 }

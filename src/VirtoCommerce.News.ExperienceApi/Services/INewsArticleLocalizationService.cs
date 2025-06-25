@@ -6,5 +6,5 @@ namespace VirtoCommerce.News.ExperienceApi.Services;
 
 public interface INewsArticleLocalizationService
 {
-    Task FilterLanguagesAsync(IEnumerable<NewsArticle> newsArticles, string languageCode, string storeId);
+    Task FilterLanguagesAsync(IList<NewsArticle> newsArticles, string languageCode, string storeId);
 }

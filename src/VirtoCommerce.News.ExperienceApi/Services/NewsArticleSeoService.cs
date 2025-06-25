@@ -10,7 +10,7 @@ namespace VirtoCommerce.News.ExperienceApi.Services;
 
 public class NewsArticleSeoService(IStoreService storeService) : INewsArticleSeoService
 {
-    public virtual async Task FilterSeoInfosAsync(IEnumerable<NewsArticle> newsArticles, string languageCode, string storeId)
+    public virtual async Task FilterSeoInfosAsync(IList<NewsArticle> newsArticles, string languageCode, string storeId)
     {
         string storeDefaultLanguage = null;
         if (!storeId.IsNullOrEmpty())

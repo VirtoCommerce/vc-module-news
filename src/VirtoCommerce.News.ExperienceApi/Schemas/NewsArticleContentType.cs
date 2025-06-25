@@ -18,10 +18,12 @@ public class NewsArticleContentType : ExtendableGraphType<NewsArticle>
         {
             return context.Source.LocalizedContents.FirstOrDefault()?.Title;
         });
+
         Field<StringGraphType>("content").Resolve(context =>
         {
             return context.Source.LocalizedContents.FirstOrDefault()?.Content;
         });
+
         Field<StringGraphType>("contentPreview").Resolve(context =>
         {
             return context.Source.LocalizedContents.FirstOrDefault()?.ContentPreview;
