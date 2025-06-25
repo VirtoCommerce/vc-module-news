@@ -29,11 +29,13 @@ public class NewsArticleRepository(NewsDbContext dbContext, IUnitOfWork unitOfWo
             await NewsArticleLocalizedContents
                 .Where(lc => ids.Contains(lc.NewsArticleId))
                 .LoadAsync();
+
             await NewsArticleSeoInfos
-                .Where(lc => ids.Contains(lc.NewsArticleId))
+                .Where(seo => ids.Contains(seo.NewsArticleId))
                 .LoadAsync();
+
             await NewsArticleUserGroups
-                .Where(lc => ids.Contains(lc.NewsArticleId))
+                .Where(ug => ids.Contains(ug.NewsArticleId))
                 .LoadAsync();
         }
 

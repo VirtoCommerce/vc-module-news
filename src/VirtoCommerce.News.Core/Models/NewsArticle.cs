@@ -32,7 +32,7 @@ public class NewsArticle : AuditableEntity, ICloneable, ISeoSupport
     {
         var result = (NewsArticle)MemberwiseClone();
 
-        result.SeoInfos = SeoInfos?.Select(x => x.Clone()).OfType<SeoInfo>().ToList();
+        result.SeoInfos = SeoInfos?.Select(x => x.CloneTyped()).ToList();
         result.LocalizedContents = LocalizedContents?.Select(x => x.CloneTyped()).ToList();
 
         return result;

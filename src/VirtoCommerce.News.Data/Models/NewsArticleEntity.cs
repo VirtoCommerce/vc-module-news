@@ -70,13 +70,13 @@ public class NewsArticleEntity : AuditableEntity, IDataEntity<NewsArticleEntity,
 
         StoreId = model.StoreId;
         Name = model.Name;
+        PublishDate = model.PublishDate;
+
         if (model.IsPublishedValue.HasValue)
         {
             IsPublished = model.IsPublishedValue.Value;
             _isPublishedValue = model.IsPublishedValue;
         }
-
-        PublishDate = model.PublishDate;
 
         if (model.LocalizedContents != null)
         {
@@ -109,21 +109,23 @@ public class NewsArticleEntity : AuditableEntity, IDataEntity<NewsArticleEntity,
 
         target.StoreId = StoreId;
         target.Name = Name;
+        target.PublishDate = PublishDate;
 
         if (_isPublishedValue.HasValue)
         {
             target.IsPublished = _isPublishedValue.Value;
         }
-        target.PublishDate = PublishDate;
 
         if (!LocalizedContents.IsNullCollection())
         {
             LocalizedContents.Patch(target.LocalizedContents, (source, target) => source.Patch(target));
         }
+
         if (!SeoInfos.IsNullCollection())
         {
             SeoInfos.Patch(target.SeoInfos, (sourceSeoInfo, targetSeoInfo) => sourceSeoInfo.Patch(targetSeoInfo));
         }
+
         if (!UserGroups.IsNullCollection())
         {
             var userGroupComparer = AnonymousComparer.Create((NewsArticleUserGroupEntity x) => x.Group);
