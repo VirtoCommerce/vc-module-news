@@ -12,8 +12,8 @@ using VirtoCommerce.News.Data.Repositories;
 namespace VirtoCommerce.News.Data.MySql.Migrations
 {
     [DbContext(typeof(NewsDbContext))]
-    [Migration("20250623173110_News_UserGroups")]
-    partial class News_UserGroups
+    [Migration("20250625185107_News_Initial")]
+    partial class News_Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -90,8 +90,8 @@ namespace VirtoCommerce.News.Data.MySql.Migrations
 
                     b.Property<string>("LanguageCode")
                         .IsRequired()
-                        .HasMaxLength(5)
-                        .HasColumnType("varchar(5)");
+                        .HasMaxLength(16)
+                        .HasColumnType("varchar(16)");
 
                     b.Property<string>("ModifiedBy")
                         .HasMaxLength(64)
@@ -125,6 +125,7 @@ namespace VirtoCommerce.News.Data.MySql.Migrations
                         .HasColumnType("varchar(128)");
 
                     b.Property<string>("Group")
+                        .IsRequired()
                         .HasMaxLength(64)
                         .HasColumnType("varchar(64)");
 
@@ -155,28 +156,28 @@ namespace VirtoCommerce.News.Data.MySql.Migrations
                         .HasColumnType("datetime(6)");
 
                     b.Property<string>("ImageAltDescription")
-                        .HasMaxLength(255)
-                        .HasColumnType("varchar(255)");
+                        .HasMaxLength(256)
+                        .HasColumnType("varchar(256)");
 
                     b.Property<bool>("IsActive")
                         .HasColumnType("tinyint(1)");
 
                     b.Property<string>("Keyword")
                         .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("varchar(255)");
+                        .HasMaxLength(256)
+                        .HasColumnType("varchar(256)");
 
                     b.Property<string>("Language")
-                        .HasMaxLength(5)
-                        .HasColumnType("varchar(5)");
+                        .HasMaxLength(16)
+                        .HasColumnType("varchar(16)");
 
                     b.Property<string>("MetaDescription")
                         .HasMaxLength(1024)
                         .HasColumnType("varchar(1024)");
 
                     b.Property<string>("MetaKeywords")
-                        .HasMaxLength(255)
-                        .HasColumnType("varchar(255)");
+                        .HasMaxLength(256)
+                        .HasColumnType("varchar(256)");
 
                     b.Property<string>("ModifiedBy")
                         .HasMaxLength(64)
@@ -195,8 +196,8 @@ namespace VirtoCommerce.News.Data.MySql.Migrations
                         .HasColumnType("varchar(128)");
 
                     b.Property<string>("Title")
-                        .HasMaxLength(255)
-                        .HasColumnType("varchar(255)");
+                        .HasMaxLength(256)
+                        .HasColumnType("varchar(256)");
 
                     b.HasKey("Id");
 
