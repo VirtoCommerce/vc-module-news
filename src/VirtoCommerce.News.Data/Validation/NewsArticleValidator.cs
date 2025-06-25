@@ -6,13 +6,13 @@ namespace VirtoCommerce.News.Data.Validation;
 
 public class NewsArticleValidator : AbstractValidator<NewsArticle>
 {
-    public NewsArticleValidator()
+    public NewsArticleValidator(AbstractValidator<NewsArticleLocalizedContent> newsArticleLocalizedContentValidator)
     {
         RuleFor(na => na.StoreId).NotNull().NotEmpty().MaximumLength(NewsArticleEntity.StoreIdLength);
         RuleFor(na => na.Name).NotNull().NotEmpty().MaximumLength(NewsArticleEntity.NameLength);
 
         RuleFor(na => na.LocalizedContents).NotEmpty().When(na => na.IsPublished);
 
-        RuleForEach(na => na.LocalizedContents).SetValidator(new NewsArticleLocalizedContentValidator());
+        RuleForEach(na => na.LocalizedContents).SetValidator(newsArticleLocalizedContentValidator);
     }
 }

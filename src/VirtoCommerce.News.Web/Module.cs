@@ -1,15 +1,18 @@
 using System;
+using FluentValidation;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using VirtoCommerce.News.Core;
+using VirtoCommerce.News.Core.Models;
 using VirtoCommerce.News.Core.Services;
 using VirtoCommerce.News.Data.MySql;
 using VirtoCommerce.News.Data.PostgreSql;
 using VirtoCommerce.News.Data.Repositories;
 using VirtoCommerce.News.Data.Services;
 using VirtoCommerce.News.Data.SqlServer;
+using VirtoCommerce.News.Data.Validation;
 using VirtoCommerce.News.ExperienceApi;
 using VirtoCommerce.News.ExperienceApi.Extensions;
 using VirtoCommerce.Platform.Core.Modularity;
@@ -53,6 +56,9 @@ public class Module : IModule, IHasConfiguration
 
         serviceCollection.AddTransient<INewsArticleService, NewsArticleService>();
         serviceCollection.AddTransient<INewsArticleSearchService, NewsArticleSearchService>();
+
+        serviceCollection.AddTransient<AbstractValidator<NewsArticle>, NewsArticleValidator>();
+        serviceCollection.AddTransient<AbstractValidator<NewsArticleLocalizedContent>, NewsArticleLocalizedContentValidator>();
 
         // GraphQL
         serviceCollection.AddExperienceApi();

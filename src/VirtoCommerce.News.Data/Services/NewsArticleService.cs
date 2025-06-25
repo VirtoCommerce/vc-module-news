@@ -7,7 +7,6 @@ using VirtoCommerce.News.Core.Models;
 using VirtoCommerce.News.Core.Services;
 using VirtoCommerce.News.Data.Models;
 using VirtoCommerce.News.Data.Repositories;
-using VirtoCommerce.News.Data.Validation;
 using VirtoCommerce.Platform.Core.Caching;
 using VirtoCommerce.Platform.Core.Common;
 using VirtoCommerce.Platform.Core.Events;
@@ -18,7 +17,8 @@ namespace VirtoCommerce.News.Data.Services;
 public class NewsArticleService(
         Func<INewsArticleRepository> repositoryFactory,
         IPlatformMemoryCache platformMemoryCache,
-        IEventPublisher eventPublisher)
+        IEventPublisher eventPublisher,
+        AbstractValidator<NewsArticle> newsArticleValidator)
     : CrudService<NewsArticle, NewsArticleEntity, NewsArticleChangingEvent, NewsArticleChangedEvent>(
         repositoryFactory,
         platformMemoryCache,
@@ -38,11 +38,9 @@ public class NewsArticleService(
 
     protected virtual async Task Validate(IList<NewsArticle> newsArticles)
     {
-        var validator = new NewsArticleValidator();
-
         foreach (var newsArticle in newsArticles)
         {
-            await validator.ValidateAndThrowAsync(newsArticle);
+            await newsArticleValidator.ValidateAndThrowAsync(newsArticle);
         }
     }
 
