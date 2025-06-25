@@ -19,7 +19,6 @@ using VirtoCommerce.Platform.Data.MySql.Extensions;
 using VirtoCommerce.Platform.Data.PostgreSql.Extensions;
 using VirtoCommerce.Platform.Data.SqlServer.Extensions;
 using VirtoCommerce.Xapi.Core.Extensions;
-using VirtoCommerce.Xapi.Core.Infrastructure;
 
 namespace VirtoCommerce.News.Web;
 
@@ -54,8 +53,6 @@ public class Module : IModule, IHasConfiguration
 
         serviceCollection.AddTransient<INewsArticleService, NewsArticleService>();
         serviceCollection.AddTransient<INewsArticleSearchService, NewsArticleSearchService>();
-
-        serviceCollection.AddSingleton<ScopedSchemaFactory<XapiAssemblyMarker>>();
 
         // GraphQL
         serviceCollection.AddExperienceApi();
