@@ -6,11 +6,11 @@ using VirtoCommerce.Xapi.Core.BaseQueries;
 
 namespace VirtoCommerce.News.ExperienceApi.Queries;
 
-public class NewsArticleContentQueryBuilder : QueryBuilder<NewsArticleContentQuery, NewsArticle, NewsArticleContentType>
+public class NewsArticleQueryBuilder : QueryBuilder<NewsArticleQuery, NewsArticle, NewsArticleContentType>
 {
-    protected override string Name => "newsArticleContent";
+    protected override string Name => "newsArticle";
 
-    public NewsArticleContentQueryBuilder(IMediator mediator, IAuthorizationService authorizationService)
+    public NewsArticleQueryBuilder(IMediator mediator, IAuthorizationService authorizationService)
         : base(mediator, authorizationService)
     {
     }

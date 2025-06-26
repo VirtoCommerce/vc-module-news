@@ -6,23 +6,30 @@ using VirtoCommerce.Xapi.Core.BaseQueries;
 
 namespace VirtoCommerce.News.ExperienceApi.Queries;
 
-public class NewsArticleContentQuery : Query<NewsArticle>
+public class NewsArticlesQuery : SearchQuery<NewsArticleSearchResult>
 {
-    public string Id { get; set; }
     public string StoreId { get; set; }
     public string LanguageCode { get; set; }
+    public string UserId { get; set; }
 
     public override IEnumerable<QueryArgument> GetArguments()
     {
-        yield return Argument<NonNullGraphType<StringGraphType>>(nameof(Id));
+        foreach (var argument in base.GetArguments())
+        {
+            yield return argument;
+        }
+
         yield return Argument<NonNullGraphType<StringGraphType>>(nameof(StoreId));
         yield return Argument<NonNullGraphType<StringGraphType>>(nameof(LanguageCode));
+        yield return Argument<StringGraphType>(nameof(UserId));
     }
 
     public override void Map(IResolveFieldContext context)
     {
-        Id = context.GetArgument<string>(nameof(Id));
+        base.Map(context);
+
         StoreId = context.GetArgument<string>(nameof(StoreId));
         LanguageCode = context.GetArgument<string>(nameof(LanguageCode));
+        UserId = context.GetArgument<string>(nameof(UserId));
     }
 }

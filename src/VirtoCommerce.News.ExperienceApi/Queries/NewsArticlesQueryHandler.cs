@@ -17,16 +17,16 @@ using VirtoCommerce.Xapi.Core.Infrastructure;
 
 namespace VirtoCommerce.News.ExperienceApi.Queries;
 
-public class NewsArticleContentsQueryHandler(
+public class NewsArticlesQueryHandler(
     INewsArticleService newsArticleService,
     INewsArticleSearchService newsArticleSearchService,
     IMemberResolver memberResolver,
     IMemberService memberService,
     IStoreService storeService)
-    : IQueryHandler<NewsArticleContentsQuery, NewsArticleSearchResult>,
-    IQueryHandler<NewsArticleContentQuery, NewsArticle>
+    : IQueryHandler<NewsArticlesQuery, NewsArticleSearchResult>,
+    IQueryHandler<NewsArticleQuery, NewsArticle>
 {
-    public async Task<NewsArticleSearchResult> Handle(NewsArticleContentsQuery request, CancellationToken cancellationToken)
+    public async Task<NewsArticleSearchResult> Handle(NewsArticlesQuery request, CancellationToken cancellationToken)
     {
         var searchCriteria = await BuildSearchCriteria(request);
 
@@ -37,7 +37,7 @@ public class NewsArticleContentsQueryHandler(
         return result;
     }
 
-    public async Task<NewsArticle> Handle(NewsArticleContentQuery request, CancellationToken cancellationToken)
+    public async Task<NewsArticle> Handle(NewsArticleQuery request, CancellationToken cancellationToken)
     {
         var result = await newsArticleService.GetByIdAsync(request.Id);
 
@@ -46,7 +46,7 @@ public class NewsArticleContentsQueryHandler(
         return result;
     }
 
-    protected virtual async Task<NewsArticleSearchCriteria> BuildSearchCriteria(NewsArticleContentsQuery request)
+    protected virtual async Task<NewsArticleSearchCriteria> BuildSearchCriteria(NewsArticlesQuery request)
     {
         var userGroups = await GetUserGroups(request.UserId);
 
