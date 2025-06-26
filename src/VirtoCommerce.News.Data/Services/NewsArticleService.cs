@@ -57,10 +57,12 @@ public class NewsArticleService(
     protected virtual async Task ChangeIsPublishedAsync(IList<string> ids, bool isPublished)
     {
         var newsArticles = await GetAsync(ids);
+
         foreach (var newsArticle in newsArticles)
         {
             newsArticle.SetIsPublished(isPublished);
         }
+
         await SaveChangesAsync(newsArticles);
     }
 }

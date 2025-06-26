@@ -12,10 +12,10 @@
         <div ui-grid="gridOptions" ui-grid-auto-resize ui-grid-save-state ui-grid-selection ui-grid-resize-columns ui-grid-move-columns ui-grid-pinning ui-grid-height> </div>
         <ul class="menu __context" role="menu" id="content_list_menu">
           <li class="menu-item" ng-click='edit(contextMenuEntity)' va-permission="news:update">
-            <i class="menu-ico fa fa-edit"></i> {{ 'platform.commands.manage' | translate }}
+            <span class="menu-ico fa fa-edit"></span> {{ 'platform.commands.manage' | translate }}
           </li>
           <li class="menu-item" ng-if="canDelete()" ng-click='delete([contextMenuEntity])' va-permission="news:update">
-            <i class="menu-ico fas fa-trash-alt"></i> {{ 'platform.commands.delete' | translate }}
+            <span class="menu-ico fas fa-trash-alt"></span> {{ 'platform.commands.delete' | translate }}
           </li>
         </ul>
       </div>
@@ -30,6 +30,6 @@
 
 <script type="text/ng-template" id="news-article-content-list-actions.cell.html">
   <div class="ui-grid-actions" left-click-menu="grid.appScope.contextMenuEntity = row.entity" data-target="content_list_menu">
-    <i class="fa fa-ellipsis-v"></i>
+    <span class="fa fa-ellipsis-v"></span>
   </div>
 </script>

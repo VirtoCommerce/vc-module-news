@@ -8,8 +8,8 @@ public class NewsArticleLocalizedContentValidator : AbstractValidator<NewsArticl
 {
     public NewsArticleLocalizedContentValidator()
     {
-        RuleFor(lc => lc.LanguageCode).NotNull().NotEmpty().MaximumLength(NewsArticleLocalizedContentEntity.LanguageCodeLength);
-        RuleFor(lc => lc.Title).NotNull().NotEmpty().MaximumLength(NewsArticleLocalizedContentEntity.TitleLength);
-        RuleFor(lc => lc.Content).NotNull().NotEmpty();
+        RuleFor(x => x.LanguageCode).NotNull().NotEmpty().MaximumLength(NewsArticleLocalizedContentEntity.LanguageCodeLength);
+        RuleFor(x => x.Title).NotNull().NotEmpty().MaximumLength(NewsArticleLocalizedContentEntity.TitleLength);
+        RuleFor(x => x.Content).NotNull().NotEmpty();
     }
 }

@@ -1,4 +1,4 @@
-const namespace = '{Namespace}';
+const namespace = 'VirtoCommerce.News';
 
 const glob = require('glob');
 const path = require('path');

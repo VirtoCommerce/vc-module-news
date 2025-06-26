@@ -21,21 +21,23 @@ public class NewsArticleRepository(NewsDbContext dbContext, IUnitOfWork unitOfWo
     public virtual async Task<IList<NewsArticleEntity>> GetNewsArticlesByIdsAsync(IList<string> ids)
     {
         var result = await NewsArticles
-            .Where(na => ids.Contains(na.Id))
+            .Where(x => ids.Contains(x.Id))
             .ToListAsync();
 
         if (result.Count > 0)
         {
+            var articleIds = result.Select(x => x.Id).ToList();
+
             await NewsArticleLocalizedContents
-                .Where(lc => ids.Contains(lc.NewsArticleId))
+                .Where(x => articleIds.Contains(x.NewsArticleId))
                 .LoadAsync();
 
             await NewsArticleSeoInfos
-                .Where(seo => ids.Contains(seo.NewsArticleId))
+                .Where(x => articleIds.Contains(x.NewsArticleId))
                 .LoadAsync();
 
             await NewsArticleUserGroups
-                .Where(ug => ids.Contains(ug.NewsArticleId))
+                .Where(x => articleIds.Contains(x.NewsArticleId))
                 .LoadAsync();
         }
 

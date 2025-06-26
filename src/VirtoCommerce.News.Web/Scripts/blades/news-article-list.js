@@ -66,7 +66,7 @@ angular.module('VirtoCommerce.News')
                         }
                     };
                     dialogService.showConfirmationDialog(dialog);
-                }
+                };
 
                 // ui-grid
                 $scope.setGridOptions = function (gridOptions) {
@@ -134,10 +134,10 @@ angular.module('VirtoCommerce.News')
                 function showDetailsBlade(isNew, itemId) {
                     const detailsBlade = {
                         id: 'newsArticleDetails',
+                        controller: 'VirtoCommerce.News.newsArticleDetailsController',
+                        template: 'Modules/$(VirtoCommerce.News)/Scripts/blades/news-article-details.html',
                         isNew: isNew,
                         itemId: itemId,
-                        controller: 'VirtoCommerce.News.newsArticleDetailsController',
-                        template: 'Modules/$(VirtoCommerce.News)/Scripts/blades/news-article-details.html'
                     };
 
                     bladeNavigationService.showBlade(detailsBlade, blade);

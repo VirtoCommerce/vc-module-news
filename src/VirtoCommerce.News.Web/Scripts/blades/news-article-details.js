@@ -61,7 +61,7 @@ angular.module('VirtoCommerce.News')
                 let formScope;
                 $scope.setForm = function (form) {
                     formScope = form;
-                }
+                };
 
                 $scope.saveChanges = function () {
                     if (!authService.checkPermission(getSavePermission())) {

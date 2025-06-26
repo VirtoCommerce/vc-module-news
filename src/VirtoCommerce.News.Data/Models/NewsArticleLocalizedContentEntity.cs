@@ -3,17 +3,17 @@ using System.ComponentModel.DataAnnotations;
 using VirtoCommerce.News.Core.Models;
 using VirtoCommerce.Platform.Core.Common;
 using VirtoCommerce.Platform.Core.Domain;
-using VirtoCommerce.Platform.Data.Infrastructure;
+using static VirtoCommerce.Platform.Data.Infrastructure.DbContextBase;
 
 namespace VirtoCommerce.News.Data.Models;
 
 public class NewsArticleLocalizedContentEntity : AuditableEntity, IDataEntity<NewsArticleLocalizedContentEntity, NewsArticleLocalizedContent>
 {
-    public const int LanguageCodeLength = DbContextBase.CultureNameLength;
-    public const int TitleLength = DbContextBase.Length1024;
+    public const int LanguageCodeLength = CultureNameLength;
+    public const int TitleLength = Length1024;
 
     [Required]
-    [StringLength(DbContextBase.IdLength)]
+    [StringLength(IdLength)]
     public string NewsArticleId { get; set; }
 
     [Required]

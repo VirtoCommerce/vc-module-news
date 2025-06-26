@@ -38,22 +38,22 @@ public class NewsArticleSearchService(
         {
             if (criteria.Published.Value)
             {
-                query = query.Where(na => na.IsPublished && (!na.PublishDate.HasValue || na.PublishDate <= DateTime.UtcNow));
+                query = query.Where(x => x.IsPublished && (x.PublishDate == null || x.PublishDate <= DateTime.UtcNow));
             }
             else
             {
-                query = query.Where(na => !na.IsPublished || (na.PublishDate.HasValue && na.PublishDate > DateTime.UtcNow));
+                query = query.Where(x => !x.IsPublished || (x.PublishDate != null && x.PublishDate > DateTime.UtcNow));
             }
         }
 
         if (!criteria.StoreId.IsNullOrEmpty())
         {
-            query = query.Where(na => na.StoreId == criteria.StoreId);
+            query = query.Where(x => x.StoreId == criteria.StoreId);
         }
 
         if (!criteria.UserGroups.IsNullOrEmpty())
         {
-            query = query.Where(na => na.UserGroups.Any(ug => criteria.UserGroups.Contains(ug.Group)));
+            query = query.Where(article => article.UserGroups.Any(group => criteria.UserGroups.Contains(group.Group)));
         }
 
         return query;

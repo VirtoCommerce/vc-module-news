@@ -5,15 +5,15 @@ using System.Linq;
 using VirtoCommerce.News.Core.Models;
 using VirtoCommerce.Platform.Core.Common;
 using VirtoCommerce.Platform.Core.Domain;
-using VirtoCommerce.Platform.Data.Infrastructure;
-using VirtoCommerce.Seo.Core.Models;
+using VirtoCommerce.Platform.Core.Extensions;
+using static VirtoCommerce.Platform.Data.Infrastructure.DbContextBase;
 
 namespace VirtoCommerce.News.Data.Models;
 
 public class NewsArticleEntity : AuditableEntity, IDataEntity<NewsArticleEntity, NewsArticle>
 {
-    public const int StoreIdLength = DbContextBase.IdLength;
-    public const int NameLength = DbContextBase.Length1024;
+    public const int StoreIdLength = IdLength;
+    public const int NameLength = Length1024;
 
     [Required]
     [StringLength(StoreIdLength)]
@@ -49,9 +49,9 @@ public class NewsArticleEntity : AuditableEntity, IDataEntity<NewsArticleEntity,
         model.IsPublished = IsPublished;
         model.PublishDate = PublishDate;
 
-        model.LocalizedContents = LocalizedContents.Select(lc => lc.ToModel(AbstractTypeFactory<NewsArticleLocalizedContent>.TryCreateInstance())).ToList();
-        model.SeoInfos = SeoInfos.Select(x => x.ToModel(AbstractTypeFactory<SeoInfo>.TryCreateInstance())).ToList();
-        model.UserGroups = UserGroups.OrderBy(x => x.Id).Select(x => x.Group).ToList();
+        model.LocalizedContents = LocalizedContents.Select(x => x.ToModel()).ToList();
+        model.SeoInfos = SeoInfos.Select(x => x.ToModel()).ToList();
+        model.UserGroups = UserGroups.OrderBy(x => x.Group).Select(x => x.Group).ToList();
 
         return model;
     }
@@ -80,7 +80,7 @@ public class NewsArticleEntity : AuditableEntity, IDataEntity<NewsArticleEntity,
 
         if (model.LocalizedContents != null)
         {
-            LocalizedContents = new ObservableCollection<NewsArticleLocalizedContentEntity>(model.LocalizedContents.Select(lc => AbstractTypeFactory<NewsArticleLocalizedContentEntity>.TryCreateInstance().FromModel(lc, pkMap)));
+            LocalizedContents = new ObservableCollection<NewsArticleLocalizedContentEntity>(model.LocalizedContents.Select(x => AbstractTypeFactory<NewsArticleLocalizedContentEntity>.TryCreateInstance().FromModel(x, pkMap)));
         }
 
         if (model.SeoInfos != null)
@@ -90,12 +90,14 @@ public class NewsArticleEntity : AuditableEntity, IDataEntity<NewsArticleEntity,
 
         if (model.UserGroups != null)
         {
-            UserGroups = new ObservableCollection<NewsArticleUserGroupEntity>();
+            UserGroups = [];
+
             foreach (var group in model.UserGroups)
             {
                 var userGroupEntity = AbstractTypeFactory<NewsArticleUserGroupEntity>.TryCreateInstance();
                 userGroupEntity.Group = group;
                 userGroupEntity.NewsArticleId = model.Id;
+
                 UserGroups.Add(userGroupEntity);
             }
         }
@@ -118,7 +120,7 @@ public class NewsArticleEntity : AuditableEntity, IDataEntity<NewsArticleEntity,
 
         if (!LocalizedContents.IsNullCollection())
         {
-            LocalizedContents.Patch(target.LocalizedContents, (source, target) => source.Patch(target));
+            LocalizedContents.Patch(target.LocalizedContents, (sourceContent, targetContent) => sourceContent.Patch(targetContent));
         }
 
         if (!SeoInfos.IsNullCollection())

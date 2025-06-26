@@ -6,6 +6,7 @@
 
   <platformVersion>3.890.0</platformVersion>
   <dependencies>
+    <dependency id="VirtoCommerce.Seo" version="3.801.0" />
     <dependency id="VirtoCommerce.Xapi" version="3.904.0" />
   </dependencies>
 

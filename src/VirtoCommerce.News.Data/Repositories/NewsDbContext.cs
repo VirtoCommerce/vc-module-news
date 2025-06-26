@@ -22,24 +22,19 @@ public class NewsDbContext : DbContextBase
     {
         base.OnModelCreating(modelBuilder);
 
-        modelBuilder.Entity<NewsArticleEntity>().ToAuditableEntityTable("NewsArticle").HasKey(x => x.Id);
-        modelBuilder.Entity<NewsArticleEntity>().Property(x => x.Id).HasMaxLength(IdLength).ValueGeneratedOnAdd();
+        modelBuilder.Entity<NewsArticleEntity>().ToAuditableEntityTable("NewsArticle");
 
-        modelBuilder.Entity<NewsArticleLocalizedContentEntity>().ToAuditableEntityTable("NewsArticleLocalizedContent").HasKey(x => x.Id);
-        modelBuilder.Entity<NewsArticleLocalizedContentEntity>().Property(x => x.Id).HasMaxLength(IdLength).ValueGeneratedOnAdd();
+        modelBuilder.Entity<NewsArticleLocalizedContentEntity>().ToAuditableEntityTable("NewsArticleLocalizedContent");
         modelBuilder.Entity<NewsArticleLocalizedContentEntity>().HasOne(x => x.NewsArticle).WithMany(x => x.LocalizedContents)
              .HasForeignKey(x => x.NewsArticleId).IsRequired().OnDelete(DeleteBehavior.Cascade);
 
-        modelBuilder.Entity<SeoInfoEntity>().ToAuditableEntityTable("NewsArticleSeoInfo").HasKey(x => x.Id);
-        modelBuilder.Entity<SeoInfoEntity>().Property(x => x.Id).HasMaxLength(IdLength).ValueGeneratedOnAdd();
+        modelBuilder.Entity<SeoInfoEntity>().ToAuditableEntityTable("NewsArticleSeoInfo");
         modelBuilder.Entity<SeoInfoEntity>().HasOne(x => x.NewsArticle).WithMany(x => x.SeoInfos)
              .HasForeignKey(x => x.NewsArticleId).IsRequired().OnDelete(DeleteBehavior.Cascade);
 
-        modelBuilder.Entity<NewsArticleUserGroupEntity>().ToEntityTable("NewsArticleUserGroup").HasKey(x => x.Id);
-        modelBuilder.Entity<NewsArticleUserGroupEntity>().Property(x => x.Id).HasMaxLength(IdLength).ValueGeneratedOnAdd();
-
-        modelBuilder.Entity<NewsArticleUserGroupEntity>().HasOne(m => m.NewsArticle).WithMany(m => m.UserGroups)
-            .HasForeignKey(m => m.NewsArticleId).IsRequired().OnDelete(DeleteBehavior.Cascade);
+        modelBuilder.Entity<NewsArticleUserGroupEntity>().ToEntityTable("NewsArticleUserGroup");
+        modelBuilder.Entity<NewsArticleUserGroupEntity>().HasOne(x => x.NewsArticle).WithMany(x => x.UserGroups)
+            .HasForeignKey(x => x.NewsArticleId).IsRequired().OnDelete(DeleteBehavior.Cascade);
 
         switch (Database.ProviderName)
         {

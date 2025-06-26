@@ -15,7 +15,6 @@ angular.module('VirtoCommerce.News')
 
                 //blade functions
                 blade.refresh = function () {
-
                 };
 
                 //scope functions
@@ -91,11 +90,11 @@ angular.module('VirtoCommerce.News')
                 function showDetailsBlade(isNew, item) {
                     const detailsBlade = {
                         id: 'newsArticleContentDetails',
+                        controller: 'VirtoCommerce.News.newsArticleContentDetailsController',
+                        template: 'Modules/$(VirtoCommerce.News)/Scripts/blades/news-article-content-details.html',
                         isNew: isNew,
                         newsArticle: blade.item,
                         currentEntity: item,
-                        controller: 'VirtoCommerce.News.newsArticleContentDetailsController',
-                        template: 'Modules/$(VirtoCommerce.News)/Scripts/blades/news-article-content-details.html'
                     };
                     bladeNavigationService.showBlade(detailsBlade, blade);
                 }

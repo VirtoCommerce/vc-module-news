@@ -1,39 +1,39 @@
 using System.ComponentModel.DataAnnotations;
 using VirtoCommerce.Platform.Core.Common;
 using VirtoCommerce.Platform.Core.Domain;
-using VirtoCommerce.Platform.Data.Infrastructure;
 using VirtoCommerce.Seo.Core.Models;
+using static VirtoCommerce.Platform.Data.Infrastructure.DbContextBase;
 
 namespace VirtoCommerce.News.Data.Models;
 
 public class SeoInfoEntity : AuditableEntity, IDataEntity<SeoInfoEntity, SeoInfo>
 {
     [Required]
-    [StringLength(DbContextBase.IdLength)]
+    [StringLength(IdLength)]
     public string NewsArticleId { get; set; }
 
-    [StringLength(DbContextBase.IdLength)]
+    [StringLength(IdLength)]
     public string StoreId { get; set; }
 
-    [StringLength(DbContextBase.Length256)]
+    [StringLength(Length256)]
     [Required]
     public string Keyword { get; set; }
 
     public bool IsActive { get; set; }
 
-    [StringLength(DbContextBase.CultureNameLength)]
+    [StringLength(CultureNameLength)]
     public string Language { get; set; }
 
-    [StringLength(DbContextBase.Length256)]
+    [StringLength(Length256)]
     public string Title { get; set; }
 
-    [StringLength(DbContextBase.Length1024)]
+    [StringLength(Length1024)]
     public string MetaDescription { get; set; }
 
-    [StringLength(DbContextBase.Length256)]
+    [StringLength(Length256)]
     public string MetaKeywords { get; set; }
 
-    [StringLength(DbContextBase.Length256)]
+    [StringLength(Length256)]
     public string ImageAltDescription { get; set; }
 
     public virtual NewsArticleEntity NewsArticle { get; set; }

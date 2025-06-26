@@ -8,11 +8,11 @@ public class NewsArticleValidator : AbstractValidator<NewsArticle>
 {
     public NewsArticleValidator(AbstractValidator<NewsArticleLocalizedContent> newsArticleLocalizedContentValidator)
     {
-        RuleFor(na => na.StoreId).NotNull().NotEmpty().MaximumLength(NewsArticleEntity.StoreIdLength);
-        RuleFor(na => na.Name).NotNull().NotEmpty().MaximumLength(NewsArticleEntity.NameLength);
+        RuleFor(x => x.StoreId).NotNull().NotEmpty().MaximumLength(NewsArticleEntity.StoreIdLength);
+        RuleFor(x => x.Name).NotNull().NotEmpty().MaximumLength(NewsArticleEntity.NameLength);
 
-        RuleFor(na => na.LocalizedContents).NotEmpty().When(na => na.IsPublished);
+        RuleFor(x => x.LocalizedContents).NotEmpty().When(x => x.IsPublished);
 
-        RuleForEach(na => na.LocalizedContents).SetValidator(newsArticleLocalizedContentValidator);
+        RuleForEach(x => x.LocalizedContents).SetValidator(newsArticleLocalizedContentValidator);
     }
 }
