@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -29,7 +30,7 @@ public class NewsArticleUserGroupService(IMemberResolver memberResolver, IMember
 
     protected virtual async Task<IList<string>> GetUserGroupsInheritedAsync(Contact contact)
     {
-        var userGroups = new HashSet<string>();
+        var userGroups = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
 
         if (!contact.Groups.IsNullOrEmpty())
         {
@@ -38,7 +39,7 @@ public class NewsArticleUserGroupService(IMemberResolver memberResolver, IMember
 
         if (!contact.Organizations.IsNullOrEmpty())
         {
-            var organizations = await memberService.GetByIdsAsync(contact.Organizations.ToArray(), MemberResponseGroup.WithGroups.ToString());
+            var organizations = await memberService.GetByIdsAsync(contact.Organizations.ToArray(), nameof(MemberResponseGroup.WithGroups));
             userGroups.AddRange(organizations.OfType<Organization>().SelectMany(x => x.Groups));
         }
 

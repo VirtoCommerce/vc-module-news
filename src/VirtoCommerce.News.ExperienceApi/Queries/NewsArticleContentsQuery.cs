@@ -18,6 +18,7 @@ public class NewsArticleContentsQuery : SearchQuery<NewsArticleSearchResult>
         {
             yield return argument;
         }
+
         yield return Argument<NonNullGraphType<StringGraphType>>(nameof(StoreId));
         yield return Argument<NonNullGraphType<StringGraphType>>(nameof(LanguageCode));
         yield return Argument<StringGraphType>(nameof(UserId));

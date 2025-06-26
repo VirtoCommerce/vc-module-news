@@ -14,24 +14,10 @@ public class NewsArticleContentType : ExtendableGraphType<NewsArticle>
         Field(x => x.Id);
         Field(x => x.PublishDate, nullable: true);
 
-        Field<StringGraphType>("title").Resolve(context =>
-        {
-            return context.Source.LocalizedContents.FirstOrDefault()?.Title;
-        });
+        Field<StringGraphType>("title").Resolve(context => context.Source.LocalizedContents.FirstOrDefault()?.Title);
+        Field<StringGraphType>("content").Resolve(context => context.Source.LocalizedContents.FirstOrDefault()?.Content);
+        Field<StringGraphType>("contentPreview").Resolve(context => context.Source.LocalizedContents.FirstOrDefault()?.ContentPreview);
 
-        Field<StringGraphType>("content").Resolve(context =>
-        {
-            return context.Source.LocalizedContents.FirstOrDefault()?.Content;
-        });
-
-        Field<StringGraphType>("contentPreview").Resolve(context =>
-        {
-            return context.Source.LocalizedContents.FirstOrDefault()?.ContentPreview;
-        });
-
-        ExtendableField<NonNullGraphType<SeoInfoType>>("seoInfo", resolve: context =>
-        {
-            return context.Source.SeoInfos.FirstOrDefault();
-        });
+        ExtendableField<NonNullGraphType<SeoInfoType>>("seoInfo", resolve: context => context.Source.SeoInfos.FirstOrDefault());
     }
 }
