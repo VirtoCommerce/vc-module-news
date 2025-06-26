@@ -10,7 +10,6 @@ using VirtoCommerce.News.Core.Services;
 using VirtoCommerce.Platform.Core.Common;
 using VirtoCommerce.Seo.Core.Extensions;
 using VirtoCommerce.Seo.Core.Models;
-using VirtoCommerce.StoreModule.Core.Model;
 using VirtoCommerce.StoreModule.Core.Services;
 using VirtoCommerce.Xapi.Core;
 using VirtoCommerce.Xapi.Core.Infrastructure;
@@ -23,9 +22,18 @@ public class NewsArticlesQueryHandler(
     IMemberResolver memberResolver,
     IMemberService memberService,
     IStoreService storeService)
-    : IQueryHandler<NewsArticlesQuery, NewsArticleSearchResult>,
-    IQueryHandler<NewsArticleQuery, NewsArticle>
+    : IQueryHandler<NewsArticleQuery, NewsArticle>,
+      IQueryHandler<NewsArticlesQuery, NewsArticleSearchResult>
 {
+    public async Task<NewsArticle> Handle(NewsArticleQuery request, CancellationToken cancellationToken)
+    {
+        var result = await newsArticleService.GetByIdAsync(request.Id);
+
+        await PostProcessResultAsync(request.StoreId, request.LanguageCode, [result]);
+
+        return result;
+    }
+
     public async Task<NewsArticleSearchResult> Handle(NewsArticlesQuery request, CancellationToken cancellationToken)
     {
         var searchCriteria = await BuildSearchCriteria(request);
@@ -33,15 +41,6 @@ public class NewsArticlesQueryHandler(
         var result = await newsArticleSearchService.SearchAsync(searchCriteria);
 
         await PostProcessResultAsync(request.StoreId, request.LanguageCode, result.Results);
-
-        return result;
-    }
-
-    public async Task<NewsArticle> Handle(NewsArticleQuery request, CancellationToken cancellationToken)
-    {
-        var result = await newsArticleService.GetByIdAsync(request.Id);
-
-        await PostProcessResultAsync(request.StoreId, request.LanguageCode, [result]);
 
         return result;
     }
@@ -65,7 +64,7 @@ public class NewsArticlesQueryHandler(
 
     protected virtual async Task PostProcessResultAsync(string storeId, string languageCode, IList<NewsArticle> newsArticles)
     {
-        Store store = !storeId.IsNullOrEmpty() ? await storeService.GetNoCloneAsync(storeId) : null;
+        var store = !storeId.IsNullOrEmpty() ? await storeService.GetNoCloneAsync(storeId) : null;
 
         await FilterLanguagesAsync(newsArticles, languageCode, store?.DefaultLanguage);
         await FilterSeoInfosAsync(newsArticles, languageCode, storeId, store?.DefaultLanguage);
