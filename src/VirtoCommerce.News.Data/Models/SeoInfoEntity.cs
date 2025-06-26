@@ -22,7 +22,7 @@ public class SeoInfoEntity : AuditableEntity, IDataEntity<SeoInfoEntity, SeoInfo
     public bool IsActive { get; set; }
 
     [StringLength(CultureNameLength)]
-    public string Language { get; set; }
+    public string LanguageCode { get; set; }
 
     [StringLength(Length256)]
     public string Title { get; set; }
@@ -46,7 +46,7 @@ public class SeoInfoEntity : AuditableEntity, IDataEntity<SeoInfoEntity, SeoInfo
         seoInfo.ModifiedBy = ModifiedBy;
         seoInfo.ModifiedDate = ModifiedDate;
 
-        seoInfo.LanguageCode = Language;
+        seoInfo.LanguageCode = LanguageCode;
         seoInfo.SemanticUrl = Keyword;
         seoInfo.PageTitle = Title;
         seoInfo.ImageAltDescription = ImageAltDescription;
@@ -70,7 +70,7 @@ public class SeoInfoEntity : AuditableEntity, IDataEntity<SeoInfoEntity, SeoInfo
         ModifiedBy = seoInfo.ModifiedBy;
         ModifiedDate = seoInfo.ModifiedDate;
 
-        Language = seoInfo.LanguageCode;
+        LanguageCode = seoInfo.LanguageCode;
         Keyword = seoInfo.SemanticUrl;
         Title = seoInfo.PageTitle;
         ImageAltDescription = seoInfo.ImageAltDescription;
@@ -84,7 +84,7 @@ public class SeoInfoEntity : AuditableEntity, IDataEntity<SeoInfoEntity, SeoInfo
 
     public virtual void Patch(SeoInfoEntity target)
     {
-        target.Language = Language;
+        target.LanguageCode = LanguageCode;
         target.Keyword = Keyword;
         target.Title = Title;
         target.ImageAltDescription = ImageAltDescription;

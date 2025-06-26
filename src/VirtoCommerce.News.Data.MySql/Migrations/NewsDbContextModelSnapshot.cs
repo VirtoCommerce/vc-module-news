@@ -164,7 +164,7 @@ namespace VirtoCommerce.News.Data.MySql.Migrations
                         .HasMaxLength(256)
                         .HasColumnType("varchar(256)");
 
-                    b.Property<string>("Language")
+                    b.Property<string>("LanguageCode")
                         .HasMaxLength(16)
                         .HasColumnType("varchar(16)");
 

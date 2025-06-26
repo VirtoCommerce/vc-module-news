@@ -164,7 +164,7 @@ namespace VirtoCommerce.News.Data.PostgreSql.Migrations
                         .HasMaxLength(256)
                         .HasColumnType("character varying(256)");
 
-                    b.Property<string>("Language")
+                    b.Property<string>("LanguageCode")
                         .HasMaxLength(16)
                         .HasColumnType("character varying(16)");
 

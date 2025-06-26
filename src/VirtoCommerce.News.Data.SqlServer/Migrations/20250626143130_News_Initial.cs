@@ -65,7 +65,7 @@ namespace VirtoCommerce.News.Data.SqlServer.Migrations
                     StoreId = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: true),
                     Keyword = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: false),
                     IsActive = table.Column<bool>(type: "bit", nullable: false),
-                    Language = table.Column<string>(type: "nvarchar(16)", maxLength: 16, nullable: true),
+                    LanguageCode = table.Column<string>(type: "nvarchar(16)", maxLength: 16, nullable: true),
                     Title = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     MetaDescription = table.Column<string>(type: "nvarchar(1024)", maxLength: 1024, nullable: true),
                     MetaKeywords = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
