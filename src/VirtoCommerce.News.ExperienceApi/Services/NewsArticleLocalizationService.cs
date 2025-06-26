@@ -12,6 +12,7 @@ public class NewsArticleLocalizationService(IStoreService storeService) : INewsA
     public virtual async Task FilterLanguagesAsync(IList<NewsArticle> newsArticles, string languageCode, string storeId)
     {
         string storeDefaultLanguage = null;
+
         if (!storeId.IsNullOrEmpty())
         {
             var store = await storeService.GetNoCloneAsync(storeId);
@@ -23,13 +24,13 @@ public class NewsArticleLocalizationService(IStoreService storeService) : INewsA
             var allLocalizedContents = newsArticle.LocalizedContents;
 
             newsArticle.LocalizedContents = allLocalizedContents
-                .Where(lc => lc.LanguageCode.EqualsIgnoreCase(languageCode))
+                .Where(x => x.LanguageCode.EqualsIgnoreCase(languageCode))
                 .ToList();
 
             if (newsArticle.LocalizedContents.Count == 0)
             {
                 newsArticle.LocalizedContents = allLocalizedContents
-                    .Where(lc => lc.LanguageCode.EqualsIgnoreCase(storeDefaultLanguage))
+                    .Where(x => x.LanguageCode.EqualsIgnoreCase(storeDefaultLanguage))
                     .ToList();
             }
         }

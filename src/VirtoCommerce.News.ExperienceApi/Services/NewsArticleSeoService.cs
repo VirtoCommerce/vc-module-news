@@ -13,9 +13,10 @@ public class NewsArticleSeoService(IStoreService storeService) : INewsArticleSeo
     public virtual async Task FilterSeoInfosAsync(IList<NewsArticle> newsArticles, string languageCode, string storeId)
     {
         string storeDefaultLanguage = null;
+
         if (!storeId.IsNullOrEmpty())
         {
-            var store = await storeService.GetByIdAsync(storeId, null, false);
+            var store = await storeService.GetNoCloneAsync(storeId);
             storeDefaultLanguage = store?.DefaultLanguage;
         }
 

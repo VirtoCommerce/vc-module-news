@@ -27,7 +27,7 @@ public class NewsArticleContentsQueryHandler(
             Published = true,
             Sort = nameof(NewsArticle.PublishDate),
             Skip = request.Skip,
-            Take = request.Take
+            Take = request.Take,
         };
 
         var result = await newsArticleSearchService.SearchAsync(searchCriteria);
