@@ -29,7 +29,10 @@ public class NewsArticlesQueryHandler(
     {
         var result = await newsArticleService.GetByIdAsync(request.Id);
 
-        await PostProcessResultAsync(request.StoreId, request.LanguageCode, [result]);
+        if (result != null)
+        {
+            await PostProcessResultAsync(request.StoreId, request.LanguageCode, [result]);
+        }
 
         return result;
     }
@@ -40,7 +43,10 @@ public class NewsArticlesQueryHandler(
 
         var result = await newsArticleSearchService.SearchAsync(searchCriteria);
 
-        await PostProcessResultAsync(request.StoreId, request.LanguageCode, result.Results);
+        if (!result.Results.IsNullOrEmpty())
+        {
+            await PostProcessResultAsync(request.StoreId, request.LanguageCode, result.Results);
+        }
 
         return result;
     }
