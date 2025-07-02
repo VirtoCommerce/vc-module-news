@@ -18,11 +18,15 @@ public class NewsArticleSeoResolver(Func<INewsArticleRepository> repositoryFacto
 
         var link = criteria.Slug ?? criteria.Permalink;
         if (link.IsNullOrEmpty())
+        {
             return [];
+        }
 
         var lastLinkSegment = link.Split('/', StringSplitOptions.RemoveEmptyEntries).LastOrDefault();
         if (lastLinkSegment.IsNullOrEmpty())
+        {
             return [];
+        }
 
         return await FindActiveSeoAsync(lastLinkSegment, criteria.StoreId, criteria.LanguageCode);
     }
