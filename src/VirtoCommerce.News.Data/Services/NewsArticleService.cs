@@ -61,6 +61,10 @@ public class NewsArticleService(
         foreach (var newsArticle in newsArticles)
         {
             newsArticle.SetIsPublished(isPublished);
+            if (isPublished && !newsArticle.PublishDate.HasValue)
+            {
+                newsArticle.PublishDate = DateTime.UtcNow;
+            }
         }
 
         await SaveChangesAsync(newsArticles);

@@ -101,10 +101,13 @@ angular.module('VirtoCommerce.News')
                         return;
                     }
 
+                    blade.isLoading = true;
+
                     newsApi.publish([blade.itemId], function () {
-                        blade.currentEntity.isPublished = true;
-                        blade.originalEntity.isPublished = true;
+                        console.warn('foo');
                         blade.parentBlade.refresh(true);
+                        blade.refresh();
+                        blade.isLoading = false;
                     });
                 };
 
@@ -113,10 +116,13 @@ angular.module('VirtoCommerce.News')
                         return;
                     }
 
+                    blade.isLoading = true;
+
                     newsApi.unpublish([blade.itemId], function () {
-                        blade.currentEntity.isPublished = false;
-                        blade.originalEntity.isPublished = false;
+                        console.warn('bar');
                         blade.parentBlade.refresh(true);
+                        blade.refresh();
+                        blade.isLoading = false;
                     });
                 };
 
