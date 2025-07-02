@@ -21,13 +21,23 @@ public class NewsArticlesQueryHandler(
     INewsArticleSearchService newsArticleSearchService,
     IMemberResolver memberResolver,
     IMemberService memberService,
-    IStoreService storeService)
+    IStoreService storeService,
+    INewsArticleSeoResolver newsArticleSeoResolver)
     : IQueryHandler<NewsArticleQuery, NewsArticle>,
       IQueryHandler<NewsArticlesQuery, NewsArticleSearchResult>
 {
     public async Task<NewsArticle> Handle(NewsArticleQuery request, CancellationToken cancellationToken)
     {
-        var result = await newsArticleService.GetByIdAsync(request.Id);
+        var result = await newsArticleService.GetNoCloneAsync(request.Id);
+
+        if (result == null)
+        {
+            var newsArticleSeoInfo = await newsArticleSeoResolver.FindActiveSeoAsync(request.Id, request.StoreId, request.LanguageCode);
+            if (!newsArticleSeoInfo.IsNullOrEmpty())
+            {
+                result = await newsArticleService.GetNoCloneAsync(newsArticleSeoInfo.First().ObjectId);
+            }
+        }
 
         if (result != null)
         {
@@ -137,10 +147,11 @@ public class NewsArticlesQueryHandler(
         foreach (var newsArticle in newsArticles)
         {
             SeoInfo seoInfo = null;
+            var activeSeoInfos = newsArticle.SeoInfos?.Where(x => x.IsActive).ToList();
 
-            if (!newsArticle.SeoInfos.IsNullOrEmpty())
+            if (!activeSeoInfos.IsNullOrEmpty())
             {
-                seoInfo = newsArticle.SeoInfos.GetBestMatchingSeoInfo(storeId, storeDefaultLanguage, languageCode);
+                seoInfo = activeSeoInfos.GetBestMatchingSeoInfo(storeId, storeDefaultLanguage, languageCode);
             }
 
             if (seoInfo == null)
