@@ -7,5 +7,5 @@ namespace VirtoCommerce.News.Core.Services;
 
 public interface INewsArticleSeoResolver : ISeoResolver
 {
-    public Task<IList<SeoInfo>> FindActiveSeoAsync(string lastLinkSegment, string storeId, string languageCode);
+    public Task<IList<SeoInfo>> FindActiveSeoAsync(string[] linkSegment, string storeId, string languageCode);
 }

@@ -32,7 +32,7 @@ public class NewsArticlesQueryHandler(
 
         if (result == null)
         {
-            var newsArticleSeoInfo = await newsArticleSeoResolver.FindActiveSeoAsync(request.Id, request.StoreId, request.LanguageCode);
+            var newsArticleSeoInfo = await newsArticleSeoResolver.FindActiveSeoAsync([request.Id], request.StoreId, request.LanguageCode);
             if (!newsArticleSeoInfo.IsNullOrEmpty())
             {
                 result = await newsArticleService.GetNoCloneAsync(newsArticleSeoInfo.First().ObjectId);

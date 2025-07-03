@@ -12,27 +12,24 @@ namespace VirtoCommerce.News.Data.Services;
 
 public class NewsArticleSeoResolver(Func<INewsArticleRepository> repositoryFactory) : INewsArticleSeoResolver
 {
+    private const string allowedUrlFirstSegment = "news";
+
     public async Task<IList<SeoInfo>> FindSeoAsync(SeoSearchCriteria criteria)
     {
-        ArgumentNullException.ThrowIfNull(criteria);
+        var linkSegments = GetLinkSegments(criteria);
 
-        var link = criteria.Slug ?? criteria.Permalink;
-        if (link.IsNullOrEmpty())
+        if (!LinkIsValid(linkSegments))
         {
             return [];
         }
 
-        var lastLinkSegment = link.Split('/', StringSplitOptions.RemoveEmptyEntries).LastOrDefault();
-        if (lastLinkSegment.IsNullOrEmpty())
-        {
-            return [];
-        }
-
-        return await FindActiveSeoAsync(lastLinkSegment, criteria.StoreId, criteria.LanguageCode);
+        return await FindActiveSeoAsync(linkSegments, criteria.StoreId, criteria.LanguageCode);
     }
 
-    public virtual async Task<IList<SeoInfo>> FindActiveSeoAsync(string lastLinkSegment, string storeId, string languageCode)
+    public virtual async Task<IList<SeoInfo>> FindActiveSeoAsync(string[] linkSegments, string storeId, string languageCode)
     {
+        var lastLinkSegment = linkSegments.Last();
+
         using var repository = repositoryFactory();
 
         var seoInfoQuery = repository.NewsArticleSeoInfos.Where(x => x.IsActive && x.Keyword == lastLinkSegment);
@@ -52,5 +49,27 @@ public class NewsArticleSeoResolver(Func<INewsArticleRepository> repositoryFacto
         return seoEntities
             .Select(x => x.ToModel(AbstractTypeFactory<SeoInfo>.TryCreateInstance()))
             .ToList();
+    }
+
+    protected virtual string[] GetLinkSegments(SeoSearchCriteria criteria)
+    {
+        var link = criteria?.Permalink ?? criteria?.Slug;
+
+        if (link.IsNullOrEmpty())
+        {
+            return [];
+        }
+
+        return link.Split('/', StringSplitOptions.RemoveEmptyEntries);
+    }
+
+    protected virtual bool LinkIsValid(string[] linkSegments)
+    {
+        if ((linkSegments.Length == 0) || (linkSegments.Length > 2) || (linkSegments.Length == 2 && !linkSegments[0].EqualsIgnoreCase(allowedUrlFirstSegment)))
+        {
+            return false;
+        }
+
+        return true;
     }
 }
