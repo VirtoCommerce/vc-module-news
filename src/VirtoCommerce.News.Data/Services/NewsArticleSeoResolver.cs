@@ -12,7 +12,7 @@ namespace VirtoCommerce.News.Data.Services;
 
 public class NewsArticleSeoResolver(Func<INewsArticleRepository> repositoryFactory) : INewsArticleSeoResolver
 {
-    private const string allowedUrlFirstSegment = "news";
+    protected const string allowedUrlFirstSegment = "news";
 
     public async Task<IList<SeoInfo>> FindSeoAsync(SeoSearchCriteria criteria)
     {
