@@ -89,7 +89,11 @@
     "News": {
       "Enabled": {
         "title": "Nachrichten aktiviert",
-        "description": "Einstellung für aktivierte Nachrichten"
+        "description": "Nachrichten aktiviert"
+      },
+      "UseRootLinks": {
+        "title": "Verwenden Sie Root-Links",
+        "description": "Verwenden Sie Root-Links"
       }
     }
   }

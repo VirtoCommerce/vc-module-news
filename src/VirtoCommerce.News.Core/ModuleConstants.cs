@@ -37,7 +37,17 @@ public static class ModuleConstants
                 Name = "News.Enabled",
                 GroupName = "News|General",
                 ValueType = SettingValueType.Boolean,
+                DefaultValue = true,
+                IsPublic = true,
+            };
+
+            public static SettingDescriptor UseRootLinks { get; } = new()
+            {
+                Name = "News.UseRootLinks",
+                GroupName = "News|General",
+                ValueType = SettingValueType.Boolean,
                 DefaultValue = false,
+                IsPublic = true,
             };
 
             public static IEnumerable<SettingDescriptor> AllGeneralSettings
@@ -45,6 +55,7 @@ public static class ModuleConstants
                 get
                 {
                     yield return NewsEnabled;
+                    yield return UseRootLinks;
                 }
             }
         }

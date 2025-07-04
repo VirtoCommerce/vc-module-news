@@ -6,19 +6,19 @@ using Microsoft.EntityFrameworkCore;
 using VirtoCommerce.News.Core.Services;
 using VirtoCommerce.News.Data.Repositories;
 using VirtoCommerce.Platform.Core.Common;
+using VirtoCommerce.Platform.Core.Settings;
 using VirtoCommerce.Seo.Core.Models;
+using NewsSettings = VirtoCommerce.News.Core.ModuleConstants.Settings.General;
 
 namespace VirtoCommerce.News.Data.Services;
 
-public class NewsArticleSeoResolver(Func<INewsArticleRepository> repositoryFactory) : INewsArticleSeoResolver
+public class NewsArticleSeoResolver(Func<INewsArticleRepository> repositoryFactory, ISettingsManager settingsManager) : INewsArticleSeoResolver
 {
-    protected const string allowedUrlFirstSegment = "news";
-
     public async Task<IList<SeoInfo>> FindSeoAsync(SeoSearchCriteria criteria)
     {
         var linkSegments = GetLinkSegments(criteria);
 
-        if (!LinkIsValid(linkSegments))
+        if (!await LinkIsValidAsync(linkSegments))
         {
             return [];
         }
@@ -63,9 +63,16 @@ public class NewsArticleSeoResolver(Func<INewsArticleRepository> repositoryFacto
         return link.Split('/', StringSplitOptions.RemoveEmptyEntries);
     }
 
-    protected virtual bool LinkIsValid(string[] linkSegments)
+    protected virtual async Task<bool> LinkIsValidAsync(string[] linkSegments)
     {
-        if ((linkSegments.Length == 0) || (linkSegments.Length > 2) || (linkSegments.Length == 2 && !linkSegments[0].EqualsIgnoreCase(allowedUrlFirstSegment)))
+        if (linkSegments.Length != 1)
+        {
+            return false;
+        }
+
+        var useRootLinks = await settingsManager.GetValueAsync<bool>(NewsSettings.UseRootLinks);
+
+        if (!useRootLinks)
         {
             return false;
         }

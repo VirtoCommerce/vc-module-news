@@ -8,11 +8,13 @@ using VirtoCommerce.CustomerModule.Core.Services;
 using VirtoCommerce.News.Core.Models;
 using VirtoCommerce.News.Core.Services;
 using VirtoCommerce.Platform.Core.Common;
+using VirtoCommerce.Platform.Core.Settings;
 using VirtoCommerce.Seo.Core.Extensions;
 using VirtoCommerce.Seo.Core.Models;
 using VirtoCommerce.StoreModule.Core.Services;
 using VirtoCommerce.Xapi.Core;
 using VirtoCommerce.Xapi.Core.Infrastructure;
+using NewsSettings = VirtoCommerce.News.Core.ModuleConstants.Settings.General;
 
 namespace VirtoCommerce.News.ExperienceApi.Queries;
 
@@ -22,7 +24,8 @@ public class NewsArticlesQueryHandler(
     IMemberResolver memberResolver,
     IMemberService memberService,
     IStoreService storeService,
-    INewsArticleSeoResolver newsArticleSeoResolver)
+    INewsArticleSeoResolver newsArticleSeoResolver,
+    ISettingsManager settingsManager)
     : IQueryHandler<NewsArticleQuery, NewsArticle>,
       IQueryHandler<NewsArticlesQuery, NewsArticleSearchResult>
 {
@@ -32,10 +35,16 @@ public class NewsArticlesQueryHandler(
 
         if (result == null)
         {
-            var newsArticleSeoInfo = await newsArticleSeoResolver.FindActiveSeoAsync([request.Id], request.StoreId, request.LanguageCode);
-            if (!newsArticleSeoInfo.IsNullOrEmpty())
+            var useRootLinks = await settingsManager.GetValueAsync<bool>(NewsSettings.UseRootLinks);
+
+            if (!useRootLinks)
             {
-                result = await newsArticleService.GetNoCloneAsync(newsArticleSeoInfo.First().ObjectId);
+                var newsArticleSeoInfo = await newsArticleSeoResolver.FindActiveSeoAsync([request.Id], request.StoreId, request.LanguageCode);
+
+                if (!newsArticleSeoInfo.IsNullOrEmpty())
+                {
+                    result = await newsArticleService.GetNoCloneAsync(newsArticleSeoInfo.First().ObjectId);
+                }
             }
         }
 

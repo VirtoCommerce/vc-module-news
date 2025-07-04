@@ -89,7 +89,11 @@
     "News": {
       "Enabled": {
         "title": "News Enabled",
-        "description": "News Enabled setting"
+        "description": "News Enabled"
+      },
+      "UseRootLinks": {
+        "title": "Use root links",
+        "description": "Use root links"
       }
     }
   }

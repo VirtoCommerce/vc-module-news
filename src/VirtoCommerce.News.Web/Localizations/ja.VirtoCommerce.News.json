@@ -90,6 +90,10 @@
       "Enabled": {
         "title": "ニュース機能を有効化",
         "description": "ニュース機能の有効化設定"
+      },
+      "UseRootLinks": {
+        "title": "ルートリンクを使用する",
+        "description": "ルートリンクを使用する"
       }
     }
   }

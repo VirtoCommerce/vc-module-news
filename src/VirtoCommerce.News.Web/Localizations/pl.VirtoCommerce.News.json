@@ -90,6 +90,10 @@
       "Enabled": {
         "title": "Wiadomości włączone",
         "description": "Ustawienie włączonych wiadomości"
+      },
+      "UseRootLinks": {
+        "title": "Użyj linków głównych",
+        "description": "Użyj linków głównych"
       }
     }
   }

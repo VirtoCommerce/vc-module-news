@@ -90,6 +90,10 @@
       "Enabled": {
         "title": "Noticias habilitadas",
         "description": "Configuración de Noticias habilitadas"
+      },
+      "UseRootLinks": {
+        "title": "Utilizar enlaces raíz",
+        "description": "Utilizar enlaces raíz"
       }
     }
   }

@@ -90,6 +90,10 @@
       "Enabled": {
         "title": "Notícias ativadas",
         "description": "Configuração de Notícias ativadas"
+      },
+      "UseRootLinks": {
+        "title": "Usar links raiz",
+        "description": "Usar links raiz"
       }
     }
   }

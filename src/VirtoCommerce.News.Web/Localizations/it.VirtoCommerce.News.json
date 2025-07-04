@@ -90,6 +90,10 @@
       "Enabled": {
         "title": "Notizie abilitate",
         "description": "Impostazione Notizie abilitate"
+      },
+      "UseRootLinks": {
+        "title": "Utilizzare i collegamenti radice",
+        "description": "Utilizzare i collegamenti radice"
       }
     }
   }

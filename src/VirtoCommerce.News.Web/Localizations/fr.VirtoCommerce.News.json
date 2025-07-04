@@ -90,6 +90,10 @@
       "Enabled": {
         "title": "Actualités activées",
         "description": "Paramètre des Actualités activées"
+      },
+      "UseRootLinks": {
+        "title": "Utiliser les liens racine",
+        "description": "Utiliser les liens racine"
       }
     }
   }
