@@ -91,9 +91,9 @@
         "title": "Включить",
         "description": "Включить"
       },
-      "UseRootLinks": {
-        "title": "Использовать корневые ссылки",
-        "description": "Использовать корневые ссылки"
+      "UseNewsPrefixInLinks": {
+        "title": "Использовать префикс \"news\" в ссылках",
+        "description": "Использовать префикс \"news\" в ссылках"
       }
     }
   }

@@ -91,9 +91,9 @@
         "title": "Habilitar",
         "description": "Habilitar"
       },
-      "UseRootLinks": {
-        "title": "Usar links raiz",
-        "description": "Usar links raiz"
+      "UseNewsPrefixInLinks": {
+        "title": "Usar o prefixo \"news\" nos links",
+        "description": "Usar o prefixo \"news\" nos links"
       }
     }
   }

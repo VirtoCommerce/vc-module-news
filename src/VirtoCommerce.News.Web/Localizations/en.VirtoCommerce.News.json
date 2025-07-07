@@ -91,9 +91,9 @@
         "title": "Enable",
         "description": "Enable"
       },
-      "UseRootLinks": {
-        "title": "Use root links",
-        "description": "Use root links"
+      "UseNewsPrefixInLinks": {
+        "title": "Use \"news\" prefix in links",
+        "description": "Use \"news\" prefix in links"
       }
     }
   }

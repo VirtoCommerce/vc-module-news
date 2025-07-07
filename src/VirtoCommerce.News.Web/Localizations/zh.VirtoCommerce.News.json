@@ -91,9 +91,9 @@
         "title": "使能够",
         "description": "使能够"
       },
-      "UseRootLinks": {
-        "title": "使用根链接",
-        "description": "使用根链接"
+      "UseNewsPrefixInLinks": {
+        "title": "在链接中使用“news”前缀",
+        "description": "在链接中使用“news”前缀"
       }
     }
   }

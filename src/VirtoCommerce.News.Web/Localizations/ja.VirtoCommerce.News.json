@@ -91,9 +91,9 @@
         "title": "有効にする",
         "description": "有効にする"
       },
-      "UseRootLinks": {
-        "title": "ルートリンクを使用する",
-        "description": "ルートリンクを使用する"
+      "UseNewsPrefixInLinks": {
+        "title": "リンクに「news」プレフィックスを使用する",
+        "description": "リンクに「news」プレフィックスを使用する"
       }
     }
   }

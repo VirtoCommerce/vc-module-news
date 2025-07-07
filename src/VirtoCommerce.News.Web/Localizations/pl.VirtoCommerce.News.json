@@ -91,9 +91,9 @@
         "title": "Umożliwić",
         "description": "Umożliwić"
       },
-      "UseRootLinks": {
-        "title": "Użyj linków głównych",
-        "description": "Użyj linków głównych"
+      "UseNewsPrefixInLinks": {
+        "title": "Użyj prefiksu \"news\" w linkach",
+        "description": "Użyj prefiksu \"news\" w linkach"
       }
     }
   }

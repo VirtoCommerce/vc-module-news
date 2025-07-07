@@ -91,9 +91,9 @@
         "title": "Activer",
         "description": "Activer"
       },
-      "UseRootLinks": {
-        "title": "Utiliser les liens racine",
-        "description": "Utiliser les liens racine"
+      "UseNewsPrefixInLinks": {
+        "title": "Utilisez le préfixe \"news\" dans les liens",
+        "description": "Utilisez le préfixe \"news\" dans les liens"
       }
     }
   }

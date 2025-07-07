@@ -4,5 +4,5 @@ namespace VirtoCommerce.News.ExperienceApi.Services;
 
 public interface INewsArticleSettingsService
 {
-    Task<bool> GetUseRootLinkSettingAsync(string storeId);
+    Task<bool> GetUseNewsPrefixInLinksSettingAsync(string storeId);
 }

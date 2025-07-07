@@ -34,9 +34,9 @@ public class NewsArticlesQueryHandler(
 
         if (result == null)
         {
-            var useRootLinks = await newsArticleSettingsService.GetUseRootLinkSettingAsync(request.StoreId);
+            var useNewsPrefixInLinks = await newsArticleSettingsService.GetUseNewsPrefixInLinksSettingAsync(request.StoreId);
 
-            if (!useRootLinks)
+            if (!useNewsPrefixInLinks)
             {
                 var newsArticleSeoInfo = await newsArticleSeoService.FindActiveSeoAsync([request.Id], request.StoreId, request.LanguageCode);
 

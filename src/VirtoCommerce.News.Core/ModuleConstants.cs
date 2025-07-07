@@ -41,9 +41,9 @@ public static class ModuleConstants
                 IsPublic = true,
             };
 
-            public static SettingDescriptor UseRootLinks { get; } = new()
+            public static SettingDescriptor UseNewsPrefixInLinks { get; } = new()
             {
-                Name = "News.UseRootLinks",
+                Name = "News.UseNewsPrefixInLinks",
                 GroupName = "News|News",
                 ValueType = SettingValueType.Boolean,
                 DefaultValue = false,
@@ -55,7 +55,7 @@ public static class ModuleConstants
                 get
                 {
                     yield return NewsEnabled;
-                    yield return UseRootLinks;
+                    yield return UseNewsPrefixInLinks;
                 }
             }
         }

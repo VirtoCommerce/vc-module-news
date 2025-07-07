@@ -41,9 +41,9 @@ public class NewsArticleSeoResolver(INewsArticleSeoService newsArticleSeoService
             return false;
         }
 
-        var useRootLinks = await newsArticleSettingsService.GetUseRootLinkSettingAsync(storeId);
+        var useNewsPrefixInLinks = await newsArticleSettingsService.GetUseNewsPrefixInLinksSettingAsync(storeId);
 
-        if (!useRootLinks)
+        if (!useNewsPrefixInLinks)
         {
             return false;
         }

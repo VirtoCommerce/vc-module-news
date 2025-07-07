@@ -91,9 +91,9 @@
         "title": "Habilitar",
         "description": "Habilitar"
       },
-      "UseRootLinks": {
-        "title": "Utilizar enlaces raíz",
-        "description": "Utilizar enlaces raíz"
+      "UseNewsPrefixInLinks": {
+        "title": "Utilizar el prefijo \"news\" en los enlaces",
+        "description": "Utilizar el prefijo \"news\" en los enlaces"
       }
     }
   }

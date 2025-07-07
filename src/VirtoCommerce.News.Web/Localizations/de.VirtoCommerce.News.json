@@ -91,9 +91,9 @@
         "title": "Ermöglichen",
         "description": "Ermöglichen"
       },
-      "UseRootLinks": {
-        "title": "Verwenden Sie Root-Links",
-        "description": "Verwenden Sie Root-Links"
+      "UseNewsPrefixInLinks": {
+        "title": "Verwenden Sie das Präfix \"news\" in Links",
+        "description": "Verwenden Sie das Präfix \"news\" in Links"
       }
     }
   }

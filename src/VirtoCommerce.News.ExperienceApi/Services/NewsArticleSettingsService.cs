@@ -8,15 +8,15 @@ namespace VirtoCommerce.News.ExperienceApi.Services;
 
 public class NewsArticleSettingsService(IStoreService storeService, ISettingsManager settingsManager) : INewsArticleSettingsService
 {
-    public async Task<bool> GetUseRootLinkSettingAsync(string storeId)
+    public async Task<bool> GetUseNewsPrefixInLinksSettingAsync(string storeId)
     {
         var store = !storeId.IsNullOrEmpty() ? await storeService.GetNoCloneAsync(storeId) : null;
 
         if (store == null)
         {
-            return await settingsManager.GetValueAsync<bool>(NewsSettings.UseRootLinks);
+            return await settingsManager.GetValueAsync<bool>(NewsSettings.UseNewsPrefixInLinks);
         }
 
-        return store.Settings.GetValue<bool>(NewsSettings.UseRootLinks);
+        return store.Settings.GetValue<bool>(NewsSettings.UseNewsPrefixInLinks);
     }
 }
