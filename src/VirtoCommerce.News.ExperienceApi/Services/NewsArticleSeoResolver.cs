@@ -43,7 +43,7 @@ public class NewsArticleSeoResolver(INewsArticleSeoService newsArticleSeoService
 
         var useNewsPrefixInLinks = await newsArticleSettingsService.GetUseNewsPrefixInLinksSettingAsync(storeId);
 
-        if (!useNewsPrefixInLinks)
+        if (useNewsPrefixInLinks)
         {
             return false;
         }

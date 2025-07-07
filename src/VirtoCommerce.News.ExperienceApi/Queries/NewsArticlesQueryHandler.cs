@@ -36,7 +36,7 @@ public class NewsArticlesQueryHandler(
         {
             var useNewsPrefixInLinks = await newsArticleSettingsService.GetUseNewsPrefixInLinksSettingAsync(request.StoreId);
 
-            if (!useNewsPrefixInLinks)
+            if (useNewsPrefixInLinks)
             {
                 var newsArticleSeoInfo = await newsArticleSeoService.FindActiveSeoAsync([request.Id], request.StoreId, request.LanguageCode);
 
