@@ -35,7 +35,7 @@ public static class ModuleConstants
             public static SettingDescriptor NewsEnabled { get; } = new()
             {
                 Name = "News.Enabled",
-                GroupName = "News|General",
+                GroupName = "News|News",
                 ValueType = SettingValueType.Boolean,
                 DefaultValue = true,
                 IsPublic = true,
@@ -44,7 +44,7 @@ public static class ModuleConstants
             public static SettingDescriptor UseRootLinks { get; } = new()
             {
                 Name = "News.UseRootLinks",
-                GroupName = "News|General",
+                GroupName = "News|News",
                 ValueType = SettingValueType.Boolean,
                 DefaultValue = false,
                 IsPublic = true,
