@@ -21,7 +21,6 @@ using VirtoCommerce.Platform.Core.Settings;
 using VirtoCommerce.Platform.Data.MySql.Extensions;
 using VirtoCommerce.Platform.Data.PostgreSql.Extensions;
 using VirtoCommerce.Platform.Data.SqlServer.Extensions;
-using VirtoCommerce.Seo.Core.Services;
 using VirtoCommerce.StoreModule.Core.Model;
 using VirtoCommerce.Xapi.Core.Extensions;
 
@@ -58,13 +57,10 @@ public class Module : IModule, IHasConfiguration
 
         serviceCollection.AddTransient<INewsArticleService, NewsArticleService>();
         serviceCollection.AddTransient<INewsArticleSearchService, NewsArticleSearchService>();
+        serviceCollection.AddTransient<INewsArticleSeoService, NewsArticleSeoService>();
 
         serviceCollection.AddTransient<AbstractValidator<NewsArticle>, NewsArticleValidator>();
         serviceCollection.AddTransient<AbstractValidator<NewsArticleLocalizedContent>, NewsArticleLocalizedContentValidator>();
-
-        //SEO
-        serviceCollection.AddTransient<ISeoResolver, NewsArticleSeoResolver>();
-        serviceCollection.AddTransient<INewsArticleSeoResolver, NewsArticleSeoResolver>();
 
         // GraphQL
         serviceCollection.AddExperienceApi();

@@ -7,14 +7,13 @@ using VirtoCommerce.CustomerModule.Core.Model;
 using VirtoCommerce.CustomerModule.Core.Services;
 using VirtoCommerce.News.Core.Models;
 using VirtoCommerce.News.Core.Services;
+using VirtoCommerce.News.ExperienceApi.Services;
 using VirtoCommerce.Platform.Core.Common;
-using VirtoCommerce.Platform.Core.Settings;
 using VirtoCommerce.Seo.Core.Extensions;
 using VirtoCommerce.Seo.Core.Models;
 using VirtoCommerce.StoreModule.Core.Services;
 using VirtoCommerce.Xapi.Core;
 using VirtoCommerce.Xapi.Core.Infrastructure;
-using NewsSettings = VirtoCommerce.News.Core.ModuleConstants.Settings.General;
 
 namespace VirtoCommerce.News.ExperienceApi.Queries;
 
@@ -24,8 +23,8 @@ public class NewsArticlesQueryHandler(
     IMemberResolver memberResolver,
     IMemberService memberService,
     IStoreService storeService,
-    INewsArticleSeoResolver newsArticleSeoResolver,
-    ISettingsManager settingsManager)
+    INewsArticleSeoService newsArticleSeoService,
+    INewsArticleSettingsService newsArticleSettingsService)
     : IQueryHandler<NewsArticleQuery, NewsArticle>,
       IQueryHandler<NewsArticlesQuery, NewsArticleSearchResult>
 {
@@ -35,11 +34,11 @@ public class NewsArticlesQueryHandler(
 
         if (result == null)
         {
-            var useRootLinks = await settingsManager.GetValueAsync<bool>(NewsSettings.UseRootLinks);
+            var useRootLinks = await newsArticleSettingsService.GetUseRootLinkSettingAsync();
 
             if (!useRootLinks)
             {
-                var newsArticleSeoInfo = await newsArticleSeoResolver.FindActiveSeoAsync([request.Id], request.StoreId, request.LanguageCode);
+                var newsArticleSeoInfo = await newsArticleSeoService.FindActiveSeoAsync([request.Id], request.StoreId, request.LanguageCode);
 
                 if (!newsArticleSeoInfo.IsNullOrEmpty())
                 {
