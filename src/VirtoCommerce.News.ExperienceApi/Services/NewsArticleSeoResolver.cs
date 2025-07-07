@@ -14,7 +14,7 @@ public class NewsArticleSeoResolver(INewsArticleSeoService newsArticleSeoService
     {
         var linkSegments = GetLinkSegments(criteria);
 
-        if (!await LinkIsValidAsync(linkSegments))
+        if (!await LinkIsValidAsync(linkSegments, criteria.StoreId))
         {
             return [];
         }
@@ -34,14 +34,14 @@ public class NewsArticleSeoResolver(INewsArticleSeoService newsArticleSeoService
         return link.Split('/', StringSplitOptions.RemoveEmptyEntries);
     }
 
-    protected virtual async Task<bool> LinkIsValidAsync(string[] linkSegments)
+    protected virtual async Task<bool> LinkIsValidAsync(string[] linkSegments, string storeId)
     {
         if (linkSegments.Length != 1)
         {
             return false;
         }
 
-        var useRootLinks = await newsArticleSettingsService.GetUseRootLinkSettingAsync();
+        var useRootLinks = await newsArticleSettingsService.GetUseRootLinkSettingAsync(storeId);
 
         if (!useRootLinks)
         {

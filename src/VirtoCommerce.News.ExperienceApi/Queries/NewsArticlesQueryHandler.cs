@@ -34,7 +34,7 @@ public class NewsArticlesQueryHandler(
 
         if (result == null)
         {
-            var useRootLinks = await newsArticleSettingsService.GetUseRootLinkSettingAsync();
+            var useRootLinks = await newsArticleSettingsService.GetUseRootLinkSettingAsync(request.StoreId);
 
             if (!useRootLinks)
             {
