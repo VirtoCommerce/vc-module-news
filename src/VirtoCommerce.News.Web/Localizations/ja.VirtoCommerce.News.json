@@ -88,8 +88,8 @@
   "settings": {
     "News": {
       "Enabled": {
-        "title": "ニュース機能を有効化",
-        "description": "ニュース機能の有効化設定"
+        "title": "有効にする",
+        "description": "有効にする"
       },
       "UseRootLinks": {
         "title": "ルートリンクを使用する",

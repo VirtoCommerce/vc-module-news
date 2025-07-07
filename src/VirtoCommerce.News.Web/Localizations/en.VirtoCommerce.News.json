@@ -88,8 +88,8 @@
   "settings": {
     "News": {
       "Enabled": {
-        "title": "News Enabled",
-        "description": "News Enabled"
+        "title": "Enable",
+        "description": "Enable"
       },
       "UseRootLinks": {
         "title": "Use root links",

@@ -88,8 +88,8 @@
   "settings": {
     "News": {
       "Enabled": {
-        "title": "启用新闻",
-        "description": "启用新闻的设置"
+        "title": "使能够",
+        "description": "使能够"
       },
       "UseRootLinks": {
         "title": "使用根链接",

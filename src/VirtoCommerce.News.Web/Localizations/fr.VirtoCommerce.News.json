@@ -88,8 +88,8 @@
   "settings": {
     "News": {
       "Enabled": {
-        "title": "Actualités activées",
-        "description": "Paramètre des Actualités activées"
+        "title": "Activer",
+        "description": "Activer"
       },
       "UseRootLinks": {
         "title": "Utiliser les liens racine",

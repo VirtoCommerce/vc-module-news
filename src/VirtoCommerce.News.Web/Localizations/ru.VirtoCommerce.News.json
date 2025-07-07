@@ -88,8 +88,8 @@
   "settings": {
     "News": {
       "Enabled": {
-        "title": "Новости включены",
-        "description": "Настройка включения Новостей"
+        "title": "Включить",
+        "description": "Включить"
       },
       "UseRootLinks": {
         "title": "Использовать корневые ссылки",

@@ -88,8 +88,8 @@
   "settings": {
     "News": {
       "Enabled": {
-        "title": "Nachrichten aktiviert",
-        "description": "Nachrichten aktiviert"
+        "title": "Ermöglichen",
+        "description": "Ermöglichen"
       },
       "UseRootLinks": {
         "title": "Verwenden Sie Root-Links",

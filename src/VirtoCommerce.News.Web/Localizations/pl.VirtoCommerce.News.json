@@ -88,8 +88,8 @@
   "settings": {
     "News": {
       "Enabled": {
-        "title": "Wiadomości włączone",
-        "description": "Ustawienie włączonych wiadomości"
+        "title": "Umożliwić",
+        "description": "Umożliwić"
       },
       "UseRootLinks": {
         "title": "Użyj linków głównych",

@@ -88,8 +88,8 @@
   "settings": {
     "News": {
       "Enabled": {
-        "title": "Notizie abilitate",
-        "description": "Impostazione Notizie abilitate"
+        "title": "Abilitare",
+        "description": "Abilitare"
       },
       "UseRootLinks": {
         "title": "Utilizzare i collegamenti radice",
