@@ -1,35 +1,14 @@
 <template>
-  <VcBlade
-    :title="$t('VC_NEWS.PAGES.LIST.TITLE')"
-    width="50%"
-    :expanded="expanded"
-    :closable="closable"
-    :toolbar-items="bladeToolbar"
-    @close="$emit('close:blade')"
-    @expand="$emit('expand:blade')"
-    @collapse="$emit('collapse:blade')"
-  >
+  <VcBlade :title="$t('VC_NEWS.PAGES.LIST.TITLE')" width="50%" :expanded="expanded" :closable="closable"
+    :toolbar-items="bladeToolbar" @close="$emit('close:blade')" @expand="$emit('expand:blade')"
+    @collapse="$emit('collapse:blade')">
     <!-- Blade contents -->
     <!-- @vue-generic {never} -->
-    <VcTable
-      :expanded="expanded"
-      class="tw-grow tw-basis-0"
-      multiselect
-      :loading="loading"
-      :columns="columns"
-      :sort="sort"
-      :pages="pages"
-      :total-count="totalCount"
-      :search-value="searchValue"
-      :current-page="currentPage"
-      :search-placeholder="$t('VC_NEWS.PAGES.LIST.SEARCH.PLACEHOLDER')"
-      :total-label="$t('VC_NEWS.PAGES.LIST.TABLE.TOTALS')"
-      :selected-item-id="selectedItemId"
-      state-key="VC_NEWS"
-      :items="data"
-      @item-click="onItemClick"
-      @header-click="onHeaderClick"
-    >
+    <VcTable :expanded="expanded" class="tw-grow tw-basis-0" multiselect :loading="loading" :columns="columns"
+      :sort="sort" :pages="pagination.pages" :total-count="pagination.totalCount" :search-value="searchValue"
+      :current-page="pagination.currentPage" :search-placeholder="$t('VC_NEWS.PAGES.LIST.SEARCH.PLACEHOLDER')"
+      :total-label="$t('VC_NEWS.PAGES.LIST.TABLE.TOTALS')" :selected-item-id="selectedItemId" state-key="VC_NEWS"
+      :items="items" @item-click="onItemClick" @header-click="onHeaderClick">
     </VcTable>
   </VcBlade>
 </template>
@@ -76,7 +55,7 @@ defineEmits<Emits>();
 
 const { t } = useI18n({ useScope: "global" });
 const { openBlade } = useBladeNavigation();
-const { getItems, data, loading, totalCount, pages, currentPage } = useVcNewsList();
+const { items, load, loading, pagination, query } = useVcNewsList();
 
 const sort = ref("createdDate:DESC");
 const searchValue = ref();
@@ -85,13 +64,13 @@ const selectedItemId = ref<string>();
 watch(
   () => props.param,
   (newVal) => {
-      selectedItemId.value = newVal;
+    selectedItemId.value = newVal;
   },
   { immediate: true },
 );
 
 onMounted(async () => {
-  await getItems();
+  await load();
 });
 
 const bladeToolbar = ref<IBladeToolbar[]>([
@@ -106,13 +85,24 @@ const bladeToolbar = ref<IBladeToolbar[]>([
 ]);
 
 const columns = ref<ITableColumns[]>([
-  // You can add columns here
+  {
+    id: "name",
+    title: computed(() => t("VC_NEWS.PAGES.LIST.TABLE.HEADER.NAME"))
+  },
+  {
+    id: "storeId",
+    title: computed(() => t("VC_NEWS.PAGES.LIST.TABLE.HEADER.STORE"))
+  },
+  {
+    id: "isPublished",
+    title: computed(() => t("VC_NEWS.PAGES.LIST.TABLE.HEADER.IS_PUBLISHED"))
+  },
 ]);
 
 const title = computed(() => t("VC_NEWS.PAGES.LIST.TITLE"));
 
 const reload = async () => {
-  await getItems();
+  await load();
 };
 
 const onItemClick = (item: { id: string }) => {

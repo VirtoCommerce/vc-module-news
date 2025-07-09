@@ -1,23 +1,27 @@
 import { computed, ref } from "vue";
-import { useAsync, useLoading } from "@vc-shell/framework";
+import { useAsync, useLoading, useApiClient, useListFactory } from "@vc-shell/framework";
+import { NewsArticleClient, NewsArticle, NewsArticleSearchCriteria } from "../../../../api_client/virtocommerce.news";
 
 export default () => {
-  const data = ref([]);
-  const dataRes = ref();
+  const { getApiClient } = useApiClient(NewsArticleClient);
 
-  // Implement your own load function
-  const { loading: itemLoading, action: getItems } = useAsync(async (payload) => {
-    data.value = [];
+  const factory = useListFactory<NewsArticle[], NewsArticleSearchCriteria>({
+    load: async (searchQuery) => {
+      const client = await getApiClient();
+      return client.search({
+        take: 20,
+        ...(searchQuery || {}),
+      } as NewsArticleSearchCriteria);
+    },
   });
 
-  const loading = useLoading(itemLoading);
+  const { load, items, pagination, loading, query } = factory();
 
   return {
-    data: computed(() => data.value),
-    loading: computed(() => loading.value),
-    totalCount: computed(() => dataRes.value?.totalCount),
-    pages: computed(() => Math.ceil(dataRes.value?.totalCount / 20)),
-    currentPage: 0 / Math.max(1, 20) + 1,
-    getItems,
+    items,
+    load,
+    loading,
+    pagination,
+    query,
   };
 };

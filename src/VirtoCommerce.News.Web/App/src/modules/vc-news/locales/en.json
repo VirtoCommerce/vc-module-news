@@ -1,11 +1,11 @@
 {
   "VC_NEWS": {
     "MENU": {
-      "TITLE": "Vc News"
+      "TITLE": "News"
     },
     "PAGES": {
       "LIST": {
-        "TITLE": "Vc News list",
+        "TITLE": "Articles",
         "TOOLBAR": {
           "REFRESH": "Refresh"
         },
@@ -14,7 +14,11 @@
         },
         "TABLE": {
           "TOTALS": "Count:",
-          "HEADER": {}
+          "HEADER": {
+            "NAME": "Name",
+            "STORE": "Store",
+            "IS_PUBLISHED": "Is published"
+          }
         }
       },
       "DETAILS": {
