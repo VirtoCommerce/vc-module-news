@@ -24,4 +24,8 @@
     <ProjectReference Include="..\VirtoCommerce.News.Data.SqlServer\VirtoCommerce.News.Data.SqlServer.csproj" />
     <ProjectReference Include="..\VirtoCommerce.News.ExperienceApi\VirtoCommerce.News.ExperienceApi.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App\" />
+    <Folder Include="Content\vc-news\" />
+  </ItemGroup>
 </Project>

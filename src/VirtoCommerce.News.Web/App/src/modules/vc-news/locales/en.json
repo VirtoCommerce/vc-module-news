@@ -1,0 +1,28 @@
+{
+  "VC_NEWS": {
+    "MENU": {
+      "TITLE": "Vc News"
+    },
+    "PAGES": {
+      "LIST": {
+        "TITLE": "Vc News list",
+        "TOOLBAR": {
+          "REFRESH": "Refresh"
+        },
+        "SEARCH": {
+          "PLACEHOLDER": "Search keywords"
+        },
+        "TABLE": {
+          "TOTALS": "Count:",
+          "HEADER": {}
+        }
+      },
+      "DETAILS": {
+        "TITLE": "Vc News details"
+      },
+      "ALERTS": {
+        "CLOSE_CONFIRMATION": "You have unsaved changes. Close anyway?"
+      }
+    }
+  }
+}

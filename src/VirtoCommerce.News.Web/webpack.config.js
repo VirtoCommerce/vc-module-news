@@ -12,7 +12,7 @@ function getEntryPoints(isProduction) {
     return [
         ...glob.sync('./Scripts/**/*.js', { nosort: true }),
         ...(isProduction ? glob.sync('./Scripts/**/*.html', { nosort: true }) : []),
-        ...glob.sync('./Content/**/*.css', { nosort: true }),
+        ...glob.sync('./Content/css/*.css', { nosort: true }),
     ];
 }
 

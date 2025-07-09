@@ -10,6 +10,15 @@
     <dependency id="VirtoCommerce.Xapi" version="3.904.0" />
   </dependencies>
 
+  <apps>
+    <app id="vc-news">
+      <title>News</title>
+      <description>News</description>
+      <iconUrl>/Content/logo.png</iconUrl>
+      <permission>news:access</permission>
+    </app>
+  </apps>
+
   <title>VirtoCommerce News</title>
   <description>VirtoCommerce News</description>
 
