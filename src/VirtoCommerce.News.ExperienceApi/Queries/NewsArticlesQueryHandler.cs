@@ -169,7 +169,7 @@ public class NewsArticlesQueryHandler(
         return Task.CompletedTask;
     }
 
-    protected IList<NewsArticleLocalizedContent> GetBestMatchingContent(IList<NewsArticleLocalizedContent> localizedContents, string languageCode, string storeDefaultLanguage)
+    protected virtual IList<NewsArticleLocalizedContent> GetBestMatchingContent(IList<NewsArticleLocalizedContent> localizedContents, string languageCode, string storeDefaultLanguage)
     {
         var result = localizedContents
             .Where(x => x.LanguageCode.EqualsIgnoreCase(languageCode))
