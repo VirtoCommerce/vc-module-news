@@ -15,6 +15,13 @@ export default () => {
     },
   });
 
+  const { action: deleteItems } = useAsync<{ ids: string[] }>(async (args?: { ids: string[] }) => {
+    if (args) {
+      const apiClient = await getApiClient();
+      await apiClient.delete(args.ids);
+    }
+  });
+
   const { load, items, pagination, loading, query } = factory();
 
   return {
@@ -23,5 +30,6 @@ export default () => {
     loading,
     pagination,
     query,
+    deleteItems,
   };
 };

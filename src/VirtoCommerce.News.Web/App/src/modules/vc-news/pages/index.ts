@@ -1,2 +1,2 @@
-export { default as List } from "./list.vue";
-export {default as Details } from './details.vue'
+export { default as NewsArticleList } from "./news-article-list.vue";
+export { default as NewsArticleDetails } from "./news-article-details.vue";

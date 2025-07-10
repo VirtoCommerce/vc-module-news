@@ -1,10 +1,5 @@
 <template>
-  <VcApp
-    :is-ready="isReady"
-    :logo="logoImage"
-    title="Vc News"
-    :version="version"
-  >
+  <VcApp :is-ready="isReady" :logo="logoImage" title="Vc News" :version="version">
   </VcApp>
 </template>
 

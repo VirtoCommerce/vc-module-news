@@ -8,17 +8,18 @@
       :sort="sort" :pages="pagination.pages" :total-count="pagination.totalCount" :search-value="searchValue"
       :current-page="pagination.currentPage" :search-placeholder="$t('VC_NEWS.PAGES.LIST.SEARCH.PLACEHOLDER')"
       :total-label="$t('VC_NEWS.PAGES.LIST.TABLE.TOTALS')" :selected-item-id="selectedItemId" state-key="VC_NEWS"
-      :items="items" @item-click="onItemClick" @header-click="onHeaderClick">
+      :items="items" @item-click="onItemClick" @header-click="onHeaderClick" @selection-changed="onSelectionChanged">
     </VcTable>
   </VcBlade>
 </template>
 
 <script lang="ts" setup>
 import { computed, ref, markRaw, onMounted, watch } from "vue";
-import { IBladeEvent, IBladeToolbar, IParentCallArgs, ITableColumns, useBladeNavigation } from "@vc-shell/framework";
+import { IBladeEvent, IBladeToolbar, IParentCallArgs, ITableColumns, useBladeNavigation, usePopup } from "@vc-shell/framework";
 import { useI18n } from "vue-i18n";
-import { useVcNewsList } from "./../composables";
-import Details from "./details.vue";
+import { useNewsArticleList } from "../composables";
+import NewsArticleDetails from "./news-article-details.vue";
+import { NewsArticle } from "src/api_client/virtocommerce.news";
 
 export interface Props {
   expanded?: boolean;
@@ -37,7 +38,7 @@ export interface Emits {
 
 defineOptions({
   url: "/vc-news",
-  name: "VcNewsList",
+  name: "NewsArticleList",
   isWorkspace: true,
   menuItem: {
     title: "VC_NEWS.MENU.TITLE",
@@ -53,13 +54,16 @@ const props = withDefaults(defineProps<Props>(), {
 
 defineEmits<Emits>();
 
+const { showConfirmation } = usePopup();
+
 const { t } = useI18n({ useScope: "global" });
 const { openBlade } = useBladeNavigation();
-const { items, load, loading, pagination, query } = useVcNewsList();
+const { items, load, loading, pagination, query, deleteItems } = useNewsArticleList();
 
 const sort = ref("createdDate:DESC");
 const searchValue = ref();
 const selectedItemId = ref<string>();
+const selectedIds = ref<string[]>([]);
 
 watch(
   () => props.param,
@@ -73,7 +77,7 @@ onMounted(async () => {
   await load();
 });
 
-const bladeToolbar = ref<IBladeToolbar[]>([
+const bladeToolbar = computed((): IBladeToolbar[] => [
   {
     id: "refresh",
     title: computed(() => t("VC_NEWS.PAGES.LIST.TOOLBAR.REFRESH")),
@@ -82,20 +86,56 @@ const bladeToolbar = ref<IBladeToolbar[]>([
       await reload();
     },
   },
+  {
+    id: "add",
+    title: computed(() => t("VC_NEWS.PAGES.LIST.TOOLBAR.ADD")),
+    icon: "material-add",
+    clickHandler: async () => {
+      openBlade({
+        blade: markRaw(NewsArticleDetails),
+        onClose() {
+          selectedItemId.value = undefined;
+        },
+      });
+    },
+  },
+  {
+    id: "delete",
+    title: computed(() => t("VC_NEWS.PAGES.LIST.TOOLBAR.DELETE")),
+    icon: "material-delete",
+    disabled: selectedIds.value.length === 0,
+    clickHandler: async () => {
+      if (
+        await showConfirmation(
+          t("VC_NEWS.PAGES.LIST.ALERTS.DELETE_SELECTED_CONFIRMATION_MESSAGE", { count: selectedIds.value.length }),
+        )
+      ) {
+        await deleteItems({ ids: selectedIds.value });
+        selectedIds.value = [];
+        await reload();
+      }
+    },
+  }
 ]);
 
 const columns = ref<ITableColumns[]>([
   {
     id: "name",
-    title: computed(() => t("VC_NEWS.PAGES.LIST.TABLE.HEADER.NAME"))
+    title: computed(() => t("VC_NEWS.PAGES.LIST.TABLE.HEADER.NAME")),
+    alwaysVisible: true,
+    width: "50%"
   },
   {
     id: "storeId",
-    title: computed(() => t("VC_NEWS.PAGES.LIST.TABLE.HEADER.STORE"))
+    title: computed(() => t("VC_NEWS.PAGES.LIST.TABLE.HEADER.STORE")),
+    alwaysVisible: true,
+    width: "30%"
   },
   {
     id: "isPublished",
-    title: computed(() => t("VC_NEWS.PAGES.LIST.TABLE.HEADER.IS_PUBLISHED"))
+    title: computed(() => t("VC_NEWS.PAGES.LIST.TABLE.HEADER.IS_PUBLISHED")),
+    alwaysVisible: true,
+    width: "20%"
   },
 ]);
 
@@ -107,7 +147,7 @@ const reload = async () => {
 
 const onItemClick = (item: { id: string }) => {
   openBlade({
-    blade: markRaw(Details),
+    blade: markRaw(NewsArticleDetails),
     param: item.id,
     onOpen() {
       selectedItemId.value = item.id;
@@ -147,7 +187,12 @@ const onHeaderClick = (item: ITableColumns) => {
   }
 };
 
+const onSelectionChanged = function (selectedItems: NewsArticle[]) {
+  selectedIds.value = selectedItems.map((item) => item.id || "").filter(Boolean);
+}
+
 defineExpose({
   title,
+  reload,
 });
 </script>

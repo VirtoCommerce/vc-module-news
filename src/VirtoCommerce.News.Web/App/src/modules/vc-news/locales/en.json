@@ -7,7 +7,9 @@
       "LIST": {
         "TITLE": "Articles",
         "TOOLBAR": {
-          "REFRESH": "Refresh"
+          "REFRESH": "Refresh",
+          "ADD": "Add",
+          "DELETE": "Delete"
         },
         "SEARCH": {
           "PLACEHOLDER": "Search keywords"
@@ -19,10 +21,33 @@
             "STORE": "Store",
             "IS_PUBLISHED": "Is published"
           }
+        },
+        "ALERTS": {
+          "DELETE_SELECTED_CONFIRMATION_MESSAGE": "Are you sure you want to delete {count} articles?"
         }
       },
       "DETAILS": {
-        "TITLE": "Vc News details"
+        "TITLE": "Article",
+        "FORM": {
+          "NAME": {
+            "LABEL": "Name"
+          },
+          "STORE": {
+            "LABEL": "Store"
+          },
+          "PUBLISH_DATE": {
+            "LABEL": "Publish date"
+          },
+          "USER_GROUPS": {
+            "LABEL": "User groups"
+          }
+        },
+        "TOOLBAR": {
+          "SAVE": "Save",
+          "RESET": "Reset",
+          "PUBLISH": "Publish",
+          "UNPUBLISH": "UnpPublish"
+        }
       },
       "ALERTS": {
         "CLOSE_CONFIRMATION": "You have unsaved changes. Close anyway?"
