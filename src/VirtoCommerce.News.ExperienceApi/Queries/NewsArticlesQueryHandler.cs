@@ -133,18 +133,7 @@ public class NewsArticlesQueryHandler(
     {
         foreach (var newsArticle in newsArticles)
         {
-            var allLocalizedContents = newsArticle.LocalizedContents;
-
-            newsArticle.LocalizedContents = allLocalizedContents
-                .Where(x => x.LanguageCode.EqualsIgnoreCase(languageCode))
-                .ToList();
-
-            if (newsArticle.LocalizedContents.Count == 0)
-            {
-                newsArticle.LocalizedContents = allLocalizedContents
-                    .Where(x => x.LanguageCode.EqualsIgnoreCase(storeDefaultLanguage))
-                    .ToList();
-            }
+            newsArticle.LocalizedContents = GetBestMatchingContent(newsArticle.LocalizedContents, languageCode, storeDefaultLanguage);
         }
 
         return Task.CompletedTask;
@@ -157,14 +146,20 @@ public class NewsArticlesQueryHandler(
             SeoInfo seoInfo = null;
             var activeSeoInfos = newsArticle.SeoInfos?.Where(x => x.IsActive).ToList();
 
+            var localizedContents = GetBestMatchingContent(newsArticle.LocalizedContents, languageCode, storeDefaultLanguage);
+
             if (!activeSeoInfos.IsNullOrEmpty())
             {
-                seoInfo = activeSeoInfos.GetBestMatchingSeoInfo(storeId, storeDefaultLanguage, languageCode);
+                seoInfo = activeSeoInfos.GetBestMatchingSeoInfo(storeId, storeDefaultLanguage, localizedContents.FirstOrDefault()?.LanguageCode);
+                if (seoInfo != null && seoInfo.Name.IsNullOrEmpty())
+                {
+                    seoInfo.Name = newsArticle.Name;
+                }
             }
 
             if (seoInfo == null)
             {
-                seoInfo = SeoExtensions.GetFallbackSeoInfo(newsArticle.Id, newsArticle.Name, languageCode);
+                seoInfo = SeoExtensions.GetFallbackSeoInfo(newsArticle.Id, newsArticle.Name, localizedContents.FirstOrDefault()?.LanguageCode);
             }
 
             newsArticle.SeoInfos.Clear();
@@ -172,5 +167,21 @@ public class NewsArticlesQueryHandler(
         }
 
         return Task.CompletedTask;
+    }
+
+    protected virtual IList<NewsArticleLocalizedContent> GetBestMatchingContent(IList<NewsArticleLocalizedContent> localizedContents, string languageCode, string storeDefaultLanguage)
+    {
+        var result = localizedContents
+            .Where(x => x.LanguageCode.EqualsIgnoreCase(languageCode))
+            .ToList();
+
+        if (result.Count == 0)
+        {
+            result = localizedContents
+                .Where(x => x.LanguageCode.EqualsIgnoreCase(storeDefaultLanguage))
+                .ToList();
+        }
+
+        return result;
     }
 }
