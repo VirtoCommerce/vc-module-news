@@ -94,6 +94,10 @@
       "UseNewsPrefixInLinks": {
         "title": "Use \"news\" prefix in links",
         "description": "Use \"news\" prefix in links"
+      },
+      "UseStoreDefaultLanguage": {
+        "title": "Use store default language while searching articles",
+        "description": "Use store default language while searching articles"
       }
     }
   }

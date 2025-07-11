@@ -94,6 +94,10 @@
       "UseNewsPrefixInLinks": {
         "title": "在链接中使用“news”前缀",
         "description": "在链接中使用“news”前缀"
+      },
+      "UseStoreDefaultLanguage": {
+        "title": "在搜索文章时使用商店默认语言",
+        "description": "在搜索文章时使用商店默认语言"
       }
     }
   }

@@ -1,4 +1,5 @@
 using System.Threading.Tasks;
+using VirtoCommerce.News.ExperienceApi.Model;
 using VirtoCommerce.Platform.Core.Common;
 using VirtoCommerce.Platform.Core.Settings;
 using VirtoCommerce.StoreModule.Core.Services;
@@ -8,15 +9,24 @@ namespace VirtoCommerce.News.ExperienceApi.Services;
 
 public class NewsArticleSettingsService(IStoreService storeService, ISettingsManager settingsManager) : INewsArticleSettingsService
 {
-    public async Task<bool> GetUseNewsPrefixInLinksSettingAsync(string storeId)
+    public async Task<NewsArticleSettings> GetSettingsAsync(string storeId)
     {
+        var result = new NewsArticleSettings();
+
         var store = !storeId.IsNullOrEmpty() ? await storeService.GetNoCloneAsync(storeId) : null;
 
-        if (store == null)
+        if (store != null)
         {
-            return await settingsManager.GetValueAsync<bool>(NewsSettings.UseNewsPrefixInLinks);
+            result.StoreDefaultLanguage = store.DefaultLanguage;
+            result.UseNewsPrefixInLinks = store.Settings.GetValue<bool>(NewsSettings.UseNewsPrefixInLinks);
+            result.UseStoreDefaultLanguage = store.Settings.GetValue<bool>(NewsSettings.UseStoreDefaultLanguage);
+        }
+        else
+        {
+            result.UseNewsPrefixInLinks = await settingsManager.GetValueAsync<bool>(NewsSettings.UseNewsPrefixInLinks);
+            result.UseStoreDefaultLanguage = await settingsManager.GetValueAsync<bool>(NewsSettings.UseStoreDefaultLanguage);
         }
 
-        return store.Settings.GetValue<bool>(NewsSettings.UseNewsPrefixInLinks);
+        return result;
     }
 }

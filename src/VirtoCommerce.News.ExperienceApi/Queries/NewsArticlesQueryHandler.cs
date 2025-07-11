@@ -7,11 +7,11 @@ using VirtoCommerce.CustomerModule.Core.Model;
 using VirtoCommerce.CustomerModule.Core.Services;
 using VirtoCommerce.News.Core.Models;
 using VirtoCommerce.News.Core.Services;
+using VirtoCommerce.News.ExperienceApi.Model;
 using VirtoCommerce.News.ExperienceApi.Services;
 using VirtoCommerce.Platform.Core.Common;
 using VirtoCommerce.Seo.Core.Extensions;
 using VirtoCommerce.Seo.Core.Models;
-using VirtoCommerce.StoreModule.Core.Services;
 using VirtoCommerce.Xapi.Core;
 using VirtoCommerce.Xapi.Core.Infrastructure;
 
@@ -22,7 +22,6 @@ public class NewsArticlesQueryHandler(
     INewsArticleSearchService newsArticleSearchService,
     IMemberResolver memberResolver,
     IMemberService memberService,
-    IStoreService storeService,
     INewsArticleSeoService newsArticleSeoService,
     INewsArticleSettingsService newsArticleSettingsService)
     : IQueryHandler<NewsArticleQuery, NewsArticle>,
@@ -34,9 +33,9 @@ public class NewsArticlesQueryHandler(
 
         if (result == null)
         {
-            var useNewsPrefixInLinks = await newsArticleSettingsService.GetUseNewsPrefixInLinksSettingAsync(request.StoreId);
+            var settings = await newsArticleSettingsService.GetSettingsAsync(request.StoreId);
 
-            if (useNewsPrefixInLinks)
+            if (settings.UseNewsPrefixInLinks)
             {
                 var newsArticleSeoInfo = await newsArticleSeoService.FindActiveSeoAsync([request.Id], request.StoreId, request.LanguageCode);
 
@@ -49,7 +48,8 @@ public class NewsArticlesQueryHandler(
 
         if (result != null)
         {
-            await PostProcessResultAsync(request.StoreId, request.LanguageCode, [result]);
+            var settings = await newsArticleSettingsService.GetSettingsAsync(request.StoreId);
+            PostProcessResult([result], request.StoreId, request.LanguageCode, settings);
         }
 
         return result;
@@ -57,25 +57,32 @@ public class NewsArticlesQueryHandler(
 
     public async Task<NewsArticleSearchResult> Handle(NewsArticlesQuery request, CancellationToken cancellationToken)
     {
-        var searchCriteria = await BuildSearchCriteria(request);
-
+        var settings = await newsArticleSettingsService.GetSettingsAsync(request.StoreId);
+        var searchCriteria = await BuildSearchCriteria(request, settings);
         var result = await newsArticleSearchService.SearchAsync(searchCriteria);
 
         if (!result.Results.IsNullOrEmpty())
         {
-            await PostProcessResultAsync(request.StoreId, request.LanguageCode, result.Results);
+            PostProcessResult(result.Results, request.StoreId, request.LanguageCode, settings);
         }
 
         return result;
     }
 
-    protected virtual async Task<NewsArticleSearchCriteria> BuildSearchCriteria(NewsArticlesQuery request)
+    protected virtual async Task<NewsArticleSearchCriteria> BuildSearchCriteria(NewsArticlesQuery request, NewsArticleSettings settings)
     {
+        var languageCodes = new List<string>() { request.LanguageCode };
+
+        if (settings.UseStoreDefaultLanguage && !settings.StoreDefaultLanguage.IsNullOrEmpty())
+        {
+            languageCodes.Add(settings.StoreDefaultLanguage);
+        }
+
         var userGroups = await GetUserGroups(request.UserId);
 
         return new NewsArticleSearchCriteria
         {
-            LanguageCode = request.LanguageCode,
+            LanguageCodes = languageCodes,
             Keyword = request.Keyword,
             StoreId = request.StoreId,
             UserGroups = userGroups,
@@ -86,12 +93,10 @@ public class NewsArticlesQueryHandler(
         };
     }
 
-    protected virtual async Task PostProcessResultAsync(string storeId, string languageCode, IList<NewsArticle> newsArticles)
+    protected virtual void PostProcessResult(IList<NewsArticle> newsArticles, string requestStoreId, string requestLanguageCode, NewsArticleSettings settings)
     {
-        var store = !storeId.IsNullOrEmpty() ? await storeService.GetNoCloneAsync(storeId) : null;
-
-        await FilterLanguagesAsync(newsArticles, languageCode, store?.DefaultLanguage);
-        await FilterSeoInfosAsync(newsArticles, languageCode, storeId, store?.DefaultLanguage);
+        FilterLanguages(newsArticles, requestLanguageCode, settings);
+        FilterSeoInfos(newsArticles, requestStoreId, requestLanguageCode, settings);
     }
 
     protected virtual async Task<IList<string>> GetUserGroups(string userId)
@@ -129,28 +134,26 @@ public class NewsArticlesQueryHandler(
         return userGroups.ToList();
     }
 
-    protected virtual Task FilterLanguagesAsync(IList<NewsArticle> newsArticles, string languageCode, string storeDefaultLanguage)
+    protected virtual void FilterLanguages(IList<NewsArticle> newsArticles, string requestLanguageCode, NewsArticleSettings settings)
     {
         foreach (var newsArticle in newsArticles)
         {
-            newsArticle.LocalizedContents = GetBestMatchingContent(newsArticle.LocalizedContents, languageCode, storeDefaultLanguage);
+            newsArticle.LocalizedContents = GetBestMatchingContent(newsArticle.LocalizedContents, requestLanguageCode, settings.UseStoreDefaultLanguage ? settings.StoreDefaultLanguage : null);
         }
-
-        return Task.CompletedTask;
     }
 
-    protected virtual Task FilterSeoInfosAsync(IList<NewsArticle> newsArticles, string languageCode, string storeId, string storeDefaultLanguage)
+    protected virtual void FilterSeoInfos(IList<NewsArticle> newsArticles, string requestStoreId, string requestLanguageCode, NewsArticleSettings settings)
     {
         foreach (var newsArticle in newsArticles)
         {
             SeoInfo seoInfo = null;
             var activeSeoInfos = newsArticle.SeoInfos?.Where(x => x.IsActive).ToList();
 
-            var localizedContents = GetBestMatchingContent(newsArticle.LocalizedContents, languageCode, storeDefaultLanguage);
+            var localizedContents = GetBestMatchingContent(newsArticle.LocalizedContents, requestLanguageCode, settings.UseStoreDefaultLanguage ? settings.StoreDefaultLanguage : null);
 
             if (!activeSeoInfos.IsNullOrEmpty())
             {
-                seoInfo = activeSeoInfos.GetBestMatchingSeoInfo(storeId, storeDefaultLanguage, localizedContents.FirstOrDefault()?.LanguageCode);
+                seoInfo = activeSeoInfos.GetBestMatchingSeoInfo(requestStoreId, settings.StoreDefaultLanguage, localizedContents.FirstOrDefault()?.LanguageCode);
                 if (seoInfo != null && seoInfo.Name.IsNullOrEmpty())
                 {
                     seoInfo.Name = newsArticle.Name;
@@ -165,8 +168,6 @@ public class NewsArticlesQueryHandler(
             newsArticle.SeoInfos.Clear();
             newsArticle.SeoInfos.Add(seoInfo);
         }
-
-        return Task.CompletedTask;
     }
 
     protected virtual IList<NewsArticleLocalizedContent> GetBestMatchingContent(IList<NewsArticleLocalizedContent> localizedContents, string languageCode, string storeDefaultLanguage)
@@ -175,7 +176,7 @@ public class NewsArticlesQueryHandler(
             .Where(x => x.LanguageCode.EqualsIgnoreCase(languageCode))
             .ToList();
 
-        if (result.Count == 0)
+        if ((result.Count == 0) && !storeDefaultLanguage.IsNullOrEmpty())
         {
             result = localizedContents
                 .Where(x => x.LanguageCode.EqualsIgnoreCase(storeDefaultLanguage))
