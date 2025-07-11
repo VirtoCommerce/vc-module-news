@@ -50,12 +50,22 @@ public static class ModuleConstants
                 IsPublic = true,
             };
 
+            public static SettingDescriptor UseStoreDefaultLanguage { get; } = new()
+            {
+                Name = "News.UseStoreDefaultLanguage",
+                GroupName = "News|News",
+                ValueType = SettingValueType.Boolean,
+                DefaultValue = false,
+                IsPublic = true,
+            };
+
             public static IEnumerable<SettingDescriptor> AllGeneralSettings
             {
                 get
                 {
                     yield return NewsEnabled;
                     yield return UseNewsPrefixInLinks;
+                    yield return UseStoreDefaultLanguage;
                 }
             }
         }

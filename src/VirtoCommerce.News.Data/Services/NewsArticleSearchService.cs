@@ -56,6 +56,11 @@ public class NewsArticleSearchService(
             query = query.Where(article => !article.UserGroups.Any() || article.UserGroups.Any(group => criteria.UserGroups.Contains(group.Group)));
         }
 
+        if (!criteria.LanguageCodes.IsNullOrEmpty())
+        {
+            query = query.Where(article => article.LocalizedContents.Any(content => criteria.LanguageCodes.Contains(content.LanguageCode)));
+        }
+
         return query;
     }
 

@@ -1,8 +1,9 @@
 using System.Threading.Tasks;
+using VirtoCommerce.News.ExperienceApi.Model;
 
 namespace VirtoCommerce.News.ExperienceApi.Services;
 
 public interface INewsArticleSettingsService
 {
-    Task<bool> GetUseNewsPrefixInLinksSettingAsync(string storeId);
+    Task<NewsArticleSettings> GetSettingsAsync(string storeId);
 }
