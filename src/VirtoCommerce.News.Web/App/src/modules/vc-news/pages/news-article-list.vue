@@ -2,13 +2,14 @@
   <VcBlade :title="$t('VC_NEWS.PAGES.LIST.TITLE')" width="50%" :expanded="expanded" :closable="closable"
     :toolbar-items="bladeToolbar" @close="$emit('close:blade')" @expand="$emit('expand:blade')"
     @collapse="$emit('collapse:blade')">
-    <!-- Blade contents -->
+
     <!-- @vue-generic {never} -->
     <VcTable :expanded="expanded" class="tw-grow tw-basis-0" multiselect :loading="loading" :columns="columns"
-      :sort="sort" :pages="pagination.pages" :total-count="pagination.totalCount" :search-value="searchValue"
-      :current-page="pagination.currentPage" :search-placeholder="$t('VC_NEWS.PAGES.LIST.SEARCH.PLACEHOLDER')"
+      :sort="searchQuery.sort" :pages="pagesCount" :total-count="itemsCount" :search-value="searchValue"
+      :current-page="pageIndex" :search-placeholder="$t('VC_NEWS.PAGES.LIST.SEARCH.PLACEHOLDER')"
       :total-label="$t('VC_NEWS.PAGES.LIST.TABLE.TOTALS')" :selected-item-id="selectedItemId" state-key="VC_NEWS"
-      :items="items" @item-click="onItemClick" @header-click="onHeaderClick" @selection-changed="onSelectionChanged">
+      :items="items" @item-click="onItemClick" @header-click="onHeaderClick" @pagination-click="onPaginationClick"
+      @search:change="onSearchChange" @selection-changed="onSelectionChanged">
     </VcTable>
   </VcBlade>
 </template>
@@ -58,9 +59,8 @@ const { showConfirmation } = usePopup();
 
 const { t } = useI18n({ useScope: "global" });
 const { openBlade } = useBladeNavigation();
-const { items, load, loading, pagination, query, deleteItems } = useNewsArticleList();
+const { items, itemsCount, pagesCount, pageIndex, search, searchQuery, loading, deleteItems } = useNewsArticleList();
 
-const sort = ref("createdDate:DESC");
 const searchValue = ref();
 const selectedItemId = ref<string>();
 const selectedIds = ref<string[]>([]);
@@ -74,7 +74,7 @@ watch(
 );
 
 onMounted(async () => {
-  await load();
+  await search();
 });
 
 const bladeToolbar = computed((): IBladeToolbar[] => [
@@ -123,18 +123,21 @@ const columns = ref<ITableColumns[]>([
     id: "name",
     title: computed(() => t("VC_NEWS.PAGES.LIST.TABLE.HEADER.NAME")),
     alwaysVisible: true,
+    sortable: true,
     width: "50%"
   },
   {
     id: "storeId",
     title: computed(() => t("VC_NEWS.PAGES.LIST.TABLE.HEADER.STORE")),
     alwaysVisible: true,
+    sortable: true,
     width: "30%"
   },
   {
     id: "isPublished",
     title: computed(() => t("VC_NEWS.PAGES.LIST.TABLE.HEADER.IS_PUBLISHED")),
     alwaysVisible: true,
+    sortable: true,
     width: "20%"
   },
 ]);
@@ -142,7 +145,7 @@ const columns = ref<ITableColumns[]>([
 const title = computed(() => t("VC_NEWS.PAGES.LIST.TITLE"));
 
 const reload = async () => {
-  await load();
+  await search();
 };
 
 const onItemClick = (item: { id: string }) => {
@@ -158,13 +161,23 @@ const onItemClick = (item: { id: string }) => {
   });
 };
 
-const onHeaderClick = (item: ITableColumns) => {
+const onSearchChange = (searchKeyword: string | undefined) => {
+  searchQuery.value.searchPhrase = searchKeyword;
+  search();
+}
+
+const onPaginationClick = (page: number) => {
+  pageIndex.value = page;
+  search();
+}
+
+const onHeaderClick = async (item: ITableColumns) => {
   const sortOptions = ["DESC", "ASC", ""];
 
   if (item.sortable) {
-    if (sort.value.split(":")[0] === item.id) {
+    if (searchQuery?.value?.sort?.split(":")[0] === item.id) {
       const index = sortOptions.findIndex((x) => {
-        const sorting = sort.value.split(":")[1];
+        const sorting = searchQuery?.value?.sort?.split(":")[1];
         if (sorting) {
           return x === sorting;
         } else {
@@ -176,13 +189,15 @@ const onHeaderClick = (item: ITableColumns) => {
         const newSort = sortOptions[(index + 1) % sortOptions.length];
 
         if (newSort === "") {
-          sort.value = `${item.id}`;
+          searchQuery.value.sort = '';
         } else {
-          sort.value = `${item.id}:${newSort}`;
+          searchQuery.value.sort = `${item.id}:${newSort}`;
         }
+        await search();
       }
     } else {
-      sort.value = `${item.id}:${sortOptions[0]}`;
+      searchQuery.value.sort = `${item.id}:${sortOptions[0]}`;
+      await search();
     }
   }
 };
