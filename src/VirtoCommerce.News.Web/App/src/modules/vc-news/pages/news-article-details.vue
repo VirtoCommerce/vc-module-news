@@ -67,9 +67,8 @@ const { t } = useI18n({ useScope: "global" });
 const userGroupsOptions = [
   { id: 'VIP', title: 'VIP' },
 ];
-const storeOptions = [
-  { id: 'B2B-store', title: 'B2B-store' },
-];
+
+const storeOptions = computed(() => stores.value.map((x) => ({ id: x.id, title: x.name })));
 
 const userGroups = computed({
   get() {
@@ -80,7 +79,7 @@ const userGroups = computed({
   }
 });
 
-const { item, loading, get, save } = useNewsArticleDetails();
+const { item, stores, loading, get, getStores, save } = useNewsArticleDetails();
 
 const bladeToolbar = ref<IBladeToolbar[]>([
   {
@@ -110,6 +109,7 @@ const bladeToolbar = ref<IBladeToolbar[]>([
 ]);
 
 onMounted(async () => {
+  await getStores();
   if (props.param) {
     await get({ id: props.param });
   }

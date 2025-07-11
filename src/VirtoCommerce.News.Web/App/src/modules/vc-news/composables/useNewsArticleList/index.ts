@@ -5,7 +5,7 @@ import { NewsArticleClient, NewsArticle, NewsArticleSearchCriteria } from "../..
 export default () => {
   const pageSize = 20;
 
-  const { getApiClient } = useApiClient(NewsArticleClient);
+  const { getApiClient: getNewsApiClient } = useApiClient(NewsArticleClient);
 
   const searchQuery = ref<NewsArticleSearchCriteria>(new NewsArticleSearchCriteria());
   const items = ref<NewsArticle[]>([]);
@@ -14,7 +14,7 @@ export default () => {
   const pageIndex = ref(1);
 
   const { loading, action: search } = useAsync(async () => {
-    const apiClient = await getApiClient();
+    const apiClient = await getNewsApiClient();
     const apiResult = await apiClient.search({
       ...(searchQuery.value ?? {}),
       take: pageSize,
@@ -30,7 +30,7 @@ export default () => {
 
   const { action: deleteItems } = useAsync<{ ids: string[] }>(async (args?: { ids: string[] }) => {
     if (args) {
-      const apiClient = await getApiClient();
+      const apiClient = await getNewsApiClient();
       await apiClient.delete(args.ids);
     }
   });

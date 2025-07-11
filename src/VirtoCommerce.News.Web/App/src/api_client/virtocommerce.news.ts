@@ -576,6 +576,7 @@ export class NewsArticleSearchCriteria implements INewsArticleSearchCriteria {
     published?: boolean | undefined;
     storeId?: string | undefined;
     userGroups?: string[] | undefined;
+    languageCodes?: string[] | undefined;
     responseGroup?: string | undefined;
     objectType?: string | undefined;
     objectTypes?: string[] | undefined;
@@ -605,6 +606,11 @@ export class NewsArticleSearchCriteria implements INewsArticleSearchCriteria {
                 this.userGroups = [] as any;
                 for (let item of _data["userGroups"])
                     this.userGroups!.push(item);
+            }
+            if (Array.isArray(_data["languageCodes"])) {
+                this.languageCodes = [] as any;
+                for (let item of _data["languageCodes"])
+                    this.languageCodes!.push(item);
             }
             this.responseGroup = _data["responseGroup"];
             this.objectType = _data["objectType"];
@@ -648,6 +654,11 @@ export class NewsArticleSearchCriteria implements INewsArticleSearchCriteria {
             for (let item of this.userGroups)
                 data["userGroups"].push(item);
         }
+        if (Array.isArray(this.languageCodes)) {
+            data["languageCodes"] = [];
+            for (let item of this.languageCodes)
+                data["languageCodes"].push(item);
+        }
         data["responseGroup"] = this.responseGroup;
         data["objectType"] = this.objectType;
         if (Array.isArray(this.objectTypes)) {
@@ -679,6 +690,7 @@ export interface INewsArticleSearchCriteria {
     published?: boolean | undefined;
     storeId?: string | undefined;
     userGroups?: string[] | undefined;
+    languageCodes?: string[] | undefined;
     responseGroup?: string | undefined;
     objectType?: string | undefined;
     objectTypes?: string[] | undefined;

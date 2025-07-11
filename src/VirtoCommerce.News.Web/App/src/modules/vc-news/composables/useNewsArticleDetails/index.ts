@@ -1,15 +1,18 @@
 import { computed, ref } from "vue";
 import { useAsync, useLoading, useApiClient, useDetailsFactory } from "@vc-shell/framework";
 import { NewsArticleClient, NewsArticle } from "../../../../api_client/virtocommerce.news";
+import { StoreModuleClient, Store, StoreSearchCriteria } from "../../../../api_client/virtocommerce.store";
 
 export default () => {
-  const { getApiClient } = useApiClient(NewsArticleClient);
+  const { getApiClient: getNewsApiClient } = useApiClient(NewsArticleClient);
+  const { getApiClient: getStoreApiClient } = useApiClient(StoreModuleClient);
 
   const item = ref<NewsArticle>(new NewsArticle());
+  const stores = ref<Store[]>([]);
 
   const { loading, action: get } = useAsync<{ id: string }>(async (args?: { id: string }) => {
     if (args) {
-      const apiClient = await getApiClient();
+      const apiClient = await getNewsApiClient();
       const apiResult = await apiClient.get(args.id);
 
       if (apiResult) {
@@ -18,9 +21,18 @@ export default () => {
     }
   });
 
+  const { action: getStores } = useAsync(async () => {
+    const apiClient = await getStoreApiClient();
+    const apiResult = await apiClient.searchStores(new StoreSearchCriteria());
+
+    if (apiResult) {
+      stores.value = apiResult.stores ?? [];
+    }
+  });
+
   const { action: save } = useAsync<NewsArticle>(async (item?: NewsArticle) => {
     if (item) {
-      const apiClient = await getApiClient();
+      const apiClient = await getNewsApiClient();
 
       if (!item.id) {
         const apiResult = await apiClient.create(item);
@@ -30,21 +42,12 @@ export default () => {
     }
   });
 
-  /*const factory = useDetailsFactory<NewsArticle>({
-    load: async (itemId) => {
-      if (itemId?.id) {
-        const client = await getApiClient();
-        return client.get(itemId.id);
-      }
-    },c
-  });
-
-  const { item, load, loading, saveChanges } = factory();
-*/
   return {
     loading,
     item,
+    stores,
     get,
+    getStores,
     save,
   };
 };
