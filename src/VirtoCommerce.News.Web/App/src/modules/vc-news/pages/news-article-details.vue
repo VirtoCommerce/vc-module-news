@@ -2,8 +2,8 @@
   <VcBlade v-loading="loading" :title="$t('VC_NEWS.PAGES.DETAILS.TITLE')" :expanded="expanded" :closable="closable"
     width="70%" :toolbar-items="bladeToolbar" @close="$emit('close:blade')" @expand="$emit('expand:blade')"
     @collapse="$emit('collapse:blade')">
-    <VcContainer class="tw-p-2">
-      <VcForm>
+    <VcContainer>
+      <VcForm class="tw-flex tw-flex-col tw-gap-4">
         <Field name="name" :model-value="item.name" :label="$t('VC_NEWS.PAGES.DETAILS.FORM.NAME.LABEL')"
           rules="required">
           <VcInput v-model="item.name" :label="$t('VC_NEWS.PAGES.DETAILS.FORM.NAME.LABEL')" :max-length="1024"
