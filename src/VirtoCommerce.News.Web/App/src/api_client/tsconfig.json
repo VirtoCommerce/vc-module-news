@@ -8,6 +8,7 @@
   },
   "files": [
     "virtocommerce.news.ts",
+    "virtocommerce.platform.ts",
     "virtocommerce.store.ts"
   ],
   "include": [

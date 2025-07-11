@@ -19,8 +19,9 @@
           <VcInput type="datetime-local" v-model="item.publishDate"
             :label="$t('VC_NEWS.PAGES.DETAILS.FORM.PUBLISH_DATE.LABEL')" />
         </Field>
-        <Field name="storeId" :model-value="userGroups" :label="$t('VC_NEWS.PAGES.DETAILS.FORM.USER_GROUPS.LABEL')">
-          <VcMultivalue v-model="userGroups" :label="$t('VC_NEWS.PAGES.DETAILS.FORM.USER_GROUPS.LABEL')"
+        <Field name="storeId" :model-value="userGroupsSelected"
+          :label="$t('VC_NEWS.PAGES.DETAILS.FORM.USER_GROUPS.LABEL')">
+          <VcMultivalue v-model="userGroupsSelected" :label="$t('VC_NEWS.PAGES.DETAILS.FORM.USER_GROUPS.LABEL')"
             :options="userGroupsOptions" option-value="id" option-label="title" multivalue />
         </Field>
       </VcForm>
@@ -64,13 +65,11 @@ const emit = defineEmits<Emits>();
 const { t } = useI18n({ useScope: "global" });
 
 
-const userGroupsOptions = [
-  { id: 'VIP', title: 'VIP' },
-];
+const userGroupsOptions = computed(() => userGroups.value.map((x) => ({ id: x, title: x })));
 
 const storeOptions = computed(() => stores.value.map((x) => ({ id: x.id, title: x.name })));
 
-const userGroups = computed({
+const userGroupsSelected = computed({
   get() {
     return item.value?.userGroups?.map((x) => ({ id: x, title: x })) ?? [];
   },
@@ -79,7 +78,7 @@ const userGroups = computed({
   }
 });
 
-const { item, stores, loading, get, getStores, save } = useNewsArticleDetails();
+const { item, stores, userGroups, loading, get, getStores, getUserGroups, save } = useNewsArticleDetails();
 
 const bladeToolbar = ref<IBladeToolbar[]>([
   {
@@ -110,6 +109,7 @@ const bladeToolbar = ref<IBladeToolbar[]>([
 
 onMounted(async () => {
   await getStores();
+  await getUserGroups();
   if (props.param) {
     await get({ id: props.param });
   }
