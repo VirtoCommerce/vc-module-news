@@ -40,6 +40,15 @@
           },
           "USER_GROUPS": {
             "LABEL": "User groups"
+          },
+          "CONTENT_TITLE": {
+            "LABEL": "Title"
+          },
+          "CONTENT_CONTENT": {
+            "LABEL": "Content"
+          },
+          "CONTENT_PREVIEW": {
+            "LABEL": "Content (user preview)"
           }
         },
         "TOOLBAR": {

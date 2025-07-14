@@ -1,8 +1,14 @@
 import { computed, ref } from "vue";
-import { useAsync, useLoading, useApiClient, useDetailsFactory } from "@vc-shell/framework";
-import { NewsArticleClient, NewsArticle } from "../../../../api_client/virtocommerce.news";
+import { useAsync, useLoading, useApiClient, useLanguages } from "@vc-shell/framework";
+import { NewsArticleClient, NewsArticle, NewsArticleLocalizedContent } from "../../../../api_client/virtocommerce.news";
 import { StoreModuleClient, Store, StoreSearchCriteria } from "../../../../api_client/virtocommerce.store";
 import { SettingClient } from "../../../../api_client/virtocommerce.platform";
+
+interface LanguageOption {
+  value: string;
+  label: string;
+  flag: string;
+}
 
 export default () => {
   const { getApiClient: getNewsApiClient } = useApiClient(NewsArticleClient);
@@ -28,8 +34,8 @@ export default () => {
     const apiClient = await getStoreApiClient();
     const apiResult = await apiClient.searchStores(new StoreSearchCriteria());
 
-    if (apiResult) {
-      stores.value = apiResult.stores ?? [];
+    if (apiResult && apiResult.stores) {
+      stores.value = apiResult.stores;
     }
   });
 
@@ -37,8 +43,8 @@ export default () => {
     const apiClient = await getSettingApiClient();
     const apiResult = await apiClient.getGlobalSetting("Customer.MemberGroups");
 
-    if (apiResult) {
-      userGroups.value = apiResult.allowedValues ?? [];
+    if (apiResult && apiResult.allowedValues) {
+      userGroups.value = apiResult.allowedValues;
     }
   });
 
@@ -54,6 +60,35 @@ export default () => {
     }
   });
 
+  const { getLocaleByTag, getFlag } = useLanguages();
+
+  const currentLocale = ref<string>("en-US");
+  const setLocale = (locale: string) => {
+    currentLocale.value = locale;
+  };
+  const languages = ref<LanguageOption[]>([]);
+
+  const { loading: languagesLoading, action: getLanguages } = useAsync(async () => {
+    const apiClient = await getSettingApiClient();
+    const apiResult = await apiClient.getGlobalSetting("VirtoCommerce.Core.General.Languages");
+
+    if (apiResult && apiResult.allowedValues) {
+      languages.value = await Promise.all(
+        apiResult.allowedValues.map(async (x) => ({
+          label: getLocaleByTag(x) || x,
+          value: x,
+          flag: await getFlag(x ?? ""),
+        })),
+      );
+    }
+  });
+
+  const selectedLocalizedContent = computed(
+    () =>
+      item.value?.localizedContents?.find((x) => x.languageCode === currentLocale.value) ??
+      new NewsArticleLocalizedContent(),
+  );
+
   return {
     loading,
     item,
@@ -63,5 +98,12 @@ export default () => {
     getStores,
     getUserGroups,
     save,
+
+    currentLocale,
+    setLocale,
+    languages,
+    getLanguages,
+
+    selectedLocalizedContent,
   };
 };

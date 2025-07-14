@@ -9,28 +9,45 @@
           <VcInput v-model="item.name" :label="$t('VC_NEWS.PAGES.DETAILS.FORM.NAME.LABEL')" :max-length="1024"
             required />
         </Field>
+
         <Field name="storeId" :model-value="item.storeId" :label="$t('VC_NEWS.PAGES.DETAILS.FORM.STORE.LABEL')"
           rules="required">
           <VcSelect v-model="item.storeId" :label="$t('VC_NEWS.PAGES.DETAILS.FORM.STORE.LABEL')" :options="storeOptions"
             required />
         </Field>
-        <Field name="publishDate" :model-value="item.publishDate"
-          :label="$t('VC_NEWS.PAGES.DETAILS.FORM.PUBLISH_DATE.LABEL')">
-          <VcInput type="datetime-local" v-model="item.publishDate"
-            :label="$t('VC_NEWS.PAGES.DETAILS.FORM.PUBLISH_DATE.LABEL')" />
-        </Field>
-        <Field name="userGroups" :model-value="userGroupsSelected"
-          :label="$t('VC_NEWS.PAGES.DETAILS.FORM.USER_GROUPS.LABEL')">
-          <VcMultivalue v-model="userGroupsSelected" :label="$t('VC_NEWS.PAGES.DETAILS.FORM.USER_GROUPS.LABEL')"
-            :options="userGroupsOptions" option-value="id" option-label="title" multivalue />
-        </Field>
+
+        <VcInput type="datetime-local" v-model="item.publishDate"
+          :label="$t('VC_NEWS.PAGES.DETAILS.FORM.PUBLISH_DATE.LABEL')" />
+
+        <VcMultivalue v-model="userGroupsSelected" :label="$t('VC_NEWS.PAGES.DETAILS.FORM.USER_GROUPS.LABEL')"
+          :options="userGroupsOptions" option-value="id" option-label="title" multivalue />
+
+        <div
+          class="tw-flex tw-flex-row tw-justify-end">
+          <VcLanguageSelector
+            :model-value="currentLocale"
+            :options="languages"
+            @update:model-value="setLocale" />
+        </div>
+
+        <VcInput v-model="selectedLocalizedContent.title"
+          :label="$t('VC_NEWS.PAGES.DETAILS.FORM.CONTENT_TITLE.LABEL')" />
+
+        <VcEditor
+          v-model="selectedLocalizedContent.content"
+          :label="$t('VC_NEWS.PAGES.DETAILS.FORM.CONTENT_CONTENT.LABEL')"
+          :placeholder="$t('VC_NEWS.PAGES.DETAILS.FORM.CONTENT_CONTENT.PLACEHOLDER')"
+          assets-folder="news-articles" />
+
+        <VcInput v-model="selectedLocalizedContent.contentPreview"
+          :label="$t('VC_NEWS.PAGES.DETAILS.FORM.CONTENT_PREVIEW.LABEL')" />
       </VcForm>
     </VcContainer>
   </VcBlade>
 </template>
 
 <script lang="ts" setup>
-import { IBladeToolbar, IParentCallArgs } from "@vc-shell/framework";
+import { IBladeToolbar, IParentCallArgs, VcLanguageSelector } from "@vc-shell/framework";
 import { useNewsArticleDetails } from "../composables";
 import { onMounted, ref, computed } from "vue";
 import { Field } from "vee-validate";
@@ -78,7 +95,7 @@ const userGroupsSelected = computed({
   }
 });
 
-const { item, stores, userGroups, loading, get, getStores, getUserGroups, save } = useNewsArticleDetails();
+const { item, stores, userGroups, loading, get, getStores, getUserGroups, save, currentLocale, setLocale, languages, getLanguages, selectedLocalizedContent } = useNewsArticleDetails();
 
 const bladeToolbar = ref<IBladeToolbar[]>([
   {
@@ -110,6 +127,7 @@ const bladeToolbar = ref<IBladeToolbar[]>([
 onMounted(async () => {
   await getStores();
   await getUserGroups();
+  await getLanguages();
   if (props.param) {
     await get({ id: props.param });
   }
