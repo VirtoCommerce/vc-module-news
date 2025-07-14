@@ -19,7 +19,7 @@
           <VcInput type="datetime-local" v-model="item.publishDate"
             :label="$t('VC_NEWS.PAGES.DETAILS.FORM.PUBLISH_DATE.LABEL')" />
         </Field>
-        <Field name="storeId" :model-value="userGroupsSelected"
+        <Field name="userGroups" :model-value="userGroupsSelected"
           :label="$t('VC_NEWS.PAGES.DETAILS.FORM.USER_GROUPS.LABEL')">
           <VcMultivalue v-model="userGroupsSelected" :label="$t('VC_NEWS.PAGES.DETAILS.FORM.USER_GROUPS.LABEL')"
             :options="userGroupsOptions" option-value="id" option-label="title" multivalue />
