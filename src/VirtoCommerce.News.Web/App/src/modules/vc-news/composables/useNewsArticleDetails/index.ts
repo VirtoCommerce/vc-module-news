@@ -1,4 +1,5 @@
 import { computed, ref } from "vue";
+import * as _ from "lodash-es";
 import { useAsync, useApiClient } from "@vc-shell/framework";
 import { NewsArticleClient, NewsArticle } from "../../../../api_client/virtocommerce.news";
 
@@ -24,15 +25,26 @@ export default () => {
 
   const { loading: savingNewsArticle, action: saveNewsArticle } = useAsync<NewsArticle>(async () => {
     if (newsArticle.value) {
+      const saveable = _.cloneDeep(newsArticle.value);
+      cleanupLocalizations(saveable);
+
       const apiClient = await getNewsApiClient();
 
-      if (!newsArticle.value.id) {
-        const apiResult = await apiClient.create(newsArticle.value);
+      if (!saveable.id) {
+        const createResult = await apiClient.create(saveable);
+        newsArticle.value.id = createResult.id;
       } else {
-        const apiResult = await apiClient.update(newsArticle.value);
+        const updateResult = await apiClient.update(saveable);
       }
     }
   });
+
+  const cleanupLocalizations = (newsArticle: NewsArticle) => {
+    const notEmptyLocalizations = newsArticle.localizedContents?.filter(
+      (x) => x.title || x.content || x.contentPreview,
+    );
+    newsArticle.localizedContents = notEmptyLocalizations;
+  };
 
   return {
     newsArticle,

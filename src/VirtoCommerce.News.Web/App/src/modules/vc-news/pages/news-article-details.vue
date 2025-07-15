@@ -18,14 +18,18 @@
               required
               class="tw-flex-auto" />
           </Field>
+
           <VcInput type="datetime-local" v-model="newsArticle.publishDate"
             :label="$t('VC_NEWS.PAGES.DETAILS.FORM.PUBLISH_DATE.LABEL')" />
         </div>
+
         <VcMultivalue v-model="userGroupsSelected" :label="$t('VC_NEWS.PAGES.DETAILS.FORM.USER_GROUPS.LABEL')"
           :options="userGroupsOptions" option-value="id" option-label="title" multivalue />
 
-        <VcInput v-model="selectedLocalizedContent.title"
-          :label="$t('VC_NEWS.PAGES.DETAILS.FORM.CONTENT_TITLE.LABEL')">
+        <VcInput v-if="props.param"
+          v-model="selectedLocalizedContent.title"
+          :label="$t('VC_NEWS.PAGES.DETAILS.FORM.CONTENT_TITLE.LABEL')"
+          required>
           <template #prepend>
             <VcLanguageSelector
               :model-value="currentLocale"
@@ -34,12 +38,13 @@
           </template>
         </VcInput>
 
-        <VcEditor
+        <VcEditor v-if="props.param"
           v-model="selectedLocalizedContent.content"
           :label="$t('VC_NEWS.PAGES.DETAILS.FORM.CONTENT_CONTENT.LABEL')"
-          assets-folder="news-articles" />
+          assets-folder="news-articles" required />
 
-        <VcInput v-model="selectedLocalizedContent.contentPreview"
+        <VcInput v-if="props.param"
+          v-model="selectedLocalizedContent.contentPreview"
           :label="$t('VC_NEWS.PAGES.DETAILS.FORM.CONTENT_PREVIEW.LABEL')" />
       </VcForm>
     </VcContainer>
@@ -72,7 +77,7 @@ export interface Props {
 const props = withDefaults(defineProps<Props>(), {
   expanded: true,
   closable: true,
-  param: undefined,
+  param: undefined
 });
 
 defineOptions({
@@ -143,7 +148,11 @@ const bladeToolbar = ref<IBladeToolbar[]>([
     clickHandler: async () => {
       try {
         await saveNewsArticle();
+        emit('close:blade');
         emit("parent:call", { method: "reload" });
+        emit("parent:call", {
+          method: "openDetailsBlade", args: newsArticle.value!.id
+        });
       } catch (error) {
         console.error("Failed to save product:", error);
       }

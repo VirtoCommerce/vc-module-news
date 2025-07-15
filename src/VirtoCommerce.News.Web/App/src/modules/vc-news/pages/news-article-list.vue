@@ -26,7 +26,6 @@ export interface Props {
   expanded?: boolean;
   closable?: boolean;
   param?: string;
-  options?: Record<string, unknown>;
 }
 
 export interface Emits {
@@ -88,12 +87,7 @@ const bladeToolbar = computed((): IBladeToolbar[] => [
     title: computed(() => t("VC_NEWS.PAGES.LIST.TOOLBAR.ADD")),
     icon: "material-add",
     clickHandler: async () => {
-      openBlade({
-        blade: markRaw(NewsArticleDetails),
-        onClose() {
-          selectedItemId.value = undefined;
-        },
-      });
+      openDetailsBlade(undefined);
     },
   },
   {
@@ -146,17 +140,21 @@ const reload = async () => {
 };
 
 const onItemClick = (item: { id: string }) => {
+  openDetailsBlade(item.id);
+};
+
+const openDetailsBlade = (id: string | undefined) => {
   openBlade({
     blade: markRaw(NewsArticleDetails),
-    param: item.id,
+    param: id ?? undefined,
     onOpen() {
-      selectedItemId.value = item.id;
+      selectedItemId.value = id ?? undefined;
     },
     onClose() {
       selectedItemId.value = undefined;
     },
   });
-};
+}
 
 const onSearchChange = (searchKeyword: string | undefined) => {
   searchQuery.value.searchPhrase = searchKeyword;
@@ -210,5 +208,6 @@ onMounted(async () => {
 defineExpose({
   title,
   reload,
+  openDetailsBlade
 });
 </script>
