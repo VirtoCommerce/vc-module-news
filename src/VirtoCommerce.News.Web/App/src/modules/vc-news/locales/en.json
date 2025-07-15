@@ -48,7 +48,8 @@
             "LABEL": "Content"
           },
           "CONTENT_PREVIEW": {
-            "LABEL": "Content (user preview)"
+            "LABEL": "Content (user preview)",
+            "PLACEHOLDER": "Content"
           }
         },
         "TOOLBAR": {

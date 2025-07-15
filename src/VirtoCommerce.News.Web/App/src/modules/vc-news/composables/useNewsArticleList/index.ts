@@ -8,12 +8,12 @@ export default () => {
   const { getApiClient: getNewsApiClient } = useApiClient(NewsArticleClient);
 
   const searchQuery = ref<NewsArticleSearchCriteria>(new NewsArticleSearchCriteria());
-  const items = ref<NewsArticle[]>([]);
-  const itemsCount = ref(0);
+  const newsArticles = ref<NewsArticle[]>([]);
+  const newsArticlesCount = ref(0);
   const pagesCount = ref(0);
   const pageIndex = ref(1);
 
-  const { loading, action: search } = useAsync(async () => {
+  const { loading: loadingNewsArticles, action: searchNewsArticles } = useAsync(async () => {
     const apiClient = await getNewsApiClient();
     const apiResult = await apiClient.search({
       ...(searchQuery.value ?? {}),
@@ -22,13 +22,13 @@ export default () => {
     } as NewsArticleSearchCriteria);
 
     if (apiResult) {
-      items.value = apiResult.results ?? [];
-      itemsCount.value = apiResult.totalCount ?? 0;
-      pagesCount.value = Math.ceil(itemsCount.value / pageSize);
+      newsArticles.value = apiResult.results ?? [];
+      newsArticlesCount.value = apiResult.totalCount ?? 0;
+      pagesCount.value = Math.ceil(newsArticlesCount.value / pageSize);
     }
   });
 
-  const { action: deleteItems } = useAsync<{ ids: string[] }>(async (args?: { ids: string[] }) => {
+  const { action: deleteNewsArticles } = useAsync<{ ids: string[] }>(async (args?: { ids: string[] }) => {
     if (args) {
       const apiClient = await getNewsApiClient();
       await apiClient.delete(args.ids);
@@ -36,15 +36,15 @@ export default () => {
   });
 
   return {
-    items,
-    itemsCount,
+    newsArticles,
+    newsArticlesCount,
     pageSize,
     pagesCount,
     pageIndex,
-    search,
     searchQuery,
-    loading,
+    searchNewsArticles,
+    loadingNewsArticles,
 
-    deleteItems,
+    deleteNewsArticles,
   };
 };

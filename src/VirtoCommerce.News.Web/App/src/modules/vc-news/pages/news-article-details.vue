@@ -4,19 +4,20 @@
     @collapse="$emit('collapse:blade')">
     <VcContainer>
       <VcForm class="tw-flex tw-flex-col tw-gap-4">
-        <Field name="name" :model-value="item.name" :label="$t('VC_NEWS.PAGES.DETAILS.FORM.NAME.LABEL')"
+        <Field name="name" :model-value="newsArticle.name" :label="$t('VC_NEWS.PAGES.DETAILS.FORM.NAME.LABEL')"
           rules="required">
-          <VcInput v-model="item.name" :label="$t('VC_NEWS.PAGES.DETAILS.FORM.NAME.LABEL')" :max-length="1024"
+          <VcInput v-model="newsArticle.name" :label="$t('VC_NEWS.PAGES.DETAILS.FORM.NAME.LABEL')" :max-length="1024"
             required />
         </Field>
 
-        <Field name="storeId" :model-value="item.storeId" :label="$t('VC_NEWS.PAGES.DETAILS.FORM.STORE.LABEL')"
+        <Field name="storeId" :model-value="newsArticle.storeId" :label="$t('VC_NEWS.PAGES.DETAILS.FORM.STORE.LABEL')"
           rules="required">
-          <VcSelect v-model="item.storeId" :label="$t('VC_NEWS.PAGES.DETAILS.FORM.STORE.LABEL')" :options="storeOptions"
+          <VcSelect v-model="newsArticle.storeId" :label="$t('VC_NEWS.PAGES.DETAILS.FORM.STORE.LABEL')"
+            :options="storeOptions"
             required />
         </Field>
 
-        <VcInput type="datetime-local" v-model="item.publishDate"
+        <VcInput type="datetime-local" v-model="newsArticle.publishDate"
           :label="$t('VC_NEWS.PAGES.DETAILS.FORM.PUBLISH_DATE.LABEL')" />
 
         <VcMultivalue v-model="userGroupsSelected" :label="$t('VC_NEWS.PAGES.DETAILS.FORM.USER_GROUPS.LABEL')"
@@ -31,12 +32,15 @@
         </div>
 
         <VcInput v-model="selectedLocalizedContent.title"
-          :label="$t('VC_NEWS.PAGES.DETAILS.FORM.CONTENT_TITLE.LABEL')" />
+          :label="$t('VC_NEWS.PAGES.DETAILS.FORM.CONTENT_TITLE.LABEL')">
+          <template v-slot="prepend">
+
+          </template>
+        </VcInput>
 
         <VcEditor
           v-model="selectedLocalizedContent.content"
           :label="$t('VC_NEWS.PAGES.DETAILS.FORM.CONTENT_CONTENT.LABEL')"
-          :placeholder="$t('VC_NEWS.PAGES.DETAILS.FORM.CONTENT_CONTENT.PLACEHOLDER')"
           assets-folder="news-articles" />
 
         <VcInput v-model="selectedLocalizedContent.contentPreview"
@@ -47,17 +51,12 @@
 </template>
 
 <script lang="ts" setup>
-import { IBladeToolbar, IParentCallArgs, VcLanguageSelector } from "@vc-shell/framework";
-import { useNewsArticleDetails } from "../composables";
 import { onMounted, ref, computed } from "vue";
 import { Field } from "vee-validate";
 import { useI18n } from "vue-i18n";
-
-export interface Props {
-  expanded?: boolean;
-  closable?: boolean;
-  param?: string;
-}
+import { IBladeToolbar, IParentCallArgs, VcLanguageSelector } from "@vc-shell/framework";
+import { useNewsArticleDetails, useStore, useUserGroups, useLocalization } from "../composables";
+import { NewsArticleLocalizedContent } from "../../../api_client/virtocommerce.news";
 
 export interface Emits {
   (event: "parent:call", args: IParentCallArgs): void;
@@ -66,10 +65,13 @@ export interface Emits {
   (event: "close:blade"): void;
 }
 
-defineOptions({
-  url: "/vc-news-details",
-  name: "NewsArticleDetails",
-});
+const emit = defineEmits<Emits>();
+
+export interface Props {
+  expanded?: boolean;
+  closable?: boolean;
+  param?: string;
+}
 
 const props = withDefaults(defineProps<Props>(), {
   expanded: true,
@@ -77,25 +79,64 @@ const props = withDefaults(defineProps<Props>(), {
   param: undefined,
 });
 
-const emit = defineEmits<Emits>();
+defineOptions({
+  url: "/vc-news-details",
+  name: "NewsArticleDetails",
+});
 
 const { t } = useI18n({ useScope: "global" });
 
-
-const userGroupsOptions = computed(() => userGroups.value.map((x) => ({ id: x, title: x })));
-
+//stores
+const { stores, loadStores, loadingStores } = useStore();
 const storeOptions = computed(() => stores.value.map((x) => ({ id: x.id, title: x.name })));
+
+//userGroups
+const { userGroups, loadUserGroups, loadingUserGroups } = useUserGroups();
+const userGroupsOptions = computed(() => userGroups.value.map((x) => ({ id: x, title: x })));
 
 const userGroupsSelected = computed({
   get() {
-    return item.value?.userGroups?.map((x) => ({ id: x, title: x })) ?? [];
+    return newsArticle.value?.userGroups?.map((x) => ({ id: x, title: x })) ?? [];
   },
   set(newValue) {
-    item.value!.userGroups = newValue.map((x) => x.id);
+    newsArticle.value!.userGroups = newValue.map((x) => x.id);
   }
 });
 
-const { item, stores, userGroups, loading, get, getStores, getUserGroups, save, currentLocale, setLocale, languages, getLanguages, selectedLocalizedContent } = useNewsArticleDetails();
+//localization
+const { languages, loadLanguages, loadingLanguages } = useLocalization();
+
+const currentLocale = ref<string>("en-US");
+const setLocale = (locale: string) => {
+  currentLocale.value = locale;
+};
+
+const selectedLocalizedContent = computed(
+  () => {
+    if (newsArticle.value) {
+      if (!newsArticle.value.localizedContents) {
+        newsArticle.value.localizedContents = [];
+      }
+    }
+    const existingLocalizedContent = newsArticle.value?.localizedContents?.find((x) => x.languageCode === currentLocale.value);
+
+    if (existingLocalizedContent) {
+      return existingLocalizedContent;
+    }
+
+    const newLocalizedContent = new NewsArticleLocalizedContent();
+    newLocalizedContent.languageCode = currentLocale.value;
+    newsArticle.value?.localizedContents?.push(newLocalizedContent);
+    return newLocalizedContent;
+  }
+);
+
+//news article 
+const { newsArticle, loadNewsArticle, saveNewsArticle, loadingOrSavingNewsArticle } = useNewsArticleDetails();
+
+
+//other
+const loading = computed(() => loadingStores.value || loadingUserGroups.value || loadingLanguages.value || loadingOrSavingNewsArticle.value);
 
 const bladeToolbar = ref<IBladeToolbar[]>([
   {
@@ -105,10 +146,8 @@ const bladeToolbar = ref<IBladeToolbar[]>([
 
     clickHandler: async () => {
       try {
-        if (item.value) {
-          await save(item.value);
-          emit("parent:call", { method: "reload" });
-        }
+        await saveNewsArticle();
+        emit("parent:call", { method: "reload" });
       } catch (error) {
         console.error("Failed to save product:", error);
       }
@@ -125,11 +164,11 @@ const bladeToolbar = ref<IBladeToolbar[]>([
 ]);
 
 onMounted(async () => {
-  await getStores();
-  await getUserGroups();
-  await getLanguages();
+  await loadStores();
+  await loadUserGroups();
+  await loadLanguages();
   if (props.param) {
-    await get({ id: props.param });
+    await loadNewsArticle({ id: props.param });
   }
 });
 </script>

@@ -4,11 +4,11 @@
     @collapse="$emit('collapse:blade')">
 
     <!-- @vue-generic {never} -->
-    <VcTable :expanded="expanded" class="tw-grow tw-basis-0" multiselect :loading="loading" :columns="columns"
-      :sort="searchQuery.sort" :pages="pagesCount" :total-count="itemsCount" :search-value="searchValue"
+    <VcTable :expanded="expanded" class="tw-grow tw-basis-0" multiselect :loading="loadingNewsArticles" :columns="columns"
+      :sort="searchQuery.sort" :pages="pagesCount" :total-count="newsArticlesCount" :search-value="searchKeyword"
       :current-page="pageIndex" :search-placeholder="$t('VC_NEWS.PAGES.LIST.SEARCH.PLACEHOLDER')"
       :total-label="$t('VC_NEWS.PAGES.LIST.TABLE.TOTALS')" :selected-item-id="selectedItemId" state-key="VC_NEWS"
-      :items="items" @item-click="onItemClick" @header-click="onHeaderClick" @pagination-click="onPaginationClick"
+      :items="newsArticles" @item-click="onItemClick" @header-click="onHeaderClick" @pagination-click="onPaginationClick"
       @search:change="onSearchChange" @selection-changed="onSelectionChanged">
     </VcTable>
   </VcBlade>
@@ -59,9 +59,10 @@ const { showConfirmation } = usePopup();
 
 const { t } = useI18n({ useScope: "global" });
 const { openBlade } = useBladeNavigation();
-const { items, itemsCount, pagesCount, pageIndex, search, searchQuery, loading, deleteItems } = useNewsArticleList();
 
-const searchValue = ref();
+const { newsArticles, newsArticlesCount, pagesCount, pageIndex, searchNewsArticles, searchQuery, loadingNewsArticles, deleteNewsArticles } = useNewsArticleList();
+
+const searchKeyword = ref();
 const selectedItemId = ref<string>();
 const selectedIds = ref<string[]>([]);
 
@@ -72,10 +73,6 @@ watch(
   },
   { immediate: true },
 );
-
-onMounted(async () => {
-  await search();
-});
 
 const bladeToolbar = computed((): IBladeToolbar[] => [
   {
@@ -110,7 +107,7 @@ const bladeToolbar = computed((): IBladeToolbar[] => [
           t("VC_NEWS.PAGES.LIST.ALERTS.DELETE_SELECTED_CONFIRMATION_MESSAGE", { count: selectedIds.value.length }),
         )
       ) {
-        await deleteItems({ ids: selectedIds.value });
+        await deleteNewsArticles({ ids: selectedIds.value });
         selectedIds.value = [];
         await reload();
       }
@@ -145,7 +142,7 @@ const columns = ref<ITableColumns[]>([
 const title = computed(() => t("VC_NEWS.PAGES.LIST.TITLE"));
 
 const reload = async () => {
-  await search();
+  await searchNewsArticles();
 };
 
 const onItemClick = (item: { id: string }) => {
@@ -163,12 +160,12 @@ const onItemClick = (item: { id: string }) => {
 
 const onSearchChange = (searchKeyword: string | undefined) => {
   searchQuery.value.searchPhrase = searchKeyword;
-  search();
+  searchNewsArticles();
 }
 
 const onPaginationClick = (page: number) => {
   pageIndex.value = page;
-  search();
+  searchNewsArticles();
 }
 
 const onHeaderClick = async (item: ITableColumns) => {
@@ -193,11 +190,11 @@ const onHeaderClick = async (item: ITableColumns) => {
         } else {
           searchQuery.value.sort = `${item.id}:${newSort}`;
         }
-        await search();
+        await searchNewsArticles();
       }
     } else {
       searchQuery.value.sort = `${item.id}:${sortOptions[0]}`;
-      await search();
+      await searchNewsArticles();
     }
   }
 };
@@ -205,6 +202,10 @@ const onHeaderClick = async (item: ITableColumns) => {
 const onSelectionChanged = function (selectedItems: NewsArticle[]) {
   selectedIds.value = selectedItems.map((item) => item.id || "").filter(Boolean);
 }
+
+onMounted(async () => {
+  await searchNewsArticles();
+});
 
 defineExpose({
   title,
