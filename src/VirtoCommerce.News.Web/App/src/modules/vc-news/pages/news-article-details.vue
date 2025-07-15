@@ -10,31 +10,27 @@
             required />
         </Field>
 
-        <Field name="storeId" :model-value="newsArticle.storeId" :label="$t('VC_NEWS.PAGES.DETAILS.FORM.STORE.LABEL')"
-          rules="required">
-          <VcSelect v-model="newsArticle.storeId" :label="$t('VC_NEWS.PAGES.DETAILS.FORM.STORE.LABEL')"
-            :options="storeOptions"
-            required />
-        </Field>
-
-        <VcInput type="datetime-local" v-model="newsArticle.publishDate"
-          :label="$t('VC_NEWS.PAGES.DETAILS.FORM.PUBLISH_DATE.LABEL')" />
-
+        <div class="tw-flex tw-flex-row tw-gap-4">
+          <Field name="storeId" :model-value="newsArticle.storeId" :label="$t('VC_NEWS.PAGES.DETAILS.FORM.STORE.LABEL')"
+            rules="required">
+            <VcSelect v-model="newsArticle.storeId" :label="$t('VC_NEWS.PAGES.DETAILS.FORM.STORE.LABEL')"
+              :options="storeOptions"
+              required
+              class="tw-flex-auto" />
+          </Field>
+          <VcInput type="datetime-local" v-model="newsArticle.publishDate"
+            :label="$t('VC_NEWS.PAGES.DETAILS.FORM.PUBLISH_DATE.LABEL')" />
+        </div>
         <VcMultivalue v-model="userGroupsSelected" :label="$t('VC_NEWS.PAGES.DETAILS.FORM.USER_GROUPS.LABEL')"
           :options="userGroupsOptions" option-value="id" option-label="title" multivalue />
 
-        <div
-          class="tw-flex tw-flex-row tw-justify-end">
-          <VcLanguageSelector
-            :model-value="currentLocale"
-            :options="languages"
-            @update:model-value="setLocale" />
-        </div>
-
         <VcInput v-model="selectedLocalizedContent.title"
           :label="$t('VC_NEWS.PAGES.DETAILS.FORM.CONTENT_TITLE.LABEL')">
-          <template v-slot="prepend">
-
+          <template #prepend>
+            <VcLanguageSelector
+              :model-value="currentLocale"
+              :options="languages"
+              @update:model-value="setLocale" />
           </template>
         </VcInput>
 
