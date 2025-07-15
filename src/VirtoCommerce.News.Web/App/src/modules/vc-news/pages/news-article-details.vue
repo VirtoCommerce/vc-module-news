@@ -133,7 +133,7 @@ const selectedLocalizedContent = computed(
 );
 
 //news article 
-const { newsArticle, loadNewsArticle, saveNewsArticle, loadingOrSavingNewsArticle } = useNewsArticleDetails();
+const { newsArticle, loadNewsArticle, saveNewsArticle, loadingOrSavingNewsArticle, newsArticleIsDirty, resetNewsArticle } = useNewsArticleDetails();
 
 
 //other
@@ -162,8 +162,9 @@ const bladeToolbar = ref<IBladeToolbar[]>([
     id: "reset",
     icon: "material-undo",
     title: t("VC_NEWS.PAGES.DETAILS.TOOLBAR.RESET"),
+    disabled: computed(() => !newsArticleIsDirty?.value),
     clickHandler: async () => {
-      //reset here
+      resetNewsArticle();
     },
   }
 ]);

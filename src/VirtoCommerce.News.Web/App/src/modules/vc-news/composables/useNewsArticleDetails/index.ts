@@ -7,6 +7,13 @@ export default () => {
   const { getApiClient: getNewsApiClient } = useApiClient(NewsArticleClient);
 
   const newsArticle = ref<NewsArticle>(new NewsArticle());
+  let originalNewsArticle: NewsArticle;
+
+  const resetNewsArticle = () => {
+    newsArticle.value = _.cloneDeep(originalNewsArticle);
+  };
+
+  const newsArticleIsDirty = computed(() => !_.isEqual(newsArticle.value, originalNewsArticle));
 
   const loadingOrSavingNewsArticle = computed(() => loadingNewsArticle.value || savingNewsArticle.value);
 
@@ -18,6 +25,7 @@ export default () => {
 
         if (apiResult) {
           newsArticle.value = apiResult;
+          originalNewsArticle = _.cloneDeep(apiResult);
         }
       }
     },
@@ -51,5 +59,8 @@ export default () => {
     loadNewsArticle,
     saveNewsArticle,
     loadingOrSavingNewsArticle,
+
+    newsArticleIsDirty,
+    resetNewsArticle,
   };
 };
