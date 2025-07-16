@@ -7,15 +7,27 @@ export default () => {
   const { getApiClient: getNewsApiClient } = useApiClient(NewsArticleClient);
 
   const newsArticle = ref<NewsArticle>(new NewsArticle());
-  let originalNewsArticle: NewsArticle;
+  const originalNewsArticle = ref<NewsArticle>();
 
   const resetNewsArticle = () => {
-    newsArticle.value = _.cloneDeep(originalNewsArticle);
+    if (originalNewsArticle.value) {
+      newsArticle.value = _.cloneDeep(originalNewsArticle.value);
+    }
   };
 
   const newsArticleIsDirty = computed(() => !_.isEqual(newsArticle.value, originalNewsArticle));
 
-  const loadingOrSavingNewsArticle = computed(() => loadingNewsArticle.value || savingNewsArticle.value);
+  const newsArticleCanPublish = computed(() => originalNewsArticle.value && !originalNewsArticle.value.isPublished);
+
+  const newsArticleCanUnpublish = computed(() => originalNewsArticle.value && originalNewsArticle.value.isPublished);
+
+  const loadingOrSavingNewsArticle = computed(
+    () =>
+      loadingNewsArticle.value ||
+      savingNewsArticle.value ||
+      publishingNewsArticle.value ||
+      unpublishingNewsArticle.value,
+  );
 
   const { loading: loadingNewsArticle, action: loadNewsArticle } = useAsync<{ id: string }>(
     async (args?: { id: string }) => {
@@ -25,7 +37,7 @@ export default () => {
 
         if (apiResult) {
           newsArticle.value = apiResult;
-          originalNewsArticle = _.cloneDeep(apiResult);
+          originalNewsArticle.value = _.cloneDeep(apiResult);
         }
       }
     },
@@ -47,6 +59,26 @@ export default () => {
     }
   });
 
+  const { loading: publishingNewsArticle, action: publishNewsArticle } = useAsync<NewsArticle>(async () => {
+    if (newsArticle.value) {
+      const apiClient = await getNewsApiClient();
+
+      if (newsArticle.value.id) {
+        await apiClient.publish([newsArticle.value.id]);
+      }
+    }
+  });
+
+  const { loading: unpublishingNewsArticle, action: unpublishNewsArticle } = useAsync<NewsArticle>(async () => {
+    if (newsArticle.value) {
+      const apiClient = await getNewsApiClient();
+
+      if (newsArticle.value.id) {
+        await apiClient.unpublish([newsArticle.value.id]);
+      }
+    }
+  });
+
   const cleanupLocalizations = (newsArticle: NewsArticle) => {
     const notEmptyLocalizations = newsArticle.localizedContents?.filter(
       (x) => x.title || x.content || x.contentPreview,
@@ -59,6 +91,11 @@ export default () => {
     loadNewsArticle,
     saveNewsArticle,
     loadingOrSavingNewsArticle,
+
+    publishNewsArticle,
+    unpublishNewsArticle,
+    newsArticleCanPublish,
+    newsArticleCanUnpublish,
 
     newsArticleIsDirty,
     resetNewsArticle,

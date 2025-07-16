@@ -134,7 +134,7 @@ const selectedLocalizedContent = computed(
 );
 
 //news article 
-const { newsArticle, loadNewsArticle, saveNewsArticle, loadingOrSavingNewsArticle, newsArticleIsDirty, resetNewsArticle } = useNewsArticleDetails();
+const { newsArticle, loadNewsArticle, saveNewsArticle, loadingOrSavingNewsArticle, publishNewsArticle, unpublishNewsArticle, newsArticleCanPublish, newsArticleCanUnpublish, newsArticleIsDirty, resetNewsArticle } = useNewsArticleDetails();
 
 
 //other
@@ -155,7 +155,7 @@ const bladeToolbar = ref<IBladeToolbar[]>([
           method: "openDetailsBlade", args: newsArticle.value!.id
         });
       } catch (error) {
-        console.error("Failed to save product:", error);
+        console.error("Failed to save news article:", error);
       }
     },
   },
@@ -166,6 +166,32 @@ const bladeToolbar = ref<IBladeToolbar[]>([
     disabled: computed(() => !newsArticleIsDirty?.value),
     clickHandler: async () => {
       resetNewsArticle();
+    },
+  },
+  {
+    id: "publish",
+    icon: "material-visibility",
+    title: t("VC_NEWS.PAGES.DETAILS.TOOLBAR.PUBLISH"),
+    disabled: computed(() => !newsArticleCanPublish?.value),
+    clickHandler: async () => {
+      await publishNewsArticle();
+      emit("parent:call", { method: "reload" });
+      emit("parent:call", {
+        method: "openDetailsBlade", args: newsArticle.value!.id
+      });
+    },
+  },
+  {
+    id: "unpublish",
+    icon: "material-visibility-off",
+    title: t("VC_NEWS.PAGES.DETAILS.TOOLBAR.UNPUBLISH"),
+    disabled: computed(() => !newsArticleCanUnpublish?.value),
+    clickHandler: async () => {
+      await unpublishNewsArticle();
+      emit("parent:call", { method: "reload" });
+      emit("parent:call", {
+        method: "openDetailsBlade", args: newsArticle.value!.id
+      });
     },
   }
 ]);
