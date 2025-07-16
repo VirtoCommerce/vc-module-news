@@ -17,7 +17,12 @@ export default () => {
 
   const newsArticleIsDirty = computed(() => !_.isEqual(newsArticle.value, originalNewsArticle));
 
-  const newsArticleCanPublish = computed(() => originalNewsArticle.value && !originalNewsArticle.value.isPublished);
+  const newsArticleCanPublish = computed(
+    () =>
+      originalNewsArticle.value &&
+      !originalNewsArticle.value.isPublished &&
+      hasValidLocalization(originalNewsArticle.value),
+  );
 
   const newsArticleCanUnpublish = computed(() => originalNewsArticle.value && originalNewsArticle.value.isPublished);
 
@@ -84,6 +89,15 @@ export default () => {
       (x) => x.title || x.content || x.contentPreview,
     );
     newsArticle.localizedContents = notEmptyLocalizations;
+  };
+
+  const hasValidLocalization = (newsArticle: NewsArticle) => {
+    const validLocalizations = newsArticle.localizedContents?.filter((x) => x.title || x.content);
+    if (!validLocalizations) {
+      return false;
+    }
+
+    return validLocalizations.length > 0;
   };
 
   return {
