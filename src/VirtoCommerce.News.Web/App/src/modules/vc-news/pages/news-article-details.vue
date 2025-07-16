@@ -47,6 +47,35 @@
           v-model="selectedLocalizedContent.contentPreview"
           :label="$t('VC_NEWS.PAGES.DETAILS.FORM.CONTENT_PREVIEW.LABEL')"
           multilanguage :current-language="currentLocale" />
+
+        <VcSwitch v-if="props.param"
+          v-model="selectedSeo.isActive"
+          :label="$t('VC_NEWS.PAGES.DETAILS.FORM.SEO_IS_ACTIVE.LABEL')" />
+
+        <VcInput v-if="props.param"
+          v-model="selectedSeo.semanticUrl"
+          :label="$t('VC_NEWS.PAGES.DETAILS.FORM.SEO_SEMANTIC_URL.LABEL')"
+          multilanguage :current-language="currentLocale" />
+
+        <VcInput v-if="props.param"
+          v-model="selectedSeo.pageTitle"
+          :label="$t('VC_NEWS.PAGES.DETAILS.FORM.SEO_PAGE_TITLE.LABEL')"
+          multilanguage :current-language="currentLocale" />
+
+        <VcInput v-if="props.param"
+          v-model="selectedSeo.metaDescription"
+          :label="$t('VC_NEWS.PAGES.DETAILS.FORM.SEO_META_DESCRIPTION.LABEL')"
+          multilanguage :current-language="currentLocale" />
+
+        <VcInput v-if="props.param"
+          v-model="selectedSeo.metaKeywords"
+          :label="$t('VC_NEWS.PAGES.DETAILS.FORM.SEO_META_KEYWORDS.LABEL')"
+          multilanguage :current-language="currentLocale" />
+
+        <VcInput v-if="props.param"
+          v-model="selectedSeo.imageAltDescription"
+          :label="$t('VC_NEWS.PAGES.DETAILS.FORM.SEO_IMAGE_ALT_TEXT.LABEL')"
+          multilanguage :current-language="currentLocale" />
       </VcForm>
     </VcContainer>
   </VcBlade>
@@ -58,7 +87,7 @@ import { Field } from "vee-validate";
 import { useI18n } from "vue-i18n";
 import { IBladeToolbar, IParentCallArgs, VcLanguageSelector } from "@vc-shell/framework";
 import { useNewsArticleDetails, useStore, useUserGroups, useLocalization } from "../composables";
-import { NewsArticleLocalizedContent } from "../../../api_client/virtocommerce.news";
+import { NewsArticleLocalizedContent, SeoInfo } from "../../../api_client/virtocommerce.news";
 
 export interface Emits {
   (event: "parent:call", args: IParentCallArgs): void;
@@ -130,6 +159,28 @@ const selectedLocalizedContent = computed(
     newLocalizedContent.languageCode = currentLocale.value;
     newsArticle.value?.localizedContents?.push(newLocalizedContent);
     return newLocalizedContent;
+  }
+);
+
+const selectedSeo = computed(
+  () => {
+    if (newsArticle.value) {
+      if (!newsArticle.value.seoInfos) {
+        newsArticle.value.seoInfos = [];
+      }
+    }
+    const existingSeoInfo = newsArticle.value?.seoInfos?.find((x) => x.languageCode === currentLocale.value);
+
+    if (existingSeoInfo) {
+      return existingSeoInfo;
+    }
+
+    const newSeoInfo = new SeoInfo();
+    newSeoInfo.isActive = false;
+    newSeoInfo.languageCode = currentLocale.value;
+    newSeoInfo.storeId = newsArticle.value.storeId;
+    newsArticle.value?.seoInfos?.push(newSeoInfo);
+    return newSeoInfo;
   }
 );
 

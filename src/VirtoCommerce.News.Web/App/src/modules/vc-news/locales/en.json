@@ -50,6 +50,24 @@
           "CONTENT_PREVIEW": {
             "LABEL": "Content (user preview)",
             "PLACEHOLDER": "Content"
+          },
+          "SEO_IS_ACTIVE": {
+            "LABEL": "Active"
+          },
+          "SEO_SEMANTIC_URL": {
+            "LABEL": "URL slug"
+          },
+          "SEO_PAGE_TITLE": {
+            "LABEL": "Page title"
+          },
+          "SEO_META_DESCRIPTION": {
+            "LABEL": "Meta description"
+          },
+          "SEO_META_KEYWORDS": {
+            "LABEL": "Meta keywords"
+          },
+          "SEO_IMAGE_ALT_TEXT": {
+            "LABEL": "Image alternative text"
           }
         },
         "TOOLBAR": {
