@@ -15,7 +15,7 @@ export default () => {
     }
   };
 
-  const newsArticleIsDirty = computed(() => !_.isEqual(newsArticle.value, originalNewsArticle));
+  const newsArticleIsDirty = computed(() => !_.isEqual(newsArticle.value, originalNewsArticle.value));
 
   const newsArticleCanPublish = computed(
     () =>
