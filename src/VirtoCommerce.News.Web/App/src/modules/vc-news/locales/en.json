@@ -51,6 +51,9 @@
             "LABEL": "Content (user preview)",
             "PLACEHOLDER": "Content"
           },
+          "SEO_HEADER": {
+            "LABEL": "SEO"
+          },
           "SEO_IS_ACTIVE": {
             "LABEL": "Active"
           },

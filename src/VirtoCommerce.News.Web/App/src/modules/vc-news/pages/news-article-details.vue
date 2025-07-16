@@ -43,39 +43,41 @@
           :label="$t('VC_NEWS.PAGES.DETAILS.FORM.CONTENT_CONTENT.LABEL')"
           assets-folder="news-articles" required multilanguage :current-language="currentLocale" />
 
-        <VcInput v-if="props.param"
+        <VcEditor v-if="props.param"
           v-model="selectedLocalizedContent.contentPreview"
           :label="$t('VC_NEWS.PAGES.DETAILS.FORM.CONTENT_PREVIEW.LABEL')"
-          multilanguage :current-language="currentLocale" />
+          assets-folder="news-articles" multilanguage :current-language="currentLocale" />
 
-        <VcSwitch v-if="props.param"
-          v-model="selectedSeo.isActive"
-          :label="$t('VC_NEWS.PAGES.DETAILS.FORM.SEO_IS_ACTIVE.LABEL')" />
+        <VcCard v-if="props.param" :header="$t('VC_NEWS.PAGES.DETAILS.FORM.SEO_HEADER.LABEL')" is-collapsable is-collapsed class="tw-p-4">
+          <VcSwitch v-if="props.param"
+            v-model="selectedSeo.isActive"
+            :label="$t('VC_NEWS.PAGES.DETAILS.FORM.SEO_IS_ACTIVE.LABEL')" />
 
-        <VcInput v-if="props.param"
-          v-model="selectedSeo.semanticUrl"
-          :label="$t('VC_NEWS.PAGES.DETAILS.FORM.SEO_SEMANTIC_URL.LABEL')"
-          multilanguage :current-language="currentLocale" />
+          <VcInput v-if="props.param"
+            v-model="selectedSeo.semanticUrl"
+            :label="$t('VC_NEWS.PAGES.DETAILS.FORM.SEO_SEMANTIC_URL.LABEL')"
+            multilanguage :current-language="currentLocale" />
 
-        <VcInput v-if="props.param"
-          v-model="selectedSeo.pageTitle"
-          :label="$t('VC_NEWS.PAGES.DETAILS.FORM.SEO_PAGE_TITLE.LABEL')"
-          multilanguage :current-language="currentLocale" />
+          <VcInput v-if="props.param"
+            v-model="selectedSeo.pageTitle"
+            :label="$t('VC_NEWS.PAGES.DETAILS.FORM.SEO_PAGE_TITLE.LABEL')"
+            multilanguage :current-language="currentLocale" />
 
-        <VcInput v-if="props.param"
-          v-model="selectedSeo.metaDescription"
-          :label="$t('VC_NEWS.PAGES.DETAILS.FORM.SEO_META_DESCRIPTION.LABEL')"
-          multilanguage :current-language="currentLocale" />
+          <VcInput v-if="props.param"
+            v-model="selectedSeo.metaDescription"
+            :label="$t('VC_NEWS.PAGES.DETAILS.FORM.SEO_META_DESCRIPTION.LABEL')"
+            multilanguage :current-language="currentLocale" />
 
-        <VcInput v-if="props.param"
-          v-model="selectedSeo.metaKeywords"
-          :label="$t('VC_NEWS.PAGES.DETAILS.FORM.SEO_META_KEYWORDS.LABEL')"
-          multilanguage :current-language="currentLocale" />
+          <VcInput v-if="props.param"
+            v-model="selectedSeo.metaKeywords"
+            :label="$t('VC_NEWS.PAGES.DETAILS.FORM.SEO_META_KEYWORDS.LABEL')"
+            multilanguage :current-language="currentLocale" />
 
-        <VcInput v-if="props.param"
-          v-model="selectedSeo.imageAltDescription"
-          :label="$t('VC_NEWS.PAGES.DETAILS.FORM.SEO_IMAGE_ALT_TEXT.LABEL')"
-          multilanguage :current-language="currentLocale" />
+          <VcInput v-if="props.param"
+            v-model="selectedSeo.imageAltDescription"
+            :label="$t('VC_NEWS.PAGES.DETAILS.FORM.SEO_IMAGE_ALT_TEXT.LABEL')"
+            multilanguage :current-language="currentLocale" />
+        </VcCard>
       </VcForm>
     </VcContainer>
   </VcBlade>
