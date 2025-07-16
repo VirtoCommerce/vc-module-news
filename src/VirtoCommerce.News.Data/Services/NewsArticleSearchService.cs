@@ -36,13 +36,15 @@ public class NewsArticleSearchService(
 
         if (criteria.Published.HasValue)
         {
+            var utcNow = criteria.CertainDate.GetValueOrDefault(DateTime.UtcNow);
+
             if (criteria.Published.Value)
             {
-                query = query.Where(x => x.IsPublished && (x.PublishDate == null || x.PublishDate <= DateTime.UtcNow));
+                query = query.Where(x => x.IsPublished && (x.PublishDate == null || x.PublishDate <= utcNow));
             }
             else
             {
-                query = query.Where(x => !x.IsPublished || (x.PublishDate != null && x.PublishDate > DateTime.UtcNow));
+                query = query.Where(x => !x.IsPublished || (x.PublishDate != null && x.PublishDate > utcNow));
             }
         }
 

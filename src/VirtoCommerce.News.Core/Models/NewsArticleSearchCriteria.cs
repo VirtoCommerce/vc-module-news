@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using VirtoCommerce.Platform.Core.Common;
 
@@ -9,4 +10,5 @@ public class NewsArticleSearchCriteria : SearchCriteriaBase
     public string StoreId { get; set; }
     public IList<string> UserGroups { get; set; }
     public IList<string> LanguageCodes { get; set; }
+    public DateTime? CertainDate { get; set; }
 }
