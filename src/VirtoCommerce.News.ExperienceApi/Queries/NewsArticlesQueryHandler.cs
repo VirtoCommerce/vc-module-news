@@ -80,17 +80,18 @@ public class NewsArticlesQueryHandler(
 
         var userGroups = await GetUserGroups(request.UserId);
 
-        return new NewsArticleSearchCriteria
-        {
-            LanguageCodes = languageCodes,
-            Keyword = request.Keyword,
-            StoreId = request.StoreId,
-            UserGroups = userGroups,
-            Published = true,
-            Sort = nameof(NewsArticle.PublishDate),
-            Skip = request.Skip,
-            Take = request.Take,
-        };
+        var result = AbstractTypeFactory<NewsArticleSearchCriteria>.TryCreateInstance();
+
+        result.LanguageCodes = languageCodes;
+        result.Keyword = request.Keyword;
+        result.StoreId = request.StoreId;
+        result.UserGroups = userGroups;
+        result.Published = true;
+        result.Sort = nameof(NewsArticle.PublishDate);
+        result.Skip = request.Skip;
+        result.Take = request.Take;
+
+        return result;
     }
 
     protected virtual void PostProcessResult(IList<NewsArticle> newsArticles, string requestStoreId, string requestLanguageCode, NewsArticleSettings settings)
