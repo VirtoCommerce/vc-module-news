@@ -11,7 +11,7 @@ public class NewsArticleSettingsService(IStoreService storeService, ISettingsMan
 {
     public async Task<NewsArticleSettings> GetSettingsAsync(string storeId)
     {
-        var result = new NewsArticleSettings();
+        var result = AbstractTypeFactory<NewsArticleSettings>.TryCreateInstance();
 
         var store = !storeId.IsNullOrEmpty() ? await storeService.GetNoCloneAsync(storeId) : null;
 
