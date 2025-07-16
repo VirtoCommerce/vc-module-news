@@ -29,7 +29,7 @@
         <VcInput v-if="props.param"
           v-model="selectedLocalizedContent.title"
           :label="$t('VC_NEWS.PAGES.DETAILS.FORM.CONTENT_TITLE.LABEL')"
-          required>
+          required multilanguage :current-language="currentLocale">
           <template #prepend>
             <VcLanguageSelector
               :model-value="currentLocale"
@@ -41,11 +41,12 @@
         <VcEditor v-if="props.param"
           v-model="selectedLocalizedContent.content"
           :label="$t('VC_NEWS.PAGES.DETAILS.FORM.CONTENT_CONTENT.LABEL')"
-          assets-folder="news-articles" required />
+          assets-folder="news-articles" required multilanguage :current-language="currentLocale" />
 
         <VcInput v-if="props.param"
           v-model="selectedLocalizedContent.contentPreview"
-          :label="$t('VC_NEWS.PAGES.DETAILS.FORM.CONTENT_PREVIEW.LABEL')" />
+          :label="$t('VC_NEWS.PAGES.DETAILS.FORM.CONTENT_PREVIEW.LABEL')"
+          multilanguage :current-language="currentLocale" />
       </VcForm>
     </VcContainer>
   </VcBlade>
