@@ -29,7 +29,7 @@ public class NewsArticlesQueryHandler(
 {
     public async Task<NewsArticle> Handle(NewsArticleQuery request, CancellationToken cancellationToken)
     {
-        var result = await newsArticleService.GetNoCloneAsync(request.Id);
+        var result = await newsArticleService.GetByIdAsync(request.Id);
 
         if (result == null)
         {
@@ -41,7 +41,7 @@ public class NewsArticlesQueryHandler(
 
                 if (!newsArticleSeoInfo.IsNullOrEmpty())
                 {
-                    result = await newsArticleService.GetNoCloneAsync(newsArticleSeoInfo.First().ObjectId);
+                    result = await newsArticleService.GetByIdAsync(newsArticleSeoInfo.First().ObjectId);
                 }
             }
         }
