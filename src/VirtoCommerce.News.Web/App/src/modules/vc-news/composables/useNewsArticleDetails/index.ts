@@ -19,12 +19,15 @@ export default () => {
 
   const newsArticleCanPublish = computed(
     () =>
+      !newsArticleIsDirty.value &&
       originalNewsArticle.value &&
       !originalNewsArticle.value.isPublished &&
-      hasValidLocalization(originalNewsArticle.value),
+      hasContent(originalNewsArticle.value),
   );
 
-  const newsArticleCanUnpublish = computed(() => originalNewsArticle.value && originalNewsArticle.value.isPublished);
+  const newsArticleCanUnpublish = computed(
+    () => !newsArticleIsDirty.value && originalNewsArticle.value && originalNewsArticle.value.isPublished,
+  );
 
   const loadingOrSavingNewsArticle = computed(
     () =>
@@ -91,7 +94,7 @@ export default () => {
     newsArticle.localizedContents = notEmptyLocalizations;
   };
 
-  const hasValidLocalization = (newsArticle: NewsArticle) => {
+  const hasContent = (newsArticle: NewsArticle) => {
     const validLocalizations = newsArticle.localizedContents?.filter((x) => x.title || x.content);
     if (!validLocalizations) {
       return false;

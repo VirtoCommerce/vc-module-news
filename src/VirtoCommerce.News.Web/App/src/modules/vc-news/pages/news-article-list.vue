@@ -1,15 +1,25 @@
 <template>
-  <VcBlade :title="$t('VC_NEWS.PAGES.LIST.TITLE')" width="50%" :expanded="expanded" :closable="closable"
-    :toolbar-items="bladeToolbar" @close="$emit('close:blade')" @expand="$emit('expand:blade')"
-    @collapse="$emit('collapse:blade')">
+  <VcBlade
+    :title="$t('VC_NEWS.PAGES.LIST.TITLE')"
+    :toolbar-items="bladeToolbar"
+    :closable="closable" :expanded="expanded"
+    v-loading="loadingNewsArticles"
+    width="40%"
+    @close="$emit('close:blade')" @expand="$emit('expand:blade')" @collapse="$emit('collapse:blade')">
 
     <!-- @vue-generic {never} -->
-    <VcTable :expanded="expanded" class="tw-grow tw-basis-0" multiselect :loading="loadingNewsArticles" :columns="columns"
-      :sort="searchQuery.sort" :pages="pagesCount" :total-count="newsArticlesCount" :search-value="searchKeyword"
-      :current-page="pageIndex" :search-placeholder="$t('VC_NEWS.PAGES.LIST.SEARCH.PLACEHOLDER')"
-      :total-label="$t('VC_NEWS.PAGES.LIST.TABLE.TOTALS')" :selected-item-id="selectedItemId" state-key="VC_NEWS"
-      :items="newsArticles" @item-click="onItemClick" @header-click="onHeaderClick" @pagination-click="onPaginationClick"
-      @search:change="onSearchChange" @selection-changed="onSelectionChanged">
+    <VcTable
+      :total-label="$t('VC_NEWS.PAGES.LIST.TABLE.TOTALS')" :search-placeholder="$t('VC_NEWS.PAGES.LIST.SEARCH.PLACEHOLDER')"
+      :items="newsArticles" :selected-item-id="selectedItemId"
+      :search-value="searchKeyword"
+      :columns="columns"
+      :sort="searchQuery.sort" :pages="pagesCount" :current-page="pageIndex" :total-count="newsArticlesCount"
+      :expanded="expanded"
+      @item-click="onItemClick" @header-click="onHeaderClick" @pagination-click="onPaginationClick"
+      @search:change="onSearchChange" @selection-changed="onSelectionChanged"
+      state-key="VC_NEWS"
+      multiselect
+      class="tw-grow tw-basis-0">
     </VcTable>
   </VcBlade>
 </template>
