@@ -166,6 +166,11 @@ const openDetailsBlade = (id: string | undefined) => {
   });
 }
 
+const reOpenDetailsBlade = (id: string) => {
+  closeBlade(1);
+  openDetailsBlade(id);
+}
+
 const onSearchChange = (searchKeyword: string | undefined) => {
   searchQuery.value.searchPhrase = searchKeyword;
   searchNewsArticles();
@@ -218,6 +223,6 @@ onMounted(async () => {
 defineExpose({
   title,
   reload,
-  openDetailsBlade
+  reOpenDetailsBlade
 });
 </script>

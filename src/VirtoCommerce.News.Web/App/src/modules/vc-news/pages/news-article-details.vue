@@ -142,7 +142,7 @@
 </template>
 
 <script lang="ts" setup>
-import { onMounted, ref, computed } from "vue";
+import { onMounted, ref, Ref, computed } from "vue";
 import { useI18n } from "vue-i18n";
 import { Field, useForm } from "vee-validate";
 import { IBladeToolbar, IParentCallArgs, VcLanguageSelector, useBladeNavigation, usePopup } from "@vc-shell/framework";
@@ -256,26 +256,26 @@ const { newsArticle, loadNewsArticle, saveNewsArticle, loadingOrSavingNewsArticl
 //other
 const loading = computed(() => loadingStores.value || loadingUserGroups.value || loadingLanguages.value || loadingOrSavingNewsArticle.value);
 
-const bladeToolbar = ref<IBladeToolbar[]>([
-  {
-    id: "save",
-    icon: "material-save",
-    title: t("VC_NEWS.PAGES.DETAILS.TOOLBAR.SAVE"),
-    disabled: computed(() => !meta.value.valid || !newsArticleIsDirty?.value),
-    clickHandler: async () => {
-      try {
-        await saveNewsArticle();
-        emit('close:blade');
-        emit("parent:call", { method: "reload" });
-        emit("parent:call", {
-          method: "openDetailsBlade", args: newsArticle.value!.id
-        });
-      } catch (error) {
-        console.error("Failed to save news article:", error);
-      }
-    },
+const bladeToolbar = ref([]) as Ref<IBladeToolbar[]>;
+
+bladeToolbar.value.push({
+  id: "save",
+  icon: "material-save",
+  title: t("VC_NEWS.PAGES.DETAILS.TOOLBAR.SAVE"),
+  disabled: computed(() => !meta.value.valid || !newsArticleIsDirty?.value),
+  clickHandler: async () => {
+    try {
+      await saveNewsArticle();
+      emit("parent:call", { method: "reload" });
+      emit("parent:call", { method: "reOpenDetailsBlade", args: newsArticle.value!.id });
+    } catch (error) {
+      console.error("Failed to save news article:", error);
+    }
   },
-  {
+});
+
+if (props.param) {
+  bladeToolbar.value.push({
     id: "reset",
     icon: "material-undo",
     title: t("VC_NEWS.PAGES.DETAILS.TOOLBAR.RESET"),
@@ -283,8 +283,8 @@ const bladeToolbar = ref<IBladeToolbar[]>([
     clickHandler: async () => {
       resetNewsArticle();
     },
-  },
-  {
+  });
+  bladeToolbar.value.push({
     id: "publish",
     icon: "material-visibility",
     title: t("VC_NEWS.PAGES.DETAILS.TOOLBAR.PUBLISH"),
@@ -292,12 +292,10 @@ const bladeToolbar = ref<IBladeToolbar[]>([
     clickHandler: async () => {
       await publishNewsArticle();
       emit("parent:call", { method: "reload" });
-      emit("parent:call", {
-        method: "openDetailsBlade", args: newsArticle.value!.id
-      });
+      emit("parent:call", { method: "reOpenDetailsBlade", args: newsArticle.value!.id });
     },
-  },
-  {
+  });
+  bladeToolbar.value.push({
     id: "unpublish",
     icon: "material-visibility-off",
     title: t("VC_NEWS.PAGES.DETAILS.TOOLBAR.UNPUBLISH"),
@@ -305,12 +303,10 @@ const bladeToolbar = ref<IBladeToolbar[]>([
     clickHandler: async () => {
       await unpublishNewsArticle();
       emit("parent:call", { method: "reload" });
-      emit("parent:call", {
-        method: "openDetailsBlade", args: newsArticle.value!.id
-      });
+      emit("parent:call", { method: "reOpenDetailsBlade", args: newsArticle.value!.id });
     },
-  }
-]);
+  });
+}
 
 onMounted(async () => {
   await loadStores();
@@ -322,7 +318,6 @@ onMounted(async () => {
 });
 
 onBeforeClose(async () => {
-  console.warn('onBeforeClose');
   if (newsArticleIsDirty.value) {
     return await showConfirmation(t("VC_NEWS.PAGES.DETAILS.ALERTS.CLOSE_CONFIRMATION"));
   }
