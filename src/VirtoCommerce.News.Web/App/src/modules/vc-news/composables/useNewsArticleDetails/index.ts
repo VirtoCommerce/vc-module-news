@@ -15,7 +15,13 @@ export default () => {
     }
   };
 
-  const newsArticleIsDirty = computed(() => !_.isEqual(newsArticle.value, originalNewsArticle.value));
+  const newsArticleIsDirty = computed(() => {
+    const saveable = _.cloneDeep(newsArticle.value);
+    cleanupEmptyLocalizations(saveable);
+    cleanupEmptySeoInfos(saveable);
+
+    return !_.isEqual(saveable, originalNewsArticle.value);
+  });
 
   const newsArticleCanPublish = computed(
     () =>
