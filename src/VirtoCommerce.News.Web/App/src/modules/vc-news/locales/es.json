@@ -1,0 +1,88 @@
+{
+  "VC_NEWS": {
+    "MENU": {
+      "TITLE": "Noticias"
+    },
+    "PAGES": {
+      "LIST": {
+        "TITLE": "Artículos",
+        "TOOLBAR": {
+          "REFRESH": "Actualizar",
+          "ADD": "Agregar",
+          "DELETE": "Eliminar"
+        },
+        "SEARCH": {
+          "PLACEHOLDER": "Buscar palabras clave"
+        },
+        "TABLE": {
+          "TOTALS": "Total:",
+          "HEADER": {
+            "NAME": "Nombre",
+            "STORE": "Tienda",
+            "IS_PUBLISHED": "Está publicado"
+          }
+        },
+        "ALERTS": {
+          "DELETE_SELECTED_CONFIRMATION_MESSAGE": "¿Está seguro de que desea eliminar {count} artículos?"
+        }
+      },
+      "DETAILS": {
+        "TITLE": "Artículo",
+        "FORM": {
+          "NAME": {
+            "LABEL": "Nombre"
+          },
+          "STORE": {
+            "LABEL": "Tienda"
+          },
+          "PUBLISH_DATE": {
+            "LABEL": "Fecha de publicación"
+          },
+          "USER_GROUPS": {
+            "LABEL": "Grupos de usuarios"
+          },
+          "CONTENT_TITLE": {
+            "LABEL": "Título"
+          },
+          "CONTENT_CONTENT": {
+            "LABEL": "Contenido"
+          },
+          "CONTENT_PREVIEW": {
+            "LABEL": "Contenido (vista previa de usuario)",
+            "PLACEHOLDER": "Contenido"
+          },
+          "SEO_HEADER": {
+            "LABEL": "SEO"
+          },
+          "SEO_IS_ACTIVE": {
+            "LABEL": "Activo"
+          },
+          "SEO_SEMANTIC_URL": {
+            "LABEL": "URL amigable"
+          },
+          "SEO_PAGE_TITLE": {
+            "LABEL": "Título de la página"
+          },
+          "SEO_META_DESCRIPTION": {
+            "LABEL": "Meta descripción"
+          },
+          "SEO_META_KEYWORDS": {
+            "LABEL": "Meta palabras clave"
+          },
+          "SEO_IMAGE_ALT_TEXT": {
+            "LABEL": "Texto alternativo de la imagen"
+          }
+        },
+        "TOOLBAR": {
+          "SAVE": "Guardar",
+          "RESET": "Restablecer",
+          "PUBLISH": "Publicar",
+          "UNPUBLISH": "Despublicar"
+        }
+      },
+      "ALERTS": {
+        "CLOSE_CONFIRMATION": "Tiene cambios no guardados. ¿Cerrar de todos modos?"
+      }
+    }
+  }
+}

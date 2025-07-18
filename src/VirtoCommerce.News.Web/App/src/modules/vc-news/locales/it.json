@@ -1,0 +1,88 @@
+{
+  "VC_NEWS": {
+    "MENU": {
+      "TITLE": "Notizie"
+    },
+    "PAGES": {
+      "LIST": {
+        "TITLE": "Articoli",
+        "TOOLBAR": {
+          "REFRESH": "Ricarica",
+          "ADD": "Aggiungi",
+          "DELETE": "Elimina"
+        },
+        "SEARCH": {
+          "PLACEHOLDER": "Cerca parole chiave"
+        },
+        "TABLE": {
+          "TOTALS": "Totale:",
+          "HEADER": {
+            "NAME": "Nome",
+            "STORE": "Negozio",
+            "IS_PUBLISHED": "Pubblicato"
+          }
+        },
+        "ALERTS": {
+          "DELETE_SELECTED_CONFIRMATION_MESSAGE": "Sei sicuro di voler eliminare {count} articoli?"
+        }
+      },
+      "DETAILS": {
+        "TITLE": "Articolo",
+        "FORM": {
+          "NAME": {
+            "LABEL": "Nome"
+          },
+          "STORE": {
+            "LABEL": "Negozio"
+          },
+          "PUBLISH_DATE": {
+            "LABEL": "Data di pubblicazione"
+          },
+          "USER_GROUPS": {
+            "LABEL": "Gruppi di utenti"
+          },
+          "CONTENT_TITLE": {
+            "LABEL": "Titolo"
+          },
+          "CONTENT_CONTENT": {
+            "LABEL": "Contenuto"
+          },
+          "CONTENT_PREVIEW": {
+            "LABEL": "Contenuto (anteprima per utente)",
+            "PLACEHOLDER": "Contenuto"
+          },
+          "SEO_HEADER": {
+            "LABEL": "SEO"
+          },
+          "SEO_IS_ACTIVE": {
+            "LABEL": "Attivo"
+          },
+          "SEO_SEMANTIC_URL": {
+            "LABEL": "URL semantica"
+          },
+          "SEO_PAGE_TITLE": {
+            "LABEL": "Titolo della pagina"
+          },
+          "SEO_META_DESCRIPTION": {
+            "LABEL": "Meta descrizione"
+          },
+          "SEO_META_KEYWORDS": {
+            "LABEL": "Meta parole chiave"
+          },
+          "SEO_IMAGE_ALT_TEXT": {
+            "LABEL": "Testo alternativo dell'immagine"
+          }
+        },
+        "TOOLBAR": {
+          "SAVE": "Salva",
+          "RESET": "Ripristina",
+          "PUBLISH": "Pubblica",
+          "UNPUBLISH": "Annulla pubblicazione"
+        }
+      },
+      "ALERTS": {
+        "CLOSE_CONFIRMATION": "Hai delle modifiche non salvate. Vuoi comunque chiudere?"
+      }
+    }
+  }
+}

@@ -1,0 +1,88 @@
+{
+  "VC_NEWS": {
+    "MENU": {
+      "TITLE": "新闻"
+    },
+    "PAGES": {
+      "LIST": {
+        "TITLE": "文章",
+        "TOOLBAR": {
+          "REFRESH": "刷新",
+          "ADD": "添加",
+          "DELETE": "删除"
+        },
+        "SEARCH": {
+          "PLACEHOLDER": "搜索关键词"
+        },
+        "TABLE": {
+          "TOTALS": "总计:",
+          "HEADER": {
+            "NAME": "名称",
+            "STORE": "商店",
+            "IS_PUBLISHED": "是否发布"
+          }
+        },
+        "ALERTS": {
+          "DELETE_SELECTED_CONFIRMATION_MESSAGE": "确定要删除 {count} 篇文章吗？"
+        }
+      },
+      "DETAILS": {
+        "TITLE": "文章",
+        "FORM": {
+          "NAME": {
+            "LABEL": "名称"
+          },
+          "STORE": {
+            "LABEL": "商店"
+          },
+          "PUBLISH_DATE": {
+            "LABEL": "发布日期"
+          },
+          "USER_GROUPS": {
+            "LABEL": "用户组"
+          },
+          "CONTENT_TITLE": {
+            "LABEL": "标题"
+          },
+          "CONTENT_CONTENT": {
+            "LABEL": "内容"
+          },
+          "CONTENT_PREVIEW": {
+            "LABEL": "内容（用户预览）",
+            "PLACEHOLDER": "内容"
+          },
+          "SEO_HEADER": {
+            "LABEL": "SEO"
+          },
+          "SEO_IS_ACTIVE": {
+            "LABEL": "已激活"
+          },
+          "SEO_SEMANTIC_URL": {
+            "LABEL": "URL Slug"
+          },
+          "SEO_PAGE_TITLE": {
+            "LABEL": "页面标题"
+          },
+          "SEO_META_DESCRIPTION": {
+            "LABEL": "Meta 描述"
+          },
+          "SEO_META_KEYWORDS": {
+            "LABEL": "Meta 关键词"
+          },
+          "SEO_IMAGE_ALT_TEXT": {
+            "LABEL": "图片替代文本"
+          }
+        },
+        "TOOLBAR": {
+          "SAVE": "保存",
+          "RESET": "重置",
+          "PUBLISH": "发布",
+          "UNPUBLISH": "取消发布"
+        }
+      },
+      "ALERTS": {
+        "CLOSE_CONFIRMATION": "您有未保存的更改。仍然关闭吗？"
+      }
+    }
+  }
+}

@@ -1,0 +1,88 @@
+{
+  "VC_NEWS": {
+    "MENU": {
+      "TITLE": "Aktualności"
+    },
+    "PAGES": {
+      "LIST": {
+        "TITLE": "Artykuły",
+        "TOOLBAR": {
+          "REFRESH": "Odśwież",
+          "ADD": "Dodaj",
+          "DELETE": "Usuń"
+        },
+        "SEARCH": {
+          "PLACEHOLDER": "Szukaj słów kluczowych"
+        },
+        "TABLE": {
+          "TOTALS": "Liczba:",
+          "HEADER": {
+            "NAME": "Nazwa",
+            "STORE": "Sklep",
+            "IS_PUBLISHED": "Opublikowane"
+          }
+        },
+        "ALERTS": {
+          "DELETE_SELECTED_CONFIRMATION_MESSAGE": "Czy na pewno chcesz usunąć {count} artykułów?"
+        }
+      },
+      "DETAILS": {
+        "TITLE": "Artykuł",
+        "FORM": {
+          "NAME": {
+            "LABEL": "Nazwa"
+          },
+          "STORE": {
+            "LABEL": "Sklep"
+          },
+          "PUBLISH_DATE": {
+            "LABEL": "Data publikacji"
+          },
+          "USER_GROUPS": {
+            "LABEL": "Grupy użytkowników"
+          },
+          "CONTENT_TITLE": {
+            "LABEL": "Tytuł"
+          },
+          "CONTENT_CONTENT": {
+            "LABEL": "Treść"
+          },
+          "CONTENT_PREVIEW": {
+            "LABEL": "Treść (podgląd użytkownika)",
+            "PLACEHOLDER": "Treść"
+          },
+          "SEO_HEADER": {
+            "LABEL": "SEO"
+          },
+          "SEO_IS_ACTIVE": {
+            "LABEL": "Aktywne"
+          },
+          "SEO_SEMANTIC_URL": {
+            "LABEL": "URL slug"
+          },
+          "SEO_PAGE_TITLE": {
+            "LABEL": "Tytuł strony"
+          },
+          "SEO_META_DESCRIPTION": {
+            "LABEL": "Meta opis"
+          },
+          "SEO_META_KEYWORDS": {
+            "LABEL": "Meta słowa kluczowe"
+          },
+          "SEO_IMAGE_ALT_TEXT": {
+            "LABEL": "Tekst alternatywny obrazu"
+          }
+        },
+        "TOOLBAR": {
+          "SAVE": "Zapisz",
+          "RESET": "Zresetuj",
+          "PUBLISH": "Opublikuj",
+          "UNPUBLISH": "Anuluj publikację"
+        }
+      },
+      "ALERTS": {
+        "CLOSE_CONFIRMATION": "Masz niezapisane zmiany. Czy na pewno chcesz zamknąć?"
+      }
+    }
+  }
+}
