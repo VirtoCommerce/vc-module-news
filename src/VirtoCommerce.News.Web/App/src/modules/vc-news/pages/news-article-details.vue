@@ -146,7 +146,7 @@ import { onMounted, ref, Ref, computed } from "vue";
 import { useI18n } from "vue-i18n";
 import { Field, useForm } from "vee-validate";
 import { IBladeToolbar, IParentCallArgs, VcLanguageSelector, useBladeNavigation, usePopup } from "@vc-shell/framework";
-import { useNewsArticleDetails, useStore, useUserGroups, useLocalization } from "../composables";
+import { useNewsArticleDetails, useNewsArticlePermissions, useStore, useUserGroups, useLocalization } from "../composables";
 import { NewsArticleLocalizedContent, SeoInfo } from "../../../api_client/virtocommerce.news";
 
 export interface Emits {
@@ -251,7 +251,9 @@ const selectedSeo = computed(
 
 //news article 
 const { newsArticle, loadNewsArticle, saveNewsArticle, loadingOrSavingNewsArticle, publishNewsArticle, unpublishNewsArticle, newsArticleCanPublish, newsArticleCanUnpublish, newsArticleIsDirty, resetNewsArticle } = useNewsArticleDetails();
+const { publishNewsArticlePermission, createNewsArticlePermission, updateNewsArticlePermission } = useNewsArticlePermissions();
 
+const saveNewsArticlePermission = props.param ? updateNewsArticlePermission : createNewsArticlePermission;
 
 //other
 const loading = computed(() => loadingStores.value || loadingUserGroups.value || loadingLanguages.value || loadingOrSavingNewsArticle.value);
@@ -263,7 +265,6 @@ bladeToolbar.value.push({
   icon: "material-save",
   title: t("VC_NEWS.PAGES.DETAILS.TOOLBAR.SAVE"),
   disabled: computed(() => !meta.value.valid || !newsArticleIsDirty?.value),
-  permissions: ["news:create"],
   clickHandler: async () => {
     try {
       await saveNewsArticle();
@@ -273,6 +274,7 @@ bladeToolbar.value.push({
       console.error("Failed to save news article:", error);
     }
   },
+  permissions: [saveNewsArticlePermission]
 });
 
 if (props.param) {
@@ -295,6 +297,7 @@ if (props.param) {
       emit("parent:call", { method: "reload" });
       emit("parent:call", { method: "reOpenDetailsBlade", args: newsArticle.value!.id });
     },
+    permissions: [publishNewsArticlePermission],
   });
   bladeToolbar.value.push({
     id: "unpublish",
@@ -306,6 +309,7 @@ if (props.param) {
       emit("parent:call", { method: "reload" });
       emit("parent:call", { method: "reOpenDetailsBlade", args: newsArticle.value!.id });
     },
+    permissions: [publishNewsArticlePermission],
   });
 }
 

@@ -1,5 +1,5 @@
-import { computed, ref } from "vue";
-import { useAsync, useLoading, useApiClient, useListFactory } from "@vc-shell/framework";
+import { ref } from "vue";
+import { useAsync, useApiClient } from "@vc-shell/framework";
 import { NewsArticleClient, NewsArticle, NewsArticleSearchCriteria } from "../../../../api_client/virtocommerce.news";
 
 export default () => {

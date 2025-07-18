@@ -28,7 +28,7 @@
 import { computed, ref, markRaw, onMounted, watch } from "vue";
 import { IBladeEvent, IBladeToolbar, IParentCallArgs, ITableColumns, useBladeNavigation, usePopup } from "@vc-shell/framework";
 import { useI18n } from "vue-i18n";
-import { useNewsArticleList } from "../composables";
+import { useNewsArticleList, useNewsArticlePermissions } from "../composables";
 import NewsArticleDetails from "./news-article-details.vue";
 import { NewsArticle } from "src/api_client/virtocommerce.news";
 
@@ -69,6 +69,7 @@ const { showConfirmation } = usePopup();
 const { t } = useI18n({ useScope: "global" });
 const { openBlade, closeBlade } = useBladeNavigation();
 const { newsArticles, newsArticlesCount, pagesCount, pageIndex, searchNewsArticles, searchQuery, loadingNewsArticles, deleteNewsArticles } = useNewsArticleList();
+const { createNewsArticlePermission, deleteNewsArticlePermission } = useNewsArticlePermissions();
 
 const searchKeyword = ref();
 const selectedItemId = ref<string>();
@@ -95,10 +96,10 @@ const bladeToolbar = computed((): IBladeToolbar[] => [
     id: "add",
     title: computed(() => t("VC_NEWS.PAGES.LIST.TOOLBAR.ADD")),
     icon: "material-add",
-    permissions: ["news:create"],
     clickHandler: async () => {
       openDetailsBlade(undefined);
     },
+    permissions: [createNewsArticlePermission],
   },
   {
     id: "delete",
@@ -117,6 +118,7 @@ const bladeToolbar = computed((): IBladeToolbar[] => [
         await reload();
       }
     },
+    permissions: [deleteNewsArticlePermission],
   }
 ]);
 
