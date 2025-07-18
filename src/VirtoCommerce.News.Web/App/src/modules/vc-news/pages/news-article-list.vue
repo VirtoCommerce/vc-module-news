@@ -67,8 +67,7 @@ defineEmits<Emits>();
 const { showConfirmation } = usePopup();
 
 const { t } = useI18n({ useScope: "global" });
-const { openBlade } = useBladeNavigation();
-
+const { openBlade, closeBlade } = useBladeNavigation();
 const { newsArticles, newsArticlesCount, pagesCount, pageIndex, searchNewsArticles, searchQuery, loadingNewsArticles, deleteNewsArticles } = useNewsArticleList();
 
 const searchKeyword = ref();
@@ -111,6 +110,7 @@ const bladeToolbar = computed((): IBladeToolbar[] => [
           t("VC_NEWS.PAGES.LIST.ALERTS.DELETE_SELECTED_CONFIRMATION_MESSAGE", { count: selectedIds.value.length }),
         )
       ) {
+        closeBlade(1);
         await deleteNewsArticles({ ids: selectedIds.value });
         selectedIds.value = [];
         await reload();
