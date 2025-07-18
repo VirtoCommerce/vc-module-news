@@ -6,8 +6,8 @@ import { NewsArticleClient, NewsArticle } from "../../../../api_client/virtocomm
 export default () => {
   const { getApiClient: getNewsApiClient } = useApiClient(NewsArticleClient);
 
-  const newsArticle = ref<NewsArticle>(new NewsArticle());
-  const originalNewsArticle = ref<NewsArticle>();
+  const newsArticle = ref<NewsArticle>(new NewsArticle({ localizedContents: [], seoInfos: [] }));
+  const originalNewsArticle = ref<NewsArticle>(new NewsArticle({ localizedContents: [], seoInfos: [] }));
 
   const resetNewsArticle = () => {
     if (originalNewsArticle.value) {
@@ -68,9 +68,11 @@ export default () => {
       if (!saveable.id) {
         const createResult = await apiClient.create(saveable);
         newsArticle.value.id = createResult.id;
+        saveable.id = createResult.id;
       } else {
-        const updateResult = await apiClient.update(saveable);
+        await apiClient.update(saveable);
       }
+      originalNewsArticle.value = _.cloneDeep(saveable);
     }
   });
 
