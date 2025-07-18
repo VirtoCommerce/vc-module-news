@@ -322,6 +322,7 @@ onMounted(async () => {
 });
 
 onBeforeClose(async () => {
+  console.warn('onBeforeClose');
   if (newsArticleIsDirty.value) {
     return await showConfirmation(t("VC_NEWS.PAGES.DETAILS.ALERTS.CLOSE_CONFIRMATION"));
   }
