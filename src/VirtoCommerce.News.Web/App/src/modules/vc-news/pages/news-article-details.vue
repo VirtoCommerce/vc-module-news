@@ -6,6 +6,15 @@
     v-loading="loading"
     width="60%"
     @close="$emit('close:blade')" @expand="$emit('expand:blade')" @collapse="$emit('collapse:blade')">
+
+    <div
+      class="tw-absolute tw-top-2 tw-right-4 tw-z-10">
+      <VcLanguageSelector
+        :model-value="currentLocale"
+        :options="languages"
+        @update:model-value="setLocale" />
+    </div>
+
     <VcContainer>
       <VcForm class="tw-flex tw-flex-col tw-gap-4">
         <Field
@@ -61,12 +70,6 @@
             :required="!!selectedLocalizedContent.content || !!selectedLocalizedContent.contentPreview"
             :error="errors.length > 0" :error-message="errorMessage" @update:model-value="handleChange"
             multilanguage :current-language="currentLocale">
-            <template #prepend>
-              <VcLanguageSelector
-                :model-value="currentLocale"
-                :options="languages"
-                @update:model-value="setLocale" />
-            </template>
           </VcInput>
         </Field>
 
