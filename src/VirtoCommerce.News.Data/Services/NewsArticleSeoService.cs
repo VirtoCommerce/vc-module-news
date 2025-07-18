@@ -27,12 +27,13 @@ public class NewsArticleSeoService(Func<INewsArticleRepository> repositoryFactor
 
         if (!languageCode.IsNullOrEmpty())
         {
-            seoInfoQuery = seoInfoQuery.Where(x => x.LanguageCode == languageCode);
+            seoInfoQuery = seoInfoQuery.Where(x => x.LanguageCode == null || (x.LanguageCode == languageCode));
         }
 
         var seoEntities = await seoInfoQuery.ToListAsync();
 
         return seoEntities
+            .OrderBy(x => x.LanguageCode == null)
             .Select(x => x.ToModel(AbstractTypeFactory<SeoInfo>.TryCreateInstance()))
             .ToList();
     }
