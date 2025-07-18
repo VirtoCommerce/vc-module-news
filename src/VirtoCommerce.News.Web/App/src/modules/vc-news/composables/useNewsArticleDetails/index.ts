@@ -54,7 +54,8 @@ export default () => {
   const { loading: savingNewsArticle, action: saveNewsArticle } = useAsync<NewsArticle>(async () => {
     if (newsArticle.value) {
       const saveable = _.cloneDeep(newsArticle.value);
-      cleanupLocalizations(saveable);
+      cleanupEmptyLocalizations(saveable);
+      cleanupEmptySeoInfos(saveable);
 
       const apiClient = await getNewsApiClient();
 
@@ -87,11 +88,24 @@ export default () => {
     }
   });
 
-  const cleanupLocalizations = (newsArticle: NewsArticle) => {
+  const cleanupEmptyLocalizations = (newsArticle: NewsArticle) => {
     const notEmptyLocalizations = newsArticle.localizedContents?.filter(
       (x) => x.title || x.content || x.contentPreview,
     );
     newsArticle.localizedContents = notEmptyLocalizations;
+  };
+
+  const cleanupEmptySeoInfos = (newsArticle: NewsArticle) => {
+    const notEmptySeoInfos = newsArticle.seoInfos?.filter(
+      (x) =>
+        x.isActive === true ||
+        x.semanticUrl ||
+        x.pageTitle ||
+        x.metaKeywords ||
+        x.metaDescription ||
+        x.imageAltDescription,
+    );
+    newsArticle.seoInfos = notEmptySeoInfos;
   };
 
   const hasContent = (newsArticle: NewsArticle) => {

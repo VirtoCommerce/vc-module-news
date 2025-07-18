@@ -99,10 +99,19 @@
             :label="$t('VC_NEWS.PAGES.DETAILS.FORM.SEO_IS_ACTIVE.LABEL')"
             v-model="selectedSeo.isActive" />
 
-          <VcInput
+          <Field
             :label="$t('VC_NEWS.PAGES.DETAILS.FORM.SEO_SEMANTIC_URL.LABEL')"
-            v-model="selectedSeo.semanticUrl"
-            multilanguage :current-language="currentLocale" />
+            :model-value="selectedSeo.semanticUrl"
+            name="seo-url"
+            :rules="{ required: selectedSeo.isActive === true || !!selectedSeo.pageTitle || !!selectedSeo.metaDescription || !!selectedSeo.metaKeywords || !!selectedSeo.imageAltDescription }"
+            v-slot="{ errors, errorMessage, handleChange }">
+            <VcInput
+              :label="$t('VC_NEWS.PAGES.DETAILS.FORM.SEO_SEMANTIC_URL.LABEL')"
+              v-model="selectedSeo.semanticUrl"
+              :required="selectedSeo.isActive === true || !!selectedSeo.pageTitle || !!selectedSeo.metaDescription || !!selectedSeo.metaKeywords || !!selectedSeo.imageAltDescription"
+              :error="errors.length > 0" :error-message="errorMessage" @update:model-value="handleChange"
+              multilanguage :current-language="currentLocale" />
+          </Field>
 
           <VcInput
             :label="$t('VC_NEWS.PAGES.DETAILS.FORM.SEO_PAGE_TITLE.LABEL')"
@@ -165,7 +174,7 @@ defineOptions({
 
 const { t } = useI18n({ useScope: "global" });
 
-const { meta } = useForm({ validateOnMount: false });
+const { meta } = useForm({ validateOnMount: true });
 
 //stores
 const { stores, loadStores, loadingStores } = useStore();
