@@ -78,10 +78,10 @@
           "RESET": "Reset",
           "PUBLISH": "Publish",
           "UNPUBLISH": "Unpublish"
+        },
+        "ALERTS": {
+          "CLOSE_CONFIRMATION": "You have unsaved changes. Close anyway?"
         }
-      },
-      "ALERTS": {
-        "CLOSE_CONFIRMATION": "You have unsaved changes. Close anyway?"
       }
     }
   }

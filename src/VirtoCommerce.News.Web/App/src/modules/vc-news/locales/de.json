@@ -78,10 +78,10 @@
           "RESET": "Zurücksetzen",
           "PUBLISH": "Veröffentlichen",
           "UNPUBLISH": "Nicht veröffentlichen"
+        },
+        "ALERTS": {
+          "CLOSE_CONFIRMATION": "Sie haben nicht gespeicherte Änderungen. Trotzdem schließen?"
         }
-      },
-      "ALERTS": {
-        "CLOSE_CONFIRMATION": "Sie haben nicht gespeicherte Änderungen. Trotzdem schließen?"
       }
     }
   }

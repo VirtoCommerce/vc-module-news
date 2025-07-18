@@ -78,10 +78,10 @@
           "RESET": "Ripristina",
           "PUBLISH": "Pubblica",
           "UNPUBLISH": "Annulla pubblicazione"
+        },
+        "ALERTS": {
+          "CLOSE_CONFIRMATION": "Hai delle modifiche non salvate. Vuoi comunque chiudere?"
         }
-      },
-      "ALERTS": {
-        "CLOSE_CONFIRMATION": "Hai delle modifiche non salvate. Vuoi comunque chiudere?"
       }
     }
   }

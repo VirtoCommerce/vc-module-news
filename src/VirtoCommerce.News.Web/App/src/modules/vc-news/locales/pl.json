@@ -78,10 +78,10 @@
           "RESET": "Zresetuj",
           "PUBLISH": "Opublikuj",
           "UNPUBLISH": "Anuluj publikację"
+        },
+        "ALERTS": {
+          "CLOSE_CONFIRMATION": "Masz niezapisane zmiany. Czy na pewno chcesz zamknąć?"
         }
-      },
-      "ALERTS": {
-        "CLOSE_CONFIRMATION": "Masz niezapisane zmiany. Czy na pewno chcesz zamknąć?"
       }
     }
   }

@@ -78,10 +78,10 @@
           "RESET": "Redefinir",
           "PUBLISH": "Publicar",
           "UNPUBLISH": "Retirar da publicação"
+        },
+        "ALERTS": {
+          "CLOSE_CONFIRMATION": "Você tem alterações não salvas. Fechar mesmo assim?"
         }
-      },
-      "ALERTS": {
-        "CLOSE_CONFIRMATION": "Você tem alterações não salvas. Fechar mesmo assim?"
       }
     }
   }

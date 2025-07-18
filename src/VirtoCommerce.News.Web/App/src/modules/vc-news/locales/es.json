@@ -78,10 +78,10 @@
           "RESET": "Restablecer",
           "PUBLISH": "Publicar",
           "UNPUBLISH": "Despublicar"
+        },
+        "ALERTS": {
+          "CLOSE_CONFIRMATION": "Tiene cambios no guardados. ¿Cerrar de todos modos?"
         }
-      },
-      "ALERTS": {
-        "CLOSE_CONFIRMATION": "Tiene cambios no guardados. ¿Cerrar de todos modos?"
       }
     }
   }

@@ -145,7 +145,7 @@
 import { onMounted, ref, computed } from "vue";
 import { useI18n } from "vue-i18n";
 import { Field, useForm } from "vee-validate";
-import { IBladeToolbar, IParentCallArgs, VcLanguageSelector } from "@vc-shell/framework";
+import { IBladeToolbar, IParentCallArgs, VcLanguageSelector, useBladeNavigation, usePopup } from "@vc-shell/framework";
 import { useNewsArticleDetails, useStore, useUserGroups, useLocalization } from "../composables";
 import { NewsArticleLocalizedContent, SeoInfo } from "../../../api_client/virtocommerce.news";
 
@@ -176,6 +176,9 @@ defineOptions({
 });
 
 const { t } = useI18n({ useScope: "global" });
+
+const { onBeforeClose } = useBladeNavigation();
+const { showConfirmation } = usePopup();
 
 const { meta } = useForm({ validateOnMount: true });
 
@@ -316,5 +319,12 @@ onMounted(async () => {
   if (props.param) {
     await loadNewsArticle({ id: props.param });
   }
+});
+
+onBeforeClose(async () => {
+  if (newsArticleIsDirty.value) {
+    return await showConfirmation(t("VC_NEWS.PAGES.DETAILS.ALERTS.CLOSE_CONFIRMATION"));
+  }
+  return true;
 });
 </script>
