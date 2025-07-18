@@ -263,6 +263,7 @@ bladeToolbar.value.push({
   icon: "material-save",
   title: t("VC_NEWS.PAGES.DETAILS.TOOLBAR.SAVE"),
   disabled: computed(() => !meta.value.valid || !newsArticleIsDirty?.value),
+  permissions: ["news:create"],
   clickHandler: async () => {
     try {
       await saveNewsArticle();

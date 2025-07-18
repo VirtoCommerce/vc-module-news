@@ -95,6 +95,7 @@ const bladeToolbar = computed((): IBladeToolbar[] => [
     id: "add",
     title: computed(() => t("VC_NEWS.PAGES.LIST.TOOLBAR.ADD")),
     icon: "material-add",
+    permissions: ["news:create"],
     clickHandler: async () => {
       openDetailsBlade(undefined);
     },
