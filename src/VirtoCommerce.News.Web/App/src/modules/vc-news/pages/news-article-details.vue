@@ -49,25 +49,41 @@
           :options="userGroupsOptions" option-value="id" option-label="title"
           multivalue />
 
-        <VcInput v-if="props.param"
+        <Field
           :label="$t('VC_NEWS.PAGES.DETAILS.FORM.CONTENT_TITLE.LABEL')"
-          v-model="selectedLocalizedContent.title"
-          required
-          multilanguage :current-language="currentLocale">
-          <template #prepend>
-            <VcLanguageSelector
-              :model-value="currentLocale"
-              :options="languages"
-              @update:model-value="setLocale" />
-          </template>
-        </VcInput>
+          :model-value="selectedLocalizedContent.title"
+          name="content-title"
+          :rules="{ required: !!selectedLocalizedContent.content || !!selectedLocalizedContent.contentPreview }"
+          v-slot="{ errors, errorMessage, handleChange }">
+          <VcInput v-if="props.param"
+            :label="$t('VC_NEWS.PAGES.DETAILS.FORM.CONTENT_TITLE.LABEL')"
+            v-model="selectedLocalizedContent.title"
+            :required="!!selectedLocalizedContent.content || !!selectedLocalizedContent.contentPreview"
+            :error="errors.length > 0" :error-message="errorMessage" @update:model-value="handleChange"
+            multilanguage :current-language="currentLocale">
+            <template #prepend>
+              <VcLanguageSelector
+                :model-value="currentLocale"
+                :options="languages"
+                @update:model-value="setLocale" />
+            </template>
+          </VcInput>
+        </Field>
 
-        <VcEditor v-if="props.param"
+        <Field
           :label="$t('VC_NEWS.PAGES.DETAILS.FORM.CONTENT_CONTENT.LABEL')"
-          v-model="selectedLocalizedContent.content"
-          required
-          multilanguage :current-language="currentLocale"
-          assets-folder="news-articles" />
+          :model-value="selectedLocalizedContent.content"
+          name="content-content"
+          :rules="{ required: !!selectedLocalizedContent.title || !!selectedLocalizedContent.contentPreview }"
+          v-slot="{ errors, errorMessage, handleChange }">
+          <VcEditor v-if="props.param"
+            :label="$t('VC_NEWS.PAGES.DETAILS.FORM.CONTENT_CONTENT.LABEL')"
+            v-model="selectedLocalizedContent.content"
+            :required="!!selectedLocalizedContent.title || !!selectedLocalizedContent.contentPreview"
+            :error="errors.length > 0" :error-message="errorMessage" @update:model-value="handleChange"
+            multilanguage :current-language="currentLocale"
+            assets-folder="news-articles" />
+        </Field>
 
         <VcEditor v-if="props.param"
           :label="$t('VC_NEWS.PAGES.DETAILS.FORM.CONTENT_PREVIEW.LABEL')"
@@ -115,8 +131,8 @@
 
 <script lang="ts" setup>
 import { onMounted, ref, computed } from "vue";
-import { Field } from "vee-validate";
 import { useI18n } from "vue-i18n";
+import { Field, useForm } from "vee-validate";
 import { IBladeToolbar, IParentCallArgs, VcLanguageSelector } from "@vc-shell/framework";
 import { useNewsArticleDetails, useStore, useUserGroups, useLocalization } from "../composables";
 import { NewsArticleLocalizedContent, SeoInfo } from "../../../api_client/virtocommerce.news";
@@ -148,6 +164,8 @@ defineOptions({
 });
 
 const { t } = useI18n({ useScope: "global" });
+
+const { meta } = useForm({ validateOnMount: false });
 
 //stores
 const { stores, loadStores, loadingStores } = useStore();
@@ -228,7 +246,7 @@ const bladeToolbar = ref<IBladeToolbar[]>([
     id: "save",
     icon: "material-save",
     title: t("VC_NEWS.PAGES.DETAILS.TOOLBAR.SAVE"),
-    disabled: computed(() => !newsArticleIsDirty?.value),
+    disabled: computed(() => !meta.value.valid || !newsArticleIsDirty?.value),
     clickHandler: async () => {
       try {
         await saveNewsArticle();
