@@ -93,7 +93,7 @@
       },
       "UseNewsPrefixInLinks": {
         "title": "リンクに「news」プレフィックスを使用する",
-        "description": "リンクに「news」プレフィックスを使用する"
+        "description": "リンクに「news」プレフィックスを使用する (SEOがアクティブな記事のみ)"
       },
       "UseStoreDefaultLanguage": {
         "title": "記事を検索する際に店舗のデフォルト言語を使用する",

@@ -93,7 +93,7 @@
       },
       "UseNewsPrefixInLinks": {
         "title": "Use \"news\" prefix in links",
-        "description": "Use \"news\" prefix in links"
+        "description": "Use \"news\" prefix in links (only for articles with active SEO)"
       },
       "UseStoreDefaultLanguage": {
         "title": "Use store default language while searching articles",
