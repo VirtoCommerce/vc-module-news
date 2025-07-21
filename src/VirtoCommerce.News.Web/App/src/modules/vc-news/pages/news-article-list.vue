@@ -175,8 +175,8 @@ const reOpenDetailsBlade = (id: string) => {
   openDetailsBlade(id);
 }
 
-const onSearchChange = (searchKeyword: string | undefined) => {
-  searchQuery.value.searchPhrase = searchKeyword;
+const onSearchChange = (searchKeywordValue: string | undefined) => {
+  searchQuery.value.searchPhrase = searchKeywordValue;
   searchNewsArticles();
 }
 

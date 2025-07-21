@@ -96,15 +96,15 @@ export default () => {
     }
   });
 
-  const cleanupEmptyLocalizations = (newsArticle: NewsArticle) => {
-    const notEmptyLocalizations = newsArticle.localizedContents?.filter(
+  const cleanupEmptyLocalizations = (newsArticleValue: NewsArticle) => {
+    const notEmptyLocalizations = newsArticleValue.localizedContents?.filter(
       (x) => x.title || x.content || x.contentPreview,
     );
-    newsArticle.localizedContents = notEmptyLocalizations;
+    newsArticleValue.localizedContents = notEmptyLocalizations;
   };
 
-  const cleanupEmptySeoInfos = (newsArticle: NewsArticle) => {
-    const notEmptySeoInfos = newsArticle.seoInfos?.filter(
+  const cleanupEmptySeoInfos = (newsArticleValue: NewsArticle) => {
+    const notEmptySeoInfos = newsArticleValue.seoInfos?.filter(
       (x) =>
         x.isActive === true ||
         x.semanticUrl ||
@@ -113,11 +113,11 @@ export default () => {
         x.metaDescription ||
         x.imageAltDescription,
     );
-    newsArticle.seoInfos = notEmptySeoInfos;
+    newsArticleValue.seoInfos = notEmptySeoInfos;
   };
 
-  const hasContent = (newsArticle: NewsArticle) => {
-    const validLocalizations = newsArticle.localizedContents?.filter((x) => x.title || x.content);
+  const hasContent = (newsArticleValue: NewsArticle) => {
+    const validLocalizations = newsArticleValue.localizedContents?.filter((x) => x.title || x.content);
     if (!validLocalizations) {
       return false;
     }
