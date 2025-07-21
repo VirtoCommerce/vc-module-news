@@ -108,11 +108,8 @@ const bladeToolbar = computed((): IBladeToolbar[] => [
     icon: "material-delete",
     disabled: selectedIds.value.length === 0,
     clickHandler: async () => {
-      if (
-        await showConfirmation(
-          t("VC_NEWS.PAGES.LIST.ALERTS.DELETE_SELECTED_CONFIRMATION_MESSAGE", { count: selectedIds.value.length }),
-        )
-      ) {
+      const confirmed = await showConfirmation(t("VC_NEWS.PAGES.LIST.ALERTS.DELETE_SELECTED_CONFIRMATION_MESSAGE", { count: selectedIds.value.length }));
+      if (confirmed) {
         closeBlade(1);
         await deleteNewsArticles({ ids: selectedIds.value });
         selectedIds.value = [];
