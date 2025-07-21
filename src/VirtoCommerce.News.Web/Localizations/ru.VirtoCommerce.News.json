@@ -43,7 +43,7 @@
           "language": "Язык",
           "title": "Заголовок",
           "content": "Содержимое",
-          "content-preview": "Содержимое (предварительный просмотр)"
+          "content-preview": "Краткое содержание"
         },
         "placeholders": {
           "language": "Язык",
