@@ -36,10 +36,10 @@ export const routes: RouteRecordRaw[] = [
     name: "Invite",
     path: "/invite",
     component: Invite,
-    props: (route) => ({
-      userId: route.query.userId,
-      token: route.query.token,
-      userName: route.query.userName,
+    props: (_route) => ({
+      userId: _route.query.userId,
+      token: _route.query.token,
+      userName: _route.query.userName,
       logo: whiteLogoImage,
       background: bgImage,
     }),
@@ -48,10 +48,10 @@ export const routes: RouteRecordRaw[] = [
     name: "ResetPassword",
     path: "/resetpassword",
     component: ResetPassword,
-    props: (route) => ({
-      userId: route.query.userId,
-      token: route.query.token,
-      userName: route.query.userName,
+    props: (_route) => ({
+      userId: _route.query.userId,
+      token: _route.query.token,
+      userName: _route.query.userName,
       logo: whiteLogoImage,
       background: bgImage,
     }),
@@ -63,7 +63,7 @@ export const routes: RouteRecordRaw[] = [
     meta: {
       forced: true,
     },
-    props: (route) => ({
+    props: (_route) => ({
       background: bgImage,
     }),
   },
