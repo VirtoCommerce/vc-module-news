@@ -48,8 +48,8 @@
             "LABEL": "Содержание"
           },
           "CONTENT_PREVIEW": {
-            "LABEL": "Резюме",
-            "PLACEHOLDER": "Резюме"
+            "LABEL": "Краткое содержание",
+            "PLACEHOLDER": "Краткое содержание"
           },
           "SEO_HEADER": {
             "LABEL": "SEO"
