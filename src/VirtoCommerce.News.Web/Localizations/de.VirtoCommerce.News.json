@@ -43,7 +43,7 @@
           "language": "Sprache",
           "title": "Titel",
           "content": "Inhalt",
-          "content-preview": "Inhalt (Benutzervorschau)"
+          "content-preview": "Zusammenfassung"
         },
         "placeholders": {
           "language": "Sprache",

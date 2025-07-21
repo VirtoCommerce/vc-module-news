@@ -43,7 +43,7 @@
           "language": "语言",
           "title": "标题",
           "content": "内容",
-          "content-preview": "内容（用户预览）"
+          "content-preview": "摘要"
         },
         "placeholders": {
           "language": "语言",

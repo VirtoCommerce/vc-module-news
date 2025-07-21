@@ -43,7 +43,7 @@
           "language": "言語",
           "title": "タイトル",
           "content": "コンテンツ",
-          "content-preview": "コンテンツ（ユーザープレビュー）"
+          "content-preview": "要約"
         },
         "placeholders": {
           "language": "言語",
