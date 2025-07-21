@@ -325,7 +325,7 @@ onMounted(async () => {
 
 onBeforeClose(async () => {
   if (newsArticleIsDirty.value) {
-    return await showConfirmation(t("VC_NEWS.PAGES.DETAILS.ALERTS.CLOSE_CONFIRMATION"));
+    return showConfirmation(t("VC_NEWS.PAGES.DETAILS.ALERTS.CLOSE_CONFIRMATION"));
   }
   return true;
 });
