@@ -53,12 +53,12 @@ public class NewsArticleSearchService(
             query = query.Where(x => x.StoreId == criteria.StoreId);
         }
 
-        if (!criteria.UserGroups.IsNullOrEmpty())
+        if (criteria.UserGroups != null)
         {
             query = query.Where(article => !article.UserGroups.Any() || article.UserGroups.Any(group => criteria.UserGroups.Contains(group.Group)));
         }
 
-        if (!criteria.LanguageCodes.IsNullOrEmpty())
+        if (criteria.LanguageCodes != null)
         {
             query = query.Where(article => article.LocalizedContents.Any(content => criteria.LanguageCodes.Contains(content.LanguageCode)));
         }
