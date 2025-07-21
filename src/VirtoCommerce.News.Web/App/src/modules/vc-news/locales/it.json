@@ -48,8 +48,8 @@
             "LABEL": "Contenuto"
           },
           "CONTENT_PREVIEW": {
-            "LABEL": "Contenuto (anteprima per utente)",
-            "PLACEHOLDER": "Contenuto"
+            "LABEL": "Sommario",
+            "PLACEHOLDER": "Sommario"
           },
           "SEO_HEADER": {
             "LABEL": "SEO"

@@ -48,8 +48,8 @@
             "LABEL": "Treść"
           },
           "CONTENT_PREVIEW": {
-            "LABEL": "Treść (podgląd użytkownika)",
-            "PLACEHOLDER": "Treść"
+            "LABEL": "Podsumowanie",
+            "PLACEHOLDER": "Podsumowanie"
           },
           "SEO_HEADER": {
             "LABEL": "SEO"

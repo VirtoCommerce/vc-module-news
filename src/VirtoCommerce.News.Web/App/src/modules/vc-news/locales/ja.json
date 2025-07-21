@@ -48,8 +48,8 @@
             "LABEL": "コンテンツ"
           },
           "CONTENT_PREVIEW": {
-            "LABEL": "コンテンツ（ユーザープレビュー）",
-            "PLACEHOLDER": "コンテンツ"
+            "LABEL": "要約",
+            "PLACEHOLDER": "要約"
           },
           "SEO_HEADER": {
             "LABEL": "SEO"

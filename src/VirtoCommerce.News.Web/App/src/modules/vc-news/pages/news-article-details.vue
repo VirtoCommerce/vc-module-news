@@ -73,6 +73,12 @@
           </VcInput>
         </Field>
 
+        <VcEditor v-if="props.param"
+          :label="$t('VC_NEWS.PAGES.DETAILS.FORM.CONTENT_PREVIEW.LABEL')"
+          v-model="selectedLocalizedContent.contentPreview"
+          multilanguage :current-language="currentLocale"
+          assets-folder="news-articles" />
+
         <Field
           :label="$t('VC_NEWS.PAGES.DETAILS.FORM.CONTENT_CONTENT.LABEL')"
           :model-value="selectedLocalizedContent.content"
@@ -87,12 +93,6 @@
             multilanguage :current-language="currentLocale"
             assets-folder="news-articles" />
         </Field>
-
-        <VcEditor v-if="props.param"
-          :label="$t('VC_NEWS.PAGES.DETAILS.FORM.CONTENT_PREVIEW.LABEL')"
-          v-model="selectedLocalizedContent.contentPreview"
-          multilanguage :current-language="currentLocale"
-          assets-folder="news-articles" />
 
         <VcCard v-if="props.param"
           :header="$t('VC_NEWS.PAGES.DETAILS.FORM.SEO_HEADER.LABEL')"

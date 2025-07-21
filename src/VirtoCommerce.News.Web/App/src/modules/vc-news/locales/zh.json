@@ -48,8 +48,8 @@
             "LABEL": "内容"
           },
           "CONTENT_PREVIEW": {
-            "LABEL": "内容（用户预览）",
-            "PLACEHOLDER": "内容"
+            "LABEL": "摘要",
+            "PLACEHOLDER": "摘要"
           },
           "SEO_HEADER": {
             "LABEL": "SEO"
