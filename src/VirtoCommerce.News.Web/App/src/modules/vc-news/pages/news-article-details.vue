@@ -145,7 +145,7 @@
 import { onMounted, ref, Ref, computed } from "vue";
 import { useI18n } from "vue-i18n";
 import { Field, useForm } from "vee-validate";
-import { IBladeToolbar, IParentCallArgs, VcLanguageSelector, useBladeNavigation, usePopup } from "@vc-shell/framework";
+import { IBladeToolbar, IParentCallArgs, VcLanguageSelector, usePermissions, useBladeNavigation, usePopup } from "@vc-shell/framework";
 import { useNewsArticleDetails, useNewsArticlePermissions, useStore, useUserGroups, useLocalization } from "../composables";
 import { NewsArticleLocalizedContent, SeoInfo } from "../../../api_client/virtocommerce.news";
 
@@ -178,6 +178,7 @@ defineOptions({
 const { t } = useI18n({ useScope: "global" });
 
 const { onBeforeClose } = useBladeNavigation();
+const { hasAccess } = usePermissions();
 const { showConfirmation } = usePopup();
 
 const { meta } = useForm({ validateOnMount: true });
@@ -274,7 +275,7 @@ bladeToolbar.value.push({
       console.error("Failed to save news article:", error);
     }
   },
-  permissions: [saveNewsArticlePermission]
+  isVisible: computed(() => hasAccess(saveNewsArticlePermission)),
 });
 
 if (props.param) {
@@ -297,7 +298,7 @@ if (props.param) {
       emit("parent:call", { method: "reload" });
       emit("parent:call", { method: "reOpenDetailsBlade", args: newsArticle.value!.id });
     },
-    permissions: [publishNewsArticlePermission],
+    isVisible: computed(() => hasAccess(publishNewsArticlePermission)),
   });
   bladeToolbar.value.push({
     id: "unpublish",
@@ -309,7 +310,7 @@ if (props.param) {
       emit("parent:call", { method: "reload" });
       emit("parent:call", { method: "reOpenDetailsBlade", args: newsArticle.value!.id });
     },
-    permissions: [publishNewsArticlePermission],
+    isVisible: computed(() => hasAccess(publishNewsArticlePermission)),
   });
 }
 

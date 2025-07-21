@@ -26,7 +26,7 @@
 
 <script lang="ts" setup>
 import { computed, ref, markRaw, onMounted, watch } from "vue";
-import { IBladeEvent, IBladeToolbar, IParentCallArgs, ITableColumns, useBladeNavigation, usePopup } from "@vc-shell/framework";
+import { IBladeEvent, IBladeToolbar, IParentCallArgs, ITableColumns, usePermissions, useBladeNavigation, usePopup } from "@vc-shell/framework";
 import { useI18n } from "vue-i18n";
 import { useNewsArticleList, useNewsArticlePermissions } from "../composables";
 import NewsArticleDetails from "./news-article-details.vue";
@@ -68,6 +68,7 @@ const { showConfirmation } = usePopup();
 
 const { t } = useI18n({ useScope: "global" });
 const { openBlade, closeBlade } = useBladeNavigation();
+const { hasAccess } = usePermissions();
 const { newsArticles, newsArticlesCount, pagesCount, pageIndex, searchNewsArticles, searchQuery, loadingNewsArticles, deleteNewsArticles } = useNewsArticleList();
 const { createNewsArticlePermission, deleteNewsArticlePermission } = useNewsArticlePermissions();
 
@@ -99,7 +100,7 @@ const bladeToolbar = computed((): IBladeToolbar[] => [
     clickHandler: async () => {
       openDetailsBlade(undefined);
     },
-    permissions: [createNewsArticlePermission],
+    isVisible: computed(() => hasAccess(createNewsArticlePermission)),
   },
   {
     id: "delete",
@@ -118,7 +119,7 @@ const bladeToolbar = computed((): IBladeToolbar[] => [
         await reload();
       }
     },
-    permissions: [deleteNewsArticlePermission],
+    isVisible: computed(() => hasAccess(deleteNewsArticlePermission)),
   }
 ]);
 
