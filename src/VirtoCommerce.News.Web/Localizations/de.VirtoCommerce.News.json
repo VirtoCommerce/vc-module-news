@@ -93,7 +93,7 @@
       },
       "UseNewsPrefixInLinks": {
         "title": "Verwenden Sie das Präfix \"news\" in Links",
-        "description": "Verwenden Sie das Präfix \"news\" in Links"
+        "description": "Verwenden Sie das Präfix \"news\" in Links (nur für Artikel mit aktivem SEO)"
       },
       "UseStoreDefaultLanguage": {
         "title": "Verwenden Sie die Standard-Sprache des Shops beim Suchen von Artikeln",
