@@ -7,7 +7,7 @@
     width="40%"
     @close="$emit('close:blade')" @expand="$emit('expand:blade')" @collapse="$emit('collapse:blade')">
 
-    <!-- @vue-generic {never} -->
+    <!-- @vue-generic {NewsArticle} -->
     <VcTable
       :total-label="$t('VC_NEWS.PAGES.LIST.TABLE.TOTALS')" :search-placeholder="$t('VC_NEWS.PAGES.LIST.SEARCH.PLACEHOLDER')"
       :items="newsArticles" :selected-item-id="selectedItemId"
@@ -30,7 +30,7 @@ import { IBladeEvent, IBladeToolbar, IParentCallArgs, ITableColumns, usePermissi
 import { useI18n } from "vue-i18n";
 import { useNewsArticleList, useNewsArticlePermissions } from "../composables";
 import NewsArticleDetails from "./news-article-details.vue";
-import { NewsArticle } from "src/api_client/virtocommerce.news";
+import { NewsArticle } from "../../../api_client/virtocommerce.news";
 
 export interface Props {
   expanded?: boolean;
@@ -87,7 +87,7 @@ watch(
 const bladeToolbar = computed((): IBladeToolbar[] => [
   {
     id: "refresh",
-    title: computed(() => t("VC_NEWS.PAGES.LIST.TOOLBAR.REFRESH")),
+    title: t("VC_NEWS.PAGES.LIST.TOOLBAR.REFRESH"),
     icon: "material-refresh",
     async clickHandler() {
       await reload();
@@ -95,16 +95,16 @@ const bladeToolbar = computed((): IBladeToolbar[] => [
   },
   {
     id: "add",
-    title: computed(() => t("VC_NEWS.PAGES.LIST.TOOLBAR.ADD")),
+    title: t("VC_NEWS.PAGES.LIST.TOOLBAR.ADD"),
     icon: "material-add",
     clickHandler: async () => {
       openDetailsBlade(undefined);
     },
-    isVisible: computed(() => hasAccess(createNewsArticlePermission)),
+    isVisible: () => hasAccess(createNewsArticlePermission),
   },
   {
     id: "delete",
-    title: computed(() => t("VC_NEWS.PAGES.LIST.TOOLBAR.DELETE")),
+    title: t("VC_NEWS.PAGES.LIST.TOOLBAR.DELETE"),
     icon: "material-delete",
     disabled: selectedIds.value.length === 0,
     clickHandler: async () => {
@@ -116,7 +116,7 @@ const bladeToolbar = computed((): IBladeToolbar[] => [
         await reload();
       }
     },
-    isVisible: computed(() => hasAccess(deleteNewsArticlePermission)),
+    isVisible: () => hasAccess(deleteNewsArticlePermission),
   }
 ]);
 
@@ -150,7 +150,7 @@ const reload = async () => {
   await searchNewsArticles();
 };
 
-const onItemClick = (item: { id: string }) => {
+const onItemClick = (item: NewsArticle) => {
   openDetailsBlade(item.id);
 };
 
