@@ -145,7 +145,7 @@
 import { onMounted, ref, Ref, computed } from "vue";
 import { useI18n } from "vue-i18n";
 import { Field, useForm } from "vee-validate";
-import { IBladeToolbar, IParentCallArgs, VcLanguageSelector, usePermissions, useBladeNavigation, usePopup } from "@vc-shell/framework";
+import { IBladeToolbar, IParentCallArgs, VcLanguageSelector, usePermissions, useBladeNavigation, usePopup, useLoading } from "@vc-shell/framework";
 import { useNewsArticleDetails, useNewsArticlePermissions, useStore, useUserGroups, useLocalization } from "../composables";
 import { NewsArticleLocalizedContent, SeoInfo } from "../../../api_client/virtocommerce.news";
 
@@ -257,7 +257,7 @@ const { publishNewsArticlePermission, createNewsArticlePermission, updateNewsArt
 const saveNewsArticlePermission = props.param ? updateNewsArticlePermission : createNewsArticlePermission;
 
 //other
-const loading = computed(() => loadingStores.value || loadingUserGroups.value || loadingLanguages.value || loadingOrSavingNewsArticle.value);
+const loading = useLoading(loadingStores, loadingUserGroups, loadingLanguages, loadingOrSavingNewsArticle);
 
 const bladeToolbar = ref([]) as Ref<IBladeToolbar[]>;
 
@@ -324,7 +324,7 @@ onMounted(async () => {
     await loadNewsArticle({ id: props.param });
   }
 });
-
+//useBeforeUnload / Close
 onBeforeClose(async () => {
   if (newsArticleIsDirty.value) {
     const confirmed = await showConfirmation(t("VC_NEWS.PAGES.DETAILS.ALERTS.CLOSE_CONFIRMATION"));

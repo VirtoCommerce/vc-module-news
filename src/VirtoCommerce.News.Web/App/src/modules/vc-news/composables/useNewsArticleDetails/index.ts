@@ -1,6 +1,6 @@
 import { computed, ref } from "vue";
 import * as _ from "lodash-es";
-import { useAsync, useApiClient } from "@vc-shell/framework";
+import { useAsync, useApiClient, useLoading } from "@vc-shell/framework";
 import { NewsArticleClient, NewsArticle } from "../../../../api_client/virtocommerce.news";
 
 export default () => {
@@ -33,14 +33,6 @@ export default () => {
 
   const newsArticleCanUnpublish = computed(
     () => !newsArticleIsDirty.value && originalNewsArticle.value && originalNewsArticle.value.isPublished,
-  );
-
-  const loadingOrSavingNewsArticle = computed(
-    () =>
-      loadingNewsArticle.value ||
-      savingNewsArticle.value ||
-      publishingNewsArticle.value ||
-      unpublishingNewsArticle.value,
   );
 
   const { loading: loadingNewsArticle, action: loadNewsArticle } = useAsync<{ id: string }>(
@@ -129,7 +121,12 @@ export default () => {
     newsArticle,
     loadNewsArticle,
     saveNewsArticle,
-    loadingOrSavingNewsArticle,
+    loadingOrSavingNewsArticle: useLoading(
+      loadingNewsArticle,
+      savingNewsArticle,
+      publishingNewsArticle,
+      unpublishingNewsArticle,
+    ),
 
     publishNewsArticle,
     unpublishNewsArticle,
