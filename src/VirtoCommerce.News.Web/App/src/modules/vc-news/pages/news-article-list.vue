@@ -26,7 +26,7 @@
 
 <script lang="ts" setup>
 import { computed, ref, markRaw, onMounted, watch } from "vue";
-import { IBladeEvent, IBladeToolbar, IParentCallArgs, ITableColumns, usePermissions, useBladeNavigation, usePopup, useTableSort } from "@vc-shell/framework";
+import { IBladeToolbar, IParentCallArgs, ITableColumns, usePermissions, useBladeNavigation, usePopup, useTableSort } from "@vc-shell/framework";
 import { useI18n } from "vue-i18n";
 import { useNewsArticleList, useNewsArticlePermissions } from "../composables";
 import NewsArticleDetails from "./news-article-details.vue";
@@ -42,7 +42,6 @@ export interface Emits {
   (event: "parent:call", args: IParentCallArgs): void;
   (event: "collapse:blade"): void;
   (event: "expand:blade"): void;
-  (event: "open:blade", blade: IBladeEvent): void;
   (event: "close:blade"): void;
 }
 
