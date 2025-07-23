@@ -264,7 +264,7 @@ const bladeToolbar = ref([]) as Ref<IBladeToolbar[]>;
 bladeToolbar.value.push({
   id: "save",
   icon: "material-save",
-  title: t("VC_NEWS.PAGES.DETAILS.TOOLBAR.SAVE"),
+  title: computed(() => t("VC_NEWS.PAGES.DETAILS.TOOLBAR.SAVE")),
   disabled: computed(() => !meta.value.valid || !newsArticleIsDirty?.value),
   clickHandler: async () => {
     try {
@@ -282,7 +282,7 @@ if (props.param) {
   bladeToolbar.value.push({
     id: "reset",
     icon: "material-undo",
-    title: t("VC_NEWS.PAGES.DETAILS.TOOLBAR.RESET"),
+    title: computed(() => t("VC_NEWS.PAGES.DETAILS.TOOLBAR.RESET")),
     disabled: computed(() => !newsArticleIsDirty?.value),
     clickHandler: async () => {
       resetNewsArticle();
@@ -291,7 +291,7 @@ if (props.param) {
   bladeToolbar.value.push({
     id: "publish",
     icon: "material-visibility",
-    title: t("VC_NEWS.PAGES.DETAILS.TOOLBAR.PUBLISH"),
+    title: computed(() => t("VC_NEWS.PAGES.DETAILS.TOOLBAR.PUBLISH")),
     disabled: computed(() => !newsArticleCanPublish?.value),
     clickHandler: async () => {
       await publishNewsArticle();
@@ -303,7 +303,7 @@ if (props.param) {
   bladeToolbar.value.push({
     id: "unpublish",
     icon: "material-visibility-off",
-    title: t("VC_NEWS.PAGES.DETAILS.TOOLBAR.UNPUBLISH"),
+    title: computed(() => t("VC_NEWS.PAGES.DETAILS.TOOLBAR.UNPUBLISH")),
     disabled: computed(() => !newsArticleCanUnpublish?.value),
     clickHandler: async () => {
       await unpublishNewsArticle();
