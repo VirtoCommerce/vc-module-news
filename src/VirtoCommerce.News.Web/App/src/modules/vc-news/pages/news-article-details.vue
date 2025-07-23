@@ -1,6 +1,6 @@
 <template>
   <VcBlade
-    :title="$t('VC_NEWS.PAGES.DETAILS.TITLE')"
+    :title="title"
     :toolbar-items="bladeToolbar"
     :closable="closable" :expanded="expanded"
     v-loading="loading"
@@ -314,6 +314,8 @@ if (props.param) {
   });
 }
 
+const title = computed(() => t("VC_NEWS.PAGES.DETAILS.TITLE"));
+
 onMounted(async () => {
   await loadStores();
   await loadUserGroups();
@@ -329,5 +331,9 @@ onBeforeClose(async () => {
     return confirmed;
   }
   return true;
+});
+
+defineExpose({
+  title,
 });
 </script>

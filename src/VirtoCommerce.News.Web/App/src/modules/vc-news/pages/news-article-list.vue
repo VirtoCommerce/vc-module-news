@@ -1,6 +1,6 @@
 <template>
   <VcBlade
-    :title="$t('VC_NEWS.PAGES.LIST.TITLE')"
+    :title="title"
     :toolbar-items="bladeToolbar"
     :closable="closable" :expanded="expanded"
     v-loading="loadingNewsArticles"
