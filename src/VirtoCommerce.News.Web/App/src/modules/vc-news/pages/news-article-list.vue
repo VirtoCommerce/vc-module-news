@@ -13,7 +13,7 @@
       :items="newsArticles" :selected-item-id="selectedItemId"
       :search-value="searchKeyword"
       :columns="columns"
-      :sort="searchQuery.sort" :pages="pagesCount" :current-page="pageIndex" :total-count="newsArticlesCount"
+      :sort="sortExpression" :pages="pagesCount" :current-page="pageIndex" :total-count="newsArticlesCount"
       :expanded="expanded"
       @item-click="onItemClick" @header-click="onHeaderClick" @pagination-click="onPaginationClick"
       @search:change="onSearchChange" @selection-changed="onSelectionChanged"
@@ -26,7 +26,7 @@
 
 <script lang="ts" setup>
 import { computed, ref, markRaw, onMounted, watch } from "vue";
-import { IBladeEvent, IBladeToolbar, IParentCallArgs, ITableColumns, usePermissions, useBladeNavigation, usePopup } from "@vc-shell/framework";
+import { IBladeEvent, IBladeToolbar, IParentCallArgs, ITableColumns, usePermissions, useBladeNavigation, usePopup, useTableSort } from "@vc-shell/framework";
 import { useI18n } from "vue-i18n";
 import { useNewsArticleList, useNewsArticlePermissions } from "../composables";
 import NewsArticleDetails from "./news-article-details.vue";
@@ -71,6 +71,8 @@ const { openBlade, closeBlade } = useBladeNavigation();
 const { hasAccess } = usePermissions();
 const { newsArticles, newsArticlesCount, pagesCount, pageIndex, searchNewsArticles, searchQuery, loadingNewsArticles, deleteNewsArticles } = useNewsArticleList();
 const { createNewsArticlePermission, deleteNewsArticlePermission } = useNewsArticlePermissions();
+
+const { sortExpression, handleSortChange } = useTableSort({ initialProperty: 'createdDate', initialDirection: 'ASC' });
 
 const searchKeyword = ref();
 const selectedItemId = ref<string>();
@@ -182,34 +184,9 @@ const onPaginationClick = (page: number) => {
   searchNewsArticles();
 }
 
-const onHeaderClick = async (item: ITableColumns) => {
-  const sortOptions = ["DESC", "ASC", ""];
-
-  if (item.sortable) {
-    if (searchQuery?.value?.sort?.split(":")[0] === item.id) {
-      const index = sortOptions.findIndex((x) => {
-        const sorting = searchQuery?.value?.sort?.split(":")[1];
-        if (sorting) {
-          return x === sorting;
-        } else {
-          return x === "";
-        }
-      });
-
-      if (index !== -1) {
-        const newSort = sortOptions[(index + 1) % sortOptions.length];
-
-        if (newSort === "") {
-          searchQuery.value.sort = '';
-        } else {
-          searchQuery.value.sort = `${item.id}:${newSort}`;
-        }
-        await searchNewsArticles();
-      }
-    } else {
-      searchQuery.value.sort = `${item.id}:${sortOptions[0]}`;
-      await searchNewsArticles();
-    }
+const onHeaderClick = async (column: ITableColumns) => {
+  if (column.sortable) {
+    handleSortChange(column.id);
   }
 };
 
@@ -218,6 +195,11 @@ const onSelectionChanged = function (selectedItems: NewsArticle[]) {
 }
 
 onMounted(async () => {
+  await searchNewsArticles();
+});
+
+watch(sortExpression, async (newSortValue) => {
+  searchQuery.value.sort = newSortValue;
   await searchNewsArticles();
 });
 
