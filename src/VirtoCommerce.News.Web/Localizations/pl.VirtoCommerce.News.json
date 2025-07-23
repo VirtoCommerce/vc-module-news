@@ -1,0 +1,104 @@
+{
+  "news": {
+    "main-menu-title": "Wiadomości",
+    "blades": {
+      "news-article-list": {
+        "title": "Artykuły",
+        "labels": {
+          "store": "Sklep",
+          "name": "Nazwa",
+          "is-published": "Jest opublikowany"
+        }
+      },
+      "news-article-details": {
+        "title-add": "Nowy artykuł",
+        "title-edit": "Artykuł",
+        "labels": {
+          "store": "Sklep",
+          "name": "Nazwa",
+          "publish-date": "Data publikacji",
+          "user-groups": "Grupy użytkowników"
+        },
+        "placeholders": {
+          "store": "Sklep",
+          "name": "Nazwa",
+          "publish-date": "Data publikacji",
+          "user-groups": "Grupy użytkowników"
+        },
+        "toolbar": {
+          "publish": "opublikuj",
+          "unpublish": "cofnij publikację"
+        }
+      },
+      "news-article-content-list": {
+        "title": "Zlokalizowana treść",
+        "labels": {
+          "language": "Język"
+        }
+      },
+      "news-article-content-details": {
+        "title-add": "Nowa zlokalizowana treść",
+        "title-edit": "Zlokalizowana treść",
+        "labels": {
+          "language": "Język",
+          "title": "Tytuł",
+          "content": "Treść",
+          "content-preview": "Podsumowanie"
+        },
+        "placeholders": {
+          "language": "Język",
+          "title": "Tytuł"
+        }
+      }
+    },
+    "dialogs": {
+      "news-article-save": {
+        "title": "Zapisz zmiany",
+        "message": "Artykuł został zmodyfikowany. Czy chcesz zapisać zmiany?"
+      },
+      "news-article-delete": {
+        "title": "Potwierdź usunięcie",
+        "message-single": "Czy na pewno chcesz usunąć artykuł '{{name}}'?",
+        "message-many": "Czy na pewno chcesz usunąć {{count}} artykułów?"
+      },
+      "news-article-content-save": {
+        "title": "Zapisz zmiany",
+        "message": "Treść została zmodyfikowana. Czy chcesz zapisać zmiany?"
+      },
+      "news-article-content-delete": {
+        "title": "Potwierdź usunięcie",
+        "message-single": "Czy na pewno chcesz usunąć tę treść zlokalizowaną dla języka '{{language}}'?",
+        "message-many": "Czy na pewno chcesz usunąć {{count}} elementów zlokalizowanej treści?"
+      }
+    },
+    "widgets": {
+      "localized-contents": {
+        "title": "Treść"
+      }
+    }
+  },
+  "permissions": {
+    "news:access": "Otwórz menu wiadomości",
+    "news:create": "Utwórz dane związane z wiadomościami",
+    "news:read": "Wyświetl dane związane z wiadomościami",
+    "news:update": "Zaktualizuj dane związane z wiadomościami",
+    "news:delete": "Usuń dane związane z wiadomościami",
+    "news:publish": "Opublikuj dane związane z wiadomościami"
+  },
+  "settings": {
+    "News": {
+      "Enabled": {
+        "title": "Umożliwić",
+        "description": "Umożliwić"
+      },
+      "UseNewsPrefixInLinks": {
+        "title": "Użyj prefiksu \"news\" w linkach",
+        "description": "Użyj prefiksu \"news\" w linkach (tylko dla artykułów z aktywnym SEO)"
+      },
+      "UseStoreDefaultLanguage": {
+        "title": "Użyj domyślnego języka sklepu podczas wyszukiwania artykułów",
+        "description": "Użyj domyślnego języka sklepu podczas wyszukiwania artykułów"
+      }
+    }
+  }
+}

@@ -14,6 +14,7 @@ public static class ModuleConstants
             public const string Read = "news:read";
             public const string Update = "news:update";
             public const string Delete = "news:delete";
+            public const string Publish = "news:publish";
 
             public static string[] AllPermissions { get; } =
             [
@@ -22,6 +23,7 @@ public static class ModuleConstants
                 Read,
                 Update,
                 Delete,
+                Publish,
             ];
         }
     }
@@ -33,9 +35,28 @@ public static class ModuleConstants
             public static SettingDescriptor NewsEnabled { get; } = new()
             {
                 Name = "News.Enabled",
-                GroupName = "News|General",
+                GroupName = "News|News",
+                ValueType = SettingValueType.Boolean,
+                DefaultValue = true,
+                IsPublic = true,
+            };
+
+            public static SettingDescriptor UseNewsPrefixInLinks { get; } = new()
+            {
+                Name = "News.UseNewsPrefixInLinks",
+                GroupName = "News|News",
                 ValueType = SettingValueType.Boolean,
                 DefaultValue = false,
+                IsPublic = true,
+            };
+
+            public static SettingDescriptor UseStoreDefaultLanguage { get; } = new()
+            {
+                Name = "News.UseStoreDefaultLanguage",
+                GroupName = "News|News",
+                ValueType = SettingValueType.Boolean,
+                DefaultValue = false,
+                IsPublic = true,
             };
 
             public static IEnumerable<SettingDescriptor> AllGeneralSettings
@@ -43,6 +64,8 @@ public static class ModuleConstants
                 get
                 {
                     yield return NewsEnabled;
+                    yield return UseNewsPrefixInLinks;
+                    yield return UseStoreDefaultLanguage;
                 }
             }
         }

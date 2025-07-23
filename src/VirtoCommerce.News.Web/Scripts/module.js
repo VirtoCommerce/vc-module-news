@@ -1,5 +1,5 @@
 // Call this to register your module to main application
-var moduleName = 'VirtoCommerce.News';
+const moduleName = 'VirtoCommerce.News';
 
 if (AppDependencies !== undefined) {
     AppDependencies.push(moduleName);
@@ -15,10 +15,10 @@ angular.module(moduleName, [])
                     controller: [
                         'platformWebApp.bladeNavigationService',
                         function (bladeNavigationService) {
-                            var newBlade = {
-                                id: 'blade1',
-                                controller: 'VirtoCommerce.News.helloWorldController',
-                                template: 'Modules/$(VirtoCommerce.News)/Scripts/blades/hello-world.html',
+                            const newBlade = {
+                                id: 'newsArticleList',
+                                controller: 'VirtoCommerce.News.newsArticleListController',
+                                template: 'Modules/$(VirtoCommerce.News)/Scripts/blades/news-article-list.html',
                                 isClosingDisabled: true,
                             };
                             bladeNavigationService.showBlade(newBlade);
@@ -27,17 +27,92 @@ angular.module(moduleName, [])
                 });
         }
     ])
-    .run(['platformWebApp.mainMenuService', '$state',
-        function (mainMenuService, $state) {
-            //Register module in main menu
-            var menuItem = {
+    .run(['platformWebApp.mainMenuService', '$state', 'platformWebApp.metaFormsService', 'platformWebApp.widgetService',
+        function (mainMenuService, $state, metaFormsService, widgetService) {
+            const menuItem = {
                 path: 'browse/news',
                 icon: 'fa fa-cube',
-                title: 'News',
+                title: 'news.main-menu-title',
                 priority: 100,
                 action: function () { $state.go('workspace.NewsState'); },
                 permission: 'news:access',
             };
             mainMenuService.addMenuItem(menuItem);
+
+            const contentWidget = {
+                controller: 'VirtoCommerce.News.contentWidgetController',
+                template: 'Modules/$(VirtoCommerce.News)/Scripts/widgets/contentWidget.html'
+            };
+            widgetService.registerWidget(contentWidget, 'newsArticleDetails');
+
+            var seoWidget = {
+                controller: 'virtoCommerce.coreModule.seo.seoWidgetController',
+                template: 'Modules/$(VirtoCommerce.Core)/Scripts/SEO/widgets/seoWidget.tpl.html',
+                objectType: 'NewsArticle',
+                getDefaultContainerId: function (blade) { return undefined; },
+                getLanguages: function (blade) { return blade.languages; }
+            };
+            widgetService.registerWidget(seoWidget, 'newsArticleDetails');
+
+            metaFormsService.registerMetaFields('newsArticleDetails', [
+                {
+                    name: 'name',
+                    title: 'news.blades.news-article-details.labels.name',
+                    placeholder: 'news.blades.news-article-details.placeholders.name',
+                    colSpan: 2,
+                    isRequired: true,
+                    valueType: 'ShortText'
+                },
+                {
+                    name: 'storeId',
+                    title: 'news.blades.news-article-details.labels.store',
+                    templateUrl: 'storeSelector.html',
+                    colSpan: 1,
+                    isRequired: true
+                },
+                {
+                    name: 'publishDate',
+                    title: 'news.blades.news-article-details.labels.publish-date',
+                    placeholder: 'news.blades.news-article-details.placeholders.publish-date',
+                    colSpan: 1,
+                    valueType: 'DateTime'
+                },
+                {
+                    templateUrl: "userGroups.html",
+                    colSpan: 2
+                }
+            ]);
+
+            metaFormsService.registerMetaFields('newsArticleContentDetails', [
+                {
+                    name: 'language',
+                    title: 'news.blades.news-article-content-details.labels.language',
+                    placeholder: 'news.blades.news-article-content-details.placeholders.language',
+                    templateUrl: 'languageSelector.html',
+                    colSpan: 2,
+                    isRequired: true
+                },
+                {
+                    name: 'title',
+                    title: 'news.blades.news-article-content-details.labels.title',
+                    placeholder: 'news.blades.news-article-content-details.placeholders.title',
+                    colSpan: 2,
+                    isRequired: true,
+                    valueType: 'ShortText'
+                },
+                {
+                    name: 'contentPreview',
+                    title: 'news.blades.news-article-content-details.labels.content-preview',
+                    templateUrl: 'contentPreviewRichEdit.html',
+                    colSpan: 2
+                },
+                {
+                    name: 'content',
+                    title: 'news.blades.news-article-content-details.labels.content',
+                    templateUrl: 'contentRichEdit.html',
+                    colSpan: 2,
+                    isRequired: true
+                }
+            ]);
         }
     ]);

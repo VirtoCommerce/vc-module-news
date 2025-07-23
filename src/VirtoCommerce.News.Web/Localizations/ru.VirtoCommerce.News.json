@@ -1,0 +1,104 @@
+{
+  "news": {
+    "main-menu-title": "Новости",
+    "blades": {
+      "news-article-list": {
+        "title": "Статьи",
+        "labels": {
+          "store": "Магазин",
+          "name": "Название",
+          "is-published": "Опубликовано"
+        }
+      },
+      "news-article-details": {
+        "title-add": "Новая статья",
+        "title-edit": "Статья",
+        "labels": {
+          "store": "Магазин",
+          "name": "Название",
+          "publish-date": "Дата публикации",
+          "user-groups": "Группы пользователей"
+        },
+        "placeholders": {
+          "store": "Магазин",
+          "name": "Название",
+          "publish-date": "Дата публикации",
+          "user-groups": "Группы пользователей"
+        },
+        "toolbar": {
+          "publish": "опубликовать",
+          "unpublish": "снять с публикации"
+        }
+      },
+      "news-article-content-list": {
+        "title": "Локализованный контент",
+        "labels": {
+          "language": "Язык"
+        }
+      },
+      "news-article-content-details": {
+        "title-add": "Новый локализованный контент",
+        "title-edit": "Локализованный контент",
+        "labels": {
+          "language": "Язык",
+          "title": "Заголовок",
+          "content": "Содержание",
+          "content-preview": "Краткое содержание"
+        },
+        "placeholders": {
+          "language": "Язык",
+          "title": "Заголовок"
+        }
+      }
+    },
+    "dialogs": {
+      "news-article-save": {
+        "title": "Сохранить изменения",
+        "message": "Статья была изменена. Хотите сохранить изменения?"
+      },
+      "news-article-delete": {
+        "title": "Подтвердите удаление",
+        "message-single": "Вы уверены, что хотите удалить статью '{{name}}'?",
+        "message-many": "Вы уверены, что хотите удалить {{count}} статей?"
+      },
+      "news-article-content-save": {
+        "title": "Сохранить изменения",
+        "message": "Контент был изменён. Хотите сохранить изменения?"
+      },
+      "news-article-content-delete": {
+        "title": "Подтвердите удаление",
+        "message-single": "Вы уверены, что хотите удалить контент, локализованный для языка '{{language}}'?",
+        "message-many": "Вы уверены, что хотите удалить {{count}} локализованных элементов?"
+      }
+    },
+    "widgets": {
+      "localized-contents": {
+        "title": "Содержимое"
+      }
+    }
+  },
+  "permissions": {
+    "news:access": "Открыть меню Новостей",
+    "news:create": "Создать данные, связанные с Новостями",
+    "news:read": "Просмотреть данные, связанные с Новостями",
+    "news:update": "Обновить данные, связанные с Новостями",
+    "news:delete": "Удалить данные, связанные с Новостями",
+    "news:publish": "Опубликовать данные, связанные с Новостями"
+  },
+  "settings": {
+    "News": {
+      "Enabled": {
+        "title": "Включить",
+        "description": "Включить"
+      },
+      "UseNewsPrefixInLinks": {
+        "title": "Использовать префикс \"news\" в ссылках",
+        "description": "Использовать префикс \"news\" в ссылках (только для статей с активным SEO)"
+      },
+      "UseStoreDefaultLanguage": {
+        "title": "Использовать язык по умолчанию магазина при поиске статей",
+        "description": "Использовать язык по умолчанию магазина при поиске статей"
+      }
+    }
+  }
+}

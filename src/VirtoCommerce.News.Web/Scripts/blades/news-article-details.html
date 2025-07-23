@@ -1,0 +1,35 @@
+<div class="blade-content blade-content __medium-wide">
+  <div class="blade-inner">
+    <div class="inner-block">
+      <form class="form" name="newsArticleForm">
+        <va-metaform registered-inputs="blade.metaFields" blade="blade" column-count="2" ng-init="setForm(newsArticleForm)"></va-metaform>
+        <va-widget-container ng-if="!blade.isNew" group="newsArticleDetails" blade="blade" gridster-opts="gridsterOpts" data="blade.currentEntity" class="form-group"></va-widget-container>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script type="text/ng-template" id="storeSelector.html">
+  <div class="form-input">
+    <ui-select ng-model="blade.currentEntity.storeId" required>
+      <ui-select-match allow-clear placeholder="{{ 'news.blades.news-article-details.placeholders.store' | translate }}">{{$select.selected.name}}</ui-select-match>
+      <ui-select-choices repeat="store.id as store in blade.stores | filter: { name: $select.search }">
+        <span ng-bind-html="store.name | highlight: $select.search"></span>
+      </ui-select-choices>
+    </ui-select>
+  </div>
+</script>
+
+<script type="text/ng-template" id="userGroups.html">
+  <div class="form-group">
+    <label class="form-label">{{'news.blades.news-article-details.labels.user-groups' | translate}}</label>
+    <div class="form-input" data-role="input-control">
+      <ui-select multiple ng-model="blade.currentEntity.userGroups">
+        <ui-select-match placeholder="{{'news.blades.news-article-details.placeholders.user-groups' | translate}}">{{$item}}</ui-select-match>
+        <ui-select-choices repeat="g in blade.userGroups | filter: $select.search">
+          <span ng-bind-html="g | highlight: $select.search"></span>
+        </ui-select-choices>
+      </ui-select>
+    </div>
+  </div>
+</script>

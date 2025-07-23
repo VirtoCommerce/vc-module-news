@@ -1,0 +1,104 @@
+{
+  "news": {
+    "main-menu-title": "新闻",
+    "blades": {
+      "news-article-list": {
+        "title": "文章",
+        "labels": {
+          "store": "商店",
+          "name": "名称",
+          "is-published": "已发布"
+        }
+      },
+      "news-article-details": {
+        "title-add": "新文章",
+        "title-edit": "文章",
+        "labels": {
+          "store": "商店",
+          "name": "名称",
+          "publish-date": "发布日期",
+          "user-groups": "用户组"
+        },
+        "placeholders": {
+          "store": "商店",
+          "name": "名称",
+          "publish-date": "发布日期",
+          "user-groups": "用户组"
+        },
+        "toolbar": {
+          "publish": "发布",
+          "unpublish": "取消发布"
+        }
+      },
+      "news-article-content-list": {
+        "title": "本地化内容",
+        "labels": {
+          "language": "语言"
+        }
+      },
+      "news-article-content-details": {
+        "title-add": "新增本地化内容",
+        "title-edit": "本地化内容",
+        "labels": {
+          "language": "语言",
+          "title": "标题",
+          "content": "内容",
+          "content-preview": "摘要"
+        },
+        "placeholders": {
+          "language": "语言",
+          "title": "标题"
+        }
+      }
+    },
+    "dialogs": {
+      "news-article-save": {
+        "title": "保存更改",
+        "message": "文章已被修改。您想保存更改吗？"
+      },
+      "news-article-delete": {
+        "title": "确认删除",
+        "message-single": "您确定要删除文章“{{name}}”吗？",
+        "message-many": "您确定要删除 {{count}} 篇文章吗？"
+      },
+      "news-article-content-save": {
+        "title": "保存更改",
+        "message": "内容已被修改。您想保存更改吗？"
+      },
+      "news-article-content-delete": {
+        "title": "确认删除",
+        "message-single": "您确定要删除“{{language}}”语言的本地化内容吗？",
+        "message-many": "您确定要删除 {{count}} 条本地化内容吗？"
+      }
+    },
+    "widgets": {
+      "localized-contents": {
+        "title": "内容"
+      }
+    }
+  },
+  "permissions": {
+    "news:access": "打开新闻菜单",
+    "news:create": "创建新闻相关数据",
+    "news:read": "查看新闻相关数据",
+    "news:update": "更新新闻相关数据",
+    "news:delete": "删除新闻相关数据",
+    "news:publish": "发布新闻相关数据"
+  },
+  "settings": {
+    "News": {
+      "Enabled": {
+        "title": "使能够",
+        "description": "使能够"
+      },
+      "UseNewsPrefixInLinks": {
+        "title": "在链接中使用“news”前缀",
+        "description": "在链接中使用“news”前缀 (仅适用于具有激活SEO的文章)"
+      },
+      "UseStoreDefaultLanguage": {
+        "title": "在搜索文章时使用商店默认语言",
+        "description": "在搜索文章时使用商店默认语言"
+      }
+    }
+  }
+}

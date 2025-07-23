@@ -1,22 +1,28 @@
-using GraphQL.MicrosoftDI;
+using System;
+using FluentValidation;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using VirtoCommerce.News.Core;
+using VirtoCommerce.News.Core.Models;
+using VirtoCommerce.News.Core.Services;
+using VirtoCommerce.News.Data.MySql;
+using VirtoCommerce.News.Data.PostgreSql;
+using VirtoCommerce.News.Data.Repositories;
+using VirtoCommerce.News.Data.Services;
+using VirtoCommerce.News.Data.SqlServer;
+using VirtoCommerce.News.Data.Validation;
+using VirtoCommerce.News.ExperienceApi;
+using VirtoCommerce.News.ExperienceApi.Extensions;
 using VirtoCommerce.Platform.Core.Modularity;
 using VirtoCommerce.Platform.Core.Security;
 using VirtoCommerce.Platform.Core.Settings;
 using VirtoCommerce.Platform.Data.MySql.Extensions;
 using VirtoCommerce.Platform.Data.PostgreSql.Extensions;
 using VirtoCommerce.Platform.Data.SqlServer.Extensions;
+using VirtoCommerce.StoreModule.Core.Model;
 using VirtoCommerce.Xapi.Core.Extensions;
-using VirtoCommerce.Xapi.Core.Infrastructure;
-using VirtoCommerce.News.Core;
-using VirtoCommerce.News.Data.MySql;
-using VirtoCommerce.News.Data.PostgreSql;
-using VirtoCommerce.News.Data.Repositories;
-using VirtoCommerce.News.Data.SqlServer;
-using VirtoCommerce.News.ExperienceApi;
 
 namespace VirtoCommerce.News.Web;
 
@@ -46,16 +52,18 @@ public class Module : IModule, IHasConfiguration
             }
         });
 
-        // Register services
-        //serviceCollection.AddTransient<IMyService, MyService>();
+        serviceCollection.AddTransient<INewsArticleRepository, NewsArticleRepository>();
+        serviceCollection.AddTransient<Func<INewsArticleRepository>>(provider => () => provider.CreateScope().ServiceProvider.GetRequiredService<INewsArticleRepository>());
 
-        // Register GraphQL schema
-        _ = new GraphQLBuilder(serviceCollection, builder =>
-        {
-            builder.AddSchema(serviceCollection, typeof(XapiAssemblyMarker));
-        });
+        serviceCollection.AddTransient<INewsArticleService, NewsArticleService>();
+        serviceCollection.AddTransient<INewsArticleSearchService, NewsArticleSearchService>();
+        serviceCollection.AddTransient<INewsArticleSeoService, NewsArticleSeoService>();
 
-        serviceCollection.AddSingleton<ScopedSchemaFactory<XapiAssemblyMarker>>();
+        serviceCollection.AddTransient<AbstractValidator<NewsArticle>, NewsArticleValidator>();
+        serviceCollection.AddTransient<AbstractValidator<NewsArticleLocalizedContent>, NewsArticleLocalizedContentValidator>();
+
+        // GraphQL
+        serviceCollection.AddExperienceApi();
     }
 
     public void PostInitialize(IApplicationBuilder appBuilder)
@@ -65,6 +73,7 @@ public class Module : IModule, IHasConfiguration
         // Register settings
         var settingsRegistrar = serviceProvider.GetRequiredService<ISettingsRegistrar>();
         settingsRegistrar.RegisterSettings(ModuleConstants.Settings.AllSettings, ModuleInfo.Id);
+        settingsRegistrar.RegisterSettingsForType(ModuleConstants.Settings.AllSettings, nameof(Store));
 
         // Register permissions
         var permissionsRegistrar = serviceProvider.GetRequiredService<IPermissionsRegistrar>();
