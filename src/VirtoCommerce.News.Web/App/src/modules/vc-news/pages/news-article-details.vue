@@ -324,7 +324,7 @@ onMounted(async () => {
     await loadNewsArticle({ id: props.param });
   }
 });
-//useBeforeUnload / Close
+
 onBeforeClose(async () => {
   if (newsArticleIsDirty.value) {
     const confirmed = await showConfirmation(t("VC_NEWS.PAGES.DETAILS.ALERTS.CLOSE_CONFIRMATION"));
