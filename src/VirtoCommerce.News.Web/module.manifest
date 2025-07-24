@@ -13,15 +13,15 @@
   <apps>
     <app id="vc-news">
       <title>News</title>
-      <description>News module allowing content manages</description>
+      <description>Module allowing content managers to publish news articles</description>
       <iconUrl>Modules/$(VirtoCommerce.News)/Content/news.svg</iconUrl>
       <permission>news:access</permission>
       <supportEmbeddedMode>true</supportEmbeddedMode>
     </app>
   </apps>
 
-  <title>VirtoCommerce News</title>
-  <description>VirtoCommerce News</description>
+  <title>News</title>
+  <description>Module allowing content managers to publish news articles</description>
 
   <authors>
     <author>Iusupov Kirill</author>
