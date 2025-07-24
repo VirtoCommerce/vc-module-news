@@ -1,8 +1,7 @@
 # Virto Commerce News Module
 The News module enables content managers to publish news articles for selected user groups using different languages within the Virto Commerce platform. Additionally, the module offers features for scheduling articles publishing.
 
-<img width="1902" height="754" alt="470339158-831f0e3e-8236-469c-98a2-0aeb0623b054" src="https://github.com/user-attachments/assets/8cb394fe-88ad-486f-a56e-6f488b9eb00f" />
-
+<img width="1902" height="754" alt="image" src="https://github.com/user-attachments/assets/e0ebad1a-d78d-4334-894f-1aa184c7d9c7" />
 
 ## Key features
 
@@ -17,7 +16,8 @@ The News module enables content managers to publish news articles for selected u
 
 ---
 
-<img width="847" height="727" alt="image" src="https://github.com/user-attachments/assets/c452647a-455a-4518-b1a9-66edad94375f" /> 
+<img width="847" height="727" alt="image" src="https://github.com/user-attachments/assets/f018b859-31a9-4f14-825f-6dd2087483bd" />
+
 
 ## XAPI Specification
 
