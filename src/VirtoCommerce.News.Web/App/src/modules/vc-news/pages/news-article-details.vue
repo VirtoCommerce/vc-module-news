@@ -302,7 +302,7 @@ if (props.param) {
   });
   bladeToolbar.value.push({
     id: "unpublish",
-    icon: "material-visibility-off",
+    icon: "material-visibility_off",
     title: computed(() => t("VC_NEWS.PAGES.DETAILS.TOOLBAR.UNPUBLISH")),
     disabled: computed(() => !newsArticleCanUnpublish?.value),
     clickHandler: async () => {
