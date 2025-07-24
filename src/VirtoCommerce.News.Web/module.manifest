@@ -13,9 +13,10 @@
   <apps>
     <app id="vc-news">
       <title>News</title>
-      <description>News</description>
-      <iconUrl>/Content/logo.png</iconUrl>
+      <description>News module allowing content manages</description>
+      <iconUrl>Modules/$(VirtoCommerce.News)/Content/news.svg</iconUrl>
       <permission>news:access</permission>
+      <supportEmbeddedMode>true</supportEmbeddedMode>
     </app>
   </apps>
 
@@ -30,7 +31,7 @@
   </owners>
 
   <projectUrl>https://github.com/VirtoCommerce/vc-module-news</projectUrl>
-  <iconUrl>Modules/$(VirtoCommerce.News)/Content/logo.png</iconUrl>
+  <iconUrl>Modules/$(VirtoCommerce.News)/Content/news.svg</iconUrl>
   <requireLicenseAcceptance>false</requireLicenseAcceptance>
 
   <assemblyFile>VirtoCommerce.News.Web.dll</assemblyFile>

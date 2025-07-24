@@ -1,1 +1,0 @@
-function u(t){return t&&t.__esModule&&Object.prototype.hasOwnProperty.call(t,"default")?t.default:t}var n,r;function e(){return r||(r=1,n={trueFunc:function(){return!0},falseFunc:function(){return!1}}),n}var o=e();const a=u(o);export{o as a,a as n,u as o};
