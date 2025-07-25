@@ -1,140 +1,201 @@
 <template>
   <VcBlade
+    v-loading="loading"
     :title="title"
     :toolbar-items="bladeToolbar"
-    :closable="closable" :expanded="expanded"
-    v-loading="loading"
+    :closable="closable"
+    :expanded="expanded"
     width="60%"
-    @close="$emit('close:blade')" @expand="$emit('expand:blade')" @collapse="$emit('collapse:blade')">
-
-    <div
-      class="tw-absolute tw-top-2 tw-right-4 tw-z-10">
+    @close="$emit('close:blade')"
+    @expand="$emit('expand:blade')"
+    @collapse="$emit('collapse:blade')"
+  >
+    <div class="tw-absolute tw-top-2 tw-right-4 tw-z-10">
       <VcLanguageSelector
         :model-value="currentLocale"
         :options="languages"
-        @update:model-value="setLocale" />
+        @update:model-value="setLocale"
+      />
     </div>
 
     <VcContainer>
       <VcForm class="tw-flex tw-flex-col tw-gap-4">
         <Field
+          v-slot="{ errors, errorMessage, handleChange }"
           :label="$t('VC_NEWS.PAGES.DETAILS.FORM.NAME.LABEL')"
           :model-value="newsArticle.name"
           name="name"
           rules="required"
-          v-slot="{ errors, errorMessage, handleChange }">
+        >
           <VcInput
-            :label="$t('VC_NEWS.PAGES.DETAILS.FORM.NAME.LABEL')"
             v-model="newsArticle.name"
-            required :max-length="1024"
-            :error="errors.length > 0" :error-message="errorMessage" @update:model-value="handleChange" />
+            :label="$t('VC_NEWS.PAGES.DETAILS.FORM.NAME.LABEL')"
+            required
+            :max-length="1024"
+            :error="errors.length > 0"
+            :error-message="errorMessage"
+            @update:model-value="handleChange"
+          />
         </Field>
 
         <div class="tw-flex tw-flex-row tw-gap-4">
           <Field
+            v-slot="{ errors, errorMessage, handleChange }"
             :label="$t('VC_NEWS.PAGES.DETAILS.FORM.STORE.LABEL')"
             :model-value="newsArticle.storeId"
             name="storeId"
             rules="required"
-            v-slot="{ errors, errorMessage, handleChange }">
+          >
             <VcSelect
-              :label="$t('VC_NEWS.PAGES.DETAILS.FORM.STORE.LABEL')"
               v-model="newsArticle.storeId"
+              :label="$t('VC_NEWS.PAGES.DETAILS.FORM.STORE.LABEL')"
               :options="storeOptions"
               required
-              :error="errors.length > 0" :error-message="errorMessage" @update:model-value="handleChange"
-              class="tw-flex-auto" />
+              :error="errors.length > 0"
+              :error-message="errorMessage"
+              class="tw-flex-auto"
+              @update:model-value="handleChange"
+            />
           </Field>
 
           <VcInput
+            v-model="newsArticle.publishDate"
             type="datetime-local"
             :label="$t('VC_NEWS.PAGES.DETAILS.FORM.PUBLISH_DATE.LABEL')"
-            v-model="newsArticle.publishDate" />
+          />
         </div>
 
         <VcMultivalue
-          :label="$t('VC_NEWS.PAGES.DETAILS.FORM.USER_GROUPS.LABEL')"
           v-model="userGroupsSelected"
-          :options="userGroupsOptions" option-value="id" option-label="title"
-          multivalue />
+          :label="$t('VC_NEWS.PAGES.DETAILS.FORM.USER_GROUPS.LABEL')"
+          :options="userGroupsOptions"
+          option-value="id"
+          option-label="title"
+          multivalue
+        />
 
         <Field
+          v-slot="{ errors, errorMessage, handleChange }"
           :label="$t('VC_NEWS.PAGES.DETAILS.FORM.CONTENT_TITLE.LABEL')"
           :model-value="selectedLocalizedContent.title"
           name="content-title"
           :rules="{ required: !!selectedLocalizedContent.content || !!selectedLocalizedContent.contentPreview }"
-          v-slot="{ errors, errorMessage, handleChange }">
-          <VcInput v-if="props.param"
-            :label="$t('VC_NEWS.PAGES.DETAILS.FORM.CONTENT_TITLE.LABEL')"
+        >
+          <VcInput
+            v-if="props.param"
             v-model="selectedLocalizedContent.title"
+            :label="$t('VC_NEWS.PAGES.DETAILS.FORM.CONTENT_TITLE.LABEL')"
             :required="!!selectedLocalizedContent.content || !!selectedLocalizedContent.contentPreview"
-            :error="errors.length > 0" :error-message="errorMessage" @update:model-value="handleChange"
-            multilanguage :current-language="currentLocale">
+            :error="errors.length > 0"
+            :error-message="errorMessage"
+            multilanguage
+            :current-language="currentLocale"
+            @update:model-value="handleChange"
+          >
           </VcInput>
         </Field>
 
-        <VcEditor v-if="props.param"
-          :label="$t('VC_NEWS.PAGES.DETAILS.FORM.CONTENT_PREVIEW.LABEL')"
+        <VcEditor
+          v-if="props.param"
           v-model="selectedLocalizedContent.contentPreview"
-          multilanguage :current-language="currentLocale"
-          assets-folder="news-articles" />
+          :label="$t('VC_NEWS.PAGES.DETAILS.FORM.CONTENT_PREVIEW.LABEL')"
+          multilanguage
+          :current-language="currentLocale"
+          assets-folder="news-articles"
+        />
 
         <Field
+          v-slot="{ errors, errorMessage, handleChange }"
           :label="$t('VC_NEWS.PAGES.DETAILS.FORM.CONTENT_CONTENT.LABEL')"
           :model-value="selectedLocalizedContent.content"
           name="content-content"
           :rules="{ required: !!selectedLocalizedContent.title || !!selectedLocalizedContent.contentPreview }"
-          v-slot="{ errors, errorMessage, handleChange }">
-          <VcEditor v-if="props.param"
-            :label="$t('VC_NEWS.PAGES.DETAILS.FORM.CONTENT_CONTENT.LABEL')"
+        >
+          <VcEditor
+            v-if="props.param"
             v-model="selectedLocalizedContent.content"
+            :label="$t('VC_NEWS.PAGES.DETAILS.FORM.CONTENT_CONTENT.LABEL')"
             :required="!!selectedLocalizedContent.title || !!selectedLocalizedContent.contentPreview"
-            :error="errors.length > 0" :error-message="errorMessage" @update:model-value="handleChange"
-            multilanguage :current-language="currentLocale"
-            assets-folder="news-articles" />
+            :error="errors.length > 0"
+            :error-message="errorMessage"
+            multilanguage
+            :current-language="currentLocale"
+            assets-folder="news-articles"
+            @update:model-value="handleChange"
+          />
         </Field>
 
-        <VcCard v-if="props.param"
+        <VcCard
+          v-if="props.param"
           :header="$t('VC_NEWS.PAGES.DETAILS.FORM.SEO_HEADER.LABEL')"
-          is-collapsable is-collapsed
-          class="tw-flex tw-flex-col tw-gap-4 tw-p-4">
+          is-collapsable
+          is-collapsed
+          class="tw-flex tw-flex-col tw-gap-4 tw-p-4"
+        >
           <VcSwitch
+            v-model="selectedSeo.isActive"
             :label="$t('VC_NEWS.PAGES.DETAILS.FORM.SEO_IS_ACTIVE.LABEL')"
-            v-model="selectedSeo.isActive" />
+          />
 
           <Field
+            v-slot="{ errors, errorMessage, handleChange }"
             :label="$t('VC_NEWS.PAGES.DETAILS.FORM.SEO_SEMANTIC_URL.LABEL')"
             :model-value="selectedSeo.semanticUrl"
             name="seo-url"
-            :rules="{ required: selectedSeo.isActive === true || !!selectedSeo.pageTitle || !!selectedSeo.metaDescription || !!selectedSeo.metaKeywords || !!selectedSeo.imageAltDescription }"
-            v-slot="{ errors, errorMessage, handleChange }">
+            :rules="{
+              required:
+                selectedSeo.isActive === true ||
+                !!selectedSeo.pageTitle ||
+                !!selectedSeo.metaDescription ||
+                !!selectedSeo.metaKeywords ||
+                !!selectedSeo.imageAltDescription,
+            }"
+          >
             <VcInput
-              :label="$t('VC_NEWS.PAGES.DETAILS.FORM.SEO_SEMANTIC_URL.LABEL')"
               v-model="selectedSeo.semanticUrl"
-              :required="selectedSeo.isActive === true || !!selectedSeo.pageTitle || !!selectedSeo.metaDescription || !!selectedSeo.metaKeywords || !!selectedSeo.imageAltDescription"
-              :error="errors.length > 0" :error-message="errorMessage" @update:model-value="handleChange"
-              multilanguage :current-language="currentLocale" />
+              :label="$t('VC_NEWS.PAGES.DETAILS.FORM.SEO_SEMANTIC_URL.LABEL')"
+              :required="
+                selectedSeo.isActive === true ||
+                !!selectedSeo.pageTitle ||
+                !!selectedSeo.metaDescription ||
+                !!selectedSeo.metaKeywords ||
+                !!selectedSeo.imageAltDescription
+              "
+              :error="errors.length > 0"
+              :error-message="errorMessage"
+              multilanguage
+              :current-language="currentLocale"
+              @update:model-value="handleChange"
+            />
           </Field>
 
           <VcInput
-            :label="$t('VC_NEWS.PAGES.DETAILS.FORM.SEO_PAGE_TITLE.LABEL')"
             v-model="selectedSeo.pageTitle"
-            multilanguage :current-language="currentLocale" />
+            :label="$t('VC_NEWS.PAGES.DETAILS.FORM.SEO_PAGE_TITLE.LABEL')"
+            multilanguage
+            :current-language="currentLocale"
+          />
 
           <VcTextarea
-            :label="$t('VC_NEWS.PAGES.DETAILS.FORM.SEO_META_DESCRIPTION.LABEL')"
             v-model="selectedSeo.metaDescription"
-            multilanguage :current-language="currentLocale" />
+            :label="$t('VC_NEWS.PAGES.DETAILS.FORM.SEO_META_DESCRIPTION.LABEL')"
+            multilanguage
+            :current-language="currentLocale"
+          />
 
           <VcInput
-            :label="$t('VC_NEWS.PAGES.DETAILS.FORM.SEO_META_KEYWORDS.LABEL')"
             v-model="selectedSeo.metaKeywords"
-            multilanguage :current-language="currentLocale" />
+            :label="$t('VC_NEWS.PAGES.DETAILS.FORM.SEO_META_KEYWORDS.LABEL')"
+            multilanguage
+            :current-language="currentLocale"
+          />
 
           <VcInput
-            :label="$t('VC_NEWS.PAGES.DETAILS.FORM.SEO_IMAGE_ALT_TEXT.LABEL')"
             v-model="selectedSeo.imageAltDescription"
-            multilanguage :current-language="currentLocale" />
+            :label="$t('VC_NEWS.PAGES.DETAILS.FORM.SEO_IMAGE_ALT_TEXT.LABEL')"
+            multilanguage
+            :current-language="currentLocale"
+          />
         </VcCard>
       </VcForm>
     </VcContainer>
@@ -145,8 +206,22 @@
 import { onMounted, ref, Ref, computed } from "vue";
 import { useI18n } from "vue-i18n";
 import { Field, useForm } from "vee-validate";
-import { IBladeToolbar, IParentCallArgs, VcLanguageSelector, usePermissions, useBladeNavigation, usePopup, useLoading } from "@vc-shell/framework";
-import { useNewsArticleDetails, useNewsArticlePermissions, useStore, useUserGroups, useLocalization } from "../composables";
+import {
+  IBladeToolbar,
+  IParentCallArgs,
+  VcLanguageSelector,
+  usePermissions,
+  useBladeNavigation,
+  usePopup,
+  useLoading,
+} from "@vc-shell/framework";
+import {
+  useNewsArticleDetails,
+  useNewsArticlePermissions,
+  useStore,
+  useUserGroups,
+  useLocalization,
+} from "../composables";
 import { NewsArticleLocalizedContent, SeoInfo } from "../../../api_client/virtocommerce.news";
 
 export interface Emits {
@@ -167,7 +242,7 @@ export interface Props {
 const props = withDefaults(defineProps<Props>(), {
   expanded: true,
   closable: true,
-  param: undefined
+  param: undefined,
 });
 
 defineOptions({
@@ -197,7 +272,7 @@ const userGroupsSelected = computed({
   },
   set(newValue) {
     newsArticle.value!.userGroups = newValue.map((x) => x.id);
-  }
+  },
 });
 
 //localization
@@ -208,51 +283,61 @@ const setLocale = (locale: string) => {
   currentLocale.value = locale;
 };
 
-const selectedLocalizedContent = computed(
-  () => {
-    if (newsArticle.value) {
-      if (!newsArticle.value.localizedContents) {
-        newsArticle.value.localizedContents = [];
-      }
+const selectedLocalizedContent = computed(() => {
+  if (newsArticle.value) {
+    if (!newsArticle.value.localizedContents) {
+      newsArticle.value.localizedContents = [];
     }
-    const existingLocalizedContent = newsArticle.value?.localizedContents?.find((x) => x.languageCode === currentLocale.value);
-
-    if (existingLocalizedContent) {
-      return existingLocalizedContent;
-    }
-
-    const newLocalizedContent = new NewsArticleLocalizedContent();
-    newLocalizedContent.languageCode = currentLocale.value;
-    newsArticle.value?.localizedContents?.push(newLocalizedContent);
-    return newLocalizedContent;
   }
-);
+  const existingLocalizedContent = newsArticle.value?.localizedContents?.find(
+    (x) => x.languageCode === currentLocale.value,
+  );
 
-const selectedSeo = computed(
-  () => {
-    if (newsArticle.value) {
-      if (!newsArticle.value.seoInfos) {
-        newsArticle.value.seoInfos = [];
-      }
-    }
-    const existingSeoInfo = newsArticle.value?.seoInfos?.find((x) => x.languageCode === currentLocale.value);
-
-    if (existingSeoInfo) {
-      return existingSeoInfo;
-    }
-
-    const newSeoInfo = new SeoInfo();
-    newSeoInfo.isActive = false;
-    newSeoInfo.languageCode = currentLocale.value;
-    newSeoInfo.storeId = newsArticle.value.storeId;
-    newsArticle.value?.seoInfos?.push(newSeoInfo);
-    return newSeoInfo;
+  if (existingLocalizedContent) {
+    return existingLocalizedContent;
   }
-);
 
-//news article 
-const { newsArticle, loadNewsArticle, saveNewsArticle, loadingOrSavingNewsArticle, publishNewsArticle, unpublishNewsArticle, newsArticleCanPublish, newsArticleCanUnpublish, newsArticleIsDirty, resetNewsArticle } = useNewsArticleDetails();
-const { publishNewsArticlePermission, createNewsArticlePermission, updateNewsArticlePermission } = useNewsArticlePermissions();
+  const newLocalizedContent = new NewsArticleLocalizedContent();
+  newLocalizedContent.languageCode = currentLocale.value;
+  newsArticle.value?.localizedContents?.push(newLocalizedContent);
+  return newLocalizedContent;
+});
+
+const selectedSeo = computed(() => {
+  if (newsArticle.value) {
+    if (!newsArticle.value.seoInfos) {
+      newsArticle.value.seoInfos = [];
+    }
+  }
+  const existingSeoInfo = newsArticle.value?.seoInfos?.find((x) => x.languageCode === currentLocale.value);
+
+  if (existingSeoInfo) {
+    return existingSeoInfo;
+  }
+
+  const newSeoInfo = new SeoInfo();
+  newSeoInfo.isActive = false;
+  newSeoInfo.languageCode = currentLocale.value;
+  newSeoInfo.storeId = newsArticle.value.storeId;
+  newsArticle.value?.seoInfos?.push(newSeoInfo);
+  return newSeoInfo;
+});
+
+//news article
+const {
+  newsArticle,
+  loadNewsArticle,
+  saveNewsArticle,
+  loadingOrSavingNewsArticle,
+  publishNewsArticle,
+  unpublishNewsArticle,
+  newsArticleCanPublish,
+  newsArticleCanUnpublish,
+  newsArticleIsDirty,
+  resetNewsArticle,
+} = useNewsArticleDetails();
+const { publishNewsArticlePermission, createNewsArticlePermission, updateNewsArticlePermission } =
+  useNewsArticlePermissions();
 
 const saveNewsArticlePermission = props.param ? updateNewsArticlePermission : createNewsArticlePermission;
 

@@ -1,32 +1,52 @@
 <template>
   <VcBlade
+    v-loading="loadingNewsArticles"
     :title="title"
     :toolbar-items="bladeToolbar"
-    :closable="closable" :expanded="expanded"
-    v-loading="loadingNewsArticles"
+    :closable="closable"
+    :expanded="expanded"
     width="40%"
-    @close="$emit('close:blade')" @expand="$emit('expand:blade')" @collapse="$emit('collapse:blade')">
-
+    @close="$emit('close:blade')"
+    @expand="$emit('expand:blade')"
+    @collapse="$emit('collapse:blade')"
+  >
     <!-- @vue-generic {NewsArticle} -->
     <VcTable
-      :total-label="$t('VC_NEWS.PAGES.LIST.TABLE.TOTALS')" :search-placeholder="$t('VC_NEWS.PAGES.LIST.SEARCH.PLACEHOLDER')"
-      :items="newsArticles" :selected-item-id="selectedItemId"
+      :total-label="$t('VC_NEWS.PAGES.LIST.TABLE.TOTALS')"
+      :search-placeholder="$t('VC_NEWS.PAGES.LIST.SEARCH.PLACEHOLDER')"
+      :items="newsArticles"
+      :selected-item-id="selectedItemId"
       :search-value="searchKeyword"
       :columns="columns"
-      :sort="sortExpression" :pages="pagesCount" :current-page="pageIndex" :total-count="newsArticlesCount"
+      :sort="sortExpression"
+      :pages="pagesCount"
+      :current-page="pageIndex"
+      :total-count="newsArticlesCount"
       :expanded="expanded"
-      @item-click="onItemClick" @header-click="onHeaderClick" @pagination-click="onPaginationClick"
-      @search:change="onSearchChange" @selection-changed="onSelectionChanged"
       state-key="VC_NEWS"
       multiselect
-      class="tw-grow tw-basis-0">
+      class="tw-grow tw-basis-0"
+      @item-click="onItemClick"
+      @header-click="onHeaderClick"
+      @pagination-click="onPaginationClick"
+      @search:change="onSearchChange"
+      @selection-changed="onSelectionChanged"
+    >
     </VcTable>
   </VcBlade>
 </template>
 
 <script lang="ts" setup>
 import { computed, ref, markRaw, onMounted, watch } from "vue";
-import { IBladeToolbar, IParentCallArgs, ITableColumns, usePermissions, useBladeNavigation, usePopup, useTableSort } from "@vc-shell/framework";
+import {
+  IBladeToolbar,
+  IParentCallArgs,
+  ITableColumns,
+  usePermissions,
+  useBladeNavigation,
+  usePopup,
+  useTableSort,
+} from "@vc-shell/framework";
 import { useI18n } from "vue-i18n";
 import { useNewsArticleList, useNewsArticlePermissions } from "../composables";
 import NewsArticleDetails from "./news-article-details.vue";
@@ -68,10 +88,19 @@ const { showConfirmation } = usePopup();
 const { t } = useI18n({ useScope: "global" });
 const { openBlade, closeBlade } = useBladeNavigation();
 const { hasAccess } = usePermissions();
-const { newsArticles, newsArticlesCount, pagesCount, pageIndex, searchNewsArticles, searchQuery, loadingNewsArticles, deleteNewsArticles } = useNewsArticleList();
+const {
+  newsArticles,
+  newsArticlesCount,
+  pagesCount,
+  pageIndex,
+  searchNewsArticles,
+  searchQuery,
+  loadingNewsArticles,
+  deleteNewsArticles,
+} = useNewsArticleList();
 const { createNewsArticlePermission, deleteNewsArticlePermission } = useNewsArticlePermissions();
 
-const { sortExpression, handleSortChange } = useTableSort({ initialProperty: 'createdDate', initialDirection: 'ASC' });
+const { sortExpression, handleSortChange } = useTableSort({ initialProperty: "createdDate", initialDirection: "ASC" });
 
 const searchKeyword = ref();
 const selectedItemId = ref<string>();
@@ -109,7 +138,9 @@ const bladeToolbar = computed((): IBladeToolbar[] => [
     icon: "material-delete",
     disabled: selectedIds.value.length === 0,
     clickHandler: async () => {
-      const confirmed = await showConfirmation(t("VC_NEWS.PAGES.LIST.ALERTS.DELETE_SELECTED_CONFIRMATION_MESSAGE", { count: selectedIds.value.length }));
+      const confirmed = await showConfirmation(
+        t("VC_NEWS.PAGES.LIST.ALERTS.DELETE_SELECTED_CONFIRMATION_MESSAGE", { count: selectedIds.value.length }),
+      );
       if (confirmed) {
         closeBlade(1);
         await deleteNewsArticles({ ids: selectedIds.value });
@@ -118,7 +149,7 @@ const bladeToolbar = computed((): IBladeToolbar[] => [
       }
     },
     isVisible: () => hasAccess(deleteNewsArticlePermission),
-  }
+  },
 ]);
 
 const columns = ref<ITableColumns[]>([
@@ -127,21 +158,21 @@ const columns = ref<ITableColumns[]>([
     title: computed(() => t("VC_NEWS.PAGES.LIST.TABLE.HEADER.NAME")),
     alwaysVisible: true,
     sortable: true,
-    width: "50%"
+    width: "50%",
   },
   {
     id: "storeId",
     title: computed(() => t("VC_NEWS.PAGES.LIST.TABLE.HEADER.STORE")),
     alwaysVisible: true,
     sortable: true,
-    width: "30%"
+    width: "30%",
   },
   {
     id: "isPublished",
     title: computed(() => t("VC_NEWS.PAGES.LIST.TABLE.HEADER.IS_PUBLISHED")),
     alwaysVisible: true,
     sortable: true,
-    width: "20%"
+    width: "20%",
   },
 ]);
 
@@ -166,22 +197,22 @@ const openDetailsBlade = (id: string | undefined) => {
       selectedItemId.value = undefined;
     },
   });
-}
+};
 
 const reOpenDetailsBlade = (id: string) => {
   closeBlade(1);
   openDetailsBlade(id);
-}
+};
 
 const onSearchChange = (searchKeywordValue: string | undefined) => {
   searchQuery.value.searchPhrase = searchKeywordValue;
   searchNewsArticles();
-}
+};
 
 const onPaginationClick = (page: number) => {
   pageIndex.value = page;
   searchNewsArticles();
-}
+};
 
 const onHeaderClick = async (column: ITableColumns) => {
   if (column.sortable) {
@@ -191,7 +222,7 @@ const onHeaderClick = async (column: ITableColumns) => {
 
 const onSelectionChanged = function (selectedItems: NewsArticle[]) {
   selectedIds.value = selectedItems.map((item) => item.id || "").filter(Boolean);
-}
+};
 
 onMounted(async () => {
   await searchNewsArticles();
@@ -205,6 +236,6 @@ watch(sortExpression, async (newSortValue) => {
 defineExpose({
   title,
   reload,
-  reOpenDetailsBlade
+  reOpenDetailsBlade,
 });
 </script>

@@ -11,7 +11,6 @@ import "@vc-shell/framework/dist/index.css";
 async function startApp() {
   const { loadUser } = useUser();
 
-
   try {
     await loadUser();
   } catch (e) {

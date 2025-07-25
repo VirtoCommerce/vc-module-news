@@ -598,30 +598,30 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@intlify/core-base@npm:11.1.9":
-  version: 11.1.9
-  resolution: "@intlify/core-base@npm:11.1.9"
+"@intlify/core-base@npm:11.1.11":
+  version: 11.1.11
+  resolution: "@intlify/core-base@npm:11.1.11"
   dependencies:
-    "@intlify/message-compiler": "npm:11.1.9"
-    "@intlify/shared": "npm:11.1.9"
-  checksum: 10/7b3e0f394511ace6a5dd2f209a33b8effd1e2323be563192f2ec38b3f4f3d6fbbdf76bd835e85cd4dea10341426024f5566d4441f060d88d623460873630dbca
+    "@intlify/message-compiler": "npm:11.1.11"
+    "@intlify/shared": "npm:11.1.11"
+  checksum: 10/f75db1a2094f94194765351fd797620dc329b8619902300e0b2a854e7e65e73db4ada63c0cf0d21e4ac172ebf22c9f3b06f2f6b4164af3406a7e2a120b6fe2f0
   languageName: node
   linkType: hard
 
-"@intlify/message-compiler@npm:11.1.9":
-  version: 11.1.9
-  resolution: "@intlify/message-compiler@npm:11.1.9"
+"@intlify/message-compiler@npm:11.1.11":
+  version: 11.1.11
+  resolution: "@intlify/message-compiler@npm:11.1.11"
   dependencies:
-    "@intlify/shared": "npm:11.1.9"
+    "@intlify/shared": "npm:11.1.11"
     source-map-js: "npm:^1.0.2"
-  checksum: 10/c44be28ceb387e1eb1a1329192ddc449e817dc7eeeb14aa04aea0157465824e8427dce4771c8a397f5c8252ba3eba5388d6d4b6beeea6bd898abdf15d44ef914
+  checksum: 10/e7244e7f3c34ef83dae9e15366fa936b7e8bbb73389c76592ed373589400811daf1928536fba41bc2d69c63855c05360cf2a60c2460aad99dd7e0ff6a87f91bb
   languageName: node
   linkType: hard
 
-"@intlify/shared@npm:11.1.9":
-  version: 11.1.9
-  resolution: "@intlify/shared@npm:11.1.9"
-  checksum: 10/001da2378687f02f8b2f053697c5013caa8f08ef43c5ef4e3797003e35a8329e1eacfe091eec387d025348b559cb3213d23a64c991519319a8973706d9513a2c
+"@intlify/shared@npm:11.1.11":
+  version: 11.1.11
+  resolution: "@intlify/shared@npm:11.1.11"
+  checksum: 10/d52bedcc15f1be334816850a0a66f799e9301667a3678ba1bde6a7f3cb1e43ec0ec1be7cd1e14cdca05de15af86d59030599881fdcf17465b99f9be67adf8c04
   languageName: node
   linkType: hard
 
@@ -2190,9 +2190,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@vc-shell/api-client-generator@npm:^1.1.62":
-  version: 1.1.62
-  resolution: "@vc-shell/api-client-generator@npm:1.1.62"
+"@vc-shell/api-client-generator@npm:^1.1.64":
+  version: 1.1.64
+  resolution: "@vc-shell/api-client-generator@npm:1.1.64"
   dependencies:
     chalk: "npm:^2.4.2"
     cross-spawn: "npm:^7.0.3"
@@ -2202,26 +2202,26 @@ __metadata:
     vite-plugin-dts: "npm:^3.6.4"
   bin:
     api-client-generator: ./dist/api-client-generator.js
-  checksum: 10/065820dadeccc92d8b65924eff22594c7d6dbc57c4c10059c368ecc3a83566e0d59296cbc7b7f891e703254a7394573f562d7f4ebde12ecea30b43cb34ec461e
+  checksum: 10/fb36fee23bb42e35b77d1b71886552bfcd6567367999ed7dbb65c82c4a461310f197e52724f0c8d9784cf217329317414bcc5092f85e41cecdd7262e60d439fa
   languageName: node
   linkType: hard
 
-"@vc-shell/config-generator@npm:^1.1.62":
-  version: 1.1.62
-  resolution: "@vc-shell/config-generator@npm:1.1.62"
+"@vc-shell/config-generator@npm:^1.1.64":
+  version: 1.1.64
+  resolution: "@vc-shell/config-generator@npm:1.1.64"
   dependencies:
     "@vitejs/plugin-vue": "npm:^5.2.3"
     vite: "npm:^6.3.3"
     vite-plugin-checker: "npm:^0.9.1"
     vite-plugin-mkcert: "npm:^1.17.1"
     vue: "npm:^3.5.13"
-  checksum: 10/3a8461cf4a04ff0cce0e0d2da62a7e17ce00215688d18e2c6fb69264a00b55d06e6287fff96c1f1929b23bf46df2dfab27e988970a3cc158a187c1a2ec92f9bc
+  checksum: 10/6054bf0513e4862f67f9dce0c65f9933c11bb4cb7323e4f7911370bb86e9e3c437c5c53c779034f7149adbc3d52bd7eb2b680186c909d1fc7c93d6e2d48fb24c
   languageName: node
   linkType: hard
 
-"@vc-shell/framework@npm:^1.1.62":
-  version: 1.1.62
-  resolution: "@vc-shell/framework@npm:1.1.62"
+"@vc-shell/framework@npm:^1.1.64":
+  version: 1.1.64
+  resolution: "@vc-shell/framework@npm:1.1.64"
   dependencies:
     "@floating-ui/vue": "npm:^1.0.6"
     "@fontsource/plus-jakarta-sans": "npm:^5.1.0"
@@ -2259,18 +2259,18 @@ __metadata:
     vee-validate: "npm:^4.12.4"
     vue: "npm:^3.5.13"
     vue-currency-input: "npm:^3.0.5"
-    vue-i18n: "npm:^11.1.3"
+    vue-i18n: "npm:^11.1.11"
     vue-router: "npm:^4.2.5"
     vue3-application-insights: "npm:^1.1.0"
     vue3-touch-events: "npm:^4.1.8"
     whatwg-fetch: "npm:^3.6.19"
-  checksum: 10/de1d2d8352b988e0d01b55aaea23b755d9be16992cc482f183d0cb237b709724dfb4d1557257349b62281b6b034c64b110d082392619c12651f3a91d4a1980f2
+  checksum: 10/dcd9bc81e52f254a5391e4fcead41db17c21e249d4f6f5a7318749b702d75eec5f4e503acf8d7331cc6b50a0c2e66395b811db43c48515986b19040cb215cdd5
   languageName: node
   linkType: hard
 
-"@vc-shell/release-config@npm:^1.1.62":
-  version: 1.1.62
-  resolution: "@vc-shell/release-config@npm:1.1.62"
+"@vc-shell/release-config@npm:^1.1.64":
+  version: 1.1.64
+  resolution: "@vc-shell/release-config@npm:1.1.64"
   dependencies:
     chalk: "npm:^2.4.2"
     cross-spawn: "npm:^7.0.3"
@@ -2278,14 +2278,14 @@ __metadata:
     prompts: "npm:^2.4.2"
     semver: "npm:^7.5.4"
     vite: "npm:^6.3.3"
-  checksum: 10/b6a71e7d0d60e8d4817b57ec46f5dfbc8a97832073177eb201acb10575959332a5abdf033ef76ea5e3cd2403f638bc6d9e5870f8ab70ac9c7ff17d701d196071
+  checksum: 10/dddd314d37253384c82bfe29e78c292f050fe75219b06c48dec9f68f2c0027de9fd4ea59f2f7a1ffaf822ebfecb8a68416adfd587493e7e06cc26a2411263dff
   languageName: node
   linkType: hard
 
-"@vc-shell/ts-config@npm:^1.1.62":
-  version: 1.1.62
-  resolution: "@vc-shell/ts-config@npm:1.1.62"
-  checksum: 10/98fd9e0de62792fec25de6e0f3c203290e73448d91cf8aae406e2f0435e022b5d9a724230c72a56510067386554f43b6bfad7c7e42495da166e633318ea5e20c
+"@vc-shell/ts-config@npm:^1.1.64":
+  version: 1.1.64
+  resolution: "@vc-shell/ts-config@npm:1.1.64"
+  checksum: 10/c05af769476a6b7aae385858cd2f21f79931c0eff7552e11aa2377881e774db8c545a857d241f6135b88a65af0ea4f592ea57c5580dbfeb27514cf902fb8d616
   languageName: node
   linkType: hard
 
@@ -9063,11 +9063,11 @@ __metadata:
     "@types/node": "npm:^20.10.5"
     "@typescript-eslint/eslint-plugin": "npm:^6.16.0"
     "@typescript-eslint/parser": "npm:^6.16.0"
-    "@vc-shell/api-client-generator": "npm:^1.1.62"
-    "@vc-shell/config-generator": "npm:^1.1.62"
-    "@vc-shell/framework": "npm:^1.1.62"
-    "@vc-shell/release-config": "npm:^1.1.62"
-    "@vc-shell/ts-config": "npm:^1.1.62"
+    "@vc-shell/api-client-generator": "npm:^1.1.64"
+    "@vc-shell/config-generator": "npm:^1.1.64"
+    "@vc-shell/framework": "npm:^1.1.64"
+    "@vc-shell/release-config": "npm:^1.1.64"
+    "@vc-shell/ts-config": "npm:^1.1.64"
     "@vitejs/plugin-vue": "npm:^5.2.3"
     "@vue/eslint-config-prettier": "npm:^9.0.0"
     "@vue/eslint-config-typescript": "npm:^12.0.0"
@@ -9300,16 +9300,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vue-i18n@npm:^11.1.3":
-  version: 11.1.9
-  resolution: "vue-i18n@npm:11.1.9"
+"vue-i18n@npm:^11.1.11":
+  version: 11.1.11
+  resolution: "vue-i18n@npm:11.1.11"
   dependencies:
-    "@intlify/core-base": "npm:11.1.9"
-    "@intlify/shared": "npm:11.1.9"
+    "@intlify/core-base": "npm:11.1.11"
+    "@intlify/shared": "npm:11.1.11"
     "@vue/devtools-api": "npm:^6.5.0"
   peerDependencies:
     vue: ^3.0.0
-  checksum: 10/115813bcef4ef4bb984bb5bfdf10b4b2de69302395a6cfb7cdb76d1e2b8670ba70fb6b9798b022876f26ccfe825c993da9764eecb23853423a2273e330405601
+  checksum: 10/eb0f1d24b8138444f1dab7638f2a8d579f1be60113a50fafa18b48535e7c3c5642df96b5e02cdecd086bd5168f26c75c673924c79793e572d48c6c7ceae11a0a
   languageName: node
   linkType: hard
 
