@@ -329,10 +329,14 @@ const {
   loadNewsArticle,
   saveNewsArticle,
   loadingOrSavingNewsArticle,
+
   publishNewsArticle,
   unpublishNewsArticle,
   newsArticleCanPublish,
   newsArticleCanUnpublish,
+
+  cloneNewsArticle,
+
   newsArticleIsDirty,
   resetNewsArticle,
 } = useNewsArticleDetails();
@@ -396,6 +400,18 @@ if (props.param) {
       emit("parent:call", { method: "reOpenDetailsBlade", args: newsArticle.value!.id });
     },
     isVisible: computed(() => hasAccess(publishNewsArticlePermission)),
+  });
+  bladeToolbar.value.push({
+    id: "clone",
+    icon: "material-content_copy",
+    title: computed(() => t("VC_NEWS.PAGES.DETAILS.TOOLBAR.CLONE")),
+    disabled: computed(() => newsArticleIsDirty?.value),
+    clickHandler: async () => {
+      await cloneNewsArticle();
+      emit("parent:call", { method: "reload" });
+      emit("parent:call", { method: "reOpenDetailsBlade", args: newsArticle.value!.id });
+    },
+    isVisible: computed(() => hasAccess(createNewsArticlePermission)),
   });
 }
 

@@ -3764,10 +3764,10 @@ export class SecurityClient extends AuthApiBase {
 
     /**
      * Reset password confirmation
-     * @param body (optional) Password reset information containing new password.
+     * @param body (optional) Password reset information.
      * @return OK
      */
-    resetPassword(userName: string, body?: ResetPasswordConfirmRequest | undefined): Promise<SecurityResult> {
+    resetPassword(userName: string, body?: ResetPasswordRequest | undefined): Promise<SecurityResult> {
         let url_ = this.baseUrl + "/api/platform/security/users/{userName}/resetpassword";
         if (userName === undefined || userName === null)
             throw new Error("The parameter 'userName' must be defined.");
@@ -3820,7 +3820,7 @@ export class SecurityClient extends AuthApiBase {
 
     /**
      * Reset password confirmation
-     * @param body (optional) New password.
+     * @param body (optional) Password reset information.
      * @return OK
      */
     resetPasswordByToken(userId: string, body?: ResetPasswordConfirmRequest | undefined): Promise<SecurityResult> {
@@ -5288,6 +5288,7 @@ export class AppDescriptor implements IAppDescriptor {
     iconUrl?: string | undefined;
     relativeUrl?: string | undefined;
     permission?: string | undefined;
+    supportEmbeddedMode?: boolean;
     id?: string | undefined;
 
     constructor(data?: IAppDescriptor) {
@@ -5306,6 +5307,7 @@ export class AppDescriptor implements IAppDescriptor {
             this.iconUrl = _data["iconUrl"];
             this.relativeUrl = _data["relativeUrl"];
             this.permission = _data["permission"];
+            this.supportEmbeddedMode = _data["supportEmbeddedMode"];
             this.id = _data["id"];
         }
     }
@@ -5324,6 +5326,7 @@ export class AppDescriptor implements IAppDescriptor {
         data["iconUrl"] = this.iconUrl;
         data["relativeUrl"] = this.relativeUrl;
         data["permission"] = this.permission;
+        data["supportEmbeddedMode"] = this.supportEmbeddedMode;
         data["id"] = this.id;
         return data;
     }
@@ -5335,6 +5338,7 @@ export interface IAppDescriptor {
     iconUrl?: string | undefined;
     relativeUrl?: string | undefined;
     permission?: string | undefined;
+    supportEmbeddedMode?: boolean;
     id?: string | undefined;
 }
 
@@ -9265,7 +9269,6 @@ export interface IPushNotificationSearchResult {
 export class ResetPasswordConfirmRequest implements IResetPasswordConfirmRequest {
     token?: string | undefined;
     newPassword?: string | undefined;
-    forcePasswordChangeOnNextSignIn?: boolean;
 
     constructor(data?: IResetPasswordConfirmRequest) {
         if (data) {
@@ -9280,7 +9283,6 @@ export class ResetPasswordConfirmRequest implements IResetPasswordConfirmRequest
         if (_data) {
             this.token = _data["token"];
             this.newPassword = _data["newPassword"];
-            this.forcePasswordChangeOnNextSignIn = _data["forcePasswordChangeOnNextSignIn"];
         }
     }
 
@@ -9295,13 +9297,51 @@ export class ResetPasswordConfirmRequest implements IResetPasswordConfirmRequest
         data = typeof data === 'object' ? data : {};
         data["token"] = this.token;
         data["newPassword"] = this.newPassword;
-        data["forcePasswordChangeOnNextSignIn"] = this.forcePasswordChangeOnNextSignIn;
         return data;
     }
 }
 
 export interface IResetPasswordConfirmRequest {
     token?: string | undefined;
+    newPassword?: string | undefined;
+}
+
+export class ResetPasswordRequest implements IResetPasswordRequest {
+    newPassword?: string | undefined;
+    forcePasswordChangeOnNextSignIn?: boolean;
+
+    constructor(data?: IResetPasswordRequest) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.newPassword = _data["newPassword"];
+            this.forcePasswordChangeOnNextSignIn = _data["forcePasswordChangeOnNextSignIn"];
+        }
+    }
+
+    static fromJS(data: any): ResetPasswordRequest {
+        data = typeof data === 'object' ? data : {};
+        let result = new ResetPasswordRequest();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["newPassword"] = this.newPassword;
+        data["forcePasswordChangeOnNextSignIn"] = this.forcePasswordChangeOnNextSignIn;
+        return data;
+    }
+}
+
+export interface IResetPasswordRequest {
     newPassword?: string | undefined;
     forcePasswordChangeOnNextSignIn?: boolean;
 }

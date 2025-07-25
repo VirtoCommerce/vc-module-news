@@ -25,6 +25,8 @@ public class NewsArticleService(
         eventPublisher),
     INewsArticleService
 {
+    protected const string ClonedNewsArticlePrefix = "[COPY] ";
+
     protected override Task<IList<NewsArticleEntity>> LoadEntities(IRepository repository, IList<string> ids, string responseGroup)
     {
         return ((INewsArticleRepository)repository).GetNewsArticlesByIdsAsync(ids);
@@ -68,5 +70,45 @@ public class NewsArticleService(
         }
 
         await SaveChangesAsync(newsArticles);
+    }
+
+    public virtual async Task<NewsArticle> Clone(NewsArticle newsArticle)
+    {
+        var clonedNewsArticle = newsArticle.CloneTyped();
+
+        MakeCloneable(clonedNewsArticle);
+        SetClonedDefaultValues(clonedNewsArticle);
+
+        await SaveChangesAsync([clonedNewsArticle]);
+
+        return clonedNewsArticle;
+    }
+
+    protected void MakeCloneable(NewsArticle newsArticle)
+    {
+        newsArticle.Id = null;
+
+        foreach (var localizedContent in newsArticle.LocalizedContents)
+        {
+            localizedContent.NewsArticleId = null;
+            localizedContent.Id = null;
+        }
+
+        foreach (var seoInfo in newsArticle.SeoInfos)
+        {
+            seoInfo.Id = null;
+        }
+    }
+
+    protected virtual void SetClonedDefaultValues(NewsArticle newsArticle)
+    {
+        newsArticle.IsPublished = false;
+        newsArticle.PublishDate = null;
+        newsArticle.Name = ClonedNewsArticlePrefix + newsArticle.Name;
+
+        foreach (var seoInfo in newsArticle.SeoInfos)
+        {
+            seoInfo.IsActive = false;
+        }
     }
 }

@@ -78,7 +78,8 @@
           "SAVE": "Speichern",
           "RESET": "Zurücksetzen",
           "PUBLISH": "Veröffentlichen",
-          "UNPUBLISH": "Nicht veröffentlichen"
+          "UNPUBLISH": "Nicht veröffentlichen",
+          "CLONE": "Kopie erstellen"
         },
         "ALERTS": {
           "CLOSE_CONFIRMATION": "Sie haben nicht gespeicherte Änderungen. Trotzdem schließen?"

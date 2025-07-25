@@ -78,7 +78,8 @@
           "SAVE": "Salva",
           "RESET": "Ripristina",
           "PUBLISH": "Pubblica",
-          "UNPUBLISH": "Annulla pubblicazione"
+          "UNPUBLISH": "Annulla pubblicazione",
+          "CLONE": "Crea copia"
         },
         "ALERTS": {
           "CLOSE_CONFIRMATION": "Hai delle modifiche non salvate. Vuoi comunque chiudere?"

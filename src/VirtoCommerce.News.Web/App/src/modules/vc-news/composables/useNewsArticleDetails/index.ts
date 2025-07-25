@@ -16,9 +16,7 @@ export default () => {
   };
 
   const newsArticleIsDirty = computed(() => {
-    const saveable = _.cloneDeep(newsArticle.value);
-    cleanupEmptyLocalizations(saveable);
-    cleanupEmptySeoInfos(saveable);
+    const saveable = getSaveable();
 
     return !_.isEqual(saveable, originalNewsArticle.value);
   });
@@ -49,26 +47,26 @@ export default () => {
     },
   );
 
-  const { loading: savingNewsArticle, action: saveNewsArticle } = useAsync<NewsArticle>(async () => {
+  const { loading: savingNewsArticle, action: saveNewsArticle } = useAsync(async () => {
     if (newsArticle.value) {
-      const saveable = _.cloneDeep(newsArticle.value);
-      cleanupEmptyLocalizations(saveable);
-      cleanupEmptySeoInfos(saveable);
+      const saveable = getSaveable();
 
       const apiClient = await getNewsApiClient();
 
       if (!saveable.id) {
         const createResult = await apiClient.create(saveable);
+
         newsArticle.value.id = createResult.id;
         saveable.id = createResult.id;
       } else {
         await apiClient.update(saveable);
       }
+
       originalNewsArticle.value = _.cloneDeep(saveable);
     }
   });
 
-  const { loading: publishingNewsArticle, action: publishNewsArticle } = useAsync<NewsArticle>(async () => {
+  const { loading: publishingNewsArticle, action: publishNewsArticle } = useAsync(async () => {
     if (newsArticle.value) {
       const apiClient = await getNewsApiClient();
 
@@ -78,7 +76,7 @@ export default () => {
     }
   });
 
-  const { loading: unpublishingNewsArticle, action: unpublishNewsArticle } = useAsync<NewsArticle>(async () => {
+  const { loading: unpublishingNewsArticle, action: unpublishNewsArticle } = useAsync(async () => {
     if (newsArticle.value) {
       const apiClient = await getNewsApiClient();
 
@@ -87,6 +85,30 @@ export default () => {
       }
     }
   });
+
+  const { loading: cloningNewsArticle, action: cloneNewsArticle } = useAsync(async () => {
+    if (newsArticle.value) {
+      const saveable = getSaveable();
+
+      const apiClient = await getNewsApiClient();
+
+      const cloneResult = await apiClient.clone(saveable);
+
+      newsArticle.value.id = cloneResult.id;
+      saveable.id = cloneResult.id;
+
+      originalNewsArticle.value = _.cloneDeep(saveable);
+    }
+  });
+
+  const getSaveable = () => {
+    const result = _.cloneDeep(newsArticle.value);
+
+    cleanupEmptyLocalizations(result);
+    cleanupEmptySeoInfos(result);
+
+    return result;
+  };
 
   const cleanupEmptyLocalizations = (newsArticleValue: NewsArticle) => {
     const notEmptyLocalizations = newsArticleValue.localizedContents?.filter(
@@ -126,12 +148,15 @@ export default () => {
       savingNewsArticle,
       publishingNewsArticle,
       unpublishingNewsArticle,
+      cloningNewsArticle,
     ),
 
     publishNewsArticle,
     unpublishNewsArticle,
     newsArticleCanPublish,
     newsArticleCanUnpublish,
+
+    cloneNewsArticle,
 
     newsArticleIsDirty,
     resetNewsArticle,

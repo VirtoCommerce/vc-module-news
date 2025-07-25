@@ -78,7 +78,8 @@
           "SAVE": "保存",
           "RESET": "リセット",
           "PUBLISH": "公開",
-          "UNPUBLISH": "非公開"
+          "UNPUBLISH": "非公開",
+          "CLONE": "コピーを作成"
         },
         "ALERTS": {
           "CLOSE_CONFIRMATION": "保存されていない変更があります。閉じてもよろしいですか？"
