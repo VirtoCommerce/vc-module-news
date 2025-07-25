@@ -19,7 +19,8 @@
           "HEADER": {
             "NAME": "名前",
             "STORE": "店舗",
-            "IS_PUBLISHED": "公開済み"
+            "IS_PUBLISHED": "公開済み",
+            "PUBLISH_DATE": "公開日"
           }
         },
         "ALERTS": {

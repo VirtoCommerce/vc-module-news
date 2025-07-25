@@ -19,7 +19,8 @@
           "HEADER": {
             "NAME": "Nazwa",
             "STORE": "Sklep",
-            "IS_PUBLISHED": "Opublikowane"
+            "IS_PUBLISHED": "Opublikowane",
+            "PUBLISH_DATE": "Data publikacji"
           }
         },
         "ALERTS": {

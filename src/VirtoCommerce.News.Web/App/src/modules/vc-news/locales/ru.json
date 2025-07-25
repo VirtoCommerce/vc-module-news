@@ -19,7 +19,8 @@
           "HEADER": {
             "NAME": "Имя",
             "STORE": "Магазин",
-            "IS_PUBLISHED": "Опубликовано"
+            "IS_PUBLISHED": "Опубликовано",
+            "PUBLISH_DATE": "Дата публикации"
           }
         },
         "ALERTS": {

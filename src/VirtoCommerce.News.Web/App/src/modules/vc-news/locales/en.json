@@ -19,7 +19,8 @@
           "HEADER": {
             "NAME": "Name",
             "STORE": "Store",
-            "IS_PUBLISHED": "Is published"
+            "IS_PUBLISHED": "Is published",
+            "PUBLISH_DATE": "Publish date"
           }
         },
         "ALERTS": {

@@ -19,7 +19,8 @@
           "HEADER": {
             "NAME": "名称",
             "STORE": "商店",
-            "IS_PUBLISHED": "是否发布"
+            "IS_PUBLISHED": "是否发布",
+            "PUBLISH_DATE": "发布日期"
           }
         },
         "ALERTS": {

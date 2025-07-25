@@ -158,14 +158,16 @@ const columns = ref<ITableColumns[]>([
     title: computed(() => t("VC_NEWS.PAGES.LIST.TABLE.HEADER.NAME")),
     alwaysVisible: true,
     sortable: true,
-    width: "50%",
+    width: "40%",
+    mobilePosition: "top-left"
   },
   {
     id: "storeId",
     title: computed(() => t("VC_NEWS.PAGES.LIST.TABLE.HEADER.STORE")),
     alwaysVisible: true,
     sortable: true,
-    width: "30%",
+    width: "20%",
+    mobilePosition: "bottom-left"
   },
   {
     id: "isPublished",
@@ -173,6 +175,15 @@ const columns = ref<ITableColumns[]>([
     alwaysVisible: true,
     sortable: true,
     width: "20%",
+    mobilePosition: "top-right"
+  },
+  {
+    id: "publishDate",
+    title: computed(() => t("VC_NEWS.PAGES.LIST.TABLE.HEADER.PUBLISH_DATE")),
+    alwaysVisible: true,
+    sortable: true,
+    width: "20%",
+    mobilePosition: "bottom-right"
   },
 ]);
 
