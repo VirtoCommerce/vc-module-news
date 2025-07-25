@@ -77,7 +77,8 @@
           "SAVE": "Zapisz",
           "RESET": "Zresetuj",
           "PUBLISH": "Opublikuj",
-          "UNPUBLISH": "Anuluj publikację"
+          "UNPUBLISH": "Anuluj publikację",
+          "CLONE": "Utwórz kopię"
         },
         "ALERTS": {
           "CLOSE_CONFIRMATION": "Masz niezapisane zmiany. Czy na pewno chcesz zamknąć?"

@@ -77,7 +77,8 @@
           "SAVE": "Save",
           "RESET": "Reset",
           "PUBLISH": "Publish",
-          "UNPUBLISH": "Unpublish"
+          "UNPUBLISH": "Unpublish",
+          "CLONE": "Create copy"
         },
         "ALERTS": {
           "CLOSE_CONFIRMATION": "You have unsaved changes. Close anyway?"

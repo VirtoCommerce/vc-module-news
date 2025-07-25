@@ -26,6 +26,15 @@ public class NewsArticleController(INewsArticleService newsArticleService, INews
         return Ok(newsArticle);
     }
 
+    [HttpPost]
+    [Route("clone")]
+    [Authorize(ModuleConstants.Security.Permissions.Create)]
+    public async Task<ActionResult<NewsArticle>> Clone([FromBody] NewsArticle newsArticle)
+    {
+        var clonedNewsArticle = await newsArticleService.Clone(newsArticle);
+        return Ok(clonedNewsArticle);
+    }
+
     [HttpPut]
     [Route("")]
     [Authorize(ModuleConstants.Security.Permissions.Update)]

@@ -9,4 +9,5 @@ public interface INewsArticleService : ICrudService<NewsArticle>
 {
     Task PublishAsync(IList<string> ids);
     Task UnpublishAsync(IList<string> ids);
+    Task<NewsArticle> Clone(NewsArticle newsArticle);
 }

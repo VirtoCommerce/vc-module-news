@@ -194,6 +194,58 @@ export class NewsArticleClient extends AuthApiBase {
     }
 
     /**
+     * @param body (optional) 
+     * @return OK
+     */
+    clone(body?: NewsArticle | undefined): Promise<NewsArticle> {
+        let url_ = this.baseUrl + "/api/news/clone";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(body);
+
+        let options_: RequestInit = {
+            body: content_,
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json-patch+json",
+                "Accept": "text/plain"
+            }
+        };
+
+        return this.transformOptions(options_).then(transformedOptions_ => {
+            return this.http.fetch(url_, transformedOptions_);
+        }).then((_response: Response) => {
+            return this.processClone(_response);
+        });
+    }
+
+    protected processClone(response: Response): Promise<NewsArticle> {
+        const status = response.status;
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        if (status === 200) {
+            return response.text().then((_responseText) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = NewsArticle.fromJS(resultData200);
+            return result200;
+            });
+        } else if (status === 401) {
+            return response.text().then((_responseText) => {
+            return throwException("Unauthorized", status, _responseText, _headers);
+            });
+        } else if (status === 403) {
+            return response.text().then((_responseText) => {
+            return throwException("Forbidden", status, _responseText, _headers);
+            });
+        } else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve<NewsArticle>(null as any);
+    }
+
+    /**
      * @return OK
      */
     get(id: string): Promise<NewsArticle> {
@@ -577,6 +629,7 @@ export class NewsArticleSearchCriteria implements INewsArticleSearchCriteria {
     storeId?: string | undefined;
     userGroups?: string[] | undefined;
     languageCodes?: string[] | undefined;
+    certainDate?: Date | undefined;
     responseGroup?: string | undefined;
     objectType?: string | undefined;
     objectTypes?: string[] | undefined;
@@ -612,6 +665,7 @@ export class NewsArticleSearchCriteria implements INewsArticleSearchCriteria {
                 for (let item of _data["languageCodes"])
                     this.languageCodes!.push(item);
             }
+            this.certainDate = _data["certainDate"] ? new Date(_data["certainDate"].toString()) : <any>undefined;
             this.responseGroup = _data["responseGroup"];
             this.objectType = _data["objectType"];
             if (Array.isArray(_data["objectTypes"])) {
@@ -659,6 +713,7 @@ export class NewsArticleSearchCriteria implements INewsArticleSearchCriteria {
             for (let item of this.languageCodes)
                 data["languageCodes"].push(item);
         }
+        data["certainDate"] = this.certainDate ? this.certainDate.toISOString() : <any>undefined;
         data["responseGroup"] = this.responseGroup;
         data["objectType"] = this.objectType;
         if (Array.isArray(this.objectTypes)) {
@@ -691,6 +746,7 @@ export interface INewsArticleSearchCriteria {
     storeId?: string | undefined;
     userGroups?: string[] | undefined;
     languageCodes?: string[] | undefined;
+    certainDate?: Date | undefined;
     responseGroup?: string | undefined;
     objectType?: string | undefined;
     objectTypes?: string[] | undefined;

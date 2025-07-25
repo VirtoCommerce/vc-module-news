@@ -77,7 +77,8 @@
           "SAVE": "Guardar",
           "RESET": "Restablecer",
           "PUBLISH": "Publicar",
-          "UNPUBLISH": "Despublicar"
+          "UNPUBLISH": "Despublicar",
+          "CLONE": "Crear copia"
         },
         "ALERTS": {
           "CLOSE_CONFIRMATION": "Tiene cambios no guardados. ¿Cerrar de todos modos?"
