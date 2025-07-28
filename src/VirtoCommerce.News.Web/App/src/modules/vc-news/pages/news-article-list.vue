@@ -174,15 +174,17 @@ const columns = ref<ITableColumns[]>([
     title: computed(() => t("VC_NEWS.PAGES.LIST.TABLE.HEADER.IS_PUBLISHED")),
     alwaysVisible: true,
     sortable: true,
-    width: "20%",
-    mobilePosition: "top-right"
+    width: "10%",
+    type: "status-icon",
+    mobilePosition: "status",
   },
   {
     id: "publishDate",
     title: computed(() => t("VC_NEWS.PAGES.LIST.TABLE.HEADER.PUBLISH_DATE")),
     alwaysVisible: true,
     sortable: true,
-    width: "20%",
+    width: "30%",
+    type: "date-time",
     mobilePosition: "bottom-right"
   },
 ]);
