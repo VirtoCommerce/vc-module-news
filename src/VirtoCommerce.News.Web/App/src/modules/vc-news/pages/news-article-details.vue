@@ -256,7 +256,7 @@ const { onBeforeClose } = useBladeNavigation();
 const { hasAccess } = usePermissions();
 const { showConfirmation } = usePopup();
 
-const { meta } = useForm({ validateOnMount: true });
+const { meta } = useForm({ validateOnMount: false });
 
 //stores
 const { stores, loadStores, loadingStores } = useStore();
