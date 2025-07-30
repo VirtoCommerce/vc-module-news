@@ -19,7 +19,13 @@
           "HEADER": {
             "NAME": "Name",
             "STORE": "Store",
-            "IS_PUBLISHED": "Is published"
+            "IS_PUBLISHED": "Is published",
+            "PUBLISH_DATE": "Publish date",
+            "CREATED_DATE": "Created date",
+            "CREATED_BY": "Created by",
+            "MODIFIED_DATE": "Modified date",
+            "MODIFIED_BY": "Modified by",
+            "ID": "Id"
           }
         },
         "ALERTS": {

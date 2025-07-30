@@ -19,7 +19,13 @@
           "HEADER": {
             "NAME": "Nom",
             "STORE": "Magasin",
-            "IS_PUBLISHED": "Publié"
+            "IS_PUBLISHED": "Publié",
+            "PUBLISH_DATE": "Date de publication",
+            "CREATED_DATE": "Date de création",
+            "CREATED_BY": "Créé par",
+            "MODIFIED_DATE": "Date de modification",
+            "MODIFIED_BY": "Modifié par",
+            "ID": "Id"
           }
         },
         "ALERTS": {
