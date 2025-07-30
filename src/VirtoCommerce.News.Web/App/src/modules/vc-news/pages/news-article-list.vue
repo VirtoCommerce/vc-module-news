@@ -23,6 +23,7 @@
       :current-page="pageIndex"
       :total-count="newsArticlesCount"
       :expanded="expanded"
+      column-selector="defined"
       state-key="VC_NEWS"
       multiselect
       class="tw-grow tw-basis-0"
@@ -187,6 +188,42 @@ const columns = ref<ITableColumns[]>([
     type: "date-time",
     mobilePosition: "bottom-right"
   },
+  {
+    id: "createdDate",
+    title: computed(() => t("VC_NEWS.PAGES.LIST.TABLE.HEADER.CREATED_DATE")), 
+    visible: false,
+    sortable: true,
+    width: "30%",
+    type: "date-time" 
+  },
+  {
+    id: "createdBy",
+    title: computed(() => t("VC_NEWS.PAGES.LIST.TABLE.HEADER.CREATED_BY")),
+    visible: false,
+    sortable: true,
+    width: "20%",
+  },
+  {
+    id: "modifiedDate",
+    title: computed(() => t("VC_NEWS.PAGES.LIST.TABLE.HEADER.MODIFIED_DATE")), 
+    visible: false,
+    sortable: true,
+    width: "30%",
+    type: "date-time"
+  },
+  {
+    id: "modifiedBy",
+    title: computed(() => t("VC_NEWS.PAGES.LIST.TABLE.HEADER.MODIFIED_BY")),
+    visible: false,
+    sortable: true,
+    width: "20%",
+  },
+  {
+    id: "id",
+    title: computed(() => t("VC_NEWS.PAGES.LIST.TABLE.HEADER.ID")),
+    visible: false,
+    width: "30%",
+  }
 ]);
 
 const title = computed(() => t("VC_NEWS.PAGES.LIST.TITLE"));

@@ -20,7 +20,12 @@
             "NAME": "名称",
             "STORE": "商店",
             "IS_PUBLISHED": "是否发布",
-            "PUBLISH_DATE": "发布日期"
+            "PUBLISH_DATE": "发布日期",
+            "CREATED_DATE": "创建日期",
+            "CREATED_BY": "创建者",
+            "MODIFIED_DATE": "修改日期",
+            "MODIFIED_BY": "修改者",
+            "ID": "ID"
           }
         },
         "ALERTS": {

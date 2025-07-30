@@ -20,7 +20,12 @@
             "NAME": "Name",
             "STORE": "Geschäft",
             "IS_PUBLISHED": "Veröffentlicht",
-            "PUBLISH_DATE": "Veröffentlichungsdatum"
+            "PUBLISH_DATE": "Veröffentlichungsdatum",
+            "CREATED_DATE": "Erstellungsdatum",
+            "CREATED_BY": "Erstellt von",
+            "MODIFIED_DATE": "Änderungsdatum",
+            "MODIFIED_BY": "Geändert von",
+            "ID": "Id"
           }
         },
         "ALERTS": {
