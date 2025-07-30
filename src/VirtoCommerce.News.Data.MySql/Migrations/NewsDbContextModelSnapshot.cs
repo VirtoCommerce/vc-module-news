@@ -36,6 +36,9 @@ namespace VirtoCommerce.News.Data.MySql.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime(6)");
 
+                    b.Property<bool>("IsArchived")
+                        .HasColumnType("tinyint(1)");
+
                     b.Property<bool>("IsPublished")
                         .HasColumnType("tinyint(1)");
 
