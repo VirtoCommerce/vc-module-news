@@ -19,7 +19,13 @@
           "HEADER": {
             "NAME": "Имя",
             "STORE": "Магазин",
-            "IS_PUBLISHED": "Опубликовано"
+            "IS_PUBLISHED": "Опубликовано",
+            "PUBLISH_DATE": "Дата публикации",
+            "CREATED_DATE": "Дата создания",
+            "CREATED_BY": "Создано",
+            "MODIFIED_DATE": "Дата изменения",
+            "MODIFIED_BY": "Изменено",
+            "ID": "Id"
           }
         },
         "ALERTS": {

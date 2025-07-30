@@ -19,7 +19,13 @@
           "HEADER": {
             "NAME": "名前",
             "STORE": "店舗",
-            "IS_PUBLISHED": "公開済み"
+            "IS_PUBLISHED": "公開済み",
+            "PUBLISH_DATE": "公開日",
+            "CREATED_DATE": "作成日",
+            "CREATED_BY": "作成者",
+            "MODIFIED_DATE": "更新日",
+            "MODIFIED_BY": "更新者",
+            "ID": "ID"
           }
         },
         "ALERTS": {
