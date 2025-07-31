@@ -13,6 +13,7 @@ public class NewsArticleContentType : ExtendableGraphType<NewsArticle>
 
         Field(x => x.Id);
         Field(x => x.PublishDate, nullable: true);
+        Field(x => x.IsArchived);
 
         Field<StringGraphType>("title").Resolve(context => context.Source.LocalizedContents.FirstOrDefault()?.Title);
         Field<StringGraphType>("content").Resolve(context => context.Source.LocalizedContents.FirstOrDefault()?.Content);
