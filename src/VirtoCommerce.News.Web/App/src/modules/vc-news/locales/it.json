@@ -21,6 +21,7 @@
             "STORE": "Negozio",
             "IS_PUBLISHED": "Pubblicato",
             "PUBLISH_DATE": "Data di pubblicazione",
+            "IS_ARCHIVED": "È archiviato",
             "CREATED_DATE": "Data di creazione",
             "CREATED_BY": "Creato da",
             "MODIFIED_DATE": "Data di modifica",
@@ -84,6 +85,8 @@
           "RESET": "Ripristina",
           "PUBLISH": "Pubblica",
           "UNPUBLISH": "Annulla pubblicazione",
+          "ARCHIVE": "Archivia",
+          "UNARCHIVE": "Dearchivia",
           "CLONE": "Crea copia"
         },
         "ALERTS": {

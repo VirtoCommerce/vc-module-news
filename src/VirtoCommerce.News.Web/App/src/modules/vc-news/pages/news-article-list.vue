@@ -184,6 +184,13 @@ const columns = ref<ITableColumns[]>([
     type: "date-time"
   },
   {
+    id: "isArchived",
+    title: computed(() => t("VC_NEWS.PAGES.LIST.TABLE.HEADER.IS_ARCHIVED")),
+    alwaysVisible: true,
+    sortable: true,
+    width: "10%",
+  },
+  {
     id: "createdDate",
     title: computed(() => t("VC_NEWS.PAGES.LIST.TABLE.HEADER.CREATED_DATE")), 
     visible: false,

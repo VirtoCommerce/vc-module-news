@@ -21,6 +21,7 @@
             "STORE": "Geschäft",
             "IS_PUBLISHED": "Veröffentlicht",
             "PUBLISH_DATE": "Veröffentlichungsdatum",
+            "IS_ARCHIVED": "Ist archiviert",
             "CREATED_DATE": "Erstellungsdatum",
             "CREATED_BY": "Erstellt von",
             "MODIFIED_DATE": "Änderungsdatum",
@@ -84,6 +85,8 @@
           "RESET": "Zurücksetzen",
           "PUBLISH": "Veröffentlichen",
           "UNPUBLISH": "Nicht veröffentlichen",
+          "ARCHIVE": "Archiv",
+          "UNARCHIVE": "Archiv wiederherstellen",
           "CLONE": "Kopie erstellen"
         },
         "ALERTS": {

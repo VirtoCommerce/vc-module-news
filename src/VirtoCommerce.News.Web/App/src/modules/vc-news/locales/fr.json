@@ -21,6 +21,7 @@
             "STORE": "Magasin",
             "IS_PUBLISHED": "Publié",
             "PUBLISH_DATE": "Date de publication",
+            "IS_ARCHIVED": "Est archivé",
             "CREATED_DATE": "Date de création",
             "CREATED_BY": "Créé par",
             "MODIFIED_DATE": "Date de modification",
@@ -84,6 +85,8 @@
           "RESET": "Réinitialiser",
           "PUBLISH": "Publier",
           "UNPUBLISH": "Désabonner",
+          "ARCHIVE": "Archiver",
+          "UNARCHIVE": "Désarchiver",
           "CLONE": "Créer une copie"
         },
         "ALERTS": {

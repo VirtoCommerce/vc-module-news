@@ -21,6 +21,7 @@
             "STORE": "店舗",
             "IS_PUBLISHED": "公開済み",
             "PUBLISH_DATE": "公開日",
+            "IS_ARCHIVED": "アーカイブされています",
             "CREATED_DATE": "作成日",
             "CREATED_BY": "作成者",
             "MODIFIED_DATE": "更新日",
@@ -84,6 +85,8 @@
           "RESET": "リセット",
           "PUBLISH": "公開",
           "UNPUBLISH": "非公開",
+          "ARCHIVE": "アーカイブ",
+          "UNARCHIVE": "アーカイブ解除",
           "CLONE": "コピーを作成"
         },
         "ALERTS": {

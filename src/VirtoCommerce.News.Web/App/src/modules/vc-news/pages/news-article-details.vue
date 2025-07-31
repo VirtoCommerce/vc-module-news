@@ -335,6 +335,11 @@ const {
   newsArticleCanPublish,
   newsArticleCanUnpublish,
 
+  archiveNewsArticle,
+  unarchiveNewsArticle,
+  newsArticleCanArchive,
+  newsArticleCanUnarchive,
+
   cloneNewsArticle,
 
   newsArticleIsDirty,
@@ -412,6 +417,30 @@ if (props.param) {
       emit("parent:call", { method: "reOpenDetailsBlade", args: newsArticle.value!.id });
     },
     isVisible: computed(() => hasAccess(createNewsArticlePermission)),
+  });
+  bladeToolbar.value.push({
+    id: "archive",
+    icon: "material-archive",
+    title: computed(() => t("VC_NEWS.PAGES.DETAILS.TOOLBAR.ARCHIVE")),
+    disabled: computed(() => !newsArticleCanArchive?.value),
+    clickHandler: async () => {
+      await archiveNewsArticle();
+      emit("parent:call", { method: "reload" });
+      emit("parent:call", { method: "reOpenDetailsBlade", args: newsArticle.value!.id });
+    },
+    isVisible: computed(() => hasAccess(publishNewsArticlePermission)),
+  });
+  bladeToolbar.value.push({
+    id: "unarchive",
+    icon: "material-unarchive",
+    title: computed(() => t("VC_NEWS.PAGES.DETAILS.TOOLBAR.UNARCHIVE")),
+    disabled: computed(() => !newsArticleCanUnarchive?.value),
+    clickHandler: async () => {
+      await unarchiveNewsArticle();
+      emit("parent:call", { method: "reload" });
+      emit("parent:call", { method: "reOpenDetailsBlade", args: newsArticle.value!.id });
+    },
+    isVisible: computed(() => hasAccess(publishNewsArticlePermission)),
   });
 }
 
