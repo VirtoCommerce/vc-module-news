@@ -9,6 +9,7 @@ The News module enables content managers to publish news articles for selected u
 * Localize articles to multiple languages
 * Select multiple target user groups
 * Shedule articles publishing
+* Clone articles
 * Setup SEO data
 
 ## Screenshots
