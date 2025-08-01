@@ -1,0 +1,95 @@
+{
+  "VC_NEWS": {
+    "MENU": {
+      "TITLE": "All news"
+    },
+    "PAGES": {
+      "LIST": {
+        "TITLE": "Articles",
+        "TOOLBAR": {
+          "REFRESH": "Refresh",
+          "ADD": "Add",
+          "DELETE": "Delete"
+        },
+        "SEARCH": {
+          "PLACEHOLDER": "Search keywords"
+        },
+        "TABLE": {
+          "TOTALS": "Count:",
+          "HEADER": {
+            "NAME": "Name",
+            "STORE": "Store",
+            "IS_PUBLISHED": "Is published",
+            "PUBLISH_DATE": "Publish date",
+            "CREATED_DATE": "Created date",
+            "CREATED_BY": "Created by",
+            "MODIFIED_DATE": "Modified date",
+            "MODIFIED_BY": "Modified by",
+            "ID": "Id"
+          }
+        },
+        "ALERTS": {
+          "DELETE_SELECTED_CONFIRMATION_MESSAGE": "Are you sure you want to delete {count} articles?"
+        }
+      },
+      "DETAILS": {
+        "TITLE": "Article",
+        "FORM": {
+          "NAME": {
+            "LABEL": "Name"
+          },
+          "STORE": {
+            "LABEL": "Store"
+          },
+          "PUBLISH_DATE": {
+            "LABEL": "Publish date"
+          },
+          "USER_GROUPS": {
+            "LABEL": "User groups"
+          },
+          "CONTENT_TITLE": {
+            "LABEL": "Title"
+          },
+          "CONTENT_CONTENT": {
+            "LABEL": "Content"
+          },
+          "CONTENT_PREVIEW": {
+            "LABEL": "Summary",
+            "PLACEHOLDER": "Summary"
+          },
+          "SEO_HEADER": {
+            "LABEL": "SEO"
+          },
+          "SEO_IS_ACTIVE": {
+            "LABEL": "Active"
+          },
+          "SEO_SEMANTIC_URL": {
+            "LABEL": "URL slug"
+          },
+          "SEO_PAGE_TITLE": {
+            "LABEL": "Page title"
+          },
+          "SEO_META_DESCRIPTION": {
+            "LABEL": "Meta description"
+          },
+          "SEO_META_KEYWORDS": {
+            "LABEL": "Meta keywords"
+          },
+          "SEO_IMAGE_ALT_TEXT": {
+            "LABEL": "Image alternative text"
+          }
+        },
+        "TOOLBAR": {
+          "SAVE": "Save",
+          "RESET": "Reset",
+          "PUBLISH": "Publish",
+          "UNPUBLISH": "Unpublish",
+          "CLONE": "Create copy"
+        },
+        "ALERTS": {
+          "CLOSE_CONFIRMATION": "You have unsaved changes. Close anyway?"
+        }
+      }
+    }
+  }
+}

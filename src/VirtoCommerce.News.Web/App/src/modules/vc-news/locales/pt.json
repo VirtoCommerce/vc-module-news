@@ -1,0 +1,95 @@
+{
+  "VC_NEWS": {
+    "MENU": {
+      "TITLE": "Todas as notícias"
+    },
+    "PAGES": {
+      "LIST": {
+        "TITLE": "Artigos",
+        "TOOLBAR": {
+          "REFRESH": "Atualizar",
+          "ADD": "Adicionar",
+          "DELETE": "Excluir"
+        },
+        "SEARCH": {
+          "PLACEHOLDER": "Pesquisar palavras-chave"
+        },
+        "TABLE": {
+          "TOTALS": "Total:",
+          "HEADER": {
+            "NAME": "Nome",
+            "STORE": "Loja",
+            "IS_PUBLISHED": "Publicado",
+            "PUBLISH_DATE": "Data de publicação",
+            "CREATED_DATE": "Data de criação",
+            "CREATED_BY": "Criado por",
+            "MODIFIED_DATE": "Data de modificação",
+            "MODIFIED_BY": "Modificado por",
+            "ID": "Id"
+          }
+        },
+        "ALERTS": {
+          "DELETE_SELECTED_CONFIRMATION_MESSAGE": "Tem certeza de que deseja excluir {count} artigos?"
+        }
+      },
+      "DETAILS": {
+        "TITLE": "Artigo",
+        "FORM": {
+          "NAME": {
+            "LABEL": "Nome"
+          },
+          "STORE": {
+            "LABEL": "Loja"
+          },
+          "PUBLISH_DATE": {
+            "LABEL": "Data de publicação"
+          },
+          "USER_GROUPS": {
+            "LABEL": "Grupos de usuários"
+          },
+          "CONTENT_TITLE": {
+            "LABEL": "Título"
+          },
+          "CONTENT_CONTENT": {
+            "LABEL": "Conteúdo"
+          },
+          "CONTENT_PREVIEW": {
+            "LABEL": "Resumo",
+            "PLACEHOLDER": "Resumo"
+          },
+          "SEO_HEADER": {
+            "LABEL": "SEO"
+          },
+          "SEO_IS_ACTIVE": {
+            "LABEL": "Ativo"
+          },
+          "SEO_SEMANTIC_URL": {
+            "LABEL": "URL amigável"
+          },
+          "SEO_PAGE_TITLE": {
+            "LABEL": "Título da página"
+          },
+          "SEO_META_DESCRIPTION": {
+            "LABEL": "Meta descrição"
+          },
+          "SEO_META_KEYWORDS": {
+            "LABEL": "Meta palavras-chave"
+          },
+          "SEO_IMAGE_ALT_TEXT": {
+            "LABEL": "Texto alternativo da imagem"
+          }
+        },
+        "TOOLBAR": {
+          "SAVE": "Salvar",
+          "RESET": "Redefinir",
+          "PUBLISH": "Publicar",
+          "UNPUBLISH": "Retirar da publicação",
+          "CLONE": "Criar cópia"
+        },
+        "ALERTS": {
+          "CLOSE_CONFIRMATION": "Você tem alterações não salvas. Fechar mesmo assim?"
+        }
+      }
+    }
+  }
+}

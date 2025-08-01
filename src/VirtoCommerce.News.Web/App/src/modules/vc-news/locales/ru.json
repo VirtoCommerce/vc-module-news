@@ -1,0 +1,95 @@
+{
+  "VC_NEWS": {
+    "MENU": {
+      "TITLE": "Все новости"
+    },
+    "PAGES": {
+      "LIST": {
+        "TITLE": "Статьи",
+        "TOOLBAR": {
+          "REFRESH": "Обновить",
+          "ADD": "Добавить",
+          "DELETE": "Удалить"
+        },
+        "SEARCH": {
+          "PLACEHOLDER": "Поиск по ключевым словам"
+        },
+        "TABLE": {
+          "TOTALS": "Всего:",
+          "HEADER": {
+            "NAME": "Имя",
+            "STORE": "Магазин",
+            "IS_PUBLISHED": "Опубликовано",
+            "PUBLISH_DATE": "Дата публикации",
+            "CREATED_DATE": "Дата создания",
+            "CREATED_BY": "Создано",
+            "MODIFIED_DATE": "Дата изменения",
+            "MODIFIED_BY": "Изменено",
+            "ID": "Id"
+          }
+        },
+        "ALERTS": {
+          "DELETE_SELECTED_CONFIRMATION_MESSAGE": "Вы уверены, что хотите удалить {count} статьи?"
+        }
+      },
+      "DETAILS": {
+        "TITLE": "Статья",
+        "FORM": {
+          "NAME": {
+            "LABEL": "Имя"
+          },
+          "STORE": {
+            "LABEL": "Магазин"
+          },
+          "PUBLISH_DATE": {
+            "LABEL": "Дата публикации"
+          },
+          "USER_GROUPS": {
+            "LABEL": "Группы пользователей"
+          },
+          "CONTENT_TITLE": {
+            "LABEL": "Заголовок"
+          },
+          "CONTENT_CONTENT": {
+            "LABEL": "Содержание"
+          },
+          "CONTENT_PREVIEW": {
+            "LABEL": "Краткое содержание",
+            "PLACEHOLDER": "Краткое содержание"
+          },
+          "SEO_HEADER": {
+            "LABEL": "SEO"
+          },
+          "SEO_IS_ACTIVE": {
+            "LABEL": "Активно"
+          },
+          "SEO_SEMANTIC_URL": {
+            "LABEL": "URL Slug"
+          },
+          "SEO_PAGE_TITLE": {
+            "LABEL": "Заголовок страницы"
+          },
+          "SEO_META_DESCRIPTION": {
+            "LABEL": "Мета описание"
+          },
+          "SEO_META_KEYWORDS": {
+            "LABEL": "Мета ключевые слова"
+          },
+          "SEO_IMAGE_ALT_TEXT": {
+            "LABEL": "Альтернативный текст изображения"
+          }
+        },
+        "TOOLBAR": {
+          "SAVE": "Сохранить",
+          "RESET": "Сбросить",
+          "PUBLISH": "Опубликовать",
+          "UNPUBLISH": "Отменить публикацию",
+          "CLONE": "Создать копию"
+        },
+        "ALERTS": {
+          "CLOSE_CONFIRMATION": "У вас есть несохраненные изменения. Все равно закрыть?"
+        }
+      }
+    }
+  }
+}

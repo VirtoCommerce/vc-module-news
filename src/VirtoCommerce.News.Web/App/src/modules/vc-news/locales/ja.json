@@ -1,0 +1,95 @@
+{
+  "VC_NEWS": {
+    "MENU": {
+      "TITLE": "すべてのニュース"
+    },
+    "PAGES": {
+      "LIST": {
+        "TITLE": "記事",
+        "TOOLBAR": {
+          "REFRESH": "更新",
+          "ADD": "追加",
+          "DELETE": "削除"
+        },
+        "SEARCH": {
+          "PLACEHOLDER": "キーワードで検索"
+        },
+        "TABLE": {
+          "TOTALS": "合計:",
+          "HEADER": {
+            "NAME": "名前",
+            "STORE": "店舗",
+            "IS_PUBLISHED": "公開済み",
+            "PUBLISH_DATE": "公開日",
+            "CREATED_DATE": "作成日",
+            "CREATED_BY": "作成者",
+            "MODIFIED_DATE": "更新日",
+            "MODIFIED_BY": "更新者",
+            "ID": "ID"
+          }
+        },
+        "ALERTS": {
+          "DELETE_SELECTED_CONFIRMATION_MESSAGE": "{count} 件の記事を削除してもよろしいですか？"
+        }
+      },
+      "DETAILS": {
+        "TITLE": "記事",
+        "FORM": {
+          "NAME": {
+            "LABEL": "名前"
+          },
+          "STORE": {
+            "LABEL": "店舗"
+          },
+          "PUBLISH_DATE": {
+            "LABEL": "公開日"
+          },
+          "USER_GROUPS": {
+            "LABEL": "ユーザーグループ"
+          },
+          "CONTENT_TITLE": {
+            "LABEL": "タイトル"
+          },
+          "CONTENT_CONTENT": {
+            "LABEL": "コンテンツ"
+          },
+          "CONTENT_PREVIEW": {
+            "LABEL": "要約",
+            "PLACEHOLDER": "要約"
+          },
+          "SEO_HEADER": {
+            "LABEL": "SEO"
+          },
+          "SEO_IS_ACTIVE": {
+            "LABEL": "アクティブ"
+          },
+          "SEO_SEMANTIC_URL": {
+            "LABEL": "URLスラッグ"
+          },
+          "SEO_PAGE_TITLE": {
+            "LABEL": "ページタイトル"
+          },
+          "SEO_META_DESCRIPTION": {
+            "LABEL": "メタディスクリプション"
+          },
+          "SEO_META_KEYWORDS": {
+            "LABEL": "メタキーワード"
+          },
+          "SEO_IMAGE_ALT_TEXT": {
+            "LABEL": "画像の代替テキスト"
+          }
+        },
+        "TOOLBAR": {
+          "SAVE": "保存",
+          "RESET": "リセット",
+          "PUBLISH": "公開",
+          "UNPUBLISH": "非公開",
+          "CLONE": "コピーを作成"
+        },
+        "ALERTS": {
+          "CLOSE_CONFIRMATION": "保存されていない変更があります。閉じてもよろしいですか？"
+        }
+      }
+    }
+  }
+}

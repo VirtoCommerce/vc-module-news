@@ -19,8 +19,20 @@ public class NewsArticleController(INewsArticleService newsArticleService, INews
     public async Task<ActionResult<NewsArticle>> Create([FromBody] NewsArticle newsArticle)
     {
         newsArticle.Id = null;
+        newsArticle.LocalizedContents = null;
+        newsArticle.SeoInfos = null;
+
         await newsArticleService.SaveChangesAsync([newsArticle]);
         return Ok(newsArticle);
+    }
+
+    [HttpPost]
+    [Route("clone")]
+    [Authorize(ModuleConstants.Security.Permissions.Create)]
+    public async Task<ActionResult<NewsArticle>> Clone([FromBody] NewsArticle newsArticle)
+    {
+        var clonedNewsArticle = await newsArticleService.Clone(newsArticle);
+        return Ok(clonedNewsArticle);
     }
 
     [HttpPut]

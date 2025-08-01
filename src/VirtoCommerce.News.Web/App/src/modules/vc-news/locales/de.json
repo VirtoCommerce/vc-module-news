@@ -1,0 +1,95 @@
+{
+  "VC_NEWS": {
+    "MENU": {
+      "TITLE": "Alle Nachrichten"
+    },
+    "PAGES": {
+      "LIST": {
+        "TITLE": "Artikel",
+        "TOOLBAR": {
+          "REFRESH": "Aktualisieren",
+          "ADD": "Hinzufügen",
+          "DELETE": "Löschen"
+        },
+        "SEARCH": {
+          "PLACEHOLDER": "Suchbegriffe"
+        },
+        "TABLE": {
+          "TOTALS": "Anzahl:",
+          "HEADER": {
+            "NAME": "Name",
+            "STORE": "Geschäft",
+            "IS_PUBLISHED": "Veröffentlicht",
+            "PUBLISH_DATE": "Veröffentlichungsdatum",
+            "CREATED_DATE": "Erstellungsdatum",
+            "CREATED_BY": "Erstellt von",
+            "MODIFIED_DATE": "Änderungsdatum",
+            "MODIFIED_BY": "Geändert von",
+            "ID": "Id"
+          }
+        },
+        "ALERTS": {
+          "DELETE_SELECTED_CONFIRMATION_MESSAGE": "Sind Sie sicher, dass Sie {count} Artikel löschen möchten?"
+        }
+      },
+      "DETAILS": {
+        "TITLE": "Artikel",
+        "FORM": {
+          "NAME": {
+            "LABEL": "Name"
+          },
+          "STORE": {
+            "LABEL": "Geschäft"
+          },
+          "PUBLISH_DATE": {
+            "LABEL": "Veröffentlichungsdatum"
+          },
+          "USER_GROUPS": {
+            "LABEL": "Benutzergruppen"
+          },
+          "CONTENT_TITLE": {
+            "LABEL": "Titel"
+          },
+          "CONTENT_CONTENT": {
+            "LABEL": "Inhalt"
+          },
+          "CONTENT_PREVIEW": {
+            "LABEL": "Zusammenfassung",
+            "PLACEHOLDER": "Zusammenfassung"
+          },
+          "SEO_HEADER": {
+            "LABEL": "SEO"
+          },
+          "SEO_IS_ACTIVE": {
+            "LABEL": "Aktiv"
+          },
+          "SEO_SEMANTIC_URL": {
+            "LABEL": "URL-Slug"
+          },
+          "SEO_PAGE_TITLE": {
+            "LABEL": "Seitentitel"
+          },
+          "SEO_META_DESCRIPTION": {
+            "LABEL": "Meta-Beschreibung"
+          },
+          "SEO_META_KEYWORDS": {
+            "LABEL": "Meta-Schlüsselwörter"
+          },
+          "SEO_IMAGE_ALT_TEXT": {
+            "LABEL": "Alternativtext für Bild"
+          }
+        },
+        "TOOLBAR": {
+          "SAVE": "Speichern",
+          "RESET": "Zurücksetzen",
+          "PUBLISH": "Veröffentlichen",
+          "UNPUBLISH": "Nicht veröffentlichen",
+          "CLONE": "Kopie erstellen"
+        },
+        "ALERTS": {
+          "CLOSE_CONFIRMATION": "Sie haben nicht gespeicherte Änderungen. Trotzdem schließen?"
+        }
+      }
+    }
+  }
+}

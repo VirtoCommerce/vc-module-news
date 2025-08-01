@@ -10,8 +10,18 @@
     <dependency id="VirtoCommerce.Xapi" version="3.904.0" />
   </dependencies>
 
-  <title>VirtoCommerce News</title>
-  <description>VirtoCommerce News</description>
+  <apps>
+    <app id="vc-news">
+      <title>News</title>
+      <description>Module allowing content managers to publish news articles</description>
+      <iconUrl>Modules/$(VirtoCommerce.News)/Content/news.svg</iconUrl>
+      <permission>news:access</permission>
+      <supportEmbeddedMode>true</supportEmbeddedMode>
+    </app>
+  </apps>
+
+  <title>News</title>
+  <description>Module allowing content managers to publish news articles</description>
 
   <authors>
     <author>Iusupov Kirill</author>
@@ -21,7 +31,7 @@
   </owners>
 
   <projectUrl>https://github.com/VirtoCommerce/vc-module-news</projectUrl>
-  <iconUrl>Modules/$(VirtoCommerce.News)/Content/logo.png</iconUrl>
+  <iconUrl>Modules/$(VirtoCommerce.News)/Content/news.svg</iconUrl>
   <requireLicenseAcceptance>false</requireLicenseAcceptance>
 
   <assemblyFile>VirtoCommerce.News.Web.dll</assemblyFile>
