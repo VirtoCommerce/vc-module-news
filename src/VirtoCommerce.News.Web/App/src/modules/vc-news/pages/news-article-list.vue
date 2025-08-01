@@ -176,6 +176,7 @@ const columns = ref<ITableColumns[]>([
     alwaysVisible: true,
     sortable: true,
     width: "10%",
+    type: "status-icon",
     mobilePosition: "status",
   },
   {
