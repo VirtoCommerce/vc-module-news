@@ -339,7 +339,7 @@ const {
   unarchiveNewsArticle,
   newsArticleCanArchive,
   newsArticleCanUnarchive,
-
+  
   cloneNewsArticle,
 
   newsArticleIsDirty,
@@ -418,6 +418,7 @@ if (props.param) {
     },
     isVisible: computed(() => hasAccess(createNewsArticlePermission)),
   });
+
   bladeToolbar.value.push({
     id: "archive",
     icon: "material-archive",
