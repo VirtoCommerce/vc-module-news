@@ -21,6 +21,7 @@
             "STORE": "Store",
             "IS_PUBLISHED": "Is published",
             "PUBLISH_DATE": "Publish date",
+            "IS_ARCHIVED": "Is archived",
             "CREATED_DATE": "Created date",
             "CREATED_BY": "Created by",
             "MODIFIED_DATE": "Modified date",
@@ -84,6 +85,8 @@
           "RESET": "Reset",
           "PUBLISH": "Publish",
           "UNPUBLISH": "Unpublish",
+          "ARCHIVE": "Archive",
+          "UNARCHIVE": "Unarchive",
           "CLONE": "Create copy"
         },
         "ALERTS": {

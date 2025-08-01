@@ -335,6 +335,11 @@ const {
   newsArticleCanPublish,
   newsArticleCanUnpublish,
 
+  archiveNewsArticle,
+  unarchiveNewsArticle,
+  newsArticleCanArchive,
+  newsArticleCanUnarchive,
+
   cloneNewsArticle,
 
   newsArticleIsDirty,
@@ -378,30 +383,6 @@ if (props.param) {
     },
   });
   bladeToolbar.value.push({
-    id: "publish",
-    icon: "material-visibility",
-    title: computed(() => t("VC_NEWS.PAGES.DETAILS.TOOLBAR.PUBLISH")),
-    disabled: computed(() => !newsArticleCanPublish?.value),
-    clickHandler: async () => {
-      await publishNewsArticle();
-      emit("parent:call", { method: "reload" });
-      emit("parent:call", { method: "reOpenDetailsBlade", args: newsArticle.value!.id });
-    },
-    isVisible: computed(() => hasAccess(publishNewsArticlePermission)),
-  });
-  bladeToolbar.value.push({
-    id: "unpublish",
-    icon: "material-visibility_off",
-    title: computed(() => t("VC_NEWS.PAGES.DETAILS.TOOLBAR.UNPUBLISH")),
-    disabled: computed(() => !newsArticleCanUnpublish?.value),
-    clickHandler: async () => {
-      await unpublishNewsArticle();
-      emit("parent:call", { method: "reload" });
-      emit("parent:call", { method: "reOpenDetailsBlade", args: newsArticle.value!.id });
-    },
-    isVisible: computed(() => hasAccess(publishNewsArticlePermission)),
-  });
-  bladeToolbar.value.push({
     id: "clone",
     icon: "material-content_copy",
     title: computed(() => t("VC_NEWS.PAGES.DETAILS.TOOLBAR.CLONE")),
@@ -412,6 +393,52 @@ if (props.param) {
       emit("parent:call", { method: "reOpenDetailsBlade", args: newsArticle.value!.id });
     },
     isVisible: computed(() => hasAccess(createNewsArticlePermission)),
+  });
+
+  bladeToolbar.value.push({
+    id: "publish",
+    icon: "material-visibility",
+    title: computed(() => t("VC_NEWS.PAGES.DETAILS.TOOLBAR.PUBLISH")),
+    clickHandler: async () => {
+      await publishNewsArticle();
+      emit("parent:call", { method: "reload" });
+      emit("parent:call", { method: "reOpenDetailsBlade", args: newsArticle.value!.id });
+    },
+    isVisible: computed(() => hasAccess(publishNewsArticlePermission) && newsArticleCanPublish?.value),
+  });
+  bladeToolbar.value.push({
+    id: "unpublish",
+    icon: "material-visibility_off",
+    title: computed(() => t("VC_NEWS.PAGES.DETAILS.TOOLBAR.UNPUBLISH")),
+    clickHandler: async () => {
+      await unpublishNewsArticle();
+      emit("parent:call", { method: "reload" });
+      emit("parent:call", { method: "reOpenDetailsBlade", args: newsArticle.value!.id });
+    },
+    isVisible: computed(() => hasAccess(publishNewsArticlePermission) && newsArticleCanUnpublish?.value),
+  });
+
+  bladeToolbar.value.push({
+    id: "archive",
+    icon: "material-archive",
+    title: computed(() => t("VC_NEWS.PAGES.DETAILS.TOOLBAR.ARCHIVE")),
+    clickHandler: async () => {
+      await archiveNewsArticle();
+      emit("parent:call", { method: "reload" });
+      emit("parent:call", { method: "reOpenDetailsBlade", args: newsArticle.value!.id });
+    },
+    isVisible: computed(() => hasAccess(publishNewsArticlePermission) && newsArticleCanArchive?.value),
+  });
+  bladeToolbar.value.push({
+    id: "unarchive",
+    icon: "material-unarchive",
+    title: computed(() => t("VC_NEWS.PAGES.DETAILS.TOOLBAR.UNARCHIVE")),
+    clickHandler: async () => {
+      await unarchiveNewsArticle();
+      emit("parent:call", { method: "reload" });
+      emit("parent:call", { method: "reOpenDetailsBlade", args: newsArticle.value!.id });
+    },
+    isVisible: computed(() => hasAccess(publishNewsArticlePermission) && newsArticleCanUnarchive?.value),
   });
 }
 

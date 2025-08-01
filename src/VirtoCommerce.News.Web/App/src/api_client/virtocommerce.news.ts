@@ -442,6 +442,102 @@ export class NewsArticleClient extends AuthApiBase {
         }
         return Promise.resolve<void>(null as any);
     }
+
+    /**
+     * @param body (optional) 
+     * @return No Content
+     */
+    archive(body?: string[] | undefined): Promise<void> {
+        let url_ = this.baseUrl + "/api/news/archive";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(body);
+
+        let options_: RequestInit = {
+            body: content_,
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json-patch+json",
+            }
+        };
+
+        return this.transformOptions(options_).then(transformedOptions_ => {
+            return this.http.fetch(url_, transformedOptions_);
+        }).then((_response: Response) => {
+            return this.processArchive(_response);
+        });
+    }
+
+    protected processArchive(response: Response): Promise<void> {
+        const status = response.status;
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        if (status === 204) {
+            return response.text().then((_responseText) => {
+            return;
+            });
+        } else if (status === 401) {
+            return response.text().then((_responseText) => {
+            return throwException("Unauthorized", status, _responseText, _headers);
+            });
+        } else if (status === 403) {
+            return response.text().then((_responseText) => {
+            return throwException("Forbidden", status, _responseText, _headers);
+            });
+        } else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve<void>(null as any);
+    }
+
+    /**
+     * @param body (optional) 
+     * @return No Content
+     */
+    unarchive(body?: string[] | undefined): Promise<void> {
+        let url_ = this.baseUrl + "/api/news/unarchive";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(body);
+
+        let options_: RequestInit = {
+            body: content_,
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json-patch+json",
+            }
+        };
+
+        return this.transformOptions(options_).then(transformedOptions_ => {
+            return this.http.fetch(url_, transformedOptions_);
+        }).then((_response: Response) => {
+            return this.processUnarchive(_response);
+        });
+    }
+
+    protected processUnarchive(response: Response): Promise<void> {
+        const status = response.status;
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        if (status === 204) {
+            return response.text().then((_responseText) => {
+            return;
+            });
+        } else if (status === 401) {
+            return response.text().then((_responseText) => {
+            return throwException("Unauthorized", status, _responseText, _headers);
+            });
+        } else if (status === 403) {
+            return response.text().then((_responseText) => {
+            return throwException("Forbidden", status, _responseText, _headers);
+            });
+        } else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve<void>(null as any);
+    }
 }
 
 export class NewsArticle implements INewsArticle {
@@ -449,6 +545,7 @@ export class NewsArticle implements INewsArticle {
     name?: string | undefined;
     isPublished?: boolean;
     publishDate?: Date | undefined;
+    isArchived?: boolean;
     localizedContents?: NewsArticleLocalizedContent[] | undefined;
     readonly seoObjectType?: string | undefined;
     seoInfos?: SeoInfo[] | undefined;
@@ -474,6 +571,7 @@ export class NewsArticle implements INewsArticle {
             this.name = _data["name"];
             this.isPublished = _data["isPublished"];
             this.publishDate = _data["publishDate"] ? new Date(_data["publishDate"].toString()) : <any>undefined;
+            this.isArchived = _data["isArchived"];
             if (Array.isArray(_data["localizedContents"])) {
                 this.localizedContents = [] as any;
                 for (let item of _data["localizedContents"])
@@ -511,6 +609,7 @@ export class NewsArticle implements INewsArticle {
         data["name"] = this.name;
         data["isPublished"] = this.isPublished;
         data["publishDate"] = this.publishDate ? this.publishDate.toISOString() : <any>undefined;
+        data["isArchived"] = this.isArchived;
         if (Array.isArray(this.localizedContents)) {
             data["localizedContents"] = [];
             for (let item of this.localizedContents)
@@ -541,6 +640,7 @@ export interface INewsArticle {
     name?: string | undefined;
     isPublished?: boolean;
     publishDate?: Date | undefined;
+    isArchived?: boolean;
     localizedContents?: NewsArticleLocalizedContent[] | undefined;
     seoObjectType?: string | undefined;
     seoInfos?: SeoInfo[] | undefined;

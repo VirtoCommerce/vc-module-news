@@ -28,6 +28,9 @@ public class NewsArticleEntity : AuditableEntity, IDataEntity<NewsArticleEntity,
 
     public DateTime? PublishDate { get; set; }
 
+    public bool IsArchived { get; set; }
+    private bool? _isArchivedValue;
+
     public virtual ObservableCollection<NewsArticleLocalizedContentEntity> LocalizedContents { get; set; } = new NullCollection<NewsArticleLocalizedContentEntity>();
 
     public virtual ObservableCollection<SeoInfoEntity> SeoInfos { get; set; } = new NullCollection<SeoInfoEntity>();
@@ -48,6 +51,7 @@ public class NewsArticleEntity : AuditableEntity, IDataEntity<NewsArticleEntity,
         model.Name = Name;
         model.IsPublished = IsPublished;
         model.PublishDate = PublishDate;
+        model.IsArchived = IsArchived;
 
         model.LocalizedContents = LocalizedContents.Select(x => x.ToModel()).ToList();
         model.SeoInfos = SeoInfos.Select(x => x.ToModel()).ToList();
@@ -76,6 +80,12 @@ public class NewsArticleEntity : AuditableEntity, IDataEntity<NewsArticleEntity,
         {
             IsPublished = model.IsPublishedValue.Value;
             _isPublishedValue = model.IsPublishedValue;
+        }
+
+        if (model.IsArchivedValue.HasValue)
+        {
+            IsArchived = model.IsArchivedValue.Value;
+            _isArchivedValue = model.IsArchivedValue;
         }
 
         if (model.LocalizedContents != null)
@@ -116,6 +126,11 @@ public class NewsArticleEntity : AuditableEntity, IDataEntity<NewsArticleEntity,
         if (_isPublishedValue.HasValue)
         {
             target.IsPublished = _isPublishedValue.Value;
+        }
+
+        if (_isArchivedValue.HasValue)
+        {
+            target.IsArchived = _isArchivedValue.Value;
         }
 
         if (!LocalizedContents.IsNullCollection())

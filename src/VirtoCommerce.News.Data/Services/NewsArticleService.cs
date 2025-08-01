@@ -72,6 +72,28 @@ public class NewsArticleService(
         await SaveChangesAsync(newsArticles);
     }
 
+    public async Task ArchiveAsync(IList<string> ids)
+    {
+        await ChangeIsArchivedAsync(ids, true);
+    }
+
+    public async Task UnarchiveAsync(IList<string> ids)
+    {
+        await ChangeIsArchivedAsync(ids, false);
+    }
+
+    protected virtual async Task ChangeIsArchivedAsync(IList<string> ids, bool isArchived)
+    {
+        var newsArticles = await GetAsync(ids);
+
+        foreach (var newsArticle in newsArticles)
+        {
+            newsArticle.SetIsArchived(isArchived);
+        }
+
+        await SaveChangesAsync(newsArticles);
+    }
+
     public virtual async Task<NewsArticle> Clone(NewsArticle newsArticle)
     {
         var clonedNewsArticle = newsArticle.CloneTyped();
