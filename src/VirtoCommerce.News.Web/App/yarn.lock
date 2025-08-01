@@ -2190,7 +2190,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@vc-shell/api-client-generator@npm:^1.1.67":
+"@vc-shell/api-client-generator@npm:^1.1.68":
   version: 1.1.68
   resolution: "@vc-shell/api-client-generator@npm:1.1.68"
   dependencies:
@@ -2206,7 +2206,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@vc-shell/config-generator@npm:^1.1.67":
+"@vc-shell/config-generator@npm:^1.1.68":
   version: 1.1.68
   resolution: "@vc-shell/config-generator@npm:1.1.68"
   dependencies:
@@ -2219,7 +2219,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@vc-shell/framework@npm:^1.1.67":
+"@vc-shell/framework@npm:^1.1.68":
   version: 1.1.68
   resolution: "@vc-shell/framework@npm:1.1.68"
   dependencies:
@@ -2268,7 +2268,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@vc-shell/release-config@npm:^1.1.67":
+"@vc-shell/release-config@npm:^1.1.68":
   version: 1.1.68
   resolution: "@vc-shell/release-config@npm:1.1.68"
   dependencies:
@@ -2282,7 +2282,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@vc-shell/ts-config@npm:^1.1.67":
+"@vc-shell/ts-config@npm:^1.1.68":
   version: 1.1.68
   resolution: "@vc-shell/ts-config@npm:1.1.68"
   checksum: 10/baf928e0bb0b6590a312ad8fe2babc88677c397e4031a56757492c575aa83428b000a378b3171e4edb2a1232b6565164274402d6fc5d3cf397ddbe757fa75a92
@@ -9063,11 +9063,11 @@ __metadata:
     "@types/node": "npm:^20.10.5"
     "@typescript-eslint/eslint-plugin": "npm:^6.16.0"
     "@typescript-eslint/parser": "npm:^6.16.0"
-    "@vc-shell/api-client-generator": "npm:^1.1.67"
-    "@vc-shell/config-generator": "npm:^1.1.67"
-    "@vc-shell/framework": "npm:^1.1.67"
-    "@vc-shell/release-config": "npm:^1.1.67"
-    "@vc-shell/ts-config": "npm:^1.1.67"
+    "@vc-shell/api-client-generator": "npm:^1.1.68"
+    "@vc-shell/config-generator": "npm:^1.1.68"
+    "@vc-shell/framework": "npm:^1.1.68"
+    "@vc-shell/release-config": "npm:^1.1.68"
+    "@vc-shell/ts-config": "npm:^1.1.68"
     "@vitejs/plugin-vue": "npm:^5.2.3"
     "@vue/eslint-config-prettier": "npm:^9.0.0"
     "@vue/eslint-config-typescript": "npm:^12.0.0"
