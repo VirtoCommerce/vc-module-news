@@ -1,4 +1,6 @@
 using System;
+using System.IO;
+using System.Threading.Tasks;
 using FluentValidation;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
@@ -7,6 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 using VirtoCommerce.News.Core;
 using VirtoCommerce.News.Core.Models;
 using VirtoCommerce.News.Core.Services;
+using VirtoCommerce.News.Data.ExportImport;
 using VirtoCommerce.News.Data.MySql;
 using VirtoCommerce.News.Data.PostgreSql;
 using VirtoCommerce.News.Data.Repositories;
@@ -15,6 +18,8 @@ using VirtoCommerce.News.Data.SqlServer;
 using VirtoCommerce.News.Data.Validation;
 using VirtoCommerce.News.ExperienceApi;
 using VirtoCommerce.News.ExperienceApi.Extensions;
+using VirtoCommerce.Platform.Core.Common;
+using VirtoCommerce.Platform.Core.ExportImport;
 using VirtoCommerce.Platform.Core.Modularity;
 using VirtoCommerce.Platform.Core.Security;
 using VirtoCommerce.Platform.Core.Settings;
@@ -26,8 +31,10 @@ using VirtoCommerce.Xapi.Core.Extensions;
 
 namespace VirtoCommerce.News.Web;
 
-public class Module : IModule, IHasConfiguration
+public class Module : IModule, IExportSupport, IImportSupport, IHasConfiguration
 {
+    private IApplicationBuilder _appBuilder;
+
     public ManifestModuleInfo ModuleInfo { get; set; }
     public IConfiguration Configuration { get; set; }
 
@@ -62,12 +69,16 @@ public class Module : IModule, IHasConfiguration
         serviceCollection.AddTransient<AbstractValidator<NewsArticle>, NewsArticleValidator>();
         serviceCollection.AddTransient<AbstractValidator<NewsArticleLocalizedContent>, NewsArticleLocalizedContentValidator>();
 
+        serviceCollection.AddTransient<NewsArticlesExportImport>();
+
         // GraphQL
         serviceCollection.AddExperienceApi();
     }
 
     public void PostInitialize(IApplicationBuilder appBuilder)
     {
+        _appBuilder = appBuilder;
+
         var serviceProvider = appBuilder.ApplicationServices;
 
         // Register settings
@@ -91,5 +102,15 @@ public class Module : IModule, IHasConfiguration
     public void Uninstall()
     {
         // Nothing to do here
+    }
+
+    public async Task ExportAsync(Stream outStream, ExportImportOptions options, Action<ExportImportProgressInfo> progressCallback, ICancellationToken cancellationToken)
+    {
+        await _appBuilder.ApplicationServices.GetRequiredService<NewsArticlesExportImport>().DoExportAsync(outStream, progressCallback, cancellationToken);
+    }
+
+    public async Task ImportAsync(Stream inputStream, ExportImportOptions options, Action<ExportImportProgressInfo> progressCallback, ICancellationToken cancellationToken)
+    {
+        await _appBuilder.ApplicationServices.GetRequiredService<NewsArticlesExportImport>().DoImportAsync(inputStream, progressCallback, cancellationToken);
     }
 }
