@@ -92,6 +92,17 @@ jobs:
         uses: VirtoCommerce/vc-github-actions/get-image-version@master
         id: artifact_ver
 
+      - name: Check if .deployment folder exists
+        id: check_deployment_folder
+        run: |
+          if [ -d ".deployment" ]; then
+            echo "exists=true" >> $GITHUB_OUTPUT
+            echo "Diagnostic: .deployment folder exists."
+          else
+            echo "exists=false" >> $GITHUB_OUTPUT
+            echo "Diagnostic: .deployment folder does NOT exist."
+          fi
+
       - name: Set VERSION_SUFFIX variable
         run: |
           if [ '${{ github.event_name }}' = 'workflow_dispatch' ]; then
@@ -237,15 +248,6 @@ jobs:
         if: success()
         run: |
           echo "Jira Upload Build Info response: ${{ steps.push_build_info_to_jira.outputs.response }}"
-
-      - name: Check if .deployment folder exists
-        id: check_deployment_folder
-        run: |
-          if [ -d ".deployment" ]; then
-            echo "exists=true" >> $GITHUB_OUTPUT
-          else
-            echo "exists=false" >> $GITHUB_OUTPUT
-          fi
 
   module-katalon-tests:
     if: ${{ ((github.ref == 'refs/heads/dev') && (github.event_name == 'push') && (needs.ci.outputs.run-e2e == 'true')) ||
