@@ -12,7 +12,7 @@ using VirtoCommerce.News.Data.Repositories;
 namespace VirtoCommerce.News.Data.PostgreSql.Migrations
 {
     [DbContext(typeof(NewsDbContext))]
-    [Migration("20250730210008_News_AddIsArchived")]
+    [Migration("20250805121400_News_AddIsArchived")]
     partial class News_AddIsArchived
     {
         /// <inheritdoc />
@@ -31,6 +31,9 @@ namespace VirtoCommerce.News.Data.PostgreSql.Migrations
                         .ValueGeneratedOnAdd()
                         .HasMaxLength(128)
                         .HasColumnType("character varying(128)");
+
+                    b.Property<DateTime?>("ArchiveDate")
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("CreatedBy")
                         .HasMaxLength(64)

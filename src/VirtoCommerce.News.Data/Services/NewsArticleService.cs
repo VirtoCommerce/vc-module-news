@@ -63,6 +63,7 @@ public class NewsArticleService(
         foreach (var newsArticle in newsArticles)
         {
             newsArticle.SetIsPublished(isPublished);
+
             if (isPublished && !newsArticle.PublishDate.HasValue)
             {
                 newsArticle.PublishDate = DateTime.UtcNow;
@@ -89,6 +90,11 @@ public class NewsArticleService(
         foreach (var newsArticle in newsArticles)
         {
             newsArticle.SetIsArchived(isArchived);
+
+            if (isArchived && !newsArticle.ArchiveDate.HasValue)
+            {
+                newsArticle.ArchiveDate = DateTime.UtcNow;
+            }
         }
 
         await SaveChangesAsync(newsArticles);
@@ -126,6 +132,8 @@ public class NewsArticleService(
     {
         newsArticle.IsPublished = false;
         newsArticle.PublishDate = null;
+        newsArticle.IsArchived = false;
+        newsArticle.ArchiveDate = null;
         newsArticle.Name = ClonedNewsArticlePrefix + newsArticle.Name;
 
         foreach (var seoInfo in newsArticle.SeoInfos)

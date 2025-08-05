@@ -546,6 +546,7 @@ export class NewsArticle implements INewsArticle {
     isPublished?: boolean;
     publishDate?: Date | undefined;
     isArchived?: boolean;
+    archiveDate?: Date | undefined;
     localizedContents?: NewsArticleLocalizedContent[] | undefined;
     readonly seoObjectType?: string | undefined;
     seoInfos?: SeoInfo[] | undefined;
@@ -572,6 +573,7 @@ export class NewsArticle implements INewsArticle {
             this.isPublished = _data["isPublished"];
             this.publishDate = _data["publishDate"] ? new Date(_data["publishDate"].toString()) : <any>undefined;
             this.isArchived = _data["isArchived"];
+            this.archiveDate = _data["archiveDate"] ? new Date(_data["archiveDate"].toString()) : <any>undefined;
             if (Array.isArray(_data["localizedContents"])) {
                 this.localizedContents = [] as any;
                 for (let item of _data["localizedContents"])
@@ -610,6 +612,7 @@ export class NewsArticle implements INewsArticle {
         data["isPublished"] = this.isPublished;
         data["publishDate"] = this.publishDate ? this.publishDate.toISOString() : <any>undefined;
         data["isArchived"] = this.isArchived;
+        data["archiveDate"] = this.archiveDate ? this.archiveDate.toISOString() : <any>undefined;
         if (Array.isArray(this.localizedContents)) {
             data["localizedContents"] = [];
             for (let item of this.localizedContents)
@@ -641,6 +644,7 @@ export interface INewsArticle {
     isPublished?: boolean;
     publishDate?: Date | undefined;
     isArchived?: boolean;
+    archiveDate?: Date | undefined;
     localizedContents?: NewsArticleLocalizedContent[] | undefined;
     seoObjectType?: string | undefined;
     seoInfos?: SeoInfo[] | undefined;

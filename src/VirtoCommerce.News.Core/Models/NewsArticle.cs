@@ -22,6 +22,8 @@ public class NewsArticle : AuditableEntity, ICloneable, ISeoSupport
 
     public bool IsArchived { get; set; }
 
+    public DateTime? ArchiveDate { get; set; }
+
     [JsonIgnore]
     public bool? IsArchivedValue { get; private set; }
 

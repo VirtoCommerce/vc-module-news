@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
@@ -10,6 +11,12 @@ namespace VirtoCommerce.News.Data.MySql.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.AddColumn<DateTime>(
+                name: "ArchiveDate",
+                table: "NewsArticle",
+                type: "datetime(6)",
+                nullable: true);
+
             migrationBuilder.AddColumn<bool>(
                 name: "IsArchived",
                 table: "NewsArticle",
@@ -21,6 +28,10 @@ namespace VirtoCommerce.News.Data.MySql.Migrations
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropColumn(
+                name: "ArchiveDate",
+                table: "NewsArticle");
+
             migrationBuilder.DropColumn(
                 name: "IsArchived",
                 table: "NewsArticle");

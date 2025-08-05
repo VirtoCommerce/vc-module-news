@@ -22,6 +22,7 @@
             "IS_PUBLISHED": "Está publicado",
             "PUBLISH_DATE": "Fecha de publicación",
             "IS_ARCHIVED": "Está archivado",
+            "ARCHIVE_DATE": "Fecha de archivo",
             "CREATED_DATE": "Fecha de creación",
             "CREATED_BY": "Creado por",
             "MODIFIED_DATE": "Fecha de modificación",
@@ -44,6 +45,9 @@
           },
           "PUBLISH_DATE": {
             "LABEL": "Fecha de publicación"
+          },
+          "ARCHIVE_DATE": {
+            "LABEL": "Fecha de archivo"
           },
           "USER_GROUPS": {
             "LABEL": "Grupos de usuarios"

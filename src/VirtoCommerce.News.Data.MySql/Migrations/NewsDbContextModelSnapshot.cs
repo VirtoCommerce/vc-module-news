@@ -29,6 +29,9 @@ namespace VirtoCommerce.News.Data.MySql.Migrations
                         .HasMaxLength(128)
                         .HasColumnType("varchar(128)");
 
+                    b.Property<DateTime?>("ArchiveDate")
+                        .HasColumnType("datetime(6)");
+
                     b.Property<string>("CreatedBy")
                         .HasMaxLength(64)
                         .HasColumnType("varchar(64)");

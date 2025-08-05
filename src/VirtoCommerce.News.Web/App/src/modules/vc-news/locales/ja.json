@@ -22,6 +22,7 @@
             "IS_PUBLISHED": "公開済み",
             "PUBLISH_DATE": "公開日",
             "IS_ARCHIVED": "アーカイブされています",
+            "ARCHIVE_DATE": "アーカイブ日付",
             "CREATED_DATE": "作成日",
             "CREATED_BY": "作成者",
             "MODIFIED_DATE": "更新日",
@@ -44,6 +45,9 @@
           },
           "PUBLISH_DATE": {
             "LABEL": "公開日"
+          },
+          "ARCHIVE_DATE": {
+            "LABEL": "アーカイブ日付"
           },
           "USER_GROUPS": {
             "LABEL": "ユーザーグループ"

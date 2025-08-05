@@ -12,7 +12,7 @@ using VirtoCommerce.News.Data.Repositories;
 namespace VirtoCommerce.News.Data.SqlServer.Migrations
 {
     [DbContext(typeof(NewsDbContext))]
-    [Migration("20250730213027_News_AddIsArchived")]
+    [Migration("20250805121446_News_AddIsArchived")]
     partial class News_AddIsArchived
     {
         /// <inheritdoc />
@@ -31,6 +31,9 @@ namespace VirtoCommerce.News.Data.SqlServer.Migrations
                         .ValueGeneratedOnAdd()
                         .HasMaxLength(128)
                         .HasColumnType("nvarchar(128)");
+
+                    b.Property<DateTime?>("ArchiveDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("CreatedBy")
                         .HasMaxLength(64)
