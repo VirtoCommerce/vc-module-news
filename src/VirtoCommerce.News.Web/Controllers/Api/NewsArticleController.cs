@@ -91,4 +91,24 @@ public class NewsArticleController(INewsArticleService newsArticleService, INews
         await newsArticleService.UnpublishAsync(ids);
         return NoContent();
     }
+
+    [HttpPost]
+    [Route("archive")]
+    [Authorize(ModuleConstants.Security.Permissions.Publish)]
+    [ProducesResponseType(typeof(void), StatusCodes.Status204NoContent)]
+    public async Task<ActionResult> Archive([FromBody] string[] ids)
+    {
+        await newsArticleService.ArchiveAsync(ids);
+        return NoContent();
+    }
+
+    [HttpPost]
+    [Route("unarchive")]
+    [Authorize(ModuleConstants.Security.Permissions.Publish)]
+    [ProducesResponseType(typeof(void), StatusCodes.Status204NoContent)]
+    public async Task<ActionResult> Unarchive([FromBody] string[] ids)
+    {
+        await newsArticleService.UnarchiveAsync(ids);
+        return NoContent();
+    }
 }

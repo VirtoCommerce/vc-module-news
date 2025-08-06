@@ -33,6 +33,14 @@ export default () => {
     () => !newsArticleIsDirty.value && originalNewsArticle.value && originalNewsArticle.value.isPublished,
   );
 
+  const newsArticleCanArchive = computed(
+    () => !newsArticleIsDirty.value && originalNewsArticle.value && !originalNewsArticle.value.isArchived,
+  );
+
+  const newsArticleCanUnarchive = computed(
+    () => !newsArticleIsDirty.value && originalNewsArticle.value && originalNewsArticle.value.isArchived,
+  );
+
   const { loading: loadingNewsArticle, action: loadNewsArticle } = useAsync<{ id: string }>(
     async (args?: { id: string }) => {
       if (args) {
@@ -82,6 +90,26 @@ export default () => {
 
       if (newsArticle.value.id) {
         await apiClient.unpublish([newsArticle.value.id]);
+      }
+    }
+  });
+
+  const { loading: archivingNewsArticle, action: archiveNewsArticle } = useAsync(async () => {
+    if (newsArticle.value) {
+      const apiClient = await getNewsApiClient();
+
+      if (newsArticle.value.id) {
+        await apiClient.archive([newsArticle.value.id]);
+      }
+    }
+  });
+
+  const { loading: unarchivingNewsArticle, action: unarchiveNewsArticle } = useAsync(async () => {
+    if (newsArticle.value) {
+      const apiClient = await getNewsApiClient();
+
+      if (newsArticle.value.id) {
+        await apiClient.unarchive([newsArticle.value.id]);
       }
     }
   });
@@ -148,6 +176,8 @@ export default () => {
       savingNewsArticle,
       publishingNewsArticle,
       unpublishingNewsArticle,
+      archivingNewsArticle,
+      unarchivingNewsArticle,
       cloningNewsArticle,
     ),
 
@@ -155,6 +185,11 @@ export default () => {
     unpublishNewsArticle,
     newsArticleCanPublish,
     newsArticleCanUnpublish,
+
+    archiveNewsArticle,
+    unarchiveNewsArticle,
+    newsArticleCanArchive,
+    newsArticleCanUnarchive,
 
     cloneNewsArticle,
 

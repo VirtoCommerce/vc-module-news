@@ -21,6 +21,8 @@
             "STORE": "Magasin",
             "IS_PUBLISHED": "Publié",
             "PUBLISH_DATE": "Date de publication",
+            "IS_ARCHIVED": "Est archivé",
+            "ARCHIVE_DATE": "Date d'archivage",
             "CREATED_DATE": "Date de création",
             "CREATED_BY": "Créé par",
             "MODIFIED_DATE": "Date de modification",
@@ -43,6 +45,9 @@
           },
           "PUBLISH_DATE": {
             "LABEL": "Date de publication"
+          },
+          "ARCHIVE_DATE": {
+            "LABEL": "Date d'archivage"
           },
           "USER_GROUPS": {
             "LABEL": "Groupes d'utilisateurs"
@@ -84,6 +89,8 @@
           "RESET": "Réinitialiser",
           "PUBLISH": "Publier",
           "UNPUBLISH": "Désabonner",
+          "ARCHIVE": "Archiver",
+          "UNARCHIVE": "Désarchiver",
           "CLONE": "Créer une copie"
         },
         "ALERTS": {

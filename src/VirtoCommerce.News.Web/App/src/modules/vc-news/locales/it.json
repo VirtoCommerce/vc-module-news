@@ -21,6 +21,8 @@
             "STORE": "Negozio",
             "IS_PUBLISHED": "Pubblicato",
             "PUBLISH_DATE": "Data di pubblicazione",
+            "IS_ARCHIVED": "È archiviato",
+            "ARCHIVE_DATE": "Data di archiviazione",
             "CREATED_DATE": "Data di creazione",
             "CREATED_BY": "Creato da",
             "MODIFIED_DATE": "Data di modifica",
@@ -43,6 +45,9 @@
           },
           "PUBLISH_DATE": {
             "LABEL": "Data di pubblicazione"
+          },
+          "ARCHIVE_DATE": {
+            "LABEL": "Data di archiviazione"
           },
           "USER_GROUPS": {
             "LABEL": "Gruppi di utenti"
@@ -84,6 +89,8 @@
           "RESET": "Ripristina",
           "PUBLISH": "Pubblica",
           "UNPUBLISH": "Annulla pubblicazione",
+          "ARCHIVE": "Archivia",
+          "UNARCHIVE": "Dearchivia",
           "CLONE": "Crea copia"
         },
         "ALERTS": {
