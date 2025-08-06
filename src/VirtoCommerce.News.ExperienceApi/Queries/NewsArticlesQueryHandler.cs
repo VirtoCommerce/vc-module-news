@@ -49,7 +49,7 @@ public class NewsArticlesQueryHandler(
         if (result != null)
         {
             var settings = await newsArticleSettingsService.GetSettingsAsync(request.StoreId);
-            PostProcessResult([result], request.StoreId, request.LanguageCode, null, settings);
+            PostProcessResult([result], request.StoreId, request.LanguageCode, requestCertainDate: null, settings);
         }
 
         return result;
@@ -63,7 +63,7 @@ public class NewsArticlesQueryHandler(
 
         if (!result.Results.IsNullOrEmpty())
         {
-            PostProcessResult(result.Results, request.StoreId, request.LanguageCode, null, settings);
+            PostProcessResult(result.Results, request.StoreId, request.LanguageCode, requestCertainDate: null, settings);
         }
 
         return result;
