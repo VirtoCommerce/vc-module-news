@@ -12,7 +12,9 @@ namespace VirtoCommerce.News.Data.ExportImport;
 
 public class NewsArticlesExportImport(INewsArticleService newsArticleService, INewsArticleSearchService newsArticleSearchService, JsonSerializer serializer)
 {
-    private readonly int _batchSize = 50;
+    private const string NewsArticlesPropertyName = "NewsArticles";
+
+    private const int BatchSize = 50;
 
     public async Task DoExportAsync(Stream outStream, Action<ExportImportProgressInfo> progressCallback, ICancellationToken cancellationToken)
     {
@@ -25,11 +27,11 @@ public class NewsArticlesExportImport(INewsArticleService newsArticleService, IN
         using var writer = new JsonTextWriter(streamWriter);
 
         await writer.WriteStartObjectAsync();
-        await writer.WritePropertyNameAsync("NewsArticles");
+        await writer.WritePropertyNameAsync(NewsArticlesPropertyName);
 
         await writer.SerializeArrayWithPagingAsync(
             serializer,
-            _batchSize,
+            BatchSize,
             async (skip, take) =>
             {
                 return (GenericSearchResult<NewsArticle>)await newsArticleSearchService.SearchAsync(new NewsArticleSearchCriteria { Skip = skip, Take = take });
@@ -62,7 +64,7 @@ public class NewsArticlesExportImport(INewsArticleService newsArticleService, IN
                 continue;
             }
 
-            if (reader.Value.ToString() == "NewsArticles")
+            if (reader.Value.ToString() == NewsArticlesPropertyName)
             {
                 await reader.DeserializeArrayWithPagingAsync<NewsArticle>(
                     serializer,
