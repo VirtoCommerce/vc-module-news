@@ -68,7 +68,7 @@ public class NewsArticlesExportImport(INewsArticleService newsArticleService, IN
             {
                 await reader.DeserializeArrayWithPagingAsync<NewsArticle>(
                     serializer,
-                    _batchSize,
+                    BatchSize,
                     async items =>
                     {
                         foreach (var item in items)
