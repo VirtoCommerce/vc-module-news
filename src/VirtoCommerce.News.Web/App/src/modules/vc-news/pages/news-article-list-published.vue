@@ -67,13 +67,13 @@ export interface Emits {
 }
 
 defineOptions({
-  url: "/published",
+  url: "/list-published",
   name: "NewsArticleListPublished",
   isWorkspace: true,
   menuItem: {
     title: "VC_NEWS.MENU.PUBLISHED",
     icon: "lucide-file",
-    priority: 1,
+    priority: 30,
   },
 });
 

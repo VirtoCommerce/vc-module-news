@@ -67,13 +67,13 @@ export interface Emits {
 }
 
 defineOptions({
-  url: "/scheduled",
+  url: "/list-scheduled",
   name: "NewsArticleListScheduled",
   isWorkspace: true,
   menuItem: {
     title: "VC_NEWS.MENU.SCHEDULED",
     icon: "lucide-file",
-    priority: 1,
+    priority: 20,
   },
 });
 

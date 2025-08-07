@@ -1,7 +1,11 @@
 {
   "VC_NEWS": {
     "MENU": {
-      "TITLE": "Todas as notícias"
+      "ALL": "Tudo",
+      "PUBLISHED": "Publicado",
+      "DRAFTS": "Rascunhos",
+      "SCHEDULED": "Agendado",
+      "ARCHIVED": "Arquivado"
     },
     "PAGES": {
       "LIST": {
