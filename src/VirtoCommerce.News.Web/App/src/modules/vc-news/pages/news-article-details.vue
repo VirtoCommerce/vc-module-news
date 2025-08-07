@@ -252,7 +252,7 @@ const props = withDefaults(defineProps<Props>(), {
 });
 
 defineOptions({
-  url: "/vc-news-details",
+  url: "/details",
   name: "NewsArticleDetails",
 });
 

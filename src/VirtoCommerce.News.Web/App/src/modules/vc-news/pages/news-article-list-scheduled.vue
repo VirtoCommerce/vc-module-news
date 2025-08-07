@@ -67,11 +67,11 @@ export interface Emits {
 }
 
 defineOptions({
-  url: "/vc-news",
-  name: "NewsArticleList",
+  url: "/scheduled",
+  name: "NewsArticleListScheduled",
   isWorkspace: true,
   menuItem: {
-    title: "VC_NEWS.MENU.TITLE",
+    title: "VC_NEWS.MENU.SCHEDULED",
     icon: "lucide-file",
     priority: 1,
   },
@@ -94,9 +94,9 @@ const {
   newsArticlesCount,
   pagesCount,
   pageIndex,
-  searchNewsArticles,
   searchQuery,
-  loadingNewsArticles,
+  searchNewsArticlesScheduled: searchNewsArticles,
+  loadingNewsArticlesScheduled :loadingNewsArticles,
   deleteNewsArticles,
 } = useNewsArticleList();
 const { createNewsArticlePermission, deleteNewsArticlePermission } = useNewsArticlePermissions();
