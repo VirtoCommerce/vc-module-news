@@ -77,7 +77,7 @@ public class NewsArticleController(INewsArticleService newsArticleService, INews
     [Authorize(ModuleConstants.Security.Permissions.Read)]
     public async Task<ActionResult<NewsArticleSearchResult>> SearchPublished([FromBody] NewsArticleSearchCriteria criteria)
     {
-        //TODO
+        criteria.Status = NewsArticleStatusEnum.Published;
         var result = await newsArticleSearchService.SearchNoCloneAsync(criteria);
         return Ok(result);
     }
@@ -87,7 +87,7 @@ public class NewsArticleController(INewsArticleService newsArticleService, INews
     [Authorize(ModuleConstants.Security.Permissions.Read)]
     public async Task<ActionResult<NewsArticleSearchResult>> SearchScheduled([FromBody] NewsArticleSearchCriteria criteria)
     {
-        //TODO
+        criteria.Status = NewsArticleStatusEnum.Scheduled;
         var result = await newsArticleSearchService.SearchNoCloneAsync(criteria);
         return Ok(result);
     }
@@ -97,7 +97,7 @@ public class NewsArticleController(INewsArticleService newsArticleService, INews
     [Authorize(ModuleConstants.Security.Permissions.Read)]
     public async Task<ActionResult<NewsArticleSearchResult>> SearchArchived([FromBody] NewsArticleSearchCriteria criteria)
     {
-        //TODO
+        criteria.Status = NewsArticleStatusEnum.Archived;
         var result = await newsArticleSearchService.SearchNoCloneAsync(criteria);
         return Ok(result);
     }
@@ -107,7 +107,7 @@ public class NewsArticleController(INewsArticleService newsArticleService, INews
     [Authorize(ModuleConstants.Security.Permissions.Read)]
     public async Task<ActionResult<NewsArticleSearchResult>> SearchDrafts([FromBody] NewsArticleSearchCriteria criteria)
     {
-        //TODO
+        criteria.Status = NewsArticleStatusEnum.Draft;
         var result = await newsArticleSearchService.SearchNoCloneAsync(criteria);
         return Ok(result);
     }
