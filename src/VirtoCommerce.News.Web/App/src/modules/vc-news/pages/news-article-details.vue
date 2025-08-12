@@ -80,6 +80,19 @@
           multivalue
         />
 
+        <VcSwitch
+          v-model="newsArticle.isSharingAllowed"
+          :label="$t('VC_NEWS.PAGES.DETAILS.FORM.IS_SHARING_ALLOWED.LABEL')"
+        />
+
+        <VcMultivalue
+          v-model="tagsSelected"
+          :label="$t('VC_NEWS.PAGES.DETAILS.FORM.TAGS.LABEL')" 
+          option-value="id"
+          option-label="title"
+          :multivalue="false"
+        />
+
         <Field
           v-slot="{ errors, errorMessage, handleChange }"
           :label="$t('VC_NEWS.PAGES.DETAILS.FORM.CONTENT_TITLE.LABEL')"
@@ -278,6 +291,15 @@ const userGroupsSelected = computed({
   },
   set(newValue) {
     newsArticle.value!.userGroups = newValue.map((x) => x.id);
+  },
+}); 
+
+const tagsSelected = computed({
+  get() {
+    return newsArticle.value?.tags?.map((x) => ({ id: x, title: x })) as [];
+  },
+  set(newValue) {
+    newsArticle.value!.tags = newValue.map((x) => (x as { id: string, title: string}).title);
   },
 });
 

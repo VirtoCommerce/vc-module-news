@@ -52,6 +52,12 @@
           "USER_GROUPS": {
             "LABEL": "Groupes d'utilisateurs"
           },
+          "IS_SHARING_ALLOWED": {
+            "LABEL": "Autoriser le partage"
+          },
+          "TAGS": {
+            "LABEL": "Étiquettes"
+          },
           "CONTENT_TITLE": {
             "LABEL": "Titre"
           },

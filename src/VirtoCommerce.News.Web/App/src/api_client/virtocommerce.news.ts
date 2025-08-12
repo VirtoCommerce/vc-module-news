@@ -547,10 +547,14 @@ export class NewsArticle implements INewsArticle {
     publishDate?: Date | undefined;
     isArchived?: boolean;
     archiveDate?: Date | undefined;
+    isSharingAllowed?: boolean;
     localizedContents?: NewsArticleLocalizedContent[] | undefined;
     readonly seoObjectType?: string | undefined;
     seoInfos?: SeoInfo[] | undefined;
     userGroups?: string[] | undefined;
+    author?: NewsArticleAuthor | undefined;
+    tags?: string[] | undefined;
+    comments?: NewsArticleComment[] | undefined;
     createdDate?: Date;
     modifiedDate?: Date | undefined;
     createdBy?: string | undefined;
@@ -574,6 +578,7 @@ export class NewsArticle implements INewsArticle {
             this.publishDate = _data["publishDate"] ? new Date(_data["publishDate"].toString()) : <any>undefined;
             this.isArchived = _data["isArchived"];
             this.archiveDate = _data["archiveDate"] ? new Date(_data["archiveDate"].toString()) : <any>undefined;
+            this.isSharingAllowed = _data["isSharingAllowed"];
             if (Array.isArray(_data["localizedContents"])) {
                 this.localizedContents = [] as any;
                 for (let item of _data["localizedContents"])
@@ -589,6 +594,17 @@ export class NewsArticle implements INewsArticle {
                 this.userGroups = [] as any;
                 for (let item of _data["userGroups"])
                     this.userGroups!.push(item);
+            }
+            this.author = _data["author"] ? NewsArticleAuthor.fromJS(_data["author"]) : <any>undefined;
+            if (Array.isArray(_data["tags"])) {
+                this.tags = [] as any;
+                for (let item of _data["tags"])
+                    this.tags!.push(item);
+            }
+            if (Array.isArray(_data["comments"])) {
+                this.comments = [] as any;
+                for (let item of _data["comments"])
+                    this.comments!.push(NewsArticleComment.fromJS(item));
             }
             this.createdDate = _data["createdDate"] ? new Date(_data["createdDate"].toString()) : <any>undefined;
             this.modifiedDate = _data["modifiedDate"] ? new Date(_data["modifiedDate"].toString()) : <any>undefined;
@@ -613,6 +629,7 @@ export class NewsArticle implements INewsArticle {
         data["publishDate"] = this.publishDate ? this.publishDate.toISOString() : <any>undefined;
         data["isArchived"] = this.isArchived;
         data["archiveDate"] = this.archiveDate ? this.archiveDate.toISOString() : <any>undefined;
+        data["isSharingAllowed"] = this.isSharingAllowed;
         if (Array.isArray(this.localizedContents)) {
             data["localizedContents"] = [];
             for (let item of this.localizedContents)
@@ -628,6 +645,17 @@ export class NewsArticle implements INewsArticle {
             data["userGroups"] = [];
             for (let item of this.userGroups)
                 data["userGroups"].push(item);
+        }
+        data["author"] = this.author ? this.author.toJSON() : <any>undefined;
+        if (Array.isArray(this.tags)) {
+            data["tags"] = [];
+            for (let item of this.tags)
+                data["tags"].push(item);
+        }
+        if (Array.isArray(this.comments)) {
+            data["comments"] = [];
+            for (let item of this.comments)
+                data["comments"].push(item.toJSON());
         }
         data["createdDate"] = this.createdDate ? this.createdDate.toISOString() : <any>undefined;
         data["modifiedDate"] = this.modifiedDate ? this.modifiedDate.toISOString() : <any>undefined;
@@ -645,10 +673,130 @@ export interface INewsArticle {
     publishDate?: Date | undefined;
     isArchived?: boolean;
     archiveDate?: Date | undefined;
+    isSharingAllowed?: boolean;
     localizedContents?: NewsArticleLocalizedContent[] | undefined;
     seoObjectType?: string | undefined;
     seoInfos?: SeoInfo[] | undefined;
     userGroups?: string[] | undefined;
+    author?: NewsArticleAuthor | undefined;
+    tags?: string[] | undefined;
+    comments?: NewsArticleComment[] | undefined;
+    createdDate?: Date;
+    modifiedDate?: Date | undefined;
+    createdBy?: string | undefined;
+    modifiedBy?: string | undefined;
+    id?: string | undefined;
+}
+
+export class NewsArticleAuthor implements INewsArticleAuthor {
+    photoUrl?: string | undefined;
+    name?: string | undefined;
+    createdDate?: Date;
+    modifiedDate?: Date | undefined;
+    createdBy?: string | undefined;
+    modifiedBy?: string | undefined;
+    id?: string | undefined;
+
+    constructor(data?: INewsArticleAuthor) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.photoUrl = _data["photoUrl"];
+            this.name = _data["name"];
+            this.createdDate = _data["createdDate"] ? new Date(_data["createdDate"].toString()) : <any>undefined;
+            this.modifiedDate = _data["modifiedDate"] ? new Date(_data["modifiedDate"].toString()) : <any>undefined;
+            this.createdBy = _data["createdBy"];
+            this.modifiedBy = _data["modifiedBy"];
+            this.id = _data["id"];
+        }
+    }
+
+    static fromJS(data: any): NewsArticleAuthor {
+        data = typeof data === 'object' ? data : {};
+        let result = new NewsArticleAuthor();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["photoUrl"] = this.photoUrl;
+        data["name"] = this.name;
+        data["createdDate"] = this.createdDate ? this.createdDate.toISOString() : <any>undefined;
+        data["modifiedDate"] = this.modifiedDate ? this.modifiedDate.toISOString() : <any>undefined;
+        data["createdBy"] = this.createdBy;
+        data["modifiedBy"] = this.modifiedBy;
+        data["id"] = this.id;
+        return data;
+    }
+}
+
+export interface INewsArticleAuthor {
+    photoUrl?: string | undefined;
+    name?: string | undefined;
+    createdDate?: Date;
+    modifiedDate?: Date | undefined;
+    createdBy?: string | undefined;
+    modifiedBy?: string | undefined;
+    id?: string | undefined;
+}
+
+export class NewsArticleComment implements INewsArticleComment {
+    text?: string | undefined;
+    createdDate?: Date;
+    modifiedDate?: Date | undefined;
+    createdBy?: string | undefined;
+    modifiedBy?: string | undefined;
+    id?: string | undefined;
+
+    constructor(data?: INewsArticleComment) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.text = _data["text"];
+            this.createdDate = _data["createdDate"] ? new Date(_data["createdDate"].toString()) : <any>undefined;
+            this.modifiedDate = _data["modifiedDate"] ? new Date(_data["modifiedDate"].toString()) : <any>undefined;
+            this.createdBy = _data["createdBy"];
+            this.modifiedBy = _data["modifiedBy"];
+            this.id = _data["id"];
+        }
+    }
+
+    static fromJS(data: any): NewsArticleComment {
+        data = typeof data === 'object' ? data : {};
+        let result = new NewsArticleComment();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["text"] = this.text;
+        data["createdDate"] = this.createdDate ? this.createdDate.toISOString() : <any>undefined;
+        data["modifiedDate"] = this.modifiedDate ? this.modifiedDate.toISOString() : <any>undefined;
+        data["createdBy"] = this.createdBy;
+        data["modifiedBy"] = this.modifiedBy;
+        data["id"] = this.id;
+        return data;
+    }
+}
+
+export interface INewsArticleComment {
+    text?: string | undefined;
     createdDate?: Date;
     modifiedDate?: Date | undefined;
     createdBy?: string | undefined;

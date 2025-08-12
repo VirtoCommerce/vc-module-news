@@ -52,6 +52,12 @@
           "USER_GROUPS": {
             "LABEL": "用户组"
           },
+          "IS_SHARING_ALLOWED": {
+            "LABEL": "允许分享"
+          },
+          "TAGS": {
+            "LABEL": "标签"
+          },
           "CONTENT_TITLE": {
             "LABEL": "标题"
           },

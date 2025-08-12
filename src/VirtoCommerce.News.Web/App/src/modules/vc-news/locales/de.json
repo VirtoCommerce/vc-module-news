@@ -52,6 +52,12 @@
           "USER_GROUPS": {
             "LABEL": "Benutzergruppen"
           },
+          "IS_SHARING_ALLOWED": {
+            "LABEL": "Freigabe erlauben"
+          },
+          "TAGS": {
+            "LABEL": "Tags"
+          },
           "CONTENT_TITLE": {
             "LABEL": "Titel"
           },

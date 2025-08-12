@@ -52,6 +52,12 @@
           "USER_GROUPS": {
             "LABEL": "Группы пользователей"
           },
+          "IS_SHARING_ALLOWED": {
+            "LABEL": "Разрешить делиться"
+          },
+          "TAGS": {
+            "LABEL": "Теги"
+          },
           "CONTENT_TITLE": {
             "LABEL": "Заголовок"
           },
