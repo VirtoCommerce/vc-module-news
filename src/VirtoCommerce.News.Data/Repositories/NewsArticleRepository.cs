@@ -18,6 +18,12 @@ public class NewsArticleRepository(NewsDbContext dbContext, IUnitOfWork unitOfWo
 
     public IQueryable<NewsArticleUserGroupEntity> NewsArticleUserGroups => DbContext.Set<NewsArticleUserGroupEntity>();
 
+    public IQueryable<NewsArticleTagEntity> NewsArticleTags => DbContext.Set<NewsArticleTagEntity>();
+
+    public IQueryable<NewsArticleCommentEntity> NewsArticleComments => DbContext.Set<NewsArticleCommentEntity>();
+
+    public IQueryable<NewsArticleAuthorEntity> NewsArticleAuthors => DbContext.Set<NewsArticleAuthorEntity>();
+
     public virtual async Task<IList<NewsArticleEntity>> GetNewsArticlesByIdsAsync(IList<string> ids)
     {
         var result = await NewsArticles
@@ -38,6 +44,18 @@ public class NewsArticleRepository(NewsDbContext dbContext, IUnitOfWork unitOfWo
 
             await NewsArticleUserGroups
                 .Where(x => articleIds.Contains(x.NewsArticleId))
+                .LoadAsync();
+
+            await NewsArticleTags
+                .Where(x => articleIds.Contains(x.NewsArticleId))
+                .LoadAsync();
+
+            await NewsArticleComments
+                .Where(x => articleIds.Contains(x.NewsArticleId))
+                .LoadAsync();
+
+            await NewsArticleAuthors
+                .Where(author => author.NewsArticles.Any(article => articleIds.Contains(article.Id)))
                 .LoadAsync();
         }
 
