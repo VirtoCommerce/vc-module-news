@@ -33,11 +33,22 @@ public class NewsArticleEntity : AuditableEntity, IDataEntity<NewsArticleEntity,
 
     public DateTime? ArchiveDate { get; set; }
 
+    public bool IsSharingAllowed { get; set; }
+
+    [StringLength(IdLength)]
+    public string AuthorId { get; set; }
+
     public virtual ObservableCollection<NewsArticleLocalizedContentEntity> LocalizedContents { get; set; } = new NullCollection<NewsArticleLocalizedContentEntity>();
 
     public virtual ObservableCollection<SeoInfoEntity> SeoInfos { get; set; } = new NullCollection<SeoInfoEntity>();
 
     public virtual ObservableCollection<NewsArticleUserGroupEntity> UserGroups { get; set; } = new NullCollection<NewsArticleUserGroupEntity>();
+
+    public virtual NewsArticleAuthorEntity Author { get; set; }
+
+    public virtual ObservableCollection<NewsArticleTagEntity> Tags { get; set; } = new NullCollection<NewsArticleTagEntity>();
+
+    public virtual ObservableCollection<NewsArticleCommentEntity> Comments { get; set; } = new NullCollection<NewsArticleCommentEntity>();
 
     public NewsArticle ToModel(NewsArticle model)
     {
@@ -55,10 +66,14 @@ public class NewsArticleEntity : AuditableEntity, IDataEntity<NewsArticleEntity,
         model.ArchiveDate = ArchiveDate;
         model.IsPublished = IsPublished;
         model.IsArchived = IsArchived;
+        model.IsSharingAllowed = IsSharingAllowed;
 
         model.LocalizedContents = LocalizedContents.Select(x => x.ToModel()).ToList();
         model.SeoInfos = SeoInfos.Select(x => x.ToModel()).ToList();
         model.UserGroups = UserGroups.OrderBy(x => x.Group).Select(x => x.Group).ToList();
+        model.Author = Author?.ToModel(new NewsArticleAuthor());
+        model.Tags = Tags.OrderBy(x => x.Tag).Select(x => x.Tag).ToList();
+        model.Comments = Comments.Select(x => x.ToModel()).ToList();
 
         return model;
     }
@@ -79,6 +94,7 @@ public class NewsArticleEntity : AuditableEntity, IDataEntity<NewsArticleEntity,
         Name = model.Name;
         PublishDate = model.PublishDate;
         ArchiveDate = model.ArchiveDate;
+        IsSharingAllowed = model.IsSharingAllowed;
 
         if (model.IsPublishedValue.HasValue)
         {
@@ -116,6 +132,30 @@ public class NewsArticleEntity : AuditableEntity, IDataEntity<NewsArticleEntity,
             }
         }
 
+        if (model.Author != null)
+        {
+            Author = AbstractTypeFactory<NewsArticleAuthorEntity>.TryCreateInstance().FromModel(model.Author, pkMap);
+        }
+
+        if (model.Tags != null)
+        {
+            Tags = [];
+
+            foreach (var tag in model.Tags)
+            {
+                var tagEntity = AbstractTypeFactory<NewsArticleTagEntity>.TryCreateInstance();
+                tagEntity.Tag = tag;
+                tagEntity.NewsArticleId = model.Id;
+
+                Tags.Add(tagEntity);
+            }
+        }
+
+        if (model.Comments != null)
+        {
+            Comments = new ObservableCollection<NewsArticleCommentEntity>(model.Comments.Select(x => AbstractTypeFactory<NewsArticleCommentEntity>.TryCreateInstance().FromModel(x, pkMap)));
+        }
+
         return this;
     }
 
@@ -127,6 +167,7 @@ public class NewsArticleEntity : AuditableEntity, IDataEntity<NewsArticleEntity,
         target.Name = Name;
         target.PublishDate = PublishDate;
         target.ArchiveDate = ArchiveDate;
+        target.IsSharingAllowed = IsSharingAllowed;
 
         if (_isPublishedValue.HasValue)
         {
@@ -152,6 +193,22 @@ public class NewsArticleEntity : AuditableEntity, IDataEntity<NewsArticleEntity,
         {
             var userGroupComparer = AnonymousComparer.Create((NewsArticleUserGroupEntity x) => x.Group);
             UserGroups.Patch(target.UserGroups, userGroupComparer, (sourceGroup, targetGroup) => targetGroup.Group = sourceGroup.Group);
+        }
+
+        if (Author != null)
+        {
+            Author.Patch(target.Author);
+        }
+
+        if (!Tags.IsNullCollection())
+        {
+            var tagComparer = AnonymousComparer.Create((NewsArticleTagEntity x) => x.Tag);
+            Tags.Patch(target.Tags, tagComparer, (sourceTag, targetTag) => targetTag.Tag = sourceTag.Tag);
+        }
+
+        if (!Comments.IsNullCollection())
+        {
+            Comments.Patch(target.Comments, (sourceComment, targetComment) => targetComment.Text = sourceComment.Text);
         }
     }
 }

@@ -36,6 +36,18 @@ public class NewsDbContext : DbContextBase
         modelBuilder.Entity<NewsArticleUserGroupEntity>().HasOne(x => x.NewsArticle).WithMany(x => x.UserGroups)
             .HasForeignKey(x => x.NewsArticleId).IsRequired().OnDelete(DeleteBehavior.Cascade);
 
+        modelBuilder.Entity<NewsArticleAuthorEntity>().ToEntityTable("NewsArticleAuthor");
+        modelBuilder.Entity<NewsArticleEntity>().HasOne(x => x.Author).WithMany(x => x.NewsArticles)
+            .HasForeignKey(x => x.AuthorId).OnDelete(DeleteBehavior.SetNull);
+
+        modelBuilder.Entity<NewsArticleTagEntity>().ToEntityTable("NewsArticleTag");
+        modelBuilder.Entity<NewsArticleTagEntity>().HasOne(x => x.NewsArticle).WithMany(x => x.Tags)
+            .HasForeignKey(x => x.NewsArticleId).IsRequired().OnDelete(DeleteBehavior.Cascade);
+
+        modelBuilder.Entity<NewsArticleCommentEntity>().ToEntityTable("NewsArticleComment");
+        modelBuilder.Entity<NewsArticleCommentEntity>().HasOne(x => x.NewsArticle).WithMany(x => x.Comments)
+            .HasForeignKey(x => x.NewsArticleId).IsRequired().OnDelete(DeleteBehavior.Cascade);
+
         switch (Database.ProviderName)
         {
             case "Pomelo.EntityFrameworkCore.MySql":
