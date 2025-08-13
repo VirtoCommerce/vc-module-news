@@ -53,12 +53,15 @@
             "LABEL": "Gruppi di utenti"
           },
           "PUBLISH_SCOPE": {
-            "LABEL": "Ambito di pubblicazione"
+            "LABEL": "Ambito di pubblicazione",
+            "VALUES": {
+              "Anonymous": "Anonimo",
+              "Authorized": "Autorizzato"
+            }
           },
           "TAGS": {
             "LABEL": "Tag"
-          }
-          ,
+          },
           "CONTENT_TITLE": {
             "LABEL": "Titolo"
           },

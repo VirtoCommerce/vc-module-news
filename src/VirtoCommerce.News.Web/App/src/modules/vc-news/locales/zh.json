@@ -53,7 +53,11 @@
             "LABEL": "用户组"
           },
           "PUBLISH_SCOPE": {
-            "LABEL": "发布范围"
+            "LABEL": "发布范围",
+            "VALUES": {
+              "Anonymous": "匿名",
+              "Authorized": "授权"
+            }
           },
           "TAGS": {
             "LABEL": "标签"

@@ -53,7 +53,11 @@
             "LABEL": "Grupos de usuarios"
           },
           "PUBLISH_SCOPE": {
-            "LABEL": "Alcance de publicación"
+            "LABEL": "Alcance de publicación",
+            "VALUES": {
+              "Anonymous": "Anónimo",
+              "Authorized": "Autorizado"
+            }
           },
           "TAGS": {
             "LABEL": "Etiquetas"

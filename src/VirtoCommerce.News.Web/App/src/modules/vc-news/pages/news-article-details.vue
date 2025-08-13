@@ -332,7 +332,12 @@ const tagsSelected = computed({
   },
 });
 
-const publishScopeOptions = computed(() => newsArticleOptions.value?.publishScopes?.map((x) => ({ id: x, title: x })));
+const publishScopeOptions = computed(() =>
+  newsArticleOptions.value?.publishScopes?.map((x) => ({
+    id: x,
+    title: t(`VC_NEWS.PAGES.DETAILS.FORM.PUBLISH_SCOPE.VALUES.${x}`),
+  })),
+);
 
 //localization
 const { languages, loadLanguages, loadingLanguages } = useLocalization();
