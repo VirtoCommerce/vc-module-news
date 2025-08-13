@@ -115,7 +115,7 @@ public class NewsArticleController(INewsArticleService newsArticleService, INews
 
     [HttpGet]
     [Route("get-options")]
-    [Authorize(ModuleConstants.Security.Permissions.Update)]
+    [Authorize(ModuleConstants.Security.Permissions.Read)]
     public async Task<ActionResult<NewsArticleOptions>> GetOptions(string languageCode)
     {
         var result = new NewsArticleOptions
