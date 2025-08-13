@@ -1,5 +1,6 @@
 using System.Reflection;
 using Microsoft.EntityFrameworkCore;
+using VirtoCommerce.News.Core.Models;
 using VirtoCommerce.News.Data.Models;
 using VirtoCommerce.Platform.Data.Extensions;
 using VirtoCommerce.Platform.Data.Infrastructure;
@@ -23,6 +24,7 @@ public class NewsDbContext : DbContextBase
         base.OnModelCreating(modelBuilder);
 
         modelBuilder.Entity<NewsArticleEntity>().ToAuditableEntityTable("NewsArticle");
+        modelBuilder.Entity<NewsArticleEntity>().Property(x => x.PublishScope).HasDefaultValueSql($"'{NewsArticlePublishScopes.Anonymous}'");
 
         modelBuilder.Entity<NewsArticleLocalizedContentEntity>().ToAuditableEntityTable("NewsArticleLocalizedContent");
         modelBuilder.Entity<NewsArticleLocalizedContentEntity>().HasOne(x => x.NewsArticle).WithMany(x => x.LocalizedContents)
@@ -36,7 +38,7 @@ public class NewsDbContext : DbContextBase
         modelBuilder.Entity<NewsArticleUserGroupEntity>().HasOne(x => x.NewsArticle).WithMany(x => x.UserGroups)
             .HasForeignKey(x => x.NewsArticleId).IsRequired().OnDelete(DeleteBehavior.Cascade);
 
-        modelBuilder.Entity<NewsArticleLocalizedTagEntity>().ToEntityTable("NewsArticleTag");
+        modelBuilder.Entity<NewsArticleLocalizedTagEntity>().ToEntityTable("NewsArticleLocalizedTag");
         modelBuilder.Entity<NewsArticleLocalizedTagEntity>().HasOne(x => x.NewsArticle).WithMany(x => x.LocalizedTags)
             .HasForeignKey(x => x.NewsArticleId).IsRequired().OnDelete(DeleteBehavior.Cascade);
 

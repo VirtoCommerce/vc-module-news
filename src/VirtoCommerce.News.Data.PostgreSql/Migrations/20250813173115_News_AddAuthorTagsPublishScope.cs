@@ -22,10 +22,11 @@ namespace VirtoCommerce.News.Data.PostgreSql.Migrations
                 table: "NewsArticle",
                 type: "character varying(32)",
                 maxLength: 32,
-                nullable: true);
+                nullable: false,
+                defaultValueSql: "'Anonymous'");
 
             migrationBuilder.CreateTable(
-                name: "NewsArticleTag",
+                name: "NewsArticleLocalizedTag",
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "character varying(128)", maxLength: 128, nullable: false),
@@ -35,9 +36,9 @@ namespace VirtoCommerce.News.Data.PostgreSql.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_NewsArticleTag", x => x.Id);
+                    table.PrimaryKey("PK_NewsArticleLocalizedTag", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_NewsArticleTag_NewsArticle_NewsArticleId",
+                        name: "FK_NewsArticleLocalizedTag_NewsArticle_NewsArticleId",
                         column: x => x.NewsArticleId,
                         principalTable: "NewsArticle",
                         principalColumn: "Id",
@@ -45,8 +46,8 @@ namespace VirtoCommerce.News.Data.PostgreSql.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_NewsArticleTag_NewsArticleId",
-                table: "NewsArticleTag",
+                name: "IX_NewsArticleLocalizedTag_NewsArticleId",
+                table: "NewsArticleLocalizedTag",
                 column: "NewsArticleId");
         }
 
@@ -54,7 +55,7 @@ namespace VirtoCommerce.News.Data.PostgreSql.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "NewsArticleTag");
+                name: "NewsArticleLocalizedTag");
 
             migrationBuilder.DropColumn(
                 name: "AuthorId",

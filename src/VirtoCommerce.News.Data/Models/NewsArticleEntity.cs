@@ -36,6 +36,7 @@ public class NewsArticleEntity : AuditableEntity, IDataEntity<NewsArticleEntity,
     [StringLength(IdLength)]
     public string AuthorId { get; set; }
 
+    [Required]
     [StringLength(Length32)]
     public string PublishScope { get; set; }
 

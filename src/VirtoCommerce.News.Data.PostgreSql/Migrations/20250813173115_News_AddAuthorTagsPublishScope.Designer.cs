@@ -12,7 +12,7 @@ using VirtoCommerce.News.Data.Repositories;
 namespace VirtoCommerce.News.Data.PostgreSql.Migrations
 {
     [DbContext(typeof(NewsDbContext))]
-    [Migration("20250813144326_News_AddAuthorTagsPublishScope")]
+    [Migration("20250813173115_News_AddAuthorTagsPublishScope")]
     partial class News_AddAuthorTagsPublishScope
     {
         /// <inheritdoc />
@@ -68,8 +68,11 @@ namespace VirtoCommerce.News.Data.PostgreSql.Migrations
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("PublishScope")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
                         .HasMaxLength(32)
-                        .HasColumnType("character varying(32)");
+                        .HasColumnType("character varying(32)")
+                        .HasDefaultValueSql("'Anonymous'");
 
                     b.Property<string>("StoreId")
                         .IsRequired()
@@ -157,7 +160,7 @@ namespace VirtoCommerce.News.Data.PostgreSql.Migrations
 
                     b.HasIndex("NewsArticleId");
 
-                    b.ToTable("NewsArticleTag", (string)null);
+                    b.ToTable("NewsArticleLocalizedTag", (string)null);
                 });
 
             modelBuilder.Entity("VirtoCommerce.News.Data.Models.NewsArticleUserGroupEntity", b =>
