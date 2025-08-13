@@ -181,7 +181,7 @@ const columns = ref<ITableColumns[]>([
     alwaysVisible: true,
     sortable: true,
     width: "30%",
-    type: "date-time"
+    type: "date-time",
   },
   {
     id: "isArchived",
@@ -196,15 +196,15 @@ const columns = ref<ITableColumns[]>([
     alwaysVisible: false,
     sortable: true,
     width: "30%",
-    type: "date-time"
+    type: "date-time",
   },
   {
     id: "createdDate",
-    title: computed(() => t("VC_NEWS.PAGES.LIST.TABLE.HEADER.CREATED_DATE")), 
+    title: computed(() => t("VC_NEWS.PAGES.LIST.TABLE.HEADER.CREATED_DATE")),
     visible: false,
     sortable: true,
     width: "30%",
-    type: "date-time" 
+    type: "date-time",
   },
   {
     id: "createdBy",
@@ -215,11 +215,11 @@ const columns = ref<ITableColumns[]>([
   },
   {
     id: "modifiedDate",
-    title: computed(() => t("VC_NEWS.PAGES.LIST.TABLE.HEADER.MODIFIED_DATE")), 
+    title: computed(() => t("VC_NEWS.PAGES.LIST.TABLE.HEADER.MODIFIED_DATE")),
     visible: false,
     sortable: true,
     width: "30%",
-    type: "date-time"
+    type: "date-time",
   },
   {
     id: "modifiedBy",
@@ -233,7 +233,7 @@ const columns = ref<ITableColumns[]>([
     title: computed(() => t("VC_NEWS.PAGES.LIST.TABLE.HEADER.ID")),
     visible: false,
     width: "30%",
-  }
+  },
 ]);
 
 const title = computed(() => t("VC_NEWS.PAGES.LIST.TITLE"));

@@ -56,8 +56,8 @@
             @update:model-value="handleChange"
           />
         </Field>
-        
-        <div class="tw-flex tw-flex-row tw-gap-4"> 
+
+        <div class="tw-flex tw-flex-row tw-gap-4">
           <VcInput
             v-model="newsArticle.publishDate"
             type="datetime-local"
@@ -87,7 +87,7 @@
 
         <VcMultivalue
           v-model="tagsSelected"
-          :label="$t('VC_NEWS.PAGES.DETAILS.FORM.TAGS.LABEL')" 
+          :label="$t('VC_NEWS.PAGES.DETAILS.FORM.TAGS.LABEL')"
           option-value="id"
           option-label="title"
           :multivalue="false"
@@ -294,16 +294,21 @@ const userGroupsSelected = computed({
   set(newValue) {
     newsArticle.value!.userGroups = newValue.map((x) => x.id);
   },
-}); 
+});
 
 const tagsSelected = computed({
   get() {
-    return newsArticle.value?.localizedTags?.filter((x) => x.languageCode === currentLocale.value).map((x) => ({ id: x.tag, title: x.tag }));
+    return newsArticle.value?.localizedTags
+      ?.filter((x) => x.languageCode === currentLocale.value)
+      .map((x) => ({ id: x.tag, title: x.tag }));
   },
   set(newValue) {
-    const newTags = newValue?.map((x) => (new NewsArticleLocalizedTag ({ tag: x.title, languageCode: currentLocale.value }  )));
-    newsArticle.value.localizedTags = newsArticle.value.localizedTags?.filter((x) => x.languageCode !== currentLocale.value) ?? []; 
-    if(newTags){ 
+    const newTags = newValue?.map(
+      (x) => new NewsArticleLocalizedTag({ tag: x.title, languageCode: currentLocale.value }),
+    );
+    newsArticle.value.localizedTags =
+      newsArticle.value.localizedTags?.filter((x) => x.languageCode !== currentLocale.value) ?? [];
+    if (newTags) {
       newsArticle.value.localizedTags.push(...newTags);
     }
   },
