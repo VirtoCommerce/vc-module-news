@@ -1,4 +1,3 @@
-﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
@@ -6,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace VirtoCommerce.News.Data.PostgreSql.Migrations
 {
     /// <inheritdoc />
-    public partial class News_AuthorTagsComments : Migration
+    public partial class News_AddAuthorTagsComments : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -71,6 +70,7 @@ namespace VirtoCommerce.News.Data.PostgreSql.Migrations
                 {
                     Id = table.Column<string>(type: "character varying(128)", maxLength: 128, nullable: false),
                     NewsArticleId = table.Column<string>(type: "character varying(128)", maxLength: 128, nullable: false),
+                    LanguageCode = table.Column<string>(type: "character varying(16)", maxLength: 16, nullable: false),
                     Tag = table.Column<string>(type: "character varying(64)", maxLength: 64, nullable: false)
                 },
                 constraints: table =>

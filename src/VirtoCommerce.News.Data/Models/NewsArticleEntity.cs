@@ -46,7 +46,7 @@ public class NewsArticleEntity : AuditableEntity, IDataEntity<NewsArticleEntity,
 
     public virtual NewsArticleAuthorEntity Author { get; set; }
 
-    public virtual ObservableCollection<NewsArticleTagEntity> Tags { get; set; } = new NullCollection<NewsArticleTagEntity>();
+    public virtual ObservableCollection<NewsArticleLocalizedTagEntity> LocalizedTags { get; set; } = new NullCollection<NewsArticleLocalizedTagEntity>();
 
     public virtual ObservableCollection<NewsArticleCommentEntity> Comments { get; set; } = new NullCollection<NewsArticleCommentEntity>();
 
@@ -72,7 +72,7 @@ public class NewsArticleEntity : AuditableEntity, IDataEntity<NewsArticleEntity,
         model.SeoInfos = SeoInfos.Select(x => x.ToModel()).ToList();
         model.UserGroups = UserGroups.OrderBy(x => x.Group).Select(x => x.Group).ToList();
         model.Author = Author?.ToModel(new NewsArticleAuthor());
-        model.Tags = Tags.OrderBy(x => x.Tag).Select(x => x.Tag).ToList();
+        model.LocalizedTags = LocalizedTags.Select(x => x.ToModel()).ToList();
         model.Comments = Comments.Select(x => x.ToModel()).ToList();
 
         return model;
@@ -137,18 +137,9 @@ public class NewsArticleEntity : AuditableEntity, IDataEntity<NewsArticleEntity,
             Author = AbstractTypeFactory<NewsArticleAuthorEntity>.TryCreateInstance().FromModel(model.Author, pkMap);
         }
 
-        if (model.Tags != null)
+        if (model.LocalizedTags != null)
         {
-            Tags = [];
-
-            foreach (var tag in model.Tags)
-            {
-                var tagEntity = AbstractTypeFactory<NewsArticleTagEntity>.TryCreateInstance();
-                tagEntity.Tag = tag;
-                tagEntity.NewsArticleId = model.Id;
-
-                Tags.Add(tagEntity);
-            }
+            LocalizedTags = new ObservableCollection<NewsArticleLocalizedTagEntity>(model.LocalizedTags.Select(x => AbstractTypeFactory<NewsArticleLocalizedTagEntity>.TryCreateInstance().FromModel(x, pkMap)));
         }
 
         if (model.Comments != null)
@@ -200,10 +191,9 @@ public class NewsArticleEntity : AuditableEntity, IDataEntity<NewsArticleEntity,
             Author.Patch(target.Author);
         }
 
-        if (!Tags.IsNullCollection())
+        if (!LocalizedTags.IsNullCollection())
         {
-            var tagComparer = AnonymousComparer.Create((NewsArticleTagEntity x) => x.Tag);
-            Tags.Patch(target.Tags, tagComparer, (sourceTag, targetTag) => targetTag.Tag = sourceTag.Tag);
+            LocalizedTags.Patch(target.LocalizedTags, (sourceTag, targetTag) => sourceTag.Patch(targetTag));
         }
 
         if (!Comments.IsNullCollection())

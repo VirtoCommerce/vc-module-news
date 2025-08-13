@@ -201,12 +201,17 @@ namespace VirtoCommerce.News.Data.PostgreSql.Migrations
                     b.ToTable("NewsArticleLocalizedContent", (string)null);
                 });
 
-            modelBuilder.Entity("VirtoCommerce.News.Data.Models.NewsArticleTagEntity", b =>
+            modelBuilder.Entity("VirtoCommerce.News.Data.Models.NewsArticleLocalizedTagEntity", b =>
                 {
                     b.Property<string>("Id")
                         .ValueGeneratedOnAdd()
                         .HasMaxLength(128)
                         .HasColumnType("character varying(128)");
+
+                    b.Property<string>("LanguageCode")
+                        .IsRequired()
+                        .HasMaxLength(16)
+                        .HasColumnType("character varying(16)");
 
                     b.Property<string>("NewsArticleId")
                         .IsRequired()
@@ -346,10 +351,10 @@ namespace VirtoCommerce.News.Data.PostgreSql.Migrations
                     b.Navigation("NewsArticle");
                 });
 
-            modelBuilder.Entity("VirtoCommerce.News.Data.Models.NewsArticleTagEntity", b =>
+            modelBuilder.Entity("VirtoCommerce.News.Data.Models.NewsArticleLocalizedTagEntity", b =>
                 {
                     b.HasOne("VirtoCommerce.News.Data.Models.NewsArticleEntity", "NewsArticle")
-                        .WithMany("Tags")
+                        .WithMany("LocalizedTags")
                         .HasForeignKey("NewsArticleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -390,9 +395,9 @@ namespace VirtoCommerce.News.Data.PostgreSql.Migrations
 
                     b.Navigation("LocalizedContents");
 
-                    b.Navigation("SeoInfos");
+                    b.Navigation("LocalizedTags");
 
-                    b.Navigation("Tags");
+                    b.Navigation("SeoInfos");
 
                     b.Navigation("UserGroups");
                 });

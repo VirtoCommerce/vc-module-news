@@ -553,7 +553,7 @@ export class NewsArticle implements INewsArticle {
     seoInfos?: SeoInfo[] | undefined;
     userGroups?: string[] | undefined;
     author?: NewsArticleAuthor | undefined;
-    tags?: string[] | undefined;
+    localizedTags?: NewsArticleLocalizedTag[] | undefined;
     comments?: NewsArticleComment[] | undefined;
     createdDate?: Date;
     modifiedDate?: Date | undefined;
@@ -596,10 +596,10 @@ export class NewsArticle implements INewsArticle {
                     this.userGroups!.push(item);
             }
             this.author = _data["author"] ? NewsArticleAuthor.fromJS(_data["author"]) : <any>undefined;
-            if (Array.isArray(_data["tags"])) {
-                this.tags = [] as any;
-                for (let item of _data["tags"])
-                    this.tags!.push(item);
+            if (Array.isArray(_data["localizedTags"])) {
+                this.localizedTags = [] as any;
+                for (let item of _data["localizedTags"])
+                    this.localizedTags!.push(NewsArticleLocalizedTag.fromJS(item));
             }
             if (Array.isArray(_data["comments"])) {
                 this.comments = [] as any;
@@ -647,10 +647,10 @@ export class NewsArticle implements INewsArticle {
                 data["userGroups"].push(item);
         }
         data["author"] = this.author ? this.author.toJSON() : <any>undefined;
-        if (Array.isArray(this.tags)) {
-            data["tags"] = [];
-            for (let item of this.tags)
-                data["tags"].push(item);
+        if (Array.isArray(this.localizedTags)) {
+            data["localizedTags"] = [];
+            for (let item of this.localizedTags)
+                data["localizedTags"].push(item.toJSON());
         }
         if (Array.isArray(this.comments)) {
             data["comments"] = [];
@@ -679,7 +679,7 @@ export interface INewsArticle {
     seoInfos?: SeoInfo[] | undefined;
     userGroups?: string[] | undefined;
     author?: NewsArticleAuthor | undefined;
-    tags?: string[] | undefined;
+    localizedTags?: NewsArticleLocalizedTag[] | undefined;
     comments?: NewsArticleComment[] | undefined;
     createdDate?: Date;
     modifiedDate?: Date | undefined;
@@ -873,6 +873,54 @@ export interface INewsArticleLocalizedContent {
     modifiedDate?: Date | undefined;
     createdBy?: string | undefined;
     modifiedBy?: string | undefined;
+    id?: string | undefined;
+}
+
+export class NewsArticleLocalizedTag implements INewsArticleLocalizedTag {
+    newsArticleId?: string | undefined;
+    languageCode?: string | undefined;
+    tag?: string | undefined;
+    id?: string | undefined;
+
+    constructor(data?: INewsArticleLocalizedTag) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.newsArticleId = _data["newsArticleId"];
+            this.languageCode = _data["languageCode"];
+            this.tag = _data["tag"];
+            this.id = _data["id"];
+        }
+    }
+
+    static fromJS(data: any): NewsArticleLocalizedTag {
+        data = typeof data === 'object' ? data : {};
+        let result = new NewsArticleLocalizedTag();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["newsArticleId"] = this.newsArticleId;
+        data["languageCode"] = this.languageCode;
+        data["tag"] = this.tag;
+        data["id"] = this.id;
+        return data;
+    }
+}
+
+export interface INewsArticleLocalizedTag {
+    newsArticleId?: string | undefined;
+    languageCode?: string | undefined;
+    tag?: string | undefined;
     id?: string | undefined;
 }
 

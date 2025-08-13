@@ -40,8 +40,8 @@ public class NewsDbContext : DbContextBase
         modelBuilder.Entity<NewsArticleEntity>().HasOne(x => x.Author).WithMany(x => x.NewsArticles)
             .HasForeignKey(x => x.AuthorId).OnDelete(DeleteBehavior.SetNull);
 
-        modelBuilder.Entity<NewsArticleTagEntity>().ToEntityTable("NewsArticleTag");
-        modelBuilder.Entity<NewsArticleTagEntity>().HasOne(x => x.NewsArticle).WithMany(x => x.Tags)
+        modelBuilder.Entity<NewsArticleLocalizedTagEntity>().ToEntityTable("NewsArticleTag");
+        modelBuilder.Entity<NewsArticleLocalizedTagEntity>().HasOne(x => x.NewsArticle).WithMany(x => x.LocalizedTags)
             .HasForeignKey(x => x.NewsArticleId).IsRequired().OnDelete(DeleteBehavior.Cascade);
 
         modelBuilder.Entity<NewsArticleCommentEntity>().ToEntityTable("NewsArticleComment");

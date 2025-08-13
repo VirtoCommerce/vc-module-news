@@ -91,6 +91,8 @@
           option-value="id"
           option-label="title"
           :multivalue="false"
+          multilanguage
+          :current-language="currentLocale"
         />
 
         <Field
@@ -241,7 +243,7 @@ import {
   useUserGroups,
   useLocalization,
 } from "../composables";
-import { NewsArticleLocalizedContent, SeoInfo } from "../../../api_client/virtocommerce.news";
+import { NewsArticleLocalizedContent, NewsArticleLocalizedTag, SeoInfo } from "../../../api_client/virtocommerce.news";
 
 export interface Emits {
   (event: "parent:call", args: IParentCallArgs): void;
@@ -296,10 +298,14 @@ const userGroupsSelected = computed({
 
 const tagsSelected = computed({
   get() {
-    return newsArticle.value?.tags?.map((x) => ({ id: x, title: x })) as [];
+    return newsArticle.value?.localizedTags?.filter((x) => x.languageCode === currentLocale.value).map((x) => ({ id: x.tag, title: x.tag }));
   },
   set(newValue) {
-    newsArticle.value!.tags = newValue.map((x) => (x as { id: string, title: string}).title);
+    const newTags = newValue?.map((x) => (new NewsArticleLocalizedTag ({ tag: x.title, languageCode: currentLocale.value }  )));
+    newsArticle.value.localizedTags = newsArticle.value.localizedTags?.filter((x) => x.languageCode !== currentLocale.value) ?? []; 
+    if(newTags){ 
+      newsArticle.value.localizedTags.push(...newTags);
+    }
   },
 });
 

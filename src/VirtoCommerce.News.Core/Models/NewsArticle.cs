@@ -39,7 +39,7 @@ public class NewsArticle : AuditableEntity, ICloneable, ISeoSupport
 
     public NewsArticleAuthor Author { get; set; }
 
-    public IList<string> Tags { get; set; }
+    public IList<NewsArticleLocalizedTag> LocalizedTags { get; set; }
 
     public IList<NewsArticleComment> Comments { get; set; }
 
@@ -50,6 +50,7 @@ public class NewsArticle : AuditableEntity, ICloneable, ISeoSupport
         result.SeoInfos = SeoInfos?.Select(x => x.CloneTyped()).ToList();
         result.LocalizedContents = LocalizedContents?.Select(x => x.CloneTyped()).ToList();
         result.Comments = Comments?.Select(x => x.CloneTyped()).ToList();
+        result.LocalizedTags = LocalizedTags?.Select(x => x.CloneTyped()).ToList();
 
         return result;
     }

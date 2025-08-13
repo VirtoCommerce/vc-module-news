@@ -18,7 +18,7 @@ public class NewsArticleRepository(NewsDbContext dbContext, IUnitOfWork unitOfWo
 
     public IQueryable<NewsArticleUserGroupEntity> NewsArticleUserGroups => DbContext.Set<NewsArticleUserGroupEntity>();
 
-    public IQueryable<NewsArticleTagEntity> NewsArticleTags => DbContext.Set<NewsArticleTagEntity>();
+    public IQueryable<NewsArticleLocalizedTagEntity> NewsArticleTags => DbContext.Set<NewsArticleLocalizedTagEntity>();
 
     public IQueryable<NewsArticleCommentEntity> NewsArticleComments => DbContext.Set<NewsArticleCommentEntity>();
 
