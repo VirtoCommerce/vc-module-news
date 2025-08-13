@@ -2190,9 +2190,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@vc-shell/api-client-generator@npm:^1.1.68":
-  version: 1.1.68
-  resolution: "@vc-shell/api-client-generator@npm:1.1.68"
+"@vc-shell/api-client-generator@npm:^1.1.69":
+  version: 1.1.69
+  resolution: "@vc-shell/api-client-generator@npm:1.1.69"
   dependencies:
     chalk: "npm:^2.4.2"
     cross-spawn: "npm:^7.0.3"
@@ -2202,26 +2202,26 @@ __metadata:
     vite-plugin-dts: "npm:^3.6.4"
   bin:
     api-client-generator: ./dist/api-client-generator.js
-  checksum: 10/cc913302c8e4bbb743d8c84076520ea996916d729bb8efccbd8479e73a6036659689199750171a8ea41975d2557aabc59e45a066c08a7a6636e1ba1e7ae50aa0
+  checksum: 10/4aceb35262de3720ba15b0a6d6a2938793e5bf2a3dca846f3b1511c7a651aef285a43ac24fb32495ddf7500761022fceecf642e3bd1462d54e9ce7014c99f2ec
   languageName: node
   linkType: hard
 
-"@vc-shell/config-generator@npm:^1.1.68":
-  version: 1.1.68
-  resolution: "@vc-shell/config-generator@npm:1.1.68"
+"@vc-shell/config-generator@npm:^1.1.69":
+  version: 1.1.69
+  resolution: "@vc-shell/config-generator@npm:1.1.69"
   dependencies:
     "@vitejs/plugin-vue": "npm:^5.2.3"
     vite: "npm:^6.3.3"
     vite-plugin-checker: "npm:^0.9.1"
     vite-plugin-mkcert: "npm:^1.17.1"
     vue: "npm:^3.5.13"
-  checksum: 10/0c68b74202023066632a47ca65a7ee4ce5546995d0ffa6db278f26dbb808642d8e2f847117ac59c0b0631cc1c2a9815e6e362eccae569fd82a83b82e6e91bdec
+  checksum: 10/217f529181e452ceec741acb9c7bdd934c7b9b39515ea68ca9ab4e6d75c2a2b35104e7f3fb509d27b24e3c15d19152d9923dd22b974d4a5182357de252821618
   languageName: node
   linkType: hard
 
-"@vc-shell/framework@npm:^1.1.68":
-  version: 1.1.68
-  resolution: "@vc-shell/framework@npm:1.1.68"
+"@vc-shell/framework@npm:^1.1.69":
+  version: 1.1.69
+  resolution: "@vc-shell/framework@npm:1.1.69"
   dependencies:
     "@floating-ui/vue": "npm:^1.0.6"
     "@fontsource/plus-jakarta-sans": "npm:^5.1.0"
@@ -2242,7 +2242,7 @@ __metadata:
     "@tiptap/vue-3": "npm:^2.25.0"
     "@vee-validate/i18n": "npm:^4.12.4"
     "@vee-validate/rules": "npm:^4.12.4"
-    "@vuepic/vue-datepicker": "npm:^9.0.2"
+    "@vuepic/vue-datepicker": "npm:^11.0.2"
     "@vueuse/components": "npm:^10.7.1"
     "@vueuse/core": "npm:^10.7.1"
     "@vueuse/integrations": "npm:^10.7.1"
@@ -2264,13 +2264,13 @@ __metadata:
     vue3-application-insights: "npm:^1.1.0"
     vue3-touch-events: "npm:^4.1.8"
     whatwg-fetch: "npm:^3.6.19"
-  checksum: 10/d4376b0acaa87cc028cb86f96bae034f432841b5306bc6406c5ae700ef687ad2435c865e5d13a394da7f90a709fcfffecf27bb6243c7af018b8ad149f9252756
+  checksum: 10/0bb4cb09f5649e8a224c7560c61f4ab8442e6bf45add935766a9173de00ba23a48e2051b5a98ebd217653f2dabd0dd3d36ce282a30359d8a4b0c4a6b92b6282d
   languageName: node
   linkType: hard
 
-"@vc-shell/release-config@npm:^1.1.68":
-  version: 1.1.68
-  resolution: "@vc-shell/release-config@npm:1.1.68"
+"@vc-shell/release-config@npm:^1.1.69":
+  version: 1.1.69
+  resolution: "@vc-shell/release-config@npm:1.1.69"
   dependencies:
     chalk: "npm:^2.4.2"
     cross-spawn: "npm:^7.0.3"
@@ -2278,14 +2278,14 @@ __metadata:
     prompts: "npm:^2.4.2"
     semver: "npm:^7.5.4"
     vite: "npm:^6.3.3"
-  checksum: 10/8f647c2cb968ec41e771de60d5b29056ee0958b3777b98fbff20d4488d7f192756c7e16a5d1cf3eecd3b9486cddb5b59ac3206d6379d2659776cec286e0b7530
+  checksum: 10/c99dc02bb6bccaae1167a023691edf8594f8a96ae843a12dd85b4a9b504dc86cfb1c372912b18a3edfd4cae85a42aaf028f2b6c783aa85667f4faa47ce5bf426
   languageName: node
   linkType: hard
 
-"@vc-shell/ts-config@npm:^1.1.68":
-  version: 1.1.68
-  resolution: "@vc-shell/ts-config@npm:1.1.68"
-  checksum: 10/baf928e0bb0b6590a312ad8fe2babc88677c397e4031a56757492c575aa83428b000a378b3171e4edb2a1232b6565164274402d6fc5d3cf397ddbe757fa75a92
+"@vc-shell/ts-config@npm:^1.1.69":
+  version: 1.1.69
+  resolution: "@vc-shell/ts-config@npm:1.1.69"
+  checksum: 10/4adaec4b6b1f5ff43348224d9ef3c74582c1a7fe4d14b946d34e57b1c1960bf232fb7b0f7327d89ffdb36e23a15ad11dd7ab4e9c6f82108be2b6071166e21d93
   languageName: node
   linkType: hard
 
@@ -2594,14 +2594,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@vuepic/vue-datepicker@npm:^9.0.2":
-  version: 9.0.3
-  resolution: "@vuepic/vue-datepicker@npm:9.0.3"
+"@vuepic/vue-datepicker@npm:^11.0.2":
+  version: 11.0.2
+  resolution: "@vuepic/vue-datepicker@npm:11.0.2"
   dependencies:
-    date-fns: "npm:^3.6.0"
+    date-fns: "npm:^4.1.0"
   peerDependencies:
-    vue: ">=3.2.0"
-  checksum: 10/0c8f94ab8f911906e925d7a47b4ad23d22fdb19a0ee5b10ae9f144ee0e2e99eb4435af196a2a173374cea05b4d8914eddd9e3f1fa180a4c1fa702dc8a39be4de
+    vue: ">=3.3.0"
+  checksum: 10/d8c48d102a82be859ec84151a5300c2ed67076b3a97e6c2e2d7fab0756dc7920c7cb7d60d7fca94e29bcea70ed19f37ae0d6deadd33905539edb7e7c0dde5237
   languageName: node
   linkType: hard
 
@@ -3731,10 +3731,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"date-fns@npm:^3.6.0":
-  version: 3.6.0
-  resolution: "date-fns@npm:3.6.0"
-  checksum: 10/cac35c58926a3b5d577082ff2b253612ec1c79eb6754fddef46b6a8e826501ea2cb346ecbd211205f1ba382ddd1f9d8c3f00bf433ad63cc3063454d294e3a6b8
+"date-fns@npm:^4.1.0":
+  version: 4.1.0
+  resolution: "date-fns@npm:4.1.0"
+  checksum: 10/d5f6e9de5bbc52310f786099e18609289ed5e30af60a71e0646784c8185ddd1d0eebcf7c96b7faaaefc4a8366f3a3a4244d099b6d0866ee2bec80d1361e64342
   languageName: node
   linkType: hard
 
@@ -9063,11 +9063,11 @@ __metadata:
     "@types/node": "npm:^20.10.5"
     "@typescript-eslint/eslint-plugin": "npm:^6.16.0"
     "@typescript-eslint/parser": "npm:^6.16.0"
-    "@vc-shell/api-client-generator": "npm:^1.1.68"
-    "@vc-shell/config-generator": "npm:^1.1.68"
-    "@vc-shell/framework": "npm:^1.1.68"
-    "@vc-shell/release-config": "npm:^1.1.68"
-    "@vc-shell/ts-config": "npm:^1.1.68"
+    "@vc-shell/api-client-generator": "npm:^1.1.69"
+    "@vc-shell/config-generator": "npm:^1.1.69"
+    "@vc-shell/framework": "npm:^1.1.69"
+    "@vc-shell/release-config": "npm:^1.1.69"
+    "@vc-shell/ts-config": "npm:^1.1.69"
     "@vitejs/plugin-vue": "npm:^5.2.3"
     "@vue/eslint-config-prettier": "npm:^9.0.0"
     "@vue/eslint-config-typescript": "npm:^12.0.0"
