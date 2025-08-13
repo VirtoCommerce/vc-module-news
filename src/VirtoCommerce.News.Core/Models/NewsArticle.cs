@@ -27,9 +27,13 @@ public class NewsArticle : AuditableEntity, ICloneable, ISeoSupport
     [JsonIgnore]
     public bool? IsArchivedValue { get; private set; }
 
-    public bool IsSharingAllowed { get; set; }
+    public string AuthorId { get; set; }
+
+    public string PublishScope { get; set; }
 
     public IList<NewsArticleLocalizedContent> LocalizedContents { get; set; }
+
+    public IList<NewsArticleLocalizedTag> LocalizedTags { get; set; }
 
     public string SeoObjectType => nameof(NewsArticle);
 
@@ -37,19 +41,12 @@ public class NewsArticle : AuditableEntity, ICloneable, ISeoSupport
 
     public IList<string> UserGroups { get; set; }
 
-    public NewsArticleAuthor Author { get; set; }
-
-    public IList<NewsArticleLocalizedTag> LocalizedTags { get; set; }
-
-    public IList<NewsArticleComment> Comments { get; set; }
-
     public object Clone()
     {
         var result = (NewsArticle)MemberwiseClone();
 
         result.SeoInfos = SeoInfos?.Select(x => x.CloneTyped()).ToList();
         result.LocalizedContents = LocalizedContents?.Select(x => x.CloneTyped()).ToList();
-        result.Comments = Comments?.Select(x => x.CloneTyped()).ToList();
         result.LocalizedTags = LocalizedTags?.Select(x => x.CloneTyped()).ToList();
 
         return result;

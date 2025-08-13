@@ -33,22 +33,19 @@ public class NewsArticleEntity : AuditableEntity, IDataEntity<NewsArticleEntity,
 
     public DateTime? ArchiveDate { get; set; }
 
-    public bool IsSharingAllowed { get; set; }
-
     [StringLength(IdLength)]
     public string AuthorId { get; set; }
 
+    [StringLength(Length32)]
+    public string PublishScope { get; set; }
+
     public virtual ObservableCollection<NewsArticleLocalizedContentEntity> LocalizedContents { get; set; } = new NullCollection<NewsArticleLocalizedContentEntity>();
+
+    public virtual ObservableCollection<NewsArticleLocalizedTagEntity> LocalizedTags { get; set; } = new NullCollection<NewsArticleLocalizedTagEntity>();
 
     public virtual ObservableCollection<SeoInfoEntity> SeoInfos { get; set; } = new NullCollection<SeoInfoEntity>();
 
     public virtual ObservableCollection<NewsArticleUserGroupEntity> UserGroups { get; set; } = new NullCollection<NewsArticleUserGroupEntity>();
-
-    public virtual NewsArticleAuthorEntity Author { get; set; }
-
-    public virtual ObservableCollection<NewsArticleLocalizedTagEntity> LocalizedTags { get; set; } = new NullCollection<NewsArticleLocalizedTagEntity>();
-
-    public virtual ObservableCollection<NewsArticleCommentEntity> Comments { get; set; } = new NullCollection<NewsArticleCommentEntity>();
 
     public NewsArticle ToModel(NewsArticle model)
     {
@@ -66,14 +63,13 @@ public class NewsArticleEntity : AuditableEntity, IDataEntity<NewsArticleEntity,
         model.ArchiveDate = ArchiveDate;
         model.IsPublished = IsPublished;
         model.IsArchived = IsArchived;
-        model.IsSharingAllowed = IsSharingAllowed;
+        model.AuthorId = AuthorId;
+        model.PublishScope = PublishScope;
 
         model.LocalizedContents = LocalizedContents.Select(x => x.ToModel()).ToList();
         model.SeoInfos = SeoInfos.Select(x => x.ToModel()).ToList();
         model.UserGroups = UserGroups.OrderBy(x => x.Group).Select(x => x.Group).ToList();
-        model.Author = Author?.ToModel(new NewsArticleAuthor());
         model.LocalizedTags = LocalizedTags.Select(x => x.ToModel()).ToList();
-        model.Comments = Comments.Select(x => x.ToModel()).ToList();
 
         return model;
     }
@@ -94,7 +90,8 @@ public class NewsArticleEntity : AuditableEntity, IDataEntity<NewsArticleEntity,
         Name = model.Name;
         PublishDate = model.PublishDate;
         ArchiveDate = model.ArchiveDate;
-        IsSharingAllowed = model.IsSharingAllowed;
+        AuthorId = model.AuthorId;
+        PublishScope = model.PublishScope;
 
         if (model.IsPublishedValue.HasValue)
         {
@@ -111,6 +108,11 @@ public class NewsArticleEntity : AuditableEntity, IDataEntity<NewsArticleEntity,
         if (model.LocalizedContents != null)
         {
             LocalizedContents = new ObservableCollection<NewsArticleLocalizedContentEntity>(model.LocalizedContents.Select(x => AbstractTypeFactory<NewsArticleLocalizedContentEntity>.TryCreateInstance().FromModel(x, pkMap)));
+        }
+
+        if (model.LocalizedTags != null)
+        {
+            LocalizedTags = new ObservableCollection<NewsArticleLocalizedTagEntity>(model.LocalizedTags.Select(x => AbstractTypeFactory<NewsArticleLocalizedTagEntity>.TryCreateInstance().FromModel(x, pkMap)));
         }
 
         if (model.SeoInfos != null)
@@ -132,21 +134,6 @@ public class NewsArticleEntity : AuditableEntity, IDataEntity<NewsArticleEntity,
             }
         }
 
-        if (model.Author != null)
-        {
-            Author = AbstractTypeFactory<NewsArticleAuthorEntity>.TryCreateInstance().FromModel(model.Author, pkMap);
-        }
-
-        if (model.LocalizedTags != null)
-        {
-            LocalizedTags = new ObservableCollection<NewsArticleLocalizedTagEntity>(model.LocalizedTags.Select(x => AbstractTypeFactory<NewsArticleLocalizedTagEntity>.TryCreateInstance().FromModel(x, pkMap)));
-        }
-
-        if (model.Comments != null)
-        {
-            Comments = new ObservableCollection<NewsArticleCommentEntity>(model.Comments.Select(x => AbstractTypeFactory<NewsArticleCommentEntity>.TryCreateInstance().FromModel(x, pkMap)));
-        }
-
         return this;
     }
 
@@ -158,7 +145,8 @@ public class NewsArticleEntity : AuditableEntity, IDataEntity<NewsArticleEntity,
         target.Name = Name;
         target.PublishDate = PublishDate;
         target.ArchiveDate = ArchiveDate;
-        target.IsSharingAllowed = IsSharingAllowed;
+        target.AuthorId = AuthorId;
+        target.PublishScope = PublishScope;
 
         if (_isPublishedValue.HasValue)
         {
@@ -175,6 +163,11 @@ public class NewsArticleEntity : AuditableEntity, IDataEntity<NewsArticleEntity,
             LocalizedContents.Patch(target.LocalizedContents, (sourceContent, targetContent) => sourceContent.Patch(targetContent));
         }
 
+        if (!LocalizedTags.IsNullCollection())
+        {
+            LocalizedTags.Patch(target.LocalizedTags, (sourceTag, targetTag) => sourceTag.Patch(targetTag));
+        }
+
         if (!SeoInfos.IsNullCollection())
         {
             SeoInfos.Patch(target.SeoInfos, (sourceSeoInfo, targetSeoInfo) => sourceSeoInfo.Patch(targetSeoInfo));
@@ -184,21 +177,6 @@ public class NewsArticleEntity : AuditableEntity, IDataEntity<NewsArticleEntity,
         {
             var userGroupComparer = AnonymousComparer.Create((NewsArticleUserGroupEntity x) => x.Group);
             UserGroups.Patch(target.UserGroups, userGroupComparer, (sourceGroup, targetGroup) => targetGroup.Group = sourceGroup.Group);
-        }
-
-        if (Author != null)
-        {
-            Author.Patch(target.Author);
-        }
-
-        if (!LocalizedTags.IsNullCollection())
-        {
-            LocalizedTags.Patch(target.LocalizedTags, (sourceTag, targetTag) => sourceTag.Patch(targetTag));
-        }
-
-        if (!Comments.IsNullCollection())
-        {
-            Comments.Patch(target.Comments, (sourceComment, targetComment) => targetComment.Text = sourceComment.Text);
         }
     }
 }

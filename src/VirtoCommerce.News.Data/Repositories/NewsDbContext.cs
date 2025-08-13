@@ -36,16 +36,8 @@ public class NewsDbContext : DbContextBase
         modelBuilder.Entity<NewsArticleUserGroupEntity>().HasOne(x => x.NewsArticle).WithMany(x => x.UserGroups)
             .HasForeignKey(x => x.NewsArticleId).IsRequired().OnDelete(DeleteBehavior.Cascade);
 
-        modelBuilder.Entity<NewsArticleAuthorEntity>().ToEntityTable("NewsArticleAuthor");
-        modelBuilder.Entity<NewsArticleEntity>().HasOne(x => x.Author).WithMany(x => x.NewsArticles)
-            .HasForeignKey(x => x.AuthorId).OnDelete(DeleteBehavior.SetNull);
-
         modelBuilder.Entity<NewsArticleLocalizedTagEntity>().ToEntityTable("NewsArticleTag");
         modelBuilder.Entity<NewsArticleLocalizedTagEntity>().HasOne(x => x.NewsArticle).WithMany(x => x.LocalizedTags)
-            .HasForeignKey(x => x.NewsArticleId).IsRequired().OnDelete(DeleteBehavior.Cascade);
-
-        modelBuilder.Entity<NewsArticleCommentEntity>().ToEntityTable("NewsArticleComment");
-        modelBuilder.Entity<NewsArticleCommentEntity>().HasOne(x => x.NewsArticle).WithMany(x => x.Comments)
             .HasForeignKey(x => x.NewsArticleId).IsRequired().OnDelete(DeleteBehavior.Cascade);
 
         switch (Database.ProviderName)

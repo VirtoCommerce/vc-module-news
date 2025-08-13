@@ -8,14 +8,12 @@
     width="60%"
     @close="$emit('close:blade')"
     @expand="$emit('expand:blade')"
-    @collapse="$emit('collapse:blade')"
-  >
+    @collapse="$emit('collapse:blade')">
     <div class="tw-absolute tw-top-2 tw-right-4 tw-z-10">
       <VcLanguageSelector
         :model-value="currentLocale"
         :options="languages"
-        @update:model-value="setLocale"
-      />
+        @update:model-value="setLocale" />
     </div>
 
     <VcContainer>
@@ -25,8 +23,7 @@
           :label="$t('VC_NEWS.PAGES.DETAILS.FORM.NAME.LABEL')"
           :model-value="newsArticle.name"
           name="name"
-          rules="required"
-        >
+          rules="required">
           <VcInput
             v-model="newsArticle.name"
             :label="$t('VC_NEWS.PAGES.DETAILS.FORM.NAME.LABEL')"
@@ -34,8 +31,7 @@
             :max-length="1024"
             :error="errors.length > 0"
             :error-message="errorMessage"
-            @update:model-value="handleChange"
-          />
+            @update:model-value="handleChange" />
         </Field>
 
         <Field
@@ -43,8 +39,7 @@
           :label="$t('VC_NEWS.PAGES.DETAILS.FORM.STORE.LABEL')"
           :model-value="newsArticle.storeId"
           name="storeId"
-          rules="required"
-        >
+          rules="required">
           <VcSelect
             v-model="newsArticle.storeId"
             :label="$t('VC_NEWS.PAGES.DETAILS.FORM.STORE.LABEL')"
@@ -53,23 +48,38 @@
             :error="errors.length > 0"
             :error-message="errorMessage"
             class="tw-flex-auto"
-            @update:model-value="handleChange"
-          />
+            @update:model-value="handleChange" />
         </Field>
 
         <div class="tw-flex tw-flex-row tw-gap-4">
           <VcInput
             v-model="newsArticle.publishDate"
             type="datetime-local"
-            :label="$t('VC_NEWS.PAGES.DETAILS.FORM.PUBLISH_DATE.LABEL')"
-          />
+            :label="$t('VC_NEWS.PAGES.DETAILS.FORM.PUBLISH_DATE.LABEL')" />
 
           <VcInput
             v-model="newsArticle.archiveDate"
             type="datetime-local"
-            :label="$t('VC_NEWS.PAGES.DETAILS.FORM.ARCHIVE_DATE.LABEL')"
-          />
+            :label="$t('VC_NEWS.PAGES.DETAILS.FORM.ARCHIVE_DATE.LABEL')" />
         </div>
+
+        <Field
+          v-slot="{ errors, errorMessage, handleChange }"
+          :label="$t('VC_NEWS.PAGES.DETAILS.FORM.PUBLISH_SCOPE.LABEL')"
+          :model-value="newsArticle.publishScope"
+          name="publishScope"
+          rules="required">          
+          <VcSelect
+            v-model="newsArticle.publishScope"
+            :label="$t('VC_NEWS.PAGES.DETAILS.FORM.PUBLISH_SCOPE.LABEL')" 
+            :options="publishScopeOptions"
+            required
+            :error="errors.length > 0"
+            :error-message="errorMessage"
+            class="tw-flex-auto"
+            @update:model-value="handleChange"
+          />
+        </Field>
 
         <VcMultivalue
           v-model="userGroupsSelected"
@@ -77,33 +87,27 @@
           :options="userGroupsOptions"
           option-value="id"
           option-label="title"
-          multivalue
-        />
-
-        <VcSwitch
-          v-model="newsArticle.isSharingAllowed"
-          :label="$t('VC_NEWS.PAGES.DETAILS.FORM.IS_SHARING_ALLOWED.LABEL')"
-        />
+          multivalue />
 
         <VcMultivalue
+          v-if="props.param"
           v-model="tagsSelected"
           :label="$t('VC_NEWS.PAGES.DETAILS.FORM.TAGS.LABEL')"
+          :options="tagsOptions"
           option-value="id"
           option-label="title"
           :multivalue="false"
           multilanguage
-          :current-language="currentLocale"
-        />
+          :current-language="currentLocale" />
 
         <Field
+          v-if="props.param"
           v-slot="{ errors, errorMessage, handleChange }"
           :label="$t('VC_NEWS.PAGES.DETAILS.FORM.CONTENT_TITLE.LABEL')"
           :model-value="selectedLocalizedContent.title"
           name="content-title"
-          :rules="{ required: !!selectedLocalizedContent.content || !!selectedLocalizedContent.contentPreview }"
-        >
+          :rules="{ required: !!selectedLocalizedContent.content || !!selectedLocalizedContent.contentPreview }">
           <VcInput
-            v-if="props.param"
             v-model="selectedLocalizedContent.title"
             :label="$t('VC_NEWS.PAGES.DETAILS.FORM.CONTENT_TITLE.LABEL')"
             :required="!!selectedLocalizedContent.content || !!selectedLocalizedContent.contentPreview"
@@ -111,8 +115,7 @@
             :error-message="errorMessage"
             multilanguage
             :current-language="currentLocale"
-            @update:model-value="handleChange"
-          >
+            @update:model-value="handleChange">
           </VcInput>
         </Field>
 
@@ -122,18 +125,16 @@
           :label="$t('VC_NEWS.PAGES.DETAILS.FORM.CONTENT_PREVIEW.LABEL')"
           multilanguage
           :current-language="currentLocale"
-          assets-folder="news-articles"
-        />
+          assets-folder="news-articles" />
 
         <Field
+          v-if="props.param"
           v-slot="{ errors, errorMessage, handleChange }"
           :label="$t('VC_NEWS.PAGES.DETAILS.FORM.CONTENT_CONTENT.LABEL')"
           :model-value="selectedLocalizedContent.content"
           name="content-content"
-          :rules="{ required: !!selectedLocalizedContent.title || !!selectedLocalizedContent.contentPreview }"
-        >
+          :rules="{ required: !!selectedLocalizedContent.title || !!selectedLocalizedContent.contentPreview }">
           <VcEditor
-            v-if="props.param"
             v-model="selectedLocalizedContent.content"
             :label="$t('VC_NEWS.PAGES.DETAILS.FORM.CONTENT_CONTENT.LABEL')"
             :required="!!selectedLocalizedContent.title || !!selectedLocalizedContent.contentPreview"
@@ -142,8 +143,7 @@
             multilanguage
             :current-language="currentLocale"
             assets-folder="news-articles"
-            @update:model-value="handleChange"
-          />
+            @update:model-value="handleChange" />
         </Field>
 
         <VcCard
@@ -151,12 +151,10 @@
           :header="$t('VC_NEWS.PAGES.DETAILS.FORM.SEO_HEADER.LABEL')"
           is-collapsable
           is-collapsed
-          class="tw-flex tw-flex-col tw-gap-4 tw-p-4"
-        >
+          class="tw-flex tw-flex-col tw-gap-4 tw-p-4">
           <VcSwitch
             v-model="selectedSeo.isActive"
-            :label="$t('VC_NEWS.PAGES.DETAILS.FORM.SEO_IS_ACTIVE.LABEL')"
-          />
+            :label="$t('VC_NEWS.PAGES.DETAILS.FORM.SEO_IS_ACTIVE.LABEL')" />
 
           <Field
             v-slot="{ errors, errorMessage, handleChange }"
@@ -170,53 +168,46 @@
                 !!selectedSeo.metaDescription ||
                 !!selectedSeo.metaKeywords ||
                 !!selectedSeo.imageAltDescription,
-            }"
-          >
+            }">
             <VcInput
               v-model="selectedSeo.semanticUrl"
               :label="$t('VC_NEWS.PAGES.DETAILS.FORM.SEO_SEMANTIC_URL.LABEL')"
-              :required="
-                selectedSeo.isActive === true ||
+              :required="selectedSeo.isActive === true ||
                 !!selectedSeo.pageTitle ||
                 !!selectedSeo.metaDescription ||
                 !!selectedSeo.metaKeywords ||
                 !!selectedSeo.imageAltDescription
-              "
+                "
               :error="errors.length > 0"
               :error-message="errorMessage"
               multilanguage
               :current-language="currentLocale"
-              @update:model-value="handleChange"
-            />
+              @update:model-value="handleChange" />
           </Field>
 
           <VcInput
             v-model="selectedSeo.pageTitle"
             :label="$t('VC_NEWS.PAGES.DETAILS.FORM.SEO_PAGE_TITLE.LABEL')"
             multilanguage
-            :current-language="currentLocale"
-          />
+            :current-language="currentLocale" />
 
           <VcTextarea
             v-model="selectedSeo.metaDescription"
             :label="$t('VC_NEWS.PAGES.DETAILS.FORM.SEO_META_DESCRIPTION.LABEL')"
             multilanguage
-            :current-language="currentLocale"
-          />
+            :current-language="currentLocale" />
 
           <VcInput
             v-model="selectedSeo.metaKeywords"
             :label="$t('VC_NEWS.PAGES.DETAILS.FORM.SEO_META_KEYWORDS.LABEL')"
             multilanguage
-            :current-language="currentLocale"
-          />
+            :current-language="currentLocale" />
 
           <VcInput
             v-model="selectedSeo.imageAltDescription"
             :label="$t('VC_NEWS.PAGES.DETAILS.FORM.SEO_IMAGE_ALT_TEXT.LABEL')"
             multilanguage
-            :current-language="currentLocale"
-          />
+            :current-language="currentLocale" />
         </VcCard>
       </VcForm>
     </VcContainer>
@@ -296,6 +287,8 @@ const userGroupsSelected = computed({
   },
 });
 
+const tagsOptions = computed(() => newsArticleOptions.value?.tags?.map((x) => ({ id: x, title: x })));
+
 const tagsSelected = computed({
   get() {
     return newsArticle.value?.localizedTags
@@ -314,12 +307,15 @@ const tagsSelected = computed({
   },
 });
 
+const publishScopeOptions = computed(() => newsArticleOptions.value?.publishScopes?.map((x) => ({ id: x, title: x })));
+
 //localization
 const { languages, loadLanguages, loadingLanguages } = useLocalization();
 
 const currentLocale = ref<string>("en-US");
-const setLocale = (locale: string) => {
+const setLocale = async (locale: string) => {
   currentLocale.value = locale;
+  await loadOptions({ languageCode: currentLocale.value });
 };
 
 const selectedLocalizedContent = computed(() => {
@@ -365,6 +361,8 @@ const selectedSeo = computed(() => {
 //news article
 const {
   newsArticle,
+  newsArticleOptions,
+
   loadNewsArticle,
   saveNewsArticle,
   loadingOrSavingNewsArticle,
@@ -383,6 +381,8 @@ const {
 
   newsArticleIsDirty,
   resetNewsArticle,
+
+  loadOptions
 } = useNewsArticleDetails();
 const { publishNewsArticlePermission, createNewsArticlePermission, updateNewsArticlePermission } =
   useNewsArticlePermissions();
@@ -487,6 +487,7 @@ onMounted(async () => {
   await loadStores();
   await loadUserGroups();
   await loadLanguages();
+  await loadOptions({ languageCode: currentLocale.value });
   if (props.param) {
     await loadNewsArticle({ id: props.param });
   }

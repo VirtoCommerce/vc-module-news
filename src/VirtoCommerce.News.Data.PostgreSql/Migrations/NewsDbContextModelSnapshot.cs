@@ -22,78 +22,6 @@ namespace VirtoCommerce.News.Data.PostgreSql.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("VirtoCommerce.News.Data.Models.NewsArticleAuthorEntity", b =>
-                {
-                    b.Property<string>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasMaxLength(128)
-                        .HasColumnType("character varying(128)");
-
-                    b.Property<string>("CreatedBy")
-                        .HasMaxLength(64)
-                        .HasColumnType("character varying(64)");
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("ModifiedBy")
-                        .HasMaxLength(64)
-                        .HasColumnType("character varying(64)");
-
-                    b.Property<DateTime?>("ModifiedDate")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(1024)
-                        .HasColumnType("character varying(1024)");
-
-                    b.Property<string>("PhotoUrl")
-                        .HasMaxLength(2048)
-                        .HasColumnType("character varying(2048)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("NewsArticleAuthor", (string)null);
-                });
-
-            modelBuilder.Entity("VirtoCommerce.News.Data.Models.NewsArticleCommentEntity", b =>
-                {
-                    b.Property<string>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasMaxLength(128)
-                        .HasColumnType("character varying(128)");
-
-                    b.Property<string>("CreatedBy")
-                        .HasMaxLength(64)
-                        .HasColumnType("character varying(64)");
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("ModifiedBy")
-                        .HasMaxLength(64)
-                        .HasColumnType("character varying(64)");
-
-                    b.Property<DateTime?>("ModifiedDate")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("NewsArticleId")
-                        .IsRequired()
-                        .HasMaxLength(128)
-                        .HasColumnType("character varying(128)");
-
-                    b.Property<string>("Text")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("NewsArticleId");
-
-                    b.ToTable("NewsArticleComment", (string)null);
-                });
-
             modelBuilder.Entity("VirtoCommerce.News.Data.Models.NewsArticleEntity", b =>
                 {
                     b.Property<string>("Id")
@@ -121,9 +49,6 @@ namespace VirtoCommerce.News.Data.PostgreSql.Migrations
                     b.Property<bool>("IsPublished")
                         .HasColumnType("boolean");
 
-                    b.Property<bool>("IsSharingAllowed")
-                        .HasColumnType("boolean");
-
                     b.Property<string>("ModifiedBy")
                         .HasMaxLength(64)
                         .HasColumnType("character varying(64)");
@@ -139,14 +64,16 @@ namespace VirtoCommerce.News.Data.PostgreSql.Migrations
                     b.Property<DateTime?>("PublishDate")
                         .HasColumnType("timestamp with time zone");
 
+                    b.Property<string>("PublishScope")
+                        .HasMaxLength(32)
+                        .HasColumnType("character varying(32)");
+
                     b.Property<string>("StoreId")
                         .IsRequired()
                         .HasMaxLength(128)
                         .HasColumnType("character varying(128)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("AuthorId");
 
                     b.ToTable("NewsArticle", (string)null);
                 });
@@ -319,27 +246,6 @@ namespace VirtoCommerce.News.Data.PostgreSql.Migrations
                     b.ToTable("NewsArticleSeoInfo", (string)null);
                 });
 
-            modelBuilder.Entity("VirtoCommerce.News.Data.Models.NewsArticleCommentEntity", b =>
-                {
-                    b.HasOne("VirtoCommerce.News.Data.Models.NewsArticleEntity", "NewsArticle")
-                        .WithMany("Comments")
-                        .HasForeignKey("NewsArticleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("NewsArticle");
-                });
-
-            modelBuilder.Entity("VirtoCommerce.News.Data.Models.NewsArticleEntity", b =>
-                {
-                    b.HasOne("VirtoCommerce.News.Data.Models.NewsArticleAuthorEntity", "Author")
-                        .WithMany("NewsArticles")
-                        .HasForeignKey("AuthorId")
-                        .OnDelete(DeleteBehavior.SetNull);
-
-                    b.Navigation("Author");
-                });
-
             modelBuilder.Entity("VirtoCommerce.News.Data.Models.NewsArticleLocalizedContentEntity", b =>
                 {
                     b.HasOne("VirtoCommerce.News.Data.Models.NewsArticleEntity", "NewsArticle")
@@ -384,15 +290,8 @@ namespace VirtoCommerce.News.Data.PostgreSql.Migrations
                     b.Navigation("NewsArticle");
                 });
 
-            modelBuilder.Entity("VirtoCommerce.News.Data.Models.NewsArticleAuthorEntity", b =>
-                {
-                    b.Navigation("NewsArticles");
-                });
-
             modelBuilder.Entity("VirtoCommerce.News.Data.Models.NewsArticleEntity", b =>
                 {
-                    b.Navigation("Comments");
-
                     b.Navigation("LocalizedContents");
 
                     b.Navigation("LocalizedTags");

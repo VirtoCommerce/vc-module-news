@@ -141,4 +141,16 @@ public class NewsArticleService(
             seoInfo.IsActive = false;
         }
     }
+
+    public async Task<IList<string>> GetTagsAsync(string languageCode)
+    {
+        using var repository = repositoryFactory();
+
+        return await repository.GetNewsArticlesTags(languageCode);
+    }
+
+    public IList<string> GetPublishScopes()
+    {
+        return new List<string>() { NewsArticlePublishScopes.Anonymous, NewsArticlePublishScopes.Authorized };
+    }
 }

@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using VirtoCommerce.News.Core;
 using VirtoCommerce.News.Core.Models;
 using VirtoCommerce.News.Core.Services;
+using VirtoCommerce.News.Web.Model;
 using VirtoCommerce.Platform.Core.Common;
 
 namespace VirtoCommerce.News.Web.Controllers.Api;
@@ -110,5 +111,18 @@ public class NewsArticleController(INewsArticleService newsArticleService, INews
     {
         await newsArticleService.UnarchiveAsync(ids);
         return NoContent();
+    }
+
+    [HttpGet]
+    [Route("get-options")]
+    [Authorize(ModuleConstants.Security.Permissions.Update)]
+    public async Task<ActionResult<NewsArticleOptions>> GetOptions(string languageCode)
+    {
+        var result = new NewsArticleOptions
+        {
+            Tags = await newsArticleService.GetTagsAsync(languageCode),
+            PublishScopes = newsArticleService.GetPublishScopes(),
+        };
+        return Ok(result);
     }
 }
