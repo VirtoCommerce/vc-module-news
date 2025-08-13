@@ -52,8 +52,8 @@
           "USER_GROUPS": {
             "LABEL": "ユーザーグループ"
           },
-          "IS_SHARING_ALLOWED": {
-            "LABEL": "共有を許可"
+          "PUBLISH_SCOPE": {
+            "LABEL": "公開範囲"
           },
           "TAGS": {
             "LABEL": "タグ"

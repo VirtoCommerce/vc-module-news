@@ -52,8 +52,8 @@
           "USER_GROUPS": {
             "LABEL": "Grupy użytkowników"
           },
-          "IS_SHARING_ALLOWED": {
-            "LABEL": "Zezwól na udostępnianie"
+          "PUBLISH_SCOPE": {
+            "LABEL": "Zakres publikacji"
           },
           "TAGS": {
             "LABEL": "Tagi"

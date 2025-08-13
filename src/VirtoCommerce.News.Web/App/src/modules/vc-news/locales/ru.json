@@ -52,8 +52,8 @@
           "USER_GROUPS": {
             "LABEL": "Группы пользователей"
           },
-          "IS_SHARING_ALLOWED": {
-            "LABEL": "Разрешить делиться"
+          "PUBLISH_SCOPE": {
+            "LABEL": "Область публикации"
           },
           "TAGS": {
             "LABEL": "Теги"

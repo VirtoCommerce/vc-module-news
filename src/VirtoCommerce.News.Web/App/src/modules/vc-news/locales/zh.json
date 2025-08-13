@@ -52,8 +52,8 @@
           "USER_GROUPS": {
             "LABEL": "用户组"
           },
-          "IS_SHARING_ALLOWED": {
-            "LABEL": "允许分享"
+          "PUBLISH_SCOPE": {
+            "LABEL": "发布范围"
           },
           "TAGS": {
             "LABEL": "标签"

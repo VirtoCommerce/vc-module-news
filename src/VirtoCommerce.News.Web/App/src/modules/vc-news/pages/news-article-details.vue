@@ -52,7 +52,6 @@
             required
             :error="errors.length > 0"
             :error-message="errorMessage"
-            class="tw-flex-auto"
             @update:model-value="handleChange"
           />
         </Field>
@@ -85,18 +84,19 @@
             required
             :error="errors.length > 0"
             :error-message="errorMessage"
-            class="tw-flex-auto"
             @update:model-value="handleChange"
           />
         </Field>
 
         <VcMultivalue
+          v-if="newsArticle.publishScope === 'Authorized'"
           v-model="userGroupsSelected"
           :label="$t('VC_NEWS.PAGES.DETAILS.FORM.USER_GROUPS.LABEL')"
           :options="userGroupsOptions"
           option-value="id"
           option-label="title"
           multivalue
+          class="tw-flex-auto"
         />
 
         <VcMultivalue
