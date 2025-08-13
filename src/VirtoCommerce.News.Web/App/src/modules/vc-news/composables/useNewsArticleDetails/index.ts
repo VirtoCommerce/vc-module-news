@@ -7,8 +7,8 @@ export default () => {
   const { getApiClient: getNewsApiClient } = useApiClient(NewsArticleClient);
 
   const newsArticle = ref<NewsArticle>(new NewsArticle({ localizedContents: [], seoInfos: [] }));
-  const originalNewsArticle = ref<NewsArticle>(new NewsArticle({ localizedContents: [], seoInfos: [] })); 
-  
+  const originalNewsArticle = ref<NewsArticle>(new NewsArticle({ localizedContents: [], seoInfos: [] }));
+
   const newsArticleOptions = ref<NewsArticleOptions>(new NewsArticleOptions({ publishScopes: [], tags: [] }));
 
   const resetNewsArticle = () => {
@@ -136,7 +136,7 @@ export default () => {
       const apiClient = await getNewsApiClient();
       const apiResult = await apiClient.getOptions(args?.languageCode);
       if (apiResult) {
-          newsArticleOptions.value = apiResult;
+        newsArticleOptions.value = apiResult;
       }
     },
   );
@@ -182,7 +182,7 @@ export default () => {
   return {
     newsArticle,
     newsArticleOptions,
-    
+
     loadNewsArticle,
     saveNewsArticle,
     loadingOrSavingNewsArticle: useLoading(
