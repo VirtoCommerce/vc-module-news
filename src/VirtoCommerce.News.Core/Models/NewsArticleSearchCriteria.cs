@@ -11,4 +11,7 @@ public class NewsArticleSearchCriteria : SearchCriteriaBase
     public IList<string> UserGroups { get; set; }
     public IList<string> LanguageCodes { get; set; }
     public DateTime? CertainDate { get; set; }
+    public string PublishScope { get; set; }
+    public string AuthorId { get; set; }
+    public IList<string> Tags { get; set; }
 }

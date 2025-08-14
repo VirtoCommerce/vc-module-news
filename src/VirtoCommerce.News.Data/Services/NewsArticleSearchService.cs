@@ -53,14 +53,40 @@ public class NewsArticleSearchService(
             query = query.Where(x => x.StoreId == criteria.StoreId);
         }
 
-        if (criteria.UserGroups != null)
-        {
-            query = query.Where(article => !article.UserGroups.Any() || article.UserGroups.Any(group => criteria.UserGroups.Contains(group.Group)));
-        }
-
         if (criteria.LanguageCodes != null)
         {
             query = query.Where(article => article.LocalizedContents.Any(content => criteria.LanguageCodes.Contains(content.LanguageCode)));
+        }
+
+        if (!criteria.PublishScope.IsNullOrEmpty())
+        {
+            if (criteria.PublishScope == NewsArticlePublishScopes.Anonymous)
+            {
+                query = query.Where(x => x.PublishScope == NewsArticlePublishScopes.Anonymous);
+            }
+            else if (criteria.PublishScope == NewsArticlePublishScopes.Authorized)
+            {
+                if (criteria.UserGroups != null)
+                {
+                    query = query.Where(article =>
+                        (article.PublishScope == NewsArticlePublishScopes.Anonymous) ||
+                        (article.PublishScope == NewsArticlePublishScopes.Authorized && (!article.UserGroups.Any() || article.UserGroups.Any(group => criteria.UserGroups.Contains(group.Group)))));
+                }
+                else
+                {
+                    query = query.Where(x => x.PublishScope == NewsArticlePublishScopes.Authorized || x.PublishScope == NewsArticlePublishScopes.Anonymous);
+                }
+            }
+        }
+
+        if (!criteria.AuthorId.IsNullOrEmpty())
+        {
+            query = query.Where(x => x.AuthorId == criteria.AuthorId);
+        }
+
+        if (criteria.Tags != null)
+        {
+            query = query.Where(article => article.LocalizedTags.Any(tag => criteria.Tags.Contains(tag.Tag)));
         }
 
         return query;
