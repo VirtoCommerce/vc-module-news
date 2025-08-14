@@ -57,7 +57,7 @@ public class NewsArticleSearchService(
         return query;
     }
 
-    protected virtual void BuildStatusSearchCriteria(IQueryable<NewsArticleEntity> query, NewsArticleSearchCriteria criteria)
+    protected virtual IQueryable<NewsArticleEntity> BuildStatusSearchCriteria(IQueryable<NewsArticleEntity> query, NewsArticleSearchCriteria criteria)
     {
         var utcNow = criteria.CertainDate.GetValueOrDefault(DateTime.UtcNow);
 
@@ -77,6 +77,8 @@ public class NewsArticleSearchService(
         {
             query = query.Where(x => !x.IsPublished && !x.IsArchived);
         }
+
+        return query;
     }
 
     protected override IList<SortInfo> BuildSortExpression(NewsArticleSearchCriteria criteria)
