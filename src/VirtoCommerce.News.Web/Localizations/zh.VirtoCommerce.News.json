@@ -1,0 +1,26 @@
+{
+  "permissions": {
+    "news:access": "打开新闻菜单",
+    "news:create": "创建新闻相关数据",
+    "news:read": "查看新闻相关数据",
+    "news:update": "更新新闻相关数据",
+    "news:delete": "删除新闻相关数据",
+    "news:publish": "发布新闻相关数据"
+  },
+  "settings": {
+    "News": {
+      "Enabled": {
+        "title": "使能够",
+        "description": "使能够"
+      },
+      "UseNewsPrefixInLinks": {
+        "title": "在链接中使用“news”前缀",
+        "description": "在链接中使用“news”前缀 (仅适用于具有激活SEO的文章)"
+      },
+      "UseStoreDefaultLanguage": {
+        "title": "在搜索文章时使用商店默认语言",
+        "description": "在搜索文章时使用商店默认语言"
+      }
+    }
+  }
+}

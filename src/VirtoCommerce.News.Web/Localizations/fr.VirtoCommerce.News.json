@@ -1,0 +1,26 @@
+{
+  "permissions": {
+    "news:access": "Ouvrir le menu Actualités",
+    "news:create": "Créer des données liées aux Actualités",
+    "news:read": "Afficher les données liées aux Actualités",
+    "news:update": "Mettre à jour les données liées aux Actualités",
+    "news:delete": "Supprimer les données liées aux Actualités",
+    "news:publish": "Publier les données liées aux Actualités"
+  },
+  "settings": {
+    "News": {
+      "Enabled": {
+        "title": "Activer",
+        "description": "Activer"
+      },
+      "UseNewsPrefixInLinks": {
+        "title": "Utilisez le préfixe \"news\" dans les liens",
+        "description": "Utilisez le préfixe \"news\" dans les liens (uniquement pour les articles avec SEO actif)"
+      },
+      "UseStoreDefaultLanguage": {
+        "title": "Utilisez la langue par défaut du magasin lors de la recherche d'articles",
+        "description": "Utilisez la langue par défaut du magasin lors de la recherche d'articles"
+      }
+    }
+  }
+}

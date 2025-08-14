@@ -1,0 +1,26 @@
+{
+  "permissions": {
+    "news:access": "Nachrichtenmenü öffnen",
+    "news:create": "Nachrichtendaten erstellen",
+    "news:read": "Nachrichtendaten anzeigen",
+    "news:update": "Nachrichtendaten aktualisieren",
+    "news:delete": "Nachrichtendaten löschen",
+    "news:publish": "Nachrichtendaten veröffentlichen"
+  },
+  "settings": {
+    "News": {
+      "Enabled": {
+        "title": "Ermöglichen",
+        "description": "Ermöglichen"
+      },
+      "UseNewsPrefixInLinks": {
+        "title": "Verwenden Sie das Präfix \"news\" in Links",
+        "description": "Verwenden Sie das Präfix \"news\" in Links (nur für Artikel mit aktivem SEO)"
+      },
+      "UseStoreDefaultLanguage": {
+        "title": "Verwenden Sie die Standard-Sprache des Shops beim Suchen von Artikeln",
+        "description": "Verwenden Sie die Standard-Sprache des Shops beim Suchen von Artikeln"
+      }
+    }
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "permissions": {
+    "news:access": "Otwórz menu wiadomości",
+    "news:create": "Utwórz dane związane z wiadomościami",
+    "news:read": "Wyświetl dane związane z wiadomościami",
+    "news:update": "Zaktualizuj dane związane z wiadomościami",
+    "news:delete": "Usuń dane związane z wiadomościami",
+    "news:publish": "Opublikuj dane związane z wiadomościami"
+  },
+  "settings": {
+    "News": {
+      "Enabled": {
+        "title": "Umożliwić",
+        "description": "Umożliwić"
+      },
+      "UseNewsPrefixInLinks": {
+        "title": "Użyj prefiksu \"news\" w linkach",
+        "description": "Użyj prefiksu \"news\" w linkach (tylko dla artykułów z aktywnym SEO)"
+      },
+      "UseStoreDefaultLanguage": {
+        "title": "Użyj domyślnego języka sklepu podczas wyszukiwania artykułów",
+        "description": "Użyj domyślnego języka sklepu podczas wyszukiwania artykułów"
+      }
+    }
+  }
+}

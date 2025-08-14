@@ -1,0 +1,26 @@
+{
+  "permissions": {
+    "news:access": "Open News menu",
+    "news:create": "Create News related data",
+    "news:read": "View News related data",
+    "news:update": "Update News related data",
+    "news:delete": "Delete News related data",
+    "news:publish": "Publish News related data"
+  },
+  "settings": {
+    "News": {
+      "Enabled": {
+        "title": "Enable",
+        "description": "Enable"
+      },
+      "UseNewsPrefixInLinks": {
+        "title": "Use \"news\" prefix in links",
+        "description": "Use \"news\" prefix in links (only for articles with active SEO)"
+      },
+      "UseStoreDefaultLanguage": {
+        "title": "Use store default language while searching articles",
+        "description": "Use store default language while searching articles"
+      }
+    }
+  }
+}
