@@ -34,28 +34,6 @@ public class NewsArticleSearchService(
             query = query.Where(x => x.Name.Contains(criteria.SearchPhrase));
         }
 
-        if (criteria.Status.HasValue)
-        {
-            var utcNow = criteria.CertainDate.GetValueOrDefault(DateTime.UtcNow);
-
-            if (criteria.Status == NewsArticleStatusEnum.Published)
-            {
-                query = query.Where(x => x.IsPublished && (x.PublishDate == null || x.PublishDate <= utcNow));
-            }
-            else if (criteria.Status == NewsArticleStatusEnum.Scheduled)
-            {
-                query = query.Where(x => x.IsPublished && (x.PublishDate != null && x.PublishDate > utcNow));
-            }
-            else if (criteria.Status == NewsArticleStatusEnum.Archived)
-            {
-                query = query.Where(x => x.IsArchived && (x.ArchiveDate == null || x.ArchiveDate <= utcNow));
-            }
-            else if (criteria.Status == NewsArticleStatusEnum.Draft)
-            {
-                query = query.Where(x => !x.IsPublished && !x.IsArchived);
-            }
-        }
-
         if (!criteria.StoreId.IsNullOrEmpty())
         {
             query = query.Where(x => x.StoreId == criteria.StoreId);
@@ -71,7 +49,34 @@ public class NewsArticleSearchService(
             query = query.Where(article => article.LocalizedContents.Any(content => criteria.LanguageCodes.Contains(content.LanguageCode)));
         }
 
+        if (criteria.Status.HasValue)
+        {
+            BuildStatusSearchCriteria(query, criteria);
+        }
+
         return query;
+    }
+
+    protected virtual void BuildStatusSearchCriteria(IQueryable<NewsArticleEntity> query, NewsArticleSearchCriteria criteria)
+    {
+        var utcNow = criteria.CertainDate.GetValueOrDefault(DateTime.UtcNow);
+
+        if (criteria.Status == NewsArticleStatusEnum.Published)
+        {
+            query = query.Where(x => x.IsPublished && (x.PublishDate == null || x.PublishDate <= utcNow));
+        }
+        else if (criteria.Status == NewsArticleStatusEnum.Scheduled)
+        {
+            query = query.Where(x => x.IsPublished && (x.PublishDate != null && x.PublishDate > utcNow));
+        }
+        else if (criteria.Status == NewsArticleStatusEnum.Archived)
+        {
+            query = query.Where(x => x.IsArchived && (x.ArchiveDate == null || x.ArchiveDate <= utcNow));
+        }
+        else if (criteria.Status == NewsArticleStatusEnum.Draft)
+        {
+            query = query.Where(x => !x.IsPublished && !x.IsArchived);
+        }
     }
 
     protected override IList<SortInfo> BuildSortExpression(NewsArticleSearchCriteria criteria)
