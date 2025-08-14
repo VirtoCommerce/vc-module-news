@@ -37,6 +37,12 @@
       "DETAILS": {
         "TITLE": "記事",
         "FORM": {
+          "BLOCKS": {
+            "PUBLISH": "公開設定",
+            "METADATA": "メタデータ",
+            "CONTENT": "コンテンツ",
+            "SEO": "SEO"
+          },
           "NAME": {
             "LABEL": "名前"
           },
@@ -74,9 +80,6 @@
           "CONTENT_PREVIEW": {
             "LABEL": "要約",
             "PLACEHOLDER": "要約"
-          },
-          "SEO_HEADER": {
-            "LABEL": "SEO"
           },
           "SEO_IS_ACTIVE": {
             "LABEL": "アクティブ"

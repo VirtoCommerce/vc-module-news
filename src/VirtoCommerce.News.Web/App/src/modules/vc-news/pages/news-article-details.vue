@@ -56,121 +56,137 @@
           />
         </Field>
 
-        <div class="tw-flex tw-flex-row tw-gap-4">
-          <VcInput
-            v-model="newsArticle.publishDate"
-            type="datetime-local"
-            :label="$t('VC_NEWS.PAGES.DETAILS.FORM.PUBLISH_DATE.LABEL')"
-          />
-
-          <VcInput
-            v-model="newsArticle.archiveDate"
-            type="datetime-local"
-            :label="$t('VC_NEWS.PAGES.DETAILS.FORM.ARCHIVE_DATE.LABEL')"
-          />
-        </div>
-
-        <Field
-          v-slot="{ errors, errorMessage, handleChange }"
-          :label="$t('VC_NEWS.PAGES.DETAILS.FORM.PUBLISH_SCOPE.LABEL')"
-          :model-value="newsArticle.publishScope"
-          name="publishScope"
-          rules="required"
+        <VcCard
+          :header="$t('VC_NEWS.PAGES.DETAILS.FORM.BLOCKS.PUBLISH')"
+          is-collapsable
+          class="tw-flex tw-flex-col tw-gap-4 tw-p-4"
         >
-          <VcSelect
-            v-model="newsArticle.publishScope"
+          <div class="tw-flex tw-flex-row tw-gap-4">
+            <VcInput
+              v-model="newsArticle.publishDate"
+              type="datetime-local"
+              :label="$t('VC_NEWS.PAGES.DETAILS.FORM.PUBLISH_DATE.LABEL')"
+            />
+
+            <VcInput
+              v-model="newsArticle.archiveDate"
+              type="datetime-local"
+              :label="$t('VC_NEWS.PAGES.DETAILS.FORM.ARCHIVE_DATE.LABEL')"
+            />
+          </div>
+
+          <Field
+            v-slot="{ errors, errorMessage, handleChange }"
             :label="$t('VC_NEWS.PAGES.DETAILS.FORM.PUBLISH_SCOPE.LABEL')"
-            :options="publishScopeOptions"
-            required
-            :error="errors.length > 0"
-            :error-message="errorMessage"
-            @update:model-value="handleChange"
-          />
-        </Field>
-
-        <VcMultivalue
-          v-if="newsArticle.publishScope === 'Authorized'"
-          v-model="userGroupsSelected"
-          :label="$t('VC_NEWS.PAGES.DETAILS.FORM.USER_GROUPS.LABEL')"
-          :options="userGroupsOptions"
-          option-value="id"
-          option-label="title"
-          multivalue
-          class="tw-flex-auto"
-        />
-
-        <VcSelect
-          v-model="newsArticle.authorId"
-          :label="$t('VC_NEWS.PAGES.DETAILS.FORM.AUTHOR.LABEL')"
-          :options="authorOptions"
-        />
-
-        <VcMultivalue
-          v-if="props.param"
-          v-model="tagsSelected"
-          :label="$t('VC_NEWS.PAGES.DETAILS.FORM.TAGS.LABEL')"
-          :options="tagsOptions"
-          option-value="id"
-          option-label="title"
-          :multivalue="false"
-          multilanguage
-          :current-language="currentLocale"
-        />
-
-        <Field
-          v-if="props.param"
-          v-slot="{ errors, errorMessage, handleChange }"
-          :label="$t('VC_NEWS.PAGES.DETAILS.FORM.CONTENT_TITLE.LABEL')"
-          :model-value="selectedLocalizedContent.title"
-          name="content-title"
-          :rules="{ required: !!selectedLocalizedContent.content || !!selectedLocalizedContent.contentPreview }"
-        >
-          <VcInput
-            v-model="selectedLocalizedContent.title"
-            :label="$t('VC_NEWS.PAGES.DETAILS.FORM.CONTENT_TITLE.LABEL')"
-            :required="!!selectedLocalizedContent.content || !!selectedLocalizedContent.contentPreview"
-            :error="errors.length > 0"
-            :error-message="errorMessage"
-            multilanguage
-            :current-language="currentLocale"
-            @update:model-value="handleChange"
+            :model-value="newsArticle.publishScope"
+            name="publishScope"
+            rules="required"
           >
-          </VcInput>
-        </Field>
+            <VcSelect
+              v-model="newsArticle.publishScope"
+              :label="$t('VC_NEWS.PAGES.DETAILS.FORM.PUBLISH_SCOPE.LABEL')"
+              :options="publishScopeOptions"
+              required
+              :error="errors.length > 0"
+              :error-message="errorMessage"
+              @update:model-value="handleChange"
+            />
+          </Field>
 
-        <VcEditor
-          v-if="props.param"
-          v-model="selectedLocalizedContent.contentPreview"
-          :label="$t('VC_NEWS.PAGES.DETAILS.FORM.CONTENT_PREVIEW.LABEL')"
-          multilanguage
-          :current-language="currentLocale"
-          assets-folder="news-articles"
-        />
-
-        <Field
-          v-if="props.param"
-          v-slot="{ errors, errorMessage, handleChange }"
-          :label="$t('VC_NEWS.PAGES.DETAILS.FORM.CONTENT_CONTENT.LABEL')"
-          :model-value="selectedLocalizedContent.content"
-          name="content-content"
-          :rules="{ required: !!selectedLocalizedContent.title || !!selectedLocalizedContent.contentPreview }"
-        >
-          <VcEditor
-            v-model="selectedLocalizedContent.content"
-            :label="$t('VC_NEWS.PAGES.DETAILS.FORM.CONTENT_CONTENT.LABEL')"
-            :required="!!selectedLocalizedContent.title || !!selectedLocalizedContent.contentPreview"
-            :error="errors.length > 0"
-            :error-message="errorMessage"
-            multilanguage
-            :current-language="currentLocale"
-            assets-folder="news-articles"
-            @update:model-value="handleChange"
+          <VcMultivalue
+            v-if="newsArticle.publishScope === 'Authorized'"
+            v-model="userGroupsSelected"
+            :label="$t('VC_NEWS.PAGES.DETAILS.FORM.USER_GROUPS.LABEL')"
+            :options="userGroupsOptions"
+            option-value="id"
+            option-label="title"
+            multivalue
+            class="tw-flex-auto"
           />
-        </Field>
+        </VcCard>
 
         <VcCard
           v-if="props.param"
-          :header="$t('VC_NEWS.PAGES.DETAILS.FORM.SEO_HEADER.LABEL')"
+          :header="$t('VC_NEWS.PAGES.DETAILS.FORM.BLOCKS.CONTENT')"
+          is-collapsable
+          class="tw-flex tw-flex-col tw-gap-4 tw-p-4"
+        >
+          <Field
+            v-slot="{ errors, errorMessage, handleChange }"
+            :label="$t('VC_NEWS.PAGES.DETAILS.FORM.CONTENT_TITLE.LABEL')"
+            :model-value="selectedLocalizedContent.title"
+            name="content-title"
+            :rules="{ required: !!selectedLocalizedContent.content || !!selectedLocalizedContent.contentPreview }"
+          >
+            <VcInput
+              v-model="selectedLocalizedContent.title"
+              :label="$t('VC_NEWS.PAGES.DETAILS.FORM.CONTENT_TITLE.LABEL')"
+              :required="!!selectedLocalizedContent.content || !!selectedLocalizedContent.contentPreview"
+              :error="errors.length > 0"
+              :error-message="errorMessage"
+              multilanguage
+              :current-language="currentLocale"
+              @update:model-value="handleChange"
+            />
+          </Field>
+
+          <VcEditor
+            v-model="selectedLocalizedContent.contentPreview"
+            :label="$t('VC_NEWS.PAGES.DETAILS.FORM.CONTENT_PREVIEW.LABEL')"
+            multilanguage
+            :current-language="currentLocale"
+            assets-folder="news-articles"
+          />
+
+          <Field
+            v-slot="{ errors, errorMessage, handleChange }"
+            :label="$t('VC_NEWS.PAGES.DETAILS.FORM.CONTENT_CONTENT.LABEL')"
+            :model-value="selectedLocalizedContent.content"
+            name="content-content"
+            :rules="{ required: !!selectedLocalizedContent.title || !!selectedLocalizedContent.contentPreview }"
+          >
+            <VcEditor
+              v-model="selectedLocalizedContent.content"
+              :label="$t('VC_NEWS.PAGES.DETAILS.FORM.CONTENT_CONTENT.LABEL')"
+              :required="!!selectedLocalizedContent.title || !!selectedLocalizedContent.contentPreview"
+              :error="errors.length > 0"
+              :error-message="errorMessage"
+              multilanguage
+              :current-language="currentLocale"
+              assets-folder="news-articles"
+              @update:model-value="handleChange"
+            />
+          </Field>
+        </VcCard>
+
+        <VcCard
+          v-if="props.param"
+          :header="$t('VC_NEWS.PAGES.DETAILS.FORM.BLOCKS.METADATA')"
+          is-collapsable
+          is-collapsed
+          class="tw-flex tw-flex-col tw-gap-4 tw-p-4"
+        >
+          <VcSelect
+            v-model="newsArticle.authorId"
+            :label="$t('VC_NEWS.PAGES.DETAILS.FORM.AUTHOR.LABEL')"
+            :options="authorOptions"
+          />
+
+          <VcMultivalue
+            v-model="tagsSelected"
+            :label="$t('VC_NEWS.PAGES.DETAILS.FORM.TAGS.LABEL')"
+            :options="tagsOptions"
+            option-value="id"
+            option-label="title"
+            :multivalue="false"
+            multilanguage
+            :current-language="currentLocale"
+          />
+        </VcCard>
+
+        <VcCard
+          v-if="props.param"
+          :header="$t('VC_NEWS.PAGES.DETAILS.FORM.BLOCKS.SEO')"
           is-collapsable
           is-collapsed
           class="tw-flex tw-flex-col tw-gap-4 tw-p-4"

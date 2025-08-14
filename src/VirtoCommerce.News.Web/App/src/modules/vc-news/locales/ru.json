@@ -37,6 +37,12 @@
       "DETAILS": {
         "TITLE": "Статья",
         "FORM": {
+          "BLOCKS": {
+            "PUBLISH": "Настройки публикации",
+            "METADATA": "Метаданные",
+            "CONTENT": "Контент",
+            "SEO": "SEO"
+          },
           "NAME": {
             "LABEL": "Имя"
           },
@@ -74,9 +80,6 @@
           "CONTENT_PREVIEW": {
             "LABEL": "Краткое содержание",
             "PLACEHOLDER": "Краткое содержание"
-          },
-          "SEO_HEADER": {
-            "LABEL": "SEO"
           },
           "SEO_IS_ACTIVE": {
             "LABEL": "Активно"

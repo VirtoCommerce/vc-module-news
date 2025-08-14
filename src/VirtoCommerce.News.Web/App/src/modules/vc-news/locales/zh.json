@@ -37,6 +37,12 @@
       "DETAILS": {
         "TITLE": "文章",
         "FORM": {
+          "BLOCKS": {
+            "PUBLISH": "发布设置",
+            "METADATA": "元数据",
+            "CONTENT": "内容",
+            "SEO": "SEO"
+          },
           "NAME": {
             "LABEL": "名称"
           },
@@ -74,9 +80,6 @@
           "CONTENT_PREVIEW": {
             "LABEL": "摘要",
             "PLACEHOLDER": "摘要"
-          },
-          "SEO_HEADER": {
-            "LABEL": "SEO"
           },
           "SEO_IS_ACTIVE": {
             "LABEL": "已激活"

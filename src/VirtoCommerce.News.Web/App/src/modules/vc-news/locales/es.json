@@ -37,6 +37,12 @@
       "DETAILS": {
         "TITLE": "Artículo",
         "FORM": {
+          "BLOCKS": {
+            "PUBLISH": "Configuraciones de publicación",
+            "METADATA": "Metadatos",
+            "CONTENT": "Contenido",
+            "SEO": "SEO"
+          },
           "NAME": {
             "LABEL": "Nombre"
           },
@@ -74,9 +80,6 @@
           "CONTENT_PREVIEW": {
             "LABEL": "Resumen",
             "PLACEHOLDER": "Resumen"
-          },
-          "SEO_HEADER": {
-            "LABEL": "SEO"
           },
           "SEO_IS_ACTIVE": {
             "LABEL": "Activo"
