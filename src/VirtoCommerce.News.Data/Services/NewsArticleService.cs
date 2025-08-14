@@ -35,10 +35,10 @@ public class NewsArticleService(
     protected override async Task BeforeSaveChanges(IList<NewsArticle> models)
     {
         await base.BeforeSaveChanges(models);
-        await Validate(models);
+        await ValidateAsync(models);
     }
 
-    protected virtual async Task Validate(IList<NewsArticle> newsArticles)
+    protected virtual async Task ValidateAsync(IList<NewsArticle> newsArticles)
     {
         foreach (var newsArticle in newsArticles)
         {
@@ -100,7 +100,7 @@ public class NewsArticleService(
         await SaveChangesAsync(newsArticles);
     }
 
-    public virtual async Task<NewsArticle> Clone(NewsArticle newsArticle)
+    public virtual async Task<NewsArticle> CloneAsync(NewsArticle newsArticle)
     {
         var clonedNewsArticle = newsArticle.CloneTyped();
 
@@ -146,7 +146,7 @@ public class NewsArticleService(
     {
         using var repository = repositoryFactory();
 
-        return await repository.GetNewsArticlesTags(languageCode);
+        return await repository.GetNewsArticlesTagsAsync(languageCode);
     }
 
     public IList<string> GetPublishScopes()

@@ -13,7 +13,7 @@ public interface INewsArticleService : ICrudService<NewsArticle>
     Task ArchiveAsync(IList<string> ids);
     Task UnarchiveAsync(IList<string> ids);
 
-    Task<NewsArticle> Clone(NewsArticle newsArticle);
+    Task<NewsArticle> CloneAsync(NewsArticle newsArticle);
 
     Task<IList<string>> GetTagsAsync(string languageCode);
     IList<string> GetPublishScopes();

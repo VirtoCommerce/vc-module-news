@@ -50,7 +50,7 @@ public class NewsArticleRepository(NewsDbContext dbContext, IUnitOfWork unitOfWo
         return result;
     }
 
-    public virtual async Task<IList<string>> GetNewsArticlesTags(string languageCode)
+    public virtual async Task<IList<string>> GetNewsArticlesTagsAsync(string languageCode)
     {
         var query = NewsArticleTags.AsQueryable();
 

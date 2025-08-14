@@ -32,7 +32,7 @@ public class NewsArticleController(INewsArticleService newsArticleService, INews
     [Authorize(ModuleConstants.Security.Permissions.Create)]
     public async Task<ActionResult<NewsArticle>> Clone([FromBody] NewsArticle newsArticle)
     {
-        var clonedNewsArticle = await newsArticleService.Clone(newsArticle);
+        var clonedNewsArticle = await newsArticleService.CloneAsync(newsArticle);
         return Ok(clonedNewsArticle);
     }
 

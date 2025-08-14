@@ -14,5 +14,5 @@ public interface INewsArticleRepository : IRepository
     IQueryable<NewsArticleUserGroupEntity> NewsArticleUserGroups { get; }
 
     Task<IList<NewsArticleEntity>> GetNewsArticlesByIdsAsync(IList<string> ids);
-    Task<IList<string>> GetNewsArticlesTags(string languageCode);
+    Task<IList<string>> GetNewsArticlesTagsAsync(string languageCode);
 }
