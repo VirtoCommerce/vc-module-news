@@ -70,13 +70,13 @@ public class NewsArticleSearchService(
 
         if (!criteria.PublishScope.IsNullOrEmpty())
         {
-            BuildPublishScopeQuery(query, criteria);
+            query = BuildPublishScopeQuery(query, criteria);
         }
 
         return query;
     }
 
-    protected virtual void BuildPublishScopeQuery(IQueryable<NewsArticleEntity> query, NewsArticleSearchCriteria criteria)
+    protected virtual IQueryable<NewsArticleEntity> BuildPublishScopeQuery(IQueryable<NewsArticleEntity> query, NewsArticleSearchCriteria criteria)
     {
         if (criteria.PublishScope == NewsArticlePublishScopes.Anonymous)
         {
@@ -95,6 +95,8 @@ public class NewsArticleSearchService(
                 query = query.Where(x => x.PublishScope == NewsArticlePublishScopes.Authorized || x.PublishScope == NewsArticlePublishScopes.Anonymous);
             }
         }
+
+        return query;
     }
 
     protected override IList<SortInfo> BuildSortExpression(NewsArticleSearchCriteria criteria)
