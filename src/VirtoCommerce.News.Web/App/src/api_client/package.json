@@ -30,6 +30,14 @@
       "import": "./dist\\virtocommerce.store.js",
       "types": "./dist\\types\\virtocommerce.store.d.ts"
     },
+    "./customer": {
+      "import": "./dist\\virtocommerce.customer.js",
+      "types": "./dist\\types\\virtocommerce.customer.d.ts"
+    },
+    "./virtocommerce.customer": {
+      "import": "./dist\\virtocommerce.customer.js",
+      "types": "./dist\\types\\virtocommerce.customer.d.ts"
+    },
     ".": {
       "import": "./dist\\virtocommerce.news.js",
       "types": "./dist\\types\\virtocommerce.news.d.ts"
@@ -37,7 +45,7 @@
   },
   "apiClientGenerator": {
     "version": "0.0.0",
-    "generatedAt": "2025-08-13T17:32:29.605Z"
+    "generatedAt": "2025-08-13T21:15:48.855Z"
   },
   "module": "./dist\\virtocommerce.news.js",
   "types": "./dist\\types\\virtocommerce.news.d.ts"

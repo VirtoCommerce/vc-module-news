@@ -59,6 +59,9 @@
               "Authorized": "Autorisert"
             }
           },
+          "AUTHOR": {
+            "LABEL": "Autor"
+          },
           "TAGS": {
             "LABEL": "Tags"
           },

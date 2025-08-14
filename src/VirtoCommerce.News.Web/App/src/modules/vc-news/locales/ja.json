@@ -59,6 +59,9 @@
               "Authorized": "認証済み"
             }
           },
+          "AUTHOR": {
+            "LABEL": "著者"
+          },
           "TAGS": {
             "LABEL": "タグ"
           },

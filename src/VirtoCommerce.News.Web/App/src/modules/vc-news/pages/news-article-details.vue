@@ -99,6 +99,12 @@
           class="tw-flex-auto"
         />
 
+        <VcSelect
+          v-model="newsArticle.authorId"
+          :label="$t('VC_NEWS.PAGES.DETAILS.FORM.AUTHOR.LABEL')"
+          :options="authorOptions"
+        />
+
         <VcMultivalue
           v-if="props.param"
           v-model="tagsSelected"
@@ -258,6 +264,7 @@ import {
   useStore,
   useUserGroups,
   useLocalization,
+  useCustomers,
 } from "../composables";
 import { NewsArticleLocalizedContent, NewsArticleLocalizedTag, SeoInfo } from "../../../api_client/virtocommerce.news";
 
@@ -312,6 +319,7 @@ const userGroupsSelected = computed({
   },
 });
 
+//tags
 const tagsOptions = computed(() => newsArticleOptions.value?.tags?.map((x) => ({ id: x, title: x })));
 
 const tagsSelected = computed({
@@ -332,6 +340,7 @@ const tagsSelected = computed({
   },
 });
 
+//publish scopes
 const publishScopeOptions = computed(() =>
   newsArticleOptions.value?.publishScopes?.map((x) => ({
     id: x,
@@ -348,6 +357,11 @@ const setLocale = async (locale: string) => {
   await loadOptions({ languageCode: currentLocale.value });
 };
 
+//authors
+const { authors, loadAuthors, loadingAuthors } = useCustomers();
+const authorOptions = computed(() => authors.value.map((x) => ({ id: x.id, title: x.name })));
+
+//content
 const selectedLocalizedContent = computed(() => {
   if (newsArticle.value) {
     if (!newsArticle.value.localizedContents) {
@@ -368,6 +382,7 @@ const selectedLocalizedContent = computed(() => {
   return newLocalizedContent;
 });
 
+//seo
 const selectedSeo = computed(() => {
   if (newsArticle.value) {
     if (!newsArticle.value.seoInfos) {
@@ -420,7 +435,13 @@ const { publishNewsArticlePermission, createNewsArticlePermission, updateNewsArt
 const saveNewsArticlePermission = props.param ? updateNewsArticlePermission : createNewsArticlePermission;
 
 //other
-const loading = useLoading(loadingStores, loadingUserGroups, loadingLanguages, loadingOrSavingNewsArticle);
+const loading = useLoading(
+  loadingStores,
+  loadingUserGroups,
+  loadingLanguages,
+  loadingAuthors,
+  loadingOrSavingNewsArticle,
+);
 
 const bladeToolbar = ref([]) as Ref<IBladeToolbar[]>;
 
@@ -517,6 +538,7 @@ onMounted(async () => {
   await loadStores();
   await loadUserGroups();
   await loadLanguages();
+  await loadAuthors();
   await loadOptions({ languageCode: currentLocale.value });
   if (props.param) {
     await loadNewsArticle({ id: props.param });
