@@ -58,27 +58,6 @@ public class NewsArticleSearchService(
             query = query.Where(article => article.LocalizedContents.Any(content => criteria.LanguageCodes.Contains(content.LanguageCode)));
         }
 
-        if (!criteria.PublishScope.IsNullOrEmpty())
-        {
-            if (criteria.PublishScope == NewsArticlePublishScopes.Anonymous)
-            {
-                query = query.Where(x => x.PublishScope == NewsArticlePublishScopes.Anonymous);
-            }
-            else if (criteria.PublishScope == NewsArticlePublishScopes.Authorized)
-            {
-                if (criteria.UserGroups != null)
-                {
-                    query = query.Where(article =>
-                        (article.PublishScope == NewsArticlePublishScopes.Anonymous) ||
-                        (article.PublishScope == NewsArticlePublishScopes.Authorized && (!article.UserGroups.Any() || article.UserGroups.Any(group => criteria.UserGroups.Contains(group.Group)))));
-                }
-                else
-                {
-                    query = query.Where(x => x.PublishScope == NewsArticlePublishScopes.Authorized || x.PublishScope == NewsArticlePublishScopes.Anonymous);
-                }
-            }
-        }
-
         if (!criteria.AuthorId.IsNullOrEmpty())
         {
             query = query.Where(x => x.AuthorId == criteria.AuthorId);
@@ -89,7 +68,33 @@ public class NewsArticleSearchService(
             query = query.Where(article => article.LocalizedTags.Any(tag => criteria.Tags.Contains(tag.Tag)));
         }
 
+        if (!criteria.PublishScope.IsNullOrEmpty())
+        {
+            BuildPublishScopeQuery(query, criteria);
+        }
+
         return query;
+    }
+
+    protected virtual void BuildPublishScopeQuery(IQueryable<NewsArticleEntity> query, NewsArticleSearchCriteria criteria)
+    {
+        if (criteria.PublishScope == NewsArticlePublishScopes.Anonymous)
+        {
+            query = query.Where(x => x.PublishScope == NewsArticlePublishScopes.Anonymous);
+        }
+        else if (criteria.PublishScope == NewsArticlePublishScopes.Authorized)
+        {
+            if (criteria.UserGroups != null)
+            {
+                query = query.Where(article =>
+                    (article.PublishScope == NewsArticlePublishScopes.Anonymous) ||
+                    (article.PublishScope == NewsArticlePublishScopes.Authorized && (!article.UserGroups.Any() || article.UserGroups.Any(group => criteria.UserGroups.Contains(group.Group)))));
+            }
+            else
+            {
+                query = query.Where(x => x.PublishScope == NewsArticlePublishScopes.Authorized || x.PublishScope == NewsArticlePublishScopes.Anonymous);
+            }
+        }
     }
 
     protected override IList<SortInfo> BuildSortExpression(NewsArticleSearchCriteria criteria)
