@@ -51,7 +51,7 @@ public class NewsArticleSearchService(
 
         if (criteria.Status.HasValue)
         {
-            BuildStatusSearchCriteria(query, criteria);
+            query = BuildStatusSearchCriteria(query, criteria);
         }
 
         return query;
