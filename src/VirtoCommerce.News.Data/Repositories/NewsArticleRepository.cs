@@ -18,6 +18,8 @@ public class NewsArticleRepository(NewsDbContext dbContext, IUnitOfWork unitOfWo
 
     public IQueryable<NewsArticleUserGroupEntity> NewsArticleUserGroups => DbContext.Set<NewsArticleUserGroupEntity>();
 
+    public IQueryable<NewsArticleLocalizedTagEntity> NewsArticleTags => DbContext.Set<NewsArticleLocalizedTagEntity>();
+
     public virtual async Task<IList<NewsArticleEntity>> GetNewsArticlesByIdsAsync(IList<string> ids)
     {
         var result = await NewsArticles
@@ -32,6 +34,10 @@ public class NewsArticleRepository(NewsDbContext dbContext, IUnitOfWork unitOfWo
                 .Where(x => articleIds.Contains(x.NewsArticleId))
                 .LoadAsync();
 
+            await NewsArticleTags
+                .Where(x => articleIds.Contains(x.NewsArticleId))
+                .LoadAsync();
+
             await NewsArticleSeoInfos
                 .Where(x => articleIds.Contains(x.NewsArticleId))
                 .LoadAsync();
@@ -42,5 +48,17 @@ public class NewsArticleRepository(NewsDbContext dbContext, IUnitOfWork unitOfWo
         }
 
         return result;
+    }
+
+    public virtual async Task<IList<string>> GetNewsArticlesTagsAsync(string languageCode)
+    {
+        var query = NewsArticleTags.AsQueryable();
+
+        if (!string.IsNullOrEmpty(languageCode))
+        {
+            query = query.Where(x => x.LanguageCode == languageCode);
+        }
+
+        return await query.Select(x => x.Tag).Distinct().ToListAsync();
     }
 }

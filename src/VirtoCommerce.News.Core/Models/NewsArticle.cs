@@ -20,7 +20,20 @@ public class NewsArticle : AuditableEntity, ICloneable, ISeoSupport
 
     public DateTime? PublishDate { get; set; }
 
+    public bool IsArchived { get; set; }
+
+    public DateTime? ArchiveDate { get; set; }
+
+    [JsonIgnore]
+    public bool? IsArchivedValue { get; private set; }
+
+    public string AuthorId { get; set; }
+
+    public string PublishScope { get; set; }
+
     public IList<NewsArticleLocalizedContent> LocalizedContents { get; set; }
+
+    public IList<NewsArticleLocalizedTag> LocalizedTags { get; set; }
 
     public string SeoObjectType => nameof(NewsArticle);
 
@@ -34,6 +47,7 @@ public class NewsArticle : AuditableEntity, ICloneable, ISeoSupport
 
         result.SeoInfos = SeoInfos?.Select(x => x.CloneTyped()).ToList();
         result.LocalizedContents = LocalizedContents?.Select(x => x.CloneTyped()).ToList();
+        result.LocalizedTags = LocalizedTags?.Select(x => x.CloneTyped()).ToList();
 
         return result;
     }
@@ -41,5 +55,10 @@ public class NewsArticle : AuditableEntity, ICloneable, ISeoSupport
     public void SetIsPublished(bool isPublished)
     {
         IsPublishedValue = isPublished;
+    }
+
+    public void SetIsArchived(bool isArchived)
+    {
+        IsArchivedValue = isArchived;
     }
 }

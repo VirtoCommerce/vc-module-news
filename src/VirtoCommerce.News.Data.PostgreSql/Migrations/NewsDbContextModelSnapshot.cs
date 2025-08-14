@@ -29,12 +29,22 @@ namespace VirtoCommerce.News.Data.PostgreSql.Migrations
                         .HasMaxLength(128)
                         .HasColumnType("character varying(128)");
 
+                    b.Property<DateTime?>("ArchiveDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("AuthorId")
+                        .HasMaxLength(128)
+                        .HasColumnType("character varying(128)");
+
                     b.Property<string>("CreatedBy")
                         .HasMaxLength(64)
                         .HasColumnType("character varying(64)");
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("timestamp with time zone");
+
+                    b.Property<bool>("IsArchived")
+                        .HasColumnType("boolean");
 
                     b.Property<bool>("IsPublished")
                         .HasColumnType("boolean");
@@ -53,6 +63,13 @@ namespace VirtoCommerce.News.Data.PostgreSql.Migrations
 
                     b.Property<DateTime?>("PublishDate")
                         .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("PublishScope")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(32)
+                        .HasColumnType("character varying(32)")
+                        .HasDefaultValueSql("'Anonymous'");
 
                     b.Property<string>("StoreId")
                         .IsRequired()
@@ -112,6 +129,35 @@ namespace VirtoCommerce.News.Data.PostgreSql.Migrations
                     b.HasIndex("NewsArticleId");
 
                     b.ToTable("NewsArticleLocalizedContent", (string)null);
+                });
+
+            modelBuilder.Entity("VirtoCommerce.News.Data.Models.NewsArticleLocalizedTagEntity", b =>
+                {
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(128)
+                        .HasColumnType("character varying(128)");
+
+                    b.Property<string>("LanguageCode")
+                        .IsRequired()
+                        .HasMaxLength(16)
+                        .HasColumnType("character varying(16)");
+
+                    b.Property<string>("NewsArticleId")
+                        .IsRequired()
+                        .HasMaxLength(128)
+                        .HasColumnType("character varying(128)");
+
+                    b.Property<string>("Tag")
+                        .IsRequired()
+                        .HasMaxLength(64)
+                        .HasColumnType("character varying(64)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NewsArticleId");
+
+                    b.ToTable("NewsArticleLocalizedTag", (string)null);
                 });
 
             modelBuilder.Entity("VirtoCommerce.News.Data.Models.NewsArticleUserGroupEntity", b =>
@@ -214,6 +260,17 @@ namespace VirtoCommerce.News.Data.PostgreSql.Migrations
                     b.Navigation("NewsArticle");
                 });
 
+            modelBuilder.Entity("VirtoCommerce.News.Data.Models.NewsArticleLocalizedTagEntity", b =>
+                {
+                    b.HasOne("VirtoCommerce.News.Data.Models.NewsArticleEntity", "NewsArticle")
+                        .WithMany("LocalizedTags")
+                        .HasForeignKey("NewsArticleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("NewsArticle");
+                });
+
             modelBuilder.Entity("VirtoCommerce.News.Data.Models.NewsArticleUserGroupEntity", b =>
                 {
                     b.HasOne("VirtoCommerce.News.Data.Models.NewsArticleEntity", "NewsArticle")
@@ -239,6 +296,8 @@ namespace VirtoCommerce.News.Data.PostgreSql.Migrations
             modelBuilder.Entity("VirtoCommerce.News.Data.Models.NewsArticleEntity", b =>
                 {
                     b.Navigation("LocalizedContents");
+
+                    b.Navigation("LocalizedTags");
 
                     b.Navigation("SeoInfos");
 

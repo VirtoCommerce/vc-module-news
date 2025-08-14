@@ -21,6 +21,8 @@
             "STORE": "店舗",
             "IS_PUBLISHED": "公開済み",
             "PUBLISH_DATE": "公開日",
+            "IS_ARCHIVED": "アーカイブされています",
+            "ARCHIVE_DATE": "アーカイブ日付",
             "CREATED_DATE": "作成日",
             "CREATED_BY": "作成者",
             "MODIFIED_DATE": "更新日",
@@ -35,6 +37,12 @@
       "DETAILS": {
         "TITLE": "記事",
         "FORM": {
+          "BLOCKS": {
+            "PUBLISH": "公開設定",
+            "METADATA": "メタデータ",
+            "CONTENT": "コンテンツ",
+            "SEO": "SEO"
+          },
           "NAME": {
             "LABEL": "名前"
           },
@@ -44,8 +52,24 @@
           "PUBLISH_DATE": {
             "LABEL": "公開日"
           },
+          "ARCHIVE_DATE": {
+            "LABEL": "アーカイブ日付"
+          },
           "USER_GROUPS": {
             "LABEL": "ユーザーグループ"
+          },
+          "PUBLISH_SCOPE": {
+            "LABEL": "公開範囲",
+            "VALUES": {
+              "Anonymous": "匿名",
+              "Authorized": "認証済み"
+            }
+          },
+          "AUTHOR": {
+            "LABEL": "著者"
+          },
+          "TAGS": {
+            "LABEL": "タグ"
           },
           "CONTENT_TITLE": {
             "LABEL": "タイトル"
@@ -56,9 +80,6 @@
           "CONTENT_PREVIEW": {
             "LABEL": "要約",
             "PLACEHOLDER": "要約"
-          },
-          "SEO_HEADER": {
-            "LABEL": "SEO"
           },
           "SEO_IS_ACTIVE": {
             "LABEL": "アクティブ"
@@ -84,6 +105,8 @@
           "RESET": "リセット",
           "PUBLISH": "公開",
           "UNPUBLISH": "非公開",
+          "ARCHIVE": "アーカイブ",
+          "UNARCHIVE": "アーカイブ解除",
           "CLONE": "コピーを作成"
         },
         "ALERTS": {

@@ -21,6 +21,8 @@
             "STORE": "Магазин",
             "IS_PUBLISHED": "Опубликовано",
             "PUBLISH_DATE": "Дата публикации",
+            "IS_ARCHIVED": "Архивировано",
+            "ARCHIVE_DATE": "Дата архивации",
             "CREATED_DATE": "Дата создания",
             "CREATED_BY": "Создано",
             "MODIFIED_DATE": "Дата изменения",
@@ -35,6 +37,12 @@
       "DETAILS": {
         "TITLE": "Статья",
         "FORM": {
+          "BLOCKS": {
+            "PUBLISH": "Настройки публикации",
+            "METADATA": "Метаданные",
+            "CONTENT": "Контент",
+            "SEO": "SEO"
+          },
           "NAME": {
             "LABEL": "Имя"
           },
@@ -44,8 +52,24 @@
           "PUBLISH_DATE": {
             "LABEL": "Дата публикации"
           },
+          "ARCHIVE_DATE": {
+            "LABEL": "Дата архивации"
+          },
           "USER_GROUPS": {
             "LABEL": "Группы пользователей"
+          },
+          "PUBLISH_SCOPE": {
+            "LABEL": "Область публикации",
+            "VALUES": {
+              "Anonymous": "Анонимный",
+              "Authorized": "Авторизованный"
+            }
+          },
+          "AUTHOR": {
+            "LABEL": "Автор"
+          },
+          "TAGS": {
+            "LABEL": "Теги"
           },
           "CONTENT_TITLE": {
             "LABEL": "Заголовок"
@@ -56,9 +80,6 @@
           "CONTENT_PREVIEW": {
             "LABEL": "Краткое содержание",
             "PLACEHOLDER": "Краткое содержание"
-          },
-          "SEO_HEADER": {
-            "LABEL": "SEO"
           },
           "SEO_IS_ACTIVE": {
             "LABEL": "Активно"
@@ -84,6 +105,8 @@
           "RESET": "Сбросить",
           "PUBLISH": "Опубликовать",
           "UNPUBLISH": "Отменить публикацию",
+          "ARCHIVE": "Архивировать",
+          "UNARCHIVE": "Извлечь из архива",
           "CLONE": "Создать копию"
         },
         "ALERTS": {

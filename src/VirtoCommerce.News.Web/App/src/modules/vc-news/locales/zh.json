@@ -21,6 +21,8 @@
             "STORE": "商店",
             "IS_PUBLISHED": "是否发布",
             "PUBLISH_DATE": "发布日期",
+            "IS_ARCHIVED": "已归档",
+            "ARCHIVE_DATE": "存档日期",
             "CREATED_DATE": "创建日期",
             "CREATED_BY": "创建者",
             "MODIFIED_DATE": "修改日期",
@@ -35,6 +37,12 @@
       "DETAILS": {
         "TITLE": "文章",
         "FORM": {
+          "BLOCKS": {
+            "PUBLISH": "发布设置",
+            "METADATA": "元数据",
+            "CONTENT": "内容",
+            "SEO": "SEO"
+          },
           "NAME": {
             "LABEL": "名称"
           },
@@ -44,8 +52,24 @@
           "PUBLISH_DATE": {
             "LABEL": "发布日期"
           },
+          "ARCHIVE_DATE": {
+            "LABEL": "存档日期"
+          },
           "USER_GROUPS": {
             "LABEL": "用户组"
+          },
+          "PUBLISH_SCOPE": {
+            "LABEL": "发布范围",
+            "VALUES": {
+              "Anonymous": "匿名",
+              "Authorized": "授权"
+            }
+          },
+          "AUTHOR": {
+            "LABEL": "作者"
+          },
+          "TAGS": {
+            "LABEL": "标签"
           },
           "CONTENT_TITLE": {
             "LABEL": "标题"
@@ -56,9 +80,6 @@
           "CONTENT_PREVIEW": {
             "LABEL": "摘要",
             "PLACEHOLDER": "摘要"
-          },
-          "SEO_HEADER": {
-            "LABEL": "SEO"
           },
           "SEO_IS_ACTIVE": {
             "LABEL": "已激活"
@@ -84,6 +105,8 @@
           "RESET": "重置",
           "PUBLISH": "发布",
           "UNPUBLISH": "取消发布",
+          "ARCHIVE": "归档",
+          "UNARCHIVE": "取消归档",
           "CLONE": "创建副本"
         },
         "ALERTS": {

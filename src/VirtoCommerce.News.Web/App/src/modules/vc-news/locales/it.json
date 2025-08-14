@@ -21,6 +21,8 @@
             "STORE": "Negozio",
             "IS_PUBLISHED": "Pubblicato",
             "PUBLISH_DATE": "Data di pubblicazione",
+            "IS_ARCHIVED": "È archiviato",
+            "ARCHIVE_DATE": "Data di archiviazione",
             "CREATED_DATE": "Data di creazione",
             "CREATED_BY": "Creato da",
             "MODIFIED_DATE": "Data di modifica",
@@ -35,6 +37,12 @@
       "DETAILS": {
         "TITLE": "Articolo",
         "FORM": {
+          "BLOCKS": {
+            "PUBLISH": "Impostazioni di pubblicazione",
+            "METADATA": "Metadati",
+            "CONTENT": "Contenuto",
+            "SEO": "SEO"
+          },
           "NAME": {
             "LABEL": "Nome"
           },
@@ -44,8 +52,24 @@
           "PUBLISH_DATE": {
             "LABEL": "Data di pubblicazione"
           },
+          "ARCHIVE_DATE": {
+            "LABEL": "Data di archiviazione"
+          },
           "USER_GROUPS": {
             "LABEL": "Gruppi di utenti"
+          },
+          "PUBLISH_SCOPE": {
+            "LABEL": "Ambito di pubblicazione",
+            "VALUES": {
+              "Anonymous": "Anonimo",
+              "Authorized": "Autorizzato"
+            }
+          },
+          "AUTHOR": {
+            "LABEL": "Autore"
+          },
+          "TAGS": {
+            "LABEL": "Tag"
           },
           "CONTENT_TITLE": {
             "LABEL": "Titolo"
@@ -56,9 +80,6 @@
           "CONTENT_PREVIEW": {
             "LABEL": "Sommario",
             "PLACEHOLDER": "Sommario"
-          },
-          "SEO_HEADER": {
-            "LABEL": "SEO"
           },
           "SEO_IS_ACTIVE": {
             "LABEL": "Attivo"
@@ -84,6 +105,8 @@
           "RESET": "Ripristina",
           "PUBLISH": "Pubblica",
           "UNPUBLISH": "Annulla pubblicazione",
+          "ARCHIVE": "Archivia",
+          "UNARCHIVE": "Dearchivia",
           "CLONE": "Crea copia"
         },
         "ALERTS": {

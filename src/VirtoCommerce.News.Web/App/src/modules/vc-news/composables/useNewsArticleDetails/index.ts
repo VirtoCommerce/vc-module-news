@@ -1,13 +1,15 @@
 import { computed, ref } from "vue";
 import * as _ from "lodash-es";
 import { useAsync, useApiClient, useLoading } from "@vc-shell/framework";
-import { NewsArticleClient, NewsArticle } from "../../../../api_client/virtocommerce.news";
+import { NewsArticleClient, NewsArticle, NewsArticleOptions } from "../../../../api_client/virtocommerce.news";
 
 export default () => {
   const { getApiClient: getNewsApiClient } = useApiClient(NewsArticleClient);
 
   const newsArticle = ref<NewsArticle>(new NewsArticle({ localizedContents: [], seoInfos: [] }));
   const originalNewsArticle = ref<NewsArticle>(new NewsArticle({ localizedContents: [], seoInfos: [] }));
+
+  const newsArticleOptions = ref<NewsArticleOptions>(new NewsArticleOptions({ publishScopes: [], tags: [] }));
 
   const resetNewsArticle = () => {
     if (originalNewsArticle.value) {
@@ -31,6 +33,14 @@ export default () => {
 
   const newsArticleCanUnpublish = computed(
     () => !newsArticleIsDirty.value && originalNewsArticle.value && originalNewsArticle.value.isPublished,
+  );
+
+  const newsArticleCanArchive = computed(
+    () => !newsArticleIsDirty.value && originalNewsArticle.value && !originalNewsArticle.value.isArchived,
+  );
+
+  const newsArticleCanUnarchive = computed(
+    () => !newsArticleIsDirty.value && originalNewsArticle.value && originalNewsArticle.value.isArchived,
   );
 
   const { loading: loadingNewsArticle, action: loadNewsArticle } = useAsync<{ id: string }>(
@@ -86,6 +96,26 @@ export default () => {
     }
   });
 
+  const { loading: archivingNewsArticle, action: archiveNewsArticle } = useAsync(async () => {
+    if (newsArticle.value) {
+      const apiClient = await getNewsApiClient();
+
+      if (newsArticle.value.id) {
+        await apiClient.archive([newsArticle.value.id]);
+      }
+    }
+  });
+
+  const { loading: unarchivingNewsArticle, action: unarchiveNewsArticle } = useAsync(async () => {
+    if (newsArticle.value) {
+      const apiClient = await getNewsApiClient();
+
+      if (newsArticle.value.id) {
+        await apiClient.unarchive([newsArticle.value.id]);
+      }
+    }
+  });
+
   const { loading: cloningNewsArticle, action: cloneNewsArticle } = useAsync(async () => {
     if (newsArticle.value) {
       const saveable = getSaveable();
@@ -100,6 +130,16 @@ export default () => {
       originalNewsArticle.value = _.cloneDeep(saveable);
     }
   });
+
+  const { loading: loadingOptions, action: loadOptions } = useAsync<{ languageCode: string }>(
+    async (args?: { languageCode: string }) => {
+      const apiClient = await getNewsApiClient();
+      const apiResult = await apiClient.getOptions(args?.languageCode);
+      if (apiResult) {
+        newsArticleOptions.value = apiResult;
+      }
+    },
+  );
 
   const getSaveable = () => {
     const result = _.cloneDeep(newsArticle.value);
@@ -141,6 +181,8 @@ export default () => {
 
   return {
     newsArticle,
+    newsArticleOptions,
+
     loadNewsArticle,
     saveNewsArticle,
     loadingOrSavingNewsArticle: useLoading(
@@ -148,7 +190,10 @@ export default () => {
       savingNewsArticle,
       publishingNewsArticle,
       unpublishingNewsArticle,
+      archivingNewsArticle,
+      unarchivingNewsArticle,
       cloningNewsArticle,
+      loadingOptions,
     ),
 
     publishNewsArticle,
@@ -156,9 +201,16 @@ export default () => {
     newsArticleCanPublish,
     newsArticleCanUnpublish,
 
+    archiveNewsArticle,
+    unarchiveNewsArticle,
+    newsArticleCanArchive,
+    newsArticleCanUnarchive,
+
     cloneNewsArticle,
 
     newsArticleIsDirty,
     resetNewsArticle,
+
+    loadOptions,
   };
 };

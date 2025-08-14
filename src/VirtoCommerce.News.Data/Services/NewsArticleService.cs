@@ -35,10 +35,10 @@ public class NewsArticleService(
     protected override async Task BeforeSaveChanges(IList<NewsArticle> models)
     {
         await base.BeforeSaveChanges(models);
-        await Validate(models);
+        await ValidateAsync(models);
     }
 
-    protected virtual async Task Validate(IList<NewsArticle> newsArticles)
+    protected virtual async Task ValidateAsync(IList<NewsArticle> newsArticles)
     {
         foreach (var newsArticle in newsArticles)
         {
@@ -63,6 +63,7 @@ public class NewsArticleService(
         foreach (var newsArticle in newsArticles)
         {
             newsArticle.SetIsPublished(isPublished);
+
             if (isPublished && !newsArticle.PublishDate.HasValue)
             {
                 newsArticle.PublishDate = DateTime.UtcNow;
@@ -72,7 +73,34 @@ public class NewsArticleService(
         await SaveChangesAsync(newsArticles);
     }
 
-    public virtual async Task<NewsArticle> Clone(NewsArticle newsArticle)
+    public async Task ArchiveAsync(IList<string> ids)
+    {
+        await ChangeIsArchivedAsync(ids, true);
+    }
+
+    public async Task UnarchiveAsync(IList<string> ids)
+    {
+        await ChangeIsArchivedAsync(ids, false);
+    }
+
+    protected virtual async Task ChangeIsArchivedAsync(IList<string> ids, bool isArchived)
+    {
+        var newsArticles = await GetAsync(ids);
+
+        foreach (var newsArticle in newsArticles)
+        {
+            newsArticle.SetIsArchived(isArchived);
+
+            if (isArchived && !newsArticle.ArchiveDate.HasValue)
+            {
+                newsArticle.ArchiveDate = DateTime.UtcNow;
+            }
+        }
+
+        await SaveChangesAsync(newsArticles);
+    }
+
+    public virtual async Task<NewsArticle> CloneAsync(NewsArticle newsArticle)
     {
         var clonedNewsArticle = newsArticle.CloneTyped();
 
@@ -104,11 +132,25 @@ public class NewsArticleService(
     {
         newsArticle.IsPublished = false;
         newsArticle.PublishDate = null;
+        newsArticle.IsArchived = false;
+        newsArticle.ArchiveDate = null;
         newsArticle.Name = ClonedNewsArticlePrefix + newsArticle.Name;
 
         foreach (var seoInfo in newsArticle.SeoInfos)
         {
             seoInfo.IsActive = false;
         }
+    }
+
+    public async Task<IList<string>> GetTagsAsync(string languageCode)
+    {
+        using var repository = repositoryFactory();
+
+        return await repository.GetNewsArticlesTagsAsync(languageCode);
+    }
+
+    public IList<string> GetPublishScopes()
+    {
+        return new List<string>() { NewsArticlePublishScopes.Anonymous, NewsArticlePublishScopes.Authorized };
     }
 }

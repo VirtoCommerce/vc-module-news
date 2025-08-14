@@ -28,7 +28,21 @@ public class NewsArticleEntity : AuditableEntity, IDataEntity<NewsArticleEntity,
 
     public DateTime? PublishDate { get; set; }
 
+    public bool IsArchived { get; set; }
+    private bool? _isArchivedValue;
+
+    public DateTime? ArchiveDate { get; set; }
+
+    [StringLength(IdLength)]
+    public string AuthorId { get; set; }
+
+    [Required]
+    [StringLength(Length32)]
+    public string PublishScope { get; set; }
+
     public virtual ObservableCollection<NewsArticleLocalizedContentEntity> LocalizedContents { get; set; } = new NullCollection<NewsArticleLocalizedContentEntity>();
+
+    public virtual ObservableCollection<NewsArticleLocalizedTagEntity> LocalizedTags { get; set; } = new NullCollection<NewsArticleLocalizedTagEntity>();
 
     public virtual ObservableCollection<SeoInfoEntity> SeoInfos { get; set; } = new NullCollection<SeoInfoEntity>();
 
@@ -46,12 +60,17 @@ public class NewsArticleEntity : AuditableEntity, IDataEntity<NewsArticleEntity,
 
         model.StoreId = StoreId;
         model.Name = Name;
-        model.IsPublished = IsPublished;
         model.PublishDate = PublishDate;
+        model.ArchiveDate = ArchiveDate;
+        model.IsPublished = IsPublished;
+        model.IsArchived = IsArchived;
+        model.AuthorId = AuthorId;
+        model.PublishScope = PublishScope;
 
         model.LocalizedContents = LocalizedContents.Select(x => x.ToModel()).ToList();
         model.SeoInfos = SeoInfos.Select(x => x.ToModel()).ToList();
         model.UserGroups = UserGroups.OrderBy(x => x.Group).Select(x => x.Group).ToList();
+        model.LocalizedTags = LocalizedTags.Select(x => x.ToModel()).ToList();
 
         return model;
     }
@@ -71,6 +90,9 @@ public class NewsArticleEntity : AuditableEntity, IDataEntity<NewsArticleEntity,
         StoreId = model.StoreId;
         Name = model.Name;
         PublishDate = model.PublishDate;
+        ArchiveDate = model.ArchiveDate;
+        AuthorId = model.AuthorId;
+        PublishScope = model.PublishScope;
 
         if (model.IsPublishedValue.HasValue)
         {
@@ -78,9 +100,20 @@ public class NewsArticleEntity : AuditableEntity, IDataEntity<NewsArticleEntity,
             _isPublishedValue = model.IsPublishedValue;
         }
 
+        if (model.IsArchivedValue.HasValue)
+        {
+            IsArchived = model.IsArchivedValue.Value;
+            _isArchivedValue = model.IsArchivedValue;
+        }
+
         if (model.LocalizedContents != null)
         {
             LocalizedContents = new ObservableCollection<NewsArticleLocalizedContentEntity>(model.LocalizedContents.Select(x => AbstractTypeFactory<NewsArticleLocalizedContentEntity>.TryCreateInstance().FromModel(x, pkMap)));
+        }
+
+        if (model.LocalizedTags != null)
+        {
+            LocalizedTags = new ObservableCollection<NewsArticleLocalizedTagEntity>(model.LocalizedTags.Select(x => AbstractTypeFactory<NewsArticleLocalizedTagEntity>.TryCreateInstance().FromModel(x, pkMap)));
         }
 
         if (model.SeoInfos != null)
@@ -112,15 +145,28 @@ public class NewsArticleEntity : AuditableEntity, IDataEntity<NewsArticleEntity,
         target.StoreId = StoreId;
         target.Name = Name;
         target.PublishDate = PublishDate;
+        target.ArchiveDate = ArchiveDate;
+        target.AuthorId = AuthorId;
+        target.PublishScope = PublishScope;
 
         if (_isPublishedValue.HasValue)
         {
             target.IsPublished = _isPublishedValue.Value;
         }
 
+        if (_isArchivedValue.HasValue)
+        {
+            target.IsArchived = _isArchivedValue.Value;
+        }
+
         if (!LocalizedContents.IsNullCollection())
         {
             LocalizedContents.Patch(target.LocalizedContents, (sourceContent, targetContent) => sourceContent.Patch(targetContent));
+        }
+
+        if (!LocalizedTags.IsNullCollection())
+        {
+            LocalizedTags.Patch(target.LocalizedTags, (sourceTag, targetTag) => sourceTag.Patch(targetTag));
         }
 
         if (!SeoInfos.IsNullCollection())
