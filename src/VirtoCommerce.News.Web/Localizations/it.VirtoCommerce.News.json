@@ -11,7 +11,7 @@
     "News": {
       "Enabled": {
         "title": "Abilitare",
-        "description": "Abilitare"
+        "description": "Attivazione del modulo delle Notizie"
       },
       "UseNewsPrefixInLinks": {
         "title": "Usa il prefisso \"news\" nei link",
@@ -19,7 +19,7 @@
       },
       "UseStoreDefaultLanguage": {
         "title": "Usa la lingua predefinita del negozio durante la ricerca degli articoli",
-        "description": "Usa la lingua predefinita del negozio durante la ricerca degli articoli"
+        "description": "Mostra gli articoli nella lingua predefinita del negozio se non esiste una localizzazione per la lingua dell'utente"
       }
     }
   }

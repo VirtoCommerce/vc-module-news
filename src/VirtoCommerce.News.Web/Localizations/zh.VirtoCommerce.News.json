@@ -11,7 +11,7 @@
     "News": {
       "Enabled": {
         "title": "使能够",
-        "description": "使能够"
+        "description": "激活新闻模块"
       },
       "UseNewsPrefixInLinks": {
         "title": "在链接中使用“news”前缀",
@@ -19,7 +19,7 @@
       },
       "UseStoreDefaultLanguage": {
         "title": "在搜索文章时使用商店默认语言",
-        "description": "在搜索文章时使用商店默认语言"
+        "description": "如果没有用户语言的本地化，显示商店的默认语言中的文章"
       }
     }
   }

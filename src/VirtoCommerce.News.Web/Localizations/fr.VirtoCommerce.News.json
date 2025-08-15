@@ -11,7 +11,7 @@
     "News": {
       "Enabled": {
         "title": "Activer",
-        "description": "Activer"
+        "description": "Activation du module de Actualités"
       },
       "UseNewsPrefixInLinks": {
         "title": "Utilisez le préfixe \"news\" dans les liens",
@@ -19,7 +19,7 @@
       },
       "UseStoreDefaultLanguage": {
         "title": "Utilisez la langue par défaut du magasin lors de la recherche d'articles",
-        "description": "Utilisez la langue par défaut du magasin lors de la recherche d'articles"
+        "description": "Afficher les articles dans la langue par défaut du magasin si aucune localisation pour la langue de l'utilisateur n'existe"
       }
     }
   }
