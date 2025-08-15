@@ -11,15 +11,15 @@
     "News": {
       "Enabled": {
         "title": "Enable",
-        "description": "Enable"
+        "description": "Activating News module"
       },
       "UseNewsPrefixInLinks": {
         "title": "Use \"news\" prefix in links",
         "description": "Use \"news\" prefix in links (only for articles with active SEO)"
       },
       "UseStoreDefaultLanguage": {
-        "title": "Use store default language while searching articles",
-        "description": "Use store default language while searching articles"
+        "title": "Use store's default language while searching articles",
+        "description": "Show articles in the store's default language if a localization for the user's language doesn't exist"
       }
     }
   }
