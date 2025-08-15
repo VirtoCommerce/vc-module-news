@@ -21,6 +21,8 @@
             "STORE": "Магазин",
             "IS_PUBLISHED": "Опубликовано",
             "PUBLISH_DATE": "Дата публикации",
+            "IS_ARCHIVED": "Архивировано",
+            "ARCHIVE_DATE": "Дата архивации",
             "CREATED_DATE": "Дата создания",
             "CREATED_BY": "Создано",
             "MODIFIED_DATE": "Дата изменения",
@@ -43,6 +45,9 @@
           },
           "PUBLISH_DATE": {
             "LABEL": "Дата публикации"
+          },
+          "ARCHIVE_DATE": {
+            "LABEL": "Дата архивации"
           },
           "USER_GROUPS": {
             "LABEL": "Группы пользователей"
@@ -84,6 +89,8 @@
           "RESET": "Сбросить",
           "PUBLISH": "Опубликовать",
           "UNPUBLISH": "Отменить публикацию",
+          "ARCHIVE": "Архивировать",
+          "UNARCHIVE": "Извлечь из архива",
           "CLONE": "Создать копию"
         },
         "ALERTS": {

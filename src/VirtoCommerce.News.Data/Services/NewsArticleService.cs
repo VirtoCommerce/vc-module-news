@@ -63,9 +63,37 @@ public class NewsArticleService(
         foreach (var newsArticle in newsArticles)
         {
             newsArticle.SetIsPublished(isPublished);
+
             if (isPublished && !newsArticle.PublishDate.HasValue)
             {
                 newsArticle.PublishDate = DateTime.UtcNow;
+            }
+        }
+
+        await SaveChangesAsync(newsArticles);
+    }
+
+    public async Task ArchiveAsync(IList<string> ids)
+    {
+        await ChangeIsArchivedAsync(ids, true);
+    }
+
+    public async Task UnarchiveAsync(IList<string> ids)
+    {
+        await ChangeIsArchivedAsync(ids, false);
+    }
+
+    protected virtual async Task ChangeIsArchivedAsync(IList<string> ids, bool isArchived)
+    {
+        var newsArticles = await GetAsync(ids);
+
+        foreach (var newsArticle in newsArticles)
+        {
+            newsArticle.SetIsArchived(isArchived);
+
+            if (isArchived && !newsArticle.ArchiveDate.HasValue)
+            {
+                newsArticle.ArchiveDate = DateTime.UtcNow;
             }
         }
 
@@ -104,6 +132,8 @@ public class NewsArticleService(
     {
         newsArticle.IsPublished = false;
         newsArticle.PublishDate = null;
+        newsArticle.IsArchived = false;
+        newsArticle.ArchiveDate = null;
         newsArticle.Name = ClonedNewsArticlePrefix + newsArticle.Name;
 
         foreach (var seoInfo in newsArticle.SeoInfos)

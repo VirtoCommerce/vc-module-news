@@ -21,6 +21,8 @@
             "STORE": "商店",
             "IS_PUBLISHED": "是否发布",
             "PUBLISH_DATE": "发布日期",
+            "IS_ARCHIVED": "已归档",
+            "ARCHIVE_DATE": "存档日期",
             "CREATED_DATE": "创建日期",
             "CREATED_BY": "创建者",
             "MODIFIED_DATE": "修改日期",
@@ -43,6 +45,9 @@
           },
           "PUBLISH_DATE": {
             "LABEL": "发布日期"
+          },
+          "ARCHIVE_DATE": {
+            "LABEL": "存档日期"
           },
           "USER_GROUPS": {
             "LABEL": "用户组"
@@ -84,6 +89,8 @@
           "RESET": "重置",
           "PUBLISH": "发布",
           "UNPUBLISH": "取消发布",
+          "ARCHIVE": "归档",
+          "UNARCHIVE": "取消归档",
           "CLONE": "创建副本"
         },
         "ALERTS": {
