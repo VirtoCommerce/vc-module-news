@@ -1,0 +1,26 @@
+{
+  "permissions": {
+    "news:access": "Apri il menu Notizie",
+    "news:create": "Crea dati relativi alle Notizie",
+    "news:read": "Visualizza dati relativi alle Notizie",
+    "news:update": "Aggiorna dati relativi alle Notizie",
+    "news:delete": "Elimina dati relativi alle Notizie",
+    "news:publish": "Pubblica dati relativi alle Notizie"
+  },
+  "settings": {
+    "News": {
+      "Enabled": {
+        "title": "Abilitare",
+        "description": "Attivazione del modulo delle Notizie"
+      },
+      "UseNewsPrefixInLinks": {
+        "title": "Usa il prefisso \"news\" nei link",
+        "description": "Usa il prefisso \"news\" nei link (solo per articoli con SEO attivo)"
+      },
+      "UseStoreDefaultLanguage": {
+        "title": "Usa la lingua predefinita del negozio durante la ricerca degli articoli",
+        "description": "Mostra gli articoli nella lingua predefinita del negozio se non esiste una localizzazione per la lingua dell'utente"
+      }
+    }
+  }
+}

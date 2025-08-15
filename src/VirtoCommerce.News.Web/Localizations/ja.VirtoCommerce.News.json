@@ -1,0 +1,26 @@
+{
+  "permissions": {
+    "news:access": "ニュースメニューを開く",
+    "news:create": "ニュース関連データを作成",
+    "news:read": "ニュース関連データを表示",
+    "news:update": "ニュース関連データを更新",
+    "news:delete": "ニュース関連データを削除",
+    "news:publish": "ニュース関連データを公開"
+  },
+  "settings": {
+    "News": {
+      "Enabled": {
+        "title": "有効にする",
+        "description": "ニュースモジュールの有効化"
+      },
+      "UseNewsPrefixInLinks": {
+        "title": "リンクに「news」プレフィックスを使用する",
+        "description": "リンクに「news」プレフィックスを使用する (SEOがアクティブな記事のみ)"
+      },
+      "UseStoreDefaultLanguage": {
+        "title": "記事を検索する際に店舗のデフォルト言語を使用する",
+        "description": "ユーザーの言語にローカライズが存在しない場合、店舗のデフォルト言語で記事を表示する"
+      }
+    }
+  }
+}
