@@ -56,8 +56,8 @@
             @update:model-value="handleChange"
           />
         </Field>
-        
-        <div class="tw-flex tw-flex-row tw-gap-4"> 
+
+        <div class="tw-flex tw-flex-row tw-gap-4">
           <VcInput
             v-model="newsArticle.publishDate"
             type="datetime-local"
