@@ -160,6 +160,7 @@ const columns = ref<ITableColumns[]>([
     alwaysVisible: true,
     sortable: true,
     width: "40%",
+    mobilePosition: "top-left"
   },
   {
     id: "storeId",
@@ -167,6 +168,7 @@ const columns = ref<ITableColumns[]>([
     alwaysVisible: true,
     sortable: true,
     width: "20%",
+    mobilePosition: "bottom-left"
   },
   {
     id: "isPublished",
@@ -174,6 +176,8 @@ const columns = ref<ITableColumns[]>([
     alwaysVisible: true,
     sortable: true,
     width: "10%",
+    type: "status-icon",
+    mobilePosition: "status",
   },
   {
     id: "publishDate",
@@ -181,7 +185,8 @@ const columns = ref<ITableColumns[]>([
     alwaysVisible: true,
     sortable: true,
     width: "30%",
-    type: "date-time"
+    type: "date-time",
+    mobilePosition: "bottom-right"
   },
   {
     id: "createdDate",
