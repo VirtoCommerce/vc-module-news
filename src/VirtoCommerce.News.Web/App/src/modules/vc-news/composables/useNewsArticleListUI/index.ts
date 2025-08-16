@@ -1,9 +1,59 @@
-import { ref, computed } from "vue";
-import { ITableColumns } from "@vc-shell/framework";
+import { ref, Ref, computed } from "vue";
+import { ITableColumns, IBladeToolbar, useBladeNavigation, usePopup, usePermissions } from "@vc-shell/framework";
 import { useI18n } from "vue-i18n";
+import useNewsArticlePermissions from "../useNewsArticlePermissions";
 
-export default () => {
+export default (options: {
+  selectedItemId: Ref<string | undefined>;
+  selectedIds: Ref<string[]>;
+  searchNewsArticles: () => Promise<void>;
+  deleteNewsArticles: (args: { ids: string[] }) => Promise<void>;
+}) => {
   const { t } = useI18n({ useScope: "global" });
+  const { showConfirmation } = usePopup();
+  const { openBlade, closeBlade } = useBladeNavigation();
+  const { hasAccess } = usePermissions();
+  const { createNewsArticlePermission, deleteNewsArticlePermission } = useNewsArticlePermissions();
+
+  const bladeToolbar = computed((): IBladeToolbar[] => [
+    {
+      id: "refresh",
+      title: t("VC_NEWS.PAGES.LIST.TOOLBAR.REFRESH"),
+      icon: "material-refresh",
+      async clickHandler() {
+        await options.searchNewsArticles();
+      },
+    },
+    {
+      id: "add",
+      title: t("VC_NEWS.PAGES.LIST.TOOLBAR.ADD"),
+      icon: "material-add",
+      clickHandler: async () => {
+        openDetailsBlade(undefined);
+      },
+      isVisible: () => hasAccess(createNewsArticlePermission),
+    },
+    {
+      id: "delete",
+      title: t("VC_NEWS.PAGES.LIST.TOOLBAR.DELETE"),
+      icon: "material-delete",
+      disabled: options.selectedIds.value.length === 0,
+      clickHandler: async () => {
+        const confirmed = await showConfirmation(
+          t("VC_NEWS.PAGES.LIST.ALERTS.DELETE_SELECTED_CONFIRMATION_MESSAGE", {
+            count: options.selectedIds.value.length,
+          }),
+        );
+        if (confirmed) {
+          closeBlade(1);
+          await options.deleteNewsArticles({ ids: options.selectedIds.value });
+          options.selectedIds.value = [];
+          await options.searchNewsArticles();
+        }
+      },
+      isVisible: () => hasAccess(deleteNewsArticlePermission),
+    },
+  ]);
 
   const columns = ref<ITableColumns[]>([
     {
@@ -88,7 +138,28 @@ export default () => {
     },
   ]);
 
+  const openDetailsBlade = (id: string | undefined) => {
+    openBlade({
+      blade: { name: "NewsArticleDetails" },
+      param: id ?? undefined,
+      onOpen() {
+        options.selectedItemId.value = id ?? undefined;
+      },
+      onClose() {
+        options.selectedItemId.value = undefined;
+      },
+    });
+  };
+
+  const reOpenDetailsBlade = (id: string) => {
+    closeBlade(1);
+    openDetailsBlade(id);
+  };
+
   return {
+    bladeToolbar,
     columns,
+    openDetailsBlade,
+    reOpenDetailsBlade,
   };
 };

@@ -8,8 +8,7 @@
     width="40%"
     @close="$emit('close:blade')"
     @expand="$emit('expand:blade')"
-    @collapse="$emit('collapse:blade')"
-  >
+    @collapse="$emit('collapse:blade')">
     <!-- @vue-generic {NewsArticle} -->
     <VcTable
       :total-label="$t('VC_NEWS.PAGES.LIST.TABLE.TOTALS')"
@@ -31,26 +30,16 @@
       @header-click="onHeaderClick"
       @pagination-click="onPaginationClick"
       @search:change="onSearchChange"
-      @selection-changed="onSelectionChanged"
-    >
+      @selection-changed="onSelectionChanged">
     </VcTable>
   </VcBlade>
 </template>
 
 <script lang="ts" setup>
-import { computed, ref, markRaw, onMounted, watch } from "vue";
-import {
-  IBladeToolbar,
-  IParentCallArgs,
-  ITableColumns,
-  usePermissions,
-  useBladeNavigation,
-  usePopup,
-  useTableSort,
-} from "@vc-shell/framework";
+import { computed, ref, onMounted, watch } from "vue";
+import { IParentCallArgs, ITableColumns, useTableSort } from "@vc-shell/framework";
 import { useI18n } from "vue-i18n";
-import { useNewsArticleListUI, useNewsArticleList, useNewsArticlePermissions } from "../composables";
-import NewsArticleDetails from "./news-article-details.vue";
+import { useNewsArticleListUI, useNewsArticleList } from "../composables";
 import { NewsArticle } from "../../../api_client/virtocommerce.news";
 
 export interface Props {
@@ -84,22 +73,17 @@ const props = withDefaults(defineProps<Props>(), {
 
 defineEmits<Emits>();
 
-const { showConfirmation } = usePopup();
-
 const { t } = useI18n({ useScope: "global" });
-const { openBlade, closeBlade } = useBladeNavigation();
-const { hasAccess } = usePermissions();
 const {
   newsArticles,
   newsArticlesCount,
   pagesCount,
   pageIndex,
   searchQuery,
-  searchNewsArticlesScheduled: searchNewsArticles,
-  loadingNewsArticlesScheduled: loadingNewsArticles,
+  searchNewsArticlesScheduled,
+  loadingNewsArticles,
   deleteNewsArticles,
 } = useNewsArticleList();
-const { createNewsArticlePermission, deleteNewsArticlePermission } = useNewsArticlePermissions();
 
 const { sortExpression, handleSortChange } = useTableSort({ initialProperty: "createdDate", initialDirection: "ASC" });
 
@@ -115,82 +99,27 @@ watch(
   { immediate: true },
 );
 
-const bladeToolbar = computed((): IBladeToolbar[] => [
-  {
-    id: "refresh",
-    title: t("VC_NEWS.PAGES.LIST.TOOLBAR.REFRESH"),
-    icon: "material-refresh",
-    async clickHandler() {
-      await reload();
-    },
-  },
-  {
-    id: "add",
-    title: t("VC_NEWS.PAGES.LIST.TOOLBAR.ADD"),
-    icon: "material-add",
-    clickHandler: async () => {
-      openDetailsBlade(undefined);
-    },
-    isVisible: () => hasAccess(createNewsArticlePermission),
-  },
-  {
-    id: "delete",
-    title: t("VC_NEWS.PAGES.LIST.TOOLBAR.DELETE"),
-    icon: "material-delete",
-    disabled: selectedIds.value.length === 0,
-    clickHandler: async () => {
-      const confirmed = await showConfirmation(
-        t("VC_NEWS.PAGES.LIST.ALERTS.DELETE_SELECTED_CONFIRMATION_MESSAGE", { count: selectedIds.value.length }),
-      );
-      if (confirmed) {
-        closeBlade(1);
-        await deleteNewsArticles({ ids: selectedIds.value });
-        selectedIds.value = [];
-        await reload();
-      }
-    },
-    isVisible: () => hasAccess(deleteNewsArticlePermission),
-  },
-]);
+const { bladeToolbar, columns, openDetailsBlade, reOpenDetailsBlade } = useNewsArticleListUI({
+  selectedItemId,
+  selectedIds,
+  searchNewsArticles: searchNewsArticlesScheduled,
+  deleteNewsArticles,
+});
 
-const { columns } = useNewsArticleListUI();
-
-const title = computed(() => t("VC_NEWS.PAGES.LIST.TITLE"));
-
-const reload = async () => {
-  await searchNewsArticles();
-};
+const title = computed(() => `${t("VC_NEWS.PAGES.LIST.TITLE")}: ${t("VC_NEWS.MENU.SCHEDULED")}`);
 
 const onItemClick = (item: NewsArticle) => {
   openDetailsBlade(item.id);
 };
 
-const openDetailsBlade = (id: string | undefined) => {
-  openBlade({
-    blade: markRaw(NewsArticleDetails),
-    param: id ?? undefined,
-    onOpen() {
-      selectedItemId.value = id ?? undefined;
-    },
-    onClose() {
-      selectedItemId.value = undefined;
-    },
-  });
-};
-
-const reOpenDetailsBlade = (id: string) => {
-  closeBlade(1);
-  openDetailsBlade(id);
-};
-
 const onSearchChange = (searchKeywordValue: string | undefined) => {
   searchQuery.value.searchPhrase = searchKeywordValue;
-  searchNewsArticles();
+  searchNewsArticlesScheduled();
 };
 
 const onPaginationClick = (page: number) => {
   pageIndex.value = page;
-  searchNewsArticles();
+  searchNewsArticlesScheduled();
 };
 
 const onHeaderClick = async (column: ITableColumns) => {
@@ -204,17 +133,17 @@ const onSelectionChanged = function (selectedItems: NewsArticle[]) {
 };
 
 onMounted(async () => {
-  await searchNewsArticles();
+  await searchNewsArticlesScheduled();
 });
 
 watch(sortExpression, async (newSortValue) => {
   searchQuery.value.sort = newSortValue;
-  await searchNewsArticles();
+  await searchNewsArticlesScheduled();
 });
 
 defineExpose({
   title,
-  reload,
+  reload: searchNewsArticlesScheduled,
   reOpenDetailsBlade,
 });
 </script>

@@ -1,5 +1,5 @@
 import { ref } from "vue";
-import { useAsync, useApiClient } from "@vc-shell/framework";
+import { useAsync, useApiClient, useLoading } from "@vc-shell/framework";
 import {
   NewsArticleClient,
   NewsArticle,
@@ -59,12 +59,14 @@ export default () => {
     }
   };
 
-  const { action: deleteNewsArticles } = useAsync<{ ids: string[] }>(async (args?: { ids: string[] }) => {
-    if (args) {
-      const apiClient = await getNewsApiClient();
-      await apiClient.delete(args.ids);
-    }
-  });
+  const { loading: deletingNewsArticles, action: deleteNewsArticles } = useAsync<{ ids: string[] }>(
+    async (args?: { ids: string[] }) => {
+      if (args) {
+        const apiClient = await getNewsApiClient();
+        await apiClient.delete(args.ids);
+      }
+    },
+  );
 
   return {
     newsArticles,
@@ -74,15 +76,19 @@ export default () => {
     pageIndex,
     searchQuery,
     searchNewsArticlesAll,
-    loadingNewsArticlesAll,
     searchNewsArticlesPublished,
-    loadingNewsArticlesPublished,
     searchNewsArticlesDrafts,
-    loadingNewsArticlesDrafts,
     searchNewsArticlesScheduled,
-    loadingNewsArticlesScheduled,
     searchNewsArticlesArchived,
-    loadingNewsArticlesArchived,
+
+    loadingNewsArticles: useLoading(
+      loadingNewsArticlesAll,
+      loadingNewsArticlesPublished,
+      loadingNewsArticlesDrafts,
+      loadingNewsArticlesScheduled,
+      loadingNewsArticlesArchived,
+      deletingNewsArticles,
+    ),
 
     deleteNewsArticles,
   };
