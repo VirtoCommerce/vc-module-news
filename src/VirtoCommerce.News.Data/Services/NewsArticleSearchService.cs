@@ -61,19 +61,19 @@ public class NewsArticleSearchService(
     {
         var utcNow = criteria.CertainDate.GetValueOrDefault(DateTime.UtcNow);
 
-        if (criteria.Status == NewsArticleStatusEnum.Published)
+        if (criteria.Status == NewsArticleStatus.Published)
         {
             query = query.Where(x => x.IsPublished && (x.PublishDate == null || x.PublishDate <= utcNow));
         }
-        else if (criteria.Status == NewsArticleStatusEnum.Scheduled)
+        else if (criteria.Status == NewsArticleStatus.Scheduled)
         {
             query = query.Where(x => x.IsPublished && (x.PublishDate != null && x.PublishDate > utcNow));
         }
-        else if (criteria.Status == NewsArticleStatusEnum.Archived)
+        else if (criteria.Status == NewsArticleStatus.Archived)
         {
             query = query.Where(x => x.IsArchived && (x.ArchiveDate == null || x.ArchiveDate <= utcNow));
         }
-        else if (criteria.Status == NewsArticleStatusEnum.Draft)
+        else if (criteria.Status == NewsArticleStatus.Draft)
         {
             query = query.Where(x => !x.IsPublished && !x.IsArchived);
         }
@@ -87,7 +87,7 @@ public class NewsArticleSearchService(
 
         if (sortInfos.IsNullOrEmpty())
         {
-            if (criteria.Status == NewsArticleStatusEnum.Published)
+            if (criteria.Status == NewsArticleStatus.Published)
             {
                 sortInfos = [new SortInfo { SortColumn = nameof(NewsArticle.PublishDate), SortDirection = SortDirection.Descending }];
             }

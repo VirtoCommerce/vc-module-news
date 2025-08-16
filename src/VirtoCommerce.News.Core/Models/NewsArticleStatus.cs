@@ -1,6 +1,6 @@
 namespace VirtoCommerce.News.Core.Models;
 
-public enum NewsArticleStatusEnum
+public enum NewsArticleStatus
 {
     Published, Draft, Scheduled, Archived
 }

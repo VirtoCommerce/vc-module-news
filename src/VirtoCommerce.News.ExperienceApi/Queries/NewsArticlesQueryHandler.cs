@@ -86,7 +86,7 @@ public class NewsArticlesQueryHandler(
         result.Keyword = request.Keyword;
         result.StoreId = request.StoreId;
         result.UserGroups = userGroups;
-        result.Status = NewsArticleStatusEnum.Published;
+        result.Status = NewsArticleStatus.Published;
         result.Sort = nameof(NewsArticle.PublishDate);
         result.Skip = request.Skip;
         result.Take = request.Take;

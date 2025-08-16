@@ -77,7 +77,7 @@ public class NewsArticleController(INewsArticleService newsArticleService, INews
     [Authorize(ModuleConstants.Security.Permissions.Read)]
     public async Task<ActionResult<NewsArticleSearchResult>> SearchPublished([FromBody] NewsArticleSearchCriteria criteria)
     {
-        criteria.Status = NewsArticleStatusEnum.Published;
+        criteria.Status = NewsArticleStatus.Published;
         var result = await newsArticleSearchService.SearchNoCloneAsync(criteria);
         return Ok(result);
     }
@@ -87,7 +87,7 @@ public class NewsArticleController(INewsArticleService newsArticleService, INews
     [Authorize(ModuleConstants.Security.Permissions.Read)]
     public async Task<ActionResult<NewsArticleSearchResult>> SearchScheduled([FromBody] NewsArticleSearchCriteria criteria)
     {
-        criteria.Status = NewsArticleStatusEnum.Scheduled;
+        criteria.Status = NewsArticleStatus.Scheduled;
         var result = await newsArticleSearchService.SearchNoCloneAsync(criteria);
         return Ok(result);
     }
@@ -97,7 +97,7 @@ public class NewsArticleController(INewsArticleService newsArticleService, INews
     [Authorize(ModuleConstants.Security.Permissions.Read)]
     public async Task<ActionResult<NewsArticleSearchResult>> SearchArchived([FromBody] NewsArticleSearchCriteria criteria)
     {
-        criteria.Status = NewsArticleStatusEnum.Archived;
+        criteria.Status = NewsArticleStatus.Archived;
         var result = await newsArticleSearchService.SearchNoCloneAsync(criteria);
         return Ok(result);
     }
@@ -107,7 +107,7 @@ public class NewsArticleController(INewsArticleService newsArticleService, INews
     [Authorize(ModuleConstants.Security.Permissions.Read)]
     public async Task<ActionResult<NewsArticleSearchResult>> SearchDrafts([FromBody] NewsArticleSearchCriteria criteria)
     {
-        criteria.Status = NewsArticleStatusEnum.Draft;
+        criteria.Status = NewsArticleStatus.Draft;
         var result = await newsArticleSearchService.SearchNoCloneAsync(criteria);
         return Ok(result);
     }

@@ -6,7 +6,7 @@ namespace VirtoCommerce.News.Core.Models;
 
 public class NewsArticleSearchCriteria : SearchCriteriaBase
 {
-    public NewsArticleStatusEnum? Status { get; set; }
+    public NewsArticleStatus? Status { get; set; }
 
     public string StoreId { get; set; }
     public IList<string> UserGroups { get; set; }
