@@ -8,7 +8,8 @@
     width="40%"
     @close="$emit('close:blade')"
     @expand="$emit('expand:blade')"
-    @collapse="$emit('collapse:blade')">
+    @collapse="$emit('collapse:blade')"
+  >
     <!-- @vue-generic {NewsArticle} -->
     <VcTable
       :total-label="$t('VC_NEWS.PAGES.LIST.TABLE.TOTALS')"
@@ -30,7 +31,8 @@
       @header-click="onHeaderClick"
       @pagination-click="onPaginationClick"
       @search:change="onSearchChange"
-      @selection-changed="onSelectionChanged">
+      @selection-changed="onSelectionChanged"
+    >
     </VcTable>
   </VcBlade>
 </template>
