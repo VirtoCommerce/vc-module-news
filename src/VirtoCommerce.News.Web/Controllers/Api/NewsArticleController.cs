@@ -73,6 +73,46 @@ public class NewsArticleController(INewsArticleService newsArticleService, INews
     }
 
     [HttpPost]
+    [Route("search-published")]
+    [Authorize(ModuleConstants.Security.Permissions.Read)]
+    public async Task<ActionResult<NewsArticleSearchResult>> SearchPublished([FromBody] NewsArticleSearchCriteria criteria)
+    {
+        criteria.Status = NewsArticleStatus.Published;
+        var result = await newsArticleSearchService.SearchNoCloneAsync(criteria);
+        return Ok(result);
+    }
+
+    [HttpPost]
+    [Route("search-scheduled")]
+    [Authorize(ModuleConstants.Security.Permissions.Read)]
+    public async Task<ActionResult<NewsArticleSearchResult>> SearchScheduled([FromBody] NewsArticleSearchCriteria criteria)
+    {
+        criteria.Status = NewsArticleStatus.Scheduled;
+        var result = await newsArticleSearchService.SearchNoCloneAsync(criteria);
+        return Ok(result);
+    }
+
+    [HttpPost]
+    [Route("search-archived")]
+    [Authorize(ModuleConstants.Security.Permissions.Read)]
+    public async Task<ActionResult<NewsArticleSearchResult>> SearchArchived([FromBody] NewsArticleSearchCriteria criteria)
+    {
+        criteria.Status = NewsArticleStatus.Archived;
+        var result = await newsArticleSearchService.SearchNoCloneAsync(criteria);
+        return Ok(result);
+    }
+
+    [HttpPost]
+    [Route("search-drafts")]
+    [Authorize(ModuleConstants.Security.Permissions.Read)]
+    public async Task<ActionResult<NewsArticleSearchResult>> SearchDrafts([FromBody] NewsArticleSearchCriteria criteria)
+    {
+        criteria.Status = NewsArticleStatus.Draft;
+        var result = await newsArticleSearchService.SearchNoCloneAsync(criteria);
+        return Ok(result);
+    }
+
+    [HttpPost]
     [Route("publish")]
     [Authorize(ModuleConstants.Security.Permissions.Publish)]
     [ProducesResponseType(typeof(void), StatusCodes.Status204NoContent)]
@@ -89,6 +129,26 @@ public class NewsArticleController(INewsArticleService newsArticleService, INews
     public async Task<ActionResult> Unpublish([FromBody] string[] ids)
     {
         await newsArticleService.UnpublishAsync(ids);
+        return NoContent();
+    }
+
+    [HttpPost]
+    [Route("archive")]
+    [Authorize(ModuleConstants.Security.Permissions.Publish)]
+    [ProducesResponseType(typeof(void), StatusCodes.Status204NoContent)]
+    public async Task<ActionResult> Archive([FromBody] string[] ids)
+    {
+        await newsArticleService.ArchiveAsync(ids);
+        return NoContent();
+    }
+
+    [HttpPost]
+    [Route("unarchive")]
+    [Authorize(ModuleConstants.Security.Permissions.Publish)]
+    [ProducesResponseType(typeof(void), StatusCodes.Status204NoContent)]
+    public async Task<ActionResult> Unarchive([FromBody] string[] ids)
+    {
+        await newsArticleService.UnarchiveAsync(ids);
         return NoContent();
     }
 }

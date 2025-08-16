@@ -4,3 +4,4 @@ export { default as useNewsArticlePermissions } from "./useNewsArticlePermission
 export { default as useStore } from "./useStore";
 export { default as useUserGroups } from "./useUserGroups";
 export { default as useLocalization } from "./useLocalization";
+export { default as useNewsArticleListUI } from "./useNewsArticleListUI";
