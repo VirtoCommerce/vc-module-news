@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -50,13 +51,19 @@ public class NewsArticleRepository(NewsDbContext dbContext, IUnitOfWork unitOfWo
         return result;
     }
 
-    public virtual async Task<IList<string>> GetNewsArticlesTagsAsync(string languageCode)
+    public virtual async Task<IList<string>> GetNewsArticlesTagsAsync(string languageCode, bool publishedOnly, DateTime? certainDate)
     {
         var query = NewsArticleTags.AsQueryable();
 
         if (!string.IsNullOrEmpty(languageCode))
         {
             query = query.Where(x => x.LanguageCode == languageCode);
+        }
+
+        if (publishedOnly)
+        {
+            var utcNow = certainDate.GetValueOrDefault(DateTime.UtcNow);
+            query = query.Where(x => x.NewsArticle.IsPublished && (x.NewsArticle.PublishDate == null || x.NewsArticle.PublishDate <= utcNow));
         }
 
         return await query.Select(x => x.Tag).Distinct().ToListAsync();

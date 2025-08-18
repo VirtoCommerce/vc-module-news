@@ -142,11 +142,11 @@ public class NewsArticleService(
         }
     }
 
-    public async Task<IList<string>> GetTagsAsync(string languageCode)
+    public async Task<IList<string>> GetTagsAsync(string languageCode, bool publishedOnly, DateTime? certainDate)
     {
         using var repository = repositoryFactory();
 
-        return await repository.GetNewsArticlesTagsAsync(languageCode);
+        return await repository.GetNewsArticlesTagsAsync(languageCode, publishedOnly, certainDate);
     }
 
     public IList<string> GetPublishScopes()

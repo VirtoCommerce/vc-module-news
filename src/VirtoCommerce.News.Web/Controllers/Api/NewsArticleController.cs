@@ -120,7 +120,7 @@ public class NewsArticleController(INewsArticleService newsArticleService, INews
     {
         var result = new NewsArticleOptions
         {
-            Tags = await newsArticleService.GetTagsAsync(languageCode),
+            Tags = await newsArticleService.GetTagsAsync(languageCode, false, null),
             PublishScopes = newsArticleService.GetPublishScopes(),
         };
         return Ok(result);

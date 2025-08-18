@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -14,5 +15,5 @@ public interface INewsArticleRepository : IRepository
     IQueryable<NewsArticleUserGroupEntity> NewsArticleUserGroups { get; }
 
     Task<IList<NewsArticleEntity>> GetNewsArticlesByIdsAsync(IList<string> ids);
-    Task<IList<string>> GetNewsArticlesTagsAsync(string languageCode);
+    Task<IList<string>> GetNewsArticlesTagsAsync(string languageCode, bool publishedOnly, DateTime? certainDate);
 }
