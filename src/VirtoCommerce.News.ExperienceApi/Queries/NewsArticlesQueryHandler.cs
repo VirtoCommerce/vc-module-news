@@ -7,7 +7,7 @@ using VirtoCommerce.CustomerModule.Core.Model;
 using VirtoCommerce.CustomerModule.Core.Services;
 using VirtoCommerce.News.Core.Models;
 using VirtoCommerce.News.Core.Services;
-using VirtoCommerce.News.ExperienceApi.Model;
+using VirtoCommerce.News.ExperienceApi.Models;
 using VirtoCommerce.News.ExperienceApi.Services;
 using VirtoCommerce.Platform.Core.Common;
 using VirtoCommerce.Seo.Core.Extensions;

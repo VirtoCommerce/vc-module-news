@@ -25,6 +25,7 @@ public class NewsArticlesQuery : SearchQuery<NewsArticleSearchResult>
         yield return Argument<NonNullGraphType<StringGraphType>>(nameof(StoreId));
         yield return Argument<NonNullGraphType<StringGraphType>>(nameof(LanguageCode));
         yield return Argument<StringGraphType>(nameof(UserId));
+        yield return Argument<StringGraphType>(nameof(AuthorId));
         yield return Argument<ListGraphType<StringGraphType>>(nameof(Tags));
     }
 
@@ -35,6 +36,7 @@ public class NewsArticlesQuery : SearchQuery<NewsArticleSearchResult>
         StoreId = context.GetArgument<string>(nameof(StoreId));
         LanguageCode = context.GetArgument<string>(nameof(LanguageCode));
         UserId = context.GetArgument<string>(nameof(UserId));
+        AuthorId = context.GetArgument<string>(nameof(AuthorId));
         Tags = context.GetArgument<IList<string>>(nameof(Tags));
     }
 }
