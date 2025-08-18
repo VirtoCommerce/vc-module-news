@@ -34,6 +34,11 @@ public class NewsArticleSearchService(
             query = query.Where(x => x.Name.Contains(criteria.SearchPhrase));
         }
 
+        if (!criteria.ContentKeyword.IsNullOrEmpty())
+        {
+            query = query.Where(article => article.LocalizedContents.Any(content => content.Title.Contains(criteria.ContentKeyword) || content.Content.Contains(criteria.ContentKeyword) || content.ContentPreview.Contains(criteria.ContentKeyword)));
+        }
+
         if (criteria.Published.HasValue)
         {
             var utcNow = criteria.CertainDate.GetValueOrDefault(DateTime.UtcNow);

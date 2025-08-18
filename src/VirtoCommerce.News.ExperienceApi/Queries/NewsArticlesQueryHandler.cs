@@ -83,7 +83,7 @@ public class NewsArticlesQueryHandler(
         var result = AbstractTypeFactory<NewsArticleSearchCriteria>.TryCreateInstance();
 
         result.LanguageCodes = languageCodes;
-        result.Keyword = request.Keyword;
+        result.ContentKeyword = request.Keyword;
         result.StoreId = request.StoreId;
         result.UserGroups = userGroups;
         result.PublishScope = request.UserId.IsNullOrEmpty() ? NewsArticlePublishScopes.Anonymous : NewsArticlePublishScopes.Authorized;
