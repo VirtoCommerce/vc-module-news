@@ -1,0 +1,26 @@
+{
+  "permissions": {
+    "news:access": "Abrir menú de Noticias",
+    "news:create": "Crear datos relacionados con Noticias",
+    "news:read": "Ver datos relacionados con Noticias",
+    "news:update": "Actualizar datos relacionados con Noticias",
+    "news:delete": "Eliminar datos relacionados con Noticias",
+    "news:publish": "Publicar datos relacionados con Noticias"
+  },
+  "settings": {
+    "News": {
+      "Enabled": {
+        "title": "Habilitar",
+        "description": "Activando el módulo de Noticias"
+      },
+      "UseNewsPrefixInLinks": {
+        "title": "Utilizar el prefijo \"news\" en los enlaces",
+        "description": "Utilizar el prefijo \"news\" en los enlaces (solo para artículos con SEO activo)"
+      },
+      "UseStoreDefaultLanguage": {
+        "title": "Usa el idioma predeterminado de la tienda al buscar artículos",
+        "description": "Muestra los artículos en el idioma predeterminado de la tienda si no existe una localización para el idioma del usuario"
+      }
+    }
+  }
+}

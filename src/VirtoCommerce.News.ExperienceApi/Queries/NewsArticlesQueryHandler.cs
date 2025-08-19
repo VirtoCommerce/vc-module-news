@@ -197,9 +197,9 @@ public class NewsArticlesQueryHandler(
 
         foreach (var newsArticle in newsArticles)
         {
-            if (!newsArticle.IsArchived && newsArticle.ArchiveDate <= utcNow)
+            if (newsArticle.IsArchived && newsArticle.ArchiveDate > utcNow)
             {
-                newsArticle.IsArchived = true;
+                newsArticle.IsArchived = false;
             }
         }
     }
