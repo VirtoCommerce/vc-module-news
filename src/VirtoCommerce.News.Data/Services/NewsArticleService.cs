@@ -122,6 +122,12 @@ public class NewsArticleService(
             localizedContent.Id = null;
         }
 
+        foreach (var localizedTag in newsArticle.LocalizedTags)
+        {
+            localizedTag.NewsArticleId = null;
+            localizedTag.Id = null;
+        }
+
         foreach (var seoInfo in newsArticle.SeoInfos)
         {
             seoInfo.Id = null;
