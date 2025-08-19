@@ -66,6 +66,11 @@ public class NewsArticleRepository(NewsDbContext dbContext, IUnitOfWork unitOfWo
             query = query.Where(x => x.NewsArticle.IsPublished && (x.NewsArticle.PublishDate == null || x.NewsArticle.PublishDate <= utcNow));
         }
 
-        return await query.Select(x => x.Tag).Distinct().ToListAsync();
+        return await query
+            .GroupBy(x => x.Tag)
+            .Select(x => new { Tag = x.Key, Count = x.Count() })
+            .OrderByDescending(x => x.Count)
+            .Select(x => x.Tag)
+            .ToListAsync();
     }
 }
