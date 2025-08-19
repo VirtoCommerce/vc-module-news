@@ -48,8 +48,16 @@
           <VcSelect
             v-model="newsArticle.storeId"
             :label="$t('VC_NEWS.PAGES.DETAILS.FORM.STORE.LABEL')"
-          </Field>
-        <div class="tw-flex tw-flex-row tw-gap-4">
+            :options="storeOptions"
+            required
+            :error="errors.length > 0"
+            :error-message="errorMessage"
+            class="tw-flex-auto"
+            @update:model-value="handleChange"
+          />
+        </Field>
+        
+        <div class="tw-flex tw-flex-row tw-gap-4"> 
           <VcInput
             v-model="newsArticle.publishDate"
             type="datetime-local"
