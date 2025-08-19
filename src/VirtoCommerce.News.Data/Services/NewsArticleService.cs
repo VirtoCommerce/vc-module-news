@@ -116,21 +116,30 @@ public class NewsArticleService(
     {
         newsArticle.Id = null;
 
-        foreach (var localizedContent in newsArticle.LocalizedContents)
+        if (newsArticle.LocalizedContents != null)
         {
-            localizedContent.NewsArticleId = null;
-            localizedContent.Id = null;
+            foreach (var localizedContent in newsArticle.LocalizedContents)
+            {
+                localizedContent.NewsArticleId = null;
+                localizedContent.Id = null;
+            }
         }
 
-        foreach (var localizedTag in newsArticle.LocalizedTags)
+        if (newsArticle.LocalizedTags != null)
         {
-            localizedTag.NewsArticleId = null;
-            localizedTag.Id = null;
+            foreach (var localizedTag in newsArticle.LocalizedTags)
+            {
+                localizedTag.NewsArticleId = null;
+                localizedTag.Id = null;
+            }
         }
 
-        foreach (var seoInfo in newsArticle.SeoInfos)
+        if (newsArticle.SeoInfos != null)
         {
-            seoInfo.Id = null;
+            foreach (var seoInfo in newsArticle.SeoInfos)
+            {
+                seoInfo.Id = null;
+            }
         }
     }
 
