@@ -62,6 +62,7 @@ export default (options: {
       alwaysVisible: true,
       sortable: true,
       width: "40%",
+      mobilePosition: "top-left",
     },
     {
       id: "storeId",
@@ -69,6 +70,7 @@ export default (options: {
       alwaysVisible: true,
       sortable: true,
       width: "20%",
+      mobilePosition: "top-right",
     },
     {
       id: "isPublished",
@@ -76,6 +78,8 @@ export default (options: {
       alwaysVisible: true,
       sortable: true,
       width: "10%",
+      type: "status-icon",
+      mobilePosition: "status",
     },
     {
       id: "publishDate",
@@ -84,6 +88,7 @@ export default (options: {
       sortable: true,
       width: "30%",
       type: "date-time",
+      mobilePosition: "bottom-left",
     },
     {
       id: "isArchived",
