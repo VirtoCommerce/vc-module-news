@@ -12,6 +12,7 @@
   >
     <div class="tw-absolute tw-top-2 tw-right-4 tw-z-10">
       <VcLanguageSelector
+        v-if="props.param"
         :model-value="currentLocale"
         :options="languages"
         @update:model-value="setLocale"
