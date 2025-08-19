@@ -54,6 +54,7 @@ jobs:
       moduleId: ${{ steps.artifact_ver.outputs.moduleId }}
       matrix: ${{ steps.deployment-matrix.outputs.matrix }}
       run-e2e: ${{ steps.run-e2e.outputs.result }}
+      deployment-folder-exists: ${{ steps.check_deployment_folder.outputs.exists }}
 
     steps:
 
@@ -90,6 +91,17 @@ jobs:
       - name: Get Artifact Version
         uses: VirtoCommerce/vc-github-actions/get-image-version@master
         id: artifact_ver
+
+      - name: Check if .deployment folder exists
+        id: check_deployment_folder
+        run: |
+          if [ -d ".deployment" ]; then
+            echo "exists=true" >> $GITHUB_OUTPUT
+            echo "Diagnostic: .deployment folder exists."
+          else
+            echo "exists=false" >> $GITHUB_OUTPUT
+            echo "Diagnostic: .deployment folder does NOT exist."
+          fi
 
       - name: Set VERSION_SUFFIX variable
         run: |
@@ -257,7 +269,9 @@ jobs:
       katalonApiKey: ${{ secrets.KATALON_API_KEY }}
 
   deploy-cloud:
-    if: ${{ (github.ref == 'refs/heads/master' || github.ref == 'refs/heads/main' || github.ref == 'refs/heads/dev') && github.event_name == 'push' }}
+    if: ${{ (github.ref == 'refs/heads/master' || github.ref == 'refs/heads/main' || github.ref == 'refs/heads/dev')
+      && github.event_name == 'push'
+      && needs.ci.outputs.deployment-folder-exists == 'true'}}
     needs: ci
     uses: VirtoCommerce/.github/.github/workflows/deploy-cloud.yml@v3.800.12
     with:
