@@ -32,6 +32,10 @@ namespace VirtoCommerce.News.Data.SqlServer.Migrations
                     b.Property<DateTime?>("ArchiveDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("AuthorId")
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
+
                     b.Property<string>("CreatedBy")
                         .HasMaxLength(64)
                         .HasColumnType("nvarchar(64)");
@@ -59,6 +63,13 @@ namespace VirtoCommerce.News.Data.SqlServer.Migrations
 
                     b.Property<DateTime?>("PublishDate")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("PublishScope")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(32)
+                        .HasColumnType("nvarchar(32)")
+                        .HasDefaultValueSql("'Anonymous'");
 
                     b.Property<string>("StoreId")
                         .IsRequired()
@@ -118,6 +129,35 @@ namespace VirtoCommerce.News.Data.SqlServer.Migrations
                     b.HasIndex("NewsArticleId");
 
                     b.ToTable("NewsArticleLocalizedContent", (string)null);
+                });
+
+            modelBuilder.Entity("VirtoCommerce.News.Data.Models.NewsArticleLocalizedTagEntity", b =>
+                {
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
+
+                    b.Property<string>("LanguageCode")
+                        .IsRequired()
+                        .HasMaxLength(16)
+                        .HasColumnType("nvarchar(16)");
+
+                    b.Property<string>("NewsArticleId")
+                        .IsRequired()
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
+
+                    b.Property<string>("Tag")
+                        .IsRequired()
+                        .HasMaxLength(64)
+                        .HasColumnType("nvarchar(64)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NewsArticleId");
+
+                    b.ToTable("NewsArticleLocalizedTag", (string)null);
                 });
 
             modelBuilder.Entity("VirtoCommerce.News.Data.Models.NewsArticleUserGroupEntity", b =>
@@ -220,6 +260,17 @@ namespace VirtoCommerce.News.Data.SqlServer.Migrations
                     b.Navigation("NewsArticle");
                 });
 
+            modelBuilder.Entity("VirtoCommerce.News.Data.Models.NewsArticleLocalizedTagEntity", b =>
+                {
+                    b.HasOne("VirtoCommerce.News.Data.Models.NewsArticleEntity", "NewsArticle")
+                        .WithMany("LocalizedTags")
+                        .HasForeignKey("NewsArticleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("NewsArticle");
+                });
+
             modelBuilder.Entity("VirtoCommerce.News.Data.Models.NewsArticleUserGroupEntity", b =>
                 {
                     b.HasOne("VirtoCommerce.News.Data.Models.NewsArticleEntity", "NewsArticle")
@@ -245,6 +296,8 @@ namespace VirtoCommerce.News.Data.SqlServer.Migrations
             modelBuilder.Entity("VirtoCommerce.News.Data.Models.NewsArticleEntity", b =>
                 {
                     b.Navigation("LocalizedContents");
+
+                    b.Navigation("LocalizedTags");
 
                     b.Navigation("SeoInfos");
 
