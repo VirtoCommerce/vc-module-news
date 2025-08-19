@@ -21,6 +21,8 @@
             "STORE": "Store",
             "IS_PUBLISHED": "Is published",
             "PUBLISH_DATE": "Publish date",
+            "IS_ARCHIVED": "Is archived",
+            "ARCHIVE_DATE": "Archive date",
             "CREATED_DATE": "Created date",
             "CREATED_BY": "Created by",
             "MODIFIED_DATE": "Modified date",
@@ -43,6 +45,9 @@
           },
           "PUBLISH_DATE": {
             "LABEL": "Publish date"
+          },
+          "ARCHIVE_DATE": {
+            "LABEL": "Archive date"
           },
           "USER_GROUPS": {
             "LABEL": "User groups"
@@ -84,6 +89,8 @@
           "RESET": "Reset",
           "PUBLISH": "Publish",
           "UNPUBLISH": "Unpublish",
+          "ARCHIVE": "Archive",
+          "UNARCHIVE": "Unarchive",
           "CLONE": "Create copy"
         },
         "ALERTS": {

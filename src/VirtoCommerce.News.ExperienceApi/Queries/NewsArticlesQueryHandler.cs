@@ -49,7 +49,7 @@ public class NewsArticlesQueryHandler(
         if (result != null)
         {
             var settings = await newsArticleSettingsService.GetSettingsAsync(request.StoreId);
-            PostProcessResult([result], request.StoreId, request.LanguageCode, settings);
+            PostProcessResult([result], request.StoreId, request.LanguageCode, requestCertainDate: null, settings);
         }
 
         return result;
@@ -63,7 +63,7 @@ public class NewsArticlesQueryHandler(
 
         if (!result.Results.IsNullOrEmpty())
         {
-            PostProcessResult(result.Results, request.StoreId, request.LanguageCode, settings);
+            PostProcessResult(result.Results, request.StoreId, request.LanguageCode, requestCertainDate: null, settings);
         }
 
         return result;
@@ -94,10 +94,11 @@ public class NewsArticlesQueryHandler(
         return result;
     }
 
-    protected virtual void PostProcessResult(IList<NewsArticle> newsArticles, string requestStoreId, string requestLanguageCode, NewsArticleSettings settings)
+    protected virtual void PostProcessResult(IList<NewsArticle> newsArticles, string requestStoreId, string requestLanguageCode, DateTime? requestCertainDate, NewsArticleSettings settings)
     {
         FilterLanguages(newsArticles, requestLanguageCode, settings);
         FilterSeoInfos(newsArticles, requestStoreId, requestLanguageCode, settings);
+        ApplyIsArchived(newsArticles, requestCertainDate);
     }
 
     protected virtual async Task<IList<string>> GetUserGroups(string userId)
@@ -185,5 +186,18 @@ public class NewsArticlesQueryHandler(
         }
 
         return result;
+    }
+
+    protected void ApplyIsArchived(IList<NewsArticle> newsArticles, DateTime? certainDate)
+    {
+        var utcNow = certainDate.GetValueOrDefault(DateTime.UtcNow);
+
+        foreach (var newsArticle in newsArticles)
+        {
+            if (newsArticle.IsArchived && newsArticle.ArchiveDate > utcNow)
+            {
+                newsArticle.IsArchived = false;
+            }
+        }
     }
 }

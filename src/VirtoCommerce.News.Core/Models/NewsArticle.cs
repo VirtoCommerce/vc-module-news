@@ -20,6 +20,13 @@ public class NewsArticle : AuditableEntity, ICloneable, ISeoSupport
 
     public DateTime? PublishDate { get; set; }
 
+    public bool IsArchived { get; set; }
+
+    public DateTime? ArchiveDate { get; set; }
+
+    [JsonIgnore]
+    public bool? IsArchivedValue { get; private set; }
+
     public IList<NewsArticleLocalizedContent> LocalizedContents { get; set; }
 
     public string SeoObjectType => nameof(NewsArticle);
@@ -41,5 +48,10 @@ public class NewsArticle : AuditableEntity, ICloneable, ISeoSupport
     public void SetIsPublished(bool isPublished)
     {
         IsPublishedValue = isPublished;
+    }
+
+    public void SetIsArchived(bool isArchived)
+    {
+        IsArchivedValue = isArchived;
     }
 }

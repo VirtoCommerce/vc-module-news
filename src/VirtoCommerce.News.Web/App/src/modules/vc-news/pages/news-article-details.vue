@@ -38,30 +38,36 @@
           />
         </Field>
 
-        <div class="tw-flex tw-flex-row tw-gap-4">
-          <Field
-            v-slot="{ errors, errorMessage, handleChange }"
+        <Field
+          v-slot="{ errors, errorMessage, handleChange }"
+          :label="$t('VC_NEWS.PAGES.DETAILS.FORM.STORE.LABEL')"
+          :model-value="newsArticle.storeId"
+          name="storeId"
+          rules="required"
+        >
+          <VcSelect
+            v-model="newsArticle.storeId"
             :label="$t('VC_NEWS.PAGES.DETAILS.FORM.STORE.LABEL')"
-            :model-value="newsArticle.storeId"
-            name="storeId"
-            rules="required"
-          >
-            <VcSelect
-              v-model="newsArticle.storeId"
-              :label="$t('VC_NEWS.PAGES.DETAILS.FORM.STORE.LABEL')"
-              :options="storeOptions"
-              required
-              :error="errors.length > 0"
-              :error-message="errorMessage"
-              class="tw-flex-auto"
-              @update:model-value="handleChange"
-            />
-          </Field>
-
+            :options="storeOptions"
+            required
+            :error="errors.length > 0"
+            :error-message="errorMessage"
+            class="tw-flex-auto"
+            @update:model-value="handleChange"
+          />
+        </Field>
+        
+        <div class="tw-flex tw-flex-row tw-gap-4"> 
           <VcInput
             v-model="newsArticle.publishDate"
             type="datetime-local"
             :label="$t('VC_NEWS.PAGES.DETAILS.FORM.PUBLISH_DATE.LABEL')"
+          />
+
+          <VcInput
+            v-model="newsArticle.archiveDate"
+            type="datetime-local"
+            :label="$t('VC_NEWS.PAGES.DETAILS.FORM.ARCHIVE_DATE.LABEL')"
           />
         </div>
 
@@ -335,6 +341,11 @@ const {
   newsArticleCanPublish,
   newsArticleCanUnpublish,
 
+  archiveNewsArticle,
+  unarchiveNewsArticle,
+  newsArticleCanArchive,
+  newsArticleCanUnarchive,
+
   cloneNewsArticle,
 
   newsArticleIsDirty,
@@ -378,30 +389,6 @@ if (props.param) {
     },
   });
   bladeToolbar.value.push({
-    id: "publish",
-    icon: "material-visibility",
-    title: computed(() => t("VC_NEWS.PAGES.DETAILS.TOOLBAR.PUBLISH")),
-    disabled: computed(() => !newsArticleCanPublish?.value),
-    clickHandler: async () => {
-      await publishNewsArticle();
-      emit("parent:call", { method: "reload" });
-      emit("parent:call", { method: "reOpenDetailsBlade", args: newsArticle.value!.id });
-    },
-    isVisible: computed(() => hasAccess(publishNewsArticlePermission)),
-  });
-  bladeToolbar.value.push({
-    id: "unpublish",
-    icon: "material-visibility_off",
-    title: computed(() => t("VC_NEWS.PAGES.DETAILS.TOOLBAR.UNPUBLISH")),
-    disabled: computed(() => !newsArticleCanUnpublish?.value),
-    clickHandler: async () => {
-      await unpublishNewsArticle();
-      emit("parent:call", { method: "reload" });
-      emit("parent:call", { method: "reOpenDetailsBlade", args: newsArticle.value!.id });
-    },
-    isVisible: computed(() => hasAccess(publishNewsArticlePermission)),
-  });
-  bladeToolbar.value.push({
     id: "clone",
     icon: "material-content_copy",
     title: computed(() => t("VC_NEWS.PAGES.DETAILS.TOOLBAR.CLONE")),
@@ -412,6 +399,52 @@ if (props.param) {
       emit("parent:call", { method: "reOpenDetailsBlade", args: newsArticle.value!.id });
     },
     isVisible: computed(() => hasAccess(createNewsArticlePermission)),
+  });
+
+  bladeToolbar.value.push({
+    id: "publish",
+    icon: "material-visibility",
+    title: computed(() => t("VC_NEWS.PAGES.DETAILS.TOOLBAR.PUBLISH")),
+    clickHandler: async () => {
+      await publishNewsArticle();
+      emit("parent:call", { method: "reload" });
+      emit("parent:call", { method: "reOpenDetailsBlade", args: newsArticle.value!.id });
+    },
+    isVisible: computed(() => hasAccess(publishNewsArticlePermission) && newsArticleCanPublish?.value),
+  });
+  bladeToolbar.value.push({
+    id: "unpublish",
+    icon: "material-visibility_off",
+    title: computed(() => t("VC_NEWS.PAGES.DETAILS.TOOLBAR.UNPUBLISH")),
+    clickHandler: async () => {
+      await unpublishNewsArticle();
+      emit("parent:call", { method: "reload" });
+      emit("parent:call", { method: "reOpenDetailsBlade", args: newsArticle.value!.id });
+    },
+    isVisible: computed(() => hasAccess(publishNewsArticlePermission) && newsArticleCanUnpublish?.value),
+  });
+
+  bladeToolbar.value.push({
+    id: "archive",
+    icon: "material-archive",
+    title: computed(() => t("VC_NEWS.PAGES.DETAILS.TOOLBAR.ARCHIVE")),
+    clickHandler: async () => {
+      await archiveNewsArticle();
+      emit("parent:call", { method: "reload" });
+      emit("parent:call", { method: "reOpenDetailsBlade", args: newsArticle.value!.id });
+    },
+    isVisible: computed(() => hasAccess(publishNewsArticlePermission) && newsArticleCanArchive?.value),
+  });
+  bladeToolbar.value.push({
+    id: "unarchive",
+    icon: "material-unarchive",
+    title: computed(() => t("VC_NEWS.PAGES.DETAILS.TOOLBAR.UNARCHIVE")),
+    clickHandler: async () => {
+      await unarchiveNewsArticle();
+      emit("parent:call", { method: "reload" });
+      emit("parent:call", { method: "reOpenDetailsBlade", args: newsArticle.value!.id });
+    },
+    isVisible: computed(() => hasAccess(publishNewsArticlePermission) && newsArticleCanUnarchive?.value),
   });
 }
 
