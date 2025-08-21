@@ -39,20 +39,6 @@ public class NewsArticleSearchService(
             query = query.Where(article => article.LocalizedContents.Any(content => content.Title.Contains(criteria.ContentKeyword) || content.Content.Contains(criteria.ContentKeyword) || content.ContentPreview.Contains(criteria.ContentKeyword)));
         }
 
-        if (criteria.Published.HasValue)
-        {
-            var utcNow = criteria.CertainDate.GetValueOrDefault(DateTime.UtcNow);
-
-            if (criteria.Published.Value)
-            {
-                query = query.Where(x => x.IsPublished && (x.PublishDate == null || x.PublishDate <= utcNow));
-            }
-            else
-            {
-                query = query.Where(x => !x.IsPublished || (x.PublishDate != null && x.PublishDate > utcNow));
-            }
-        }
-
         if (!criteria.StoreId.IsNullOrEmpty())
         {
             query = query.Where(x => x.StoreId == criteria.StoreId);
@@ -73,9 +59,38 @@ public class NewsArticleSearchService(
             query = query.Where(article => article.LocalizedTags.Any(tag => criteria.Tags.Contains(tag.Tag)));
         }
 
+        if (criteria.Status.HasValue)
+        {
+            query = BuildStatusSearchCriteria(query, criteria);
+        }
+
         if (!criteria.PublishScope.IsNullOrEmpty())
         {
             query = BuildPublishScopeQuery(query, criteria);
+        }
+
+        return query;
+    }
+
+    protected virtual IQueryable<NewsArticleEntity> BuildStatusSearchCriteria(IQueryable<NewsArticleEntity> query, NewsArticleSearchCriteria criteria)
+    {
+        var utcNow = criteria.CertainDate.GetValueOrDefault(DateTime.UtcNow);
+
+        if (criteria.Status == NewsArticleStatus.Published)
+        {
+            query = query.Where(x => x.IsPublished && (x.PublishDate == null || x.PublishDate <= utcNow));
+        }
+        else if (criteria.Status == NewsArticleStatus.Scheduled)
+        {
+            query = query.Where(x => x.IsPublished && (x.PublishDate != null && x.PublishDate > utcNow));
+        }
+        else if (criteria.Status == NewsArticleStatus.Archived)
+        {
+            query = query.Where(x => x.IsArchived && (x.ArchiveDate == null || x.ArchiveDate <= utcNow));
+        }
+        else if (criteria.Status == NewsArticleStatus.Draft)
+        {
+            query = query.Where(x => !x.IsPublished && !x.IsArchived);
         }
 
         return query;
@@ -110,7 +125,7 @@ public class NewsArticleSearchService(
 
         if (sortInfos.IsNullOrEmpty())
         {
-            if (criteria.Published.GetValueOrDefault())
+            if (criteria.Status == NewsArticleStatus.Published)
             {
                 sortInfos = [new SortInfo { SortColumn = nameof(NewsArticle.PublishDate), SortDirection = SortDirection.Descending }];
             }

@@ -7,7 +7,8 @@ namespace VirtoCommerce.News.Core.Models;
 public class NewsArticleSearchCriteria : SearchCriteriaBase
 {
     public string ContentKeyword { get; set; }
-    public bool? Published { get; set; }
+    public NewsArticleStatus? Status { get; set; }
+
     public string StoreId { get; set; }
     public IList<string> UserGroups { get; set; }
     public IList<string> LanguageCodes { get; set; }

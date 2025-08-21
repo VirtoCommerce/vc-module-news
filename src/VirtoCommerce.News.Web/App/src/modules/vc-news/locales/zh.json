@@ -1,7 +1,11 @@
 {
   "VC_NEWS": {
     "MENU": {
-      "TITLE": "所有新闻"
+      "ALL": "所有",
+      "PUBLISHED": "已发布",
+      "DRAFTS": "草稿",
+      "SCHEDULED": "已安排",
+      "ARCHIVED": "已归档"
     },
     "PAGES": {
       "LIST": {

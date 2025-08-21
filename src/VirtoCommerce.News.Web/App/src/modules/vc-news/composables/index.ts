@@ -5,3 +5,4 @@ export { default as useStore } from "./useStore";
 export { default as useUserGroups } from "./useUserGroups";
 export { default as useLocalization } from "./useLocalization";
 export { default as useCustomers } from "./useCustomers";
+export { default as useNewsArticleListUI } from "./useNewsArticleListUI";
