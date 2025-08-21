@@ -1,7 +1,11 @@
 {
   "VC_NEWS": {
     "MENU": {
-      "TITLE": "Все новости"
+      "ALL": "Все",
+      "PUBLISHED": "Опубликовано",
+      "DRAFTS": "Черновики",
+      "SCHEDULED": "Запланировано",
+      "ARCHIVED": "Архивировано"
     },
     "PAGES": {
       "LIST": {

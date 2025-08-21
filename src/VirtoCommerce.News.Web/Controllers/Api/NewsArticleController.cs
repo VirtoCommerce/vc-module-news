@@ -73,6 +73,46 @@ public class NewsArticleController(INewsArticleService newsArticleService, INews
     }
 
     [HttpPost]
+    [Route("search-published")]
+    [Authorize(ModuleConstants.Security.Permissions.Read)]
+    public async Task<ActionResult<NewsArticleSearchResult>> SearchPublished([FromBody] NewsArticleSearchCriteria criteria)
+    {
+        criteria.Status = NewsArticleStatus.Published;
+        var result = await newsArticleSearchService.SearchNoCloneAsync(criteria);
+        return Ok(result);
+    }
+
+    [HttpPost]
+    [Route("search-scheduled")]
+    [Authorize(ModuleConstants.Security.Permissions.Read)]
+    public async Task<ActionResult<NewsArticleSearchResult>> SearchScheduled([FromBody] NewsArticleSearchCriteria criteria)
+    {
+        criteria.Status = NewsArticleStatus.Scheduled;
+        var result = await newsArticleSearchService.SearchNoCloneAsync(criteria);
+        return Ok(result);
+    }
+
+    [HttpPost]
+    [Route("search-archived")]
+    [Authorize(ModuleConstants.Security.Permissions.Read)]
+    public async Task<ActionResult<NewsArticleSearchResult>> SearchArchived([FromBody] NewsArticleSearchCriteria criteria)
+    {
+        criteria.Status = NewsArticleStatus.Archived;
+        var result = await newsArticleSearchService.SearchNoCloneAsync(criteria);
+        return Ok(result);
+    }
+
+    [HttpPost]
+    [Route("search-drafts")]
+    [Authorize(ModuleConstants.Security.Permissions.Read)]
+    public async Task<ActionResult<NewsArticleSearchResult>> SearchDrafts([FromBody] NewsArticleSearchCriteria criteria)
+    {
+        criteria.Status = NewsArticleStatus.Draft;
+        var result = await newsArticleSearchService.SearchNoCloneAsync(criteria);
+        return Ok(result);
+    }
+
+    [HttpPost]
     [Route("publish")]
     [Authorize(ModuleConstants.Security.Permissions.Publish)]
     [ProducesResponseType(typeof(void), StatusCodes.Status204NoContent)]

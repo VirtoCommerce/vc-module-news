@@ -1,6 +1,11 @@
 import { ref } from "vue";
-import { useAsync, useApiClient } from "@vc-shell/framework";
-import { NewsArticleClient, NewsArticle, NewsArticleSearchCriteria } from "../../../../api_client/virtocommerce.news";
+import { useAsync, useApiClient, useLoading } from "@vc-shell/framework";
+import {
+  NewsArticleClient,
+  NewsArticle,
+  NewsArticleSearchCriteria,
+  NewsArticleSearchResult,
+} from "../../../../api_client/virtocommerce.news";
 
 export default () => {
   const pageSize = 20;
@@ -13,9 +18,35 @@ export default () => {
   const pagesCount = ref(0);
   const pageIndex = ref(1);
 
-  const { loading: loadingNewsArticles, action: searchNewsArticles } = useAsync(async () => {
+  const { loading: loadingNewsArticlesAll, action: searchNewsArticlesAll } = useAsync(async () => {
     const apiClient = await getNewsApiClient();
-    const apiResult = await apiClient.search({
+    await requestNewsArticles((searchCriteria) => apiClient.search(searchCriteria));
+  });
+
+  const { loading: loadingNewsArticlesPublished, action: searchNewsArticlesPublished } = useAsync(async () => {
+    const apiClient = await getNewsApiClient();
+    await requestNewsArticles((searchCriteria) => apiClient.searchPublished(searchCriteria));
+  });
+
+  const { loading: loadingNewsArticlesDrafts, action: searchNewsArticlesDrafts } = useAsync(async () => {
+    const apiClient = await getNewsApiClient();
+    await requestNewsArticles((searchCriteria) => apiClient.searchDrafts(searchCriteria));
+  });
+
+  const { loading: loadingNewsArticlesScheduled, action: searchNewsArticlesScheduled } = useAsync(async () => {
+    const apiClient = await getNewsApiClient();
+    await requestNewsArticles((searchCriteria) => apiClient.searchScheduled(searchCriteria));
+  });
+
+  const { loading: loadingNewsArticlesArchived, action: searchNewsArticlesArchived } = useAsync(async () => {
+    const apiClient = await getNewsApiClient();
+    await requestNewsArticles((searchCriteria) => apiClient.searchArchived(searchCriteria));
+  });
+
+  const requestNewsArticles = async (
+    method: (searchCriteria: NewsArticleSearchCriteria) => Promise<NewsArticleSearchResult>,
+  ) => {
+    const apiResult = await method({
       ...(searchQuery.value ?? {}),
       take: pageSize,
       skip: pageSize * (pageIndex.value - 1),
@@ -26,14 +57,16 @@ export default () => {
       newsArticlesCount.value = apiResult.totalCount ?? 0;
       pagesCount.value = Math.ceil(newsArticlesCount.value / pageSize);
     }
-  });
+  };
 
-  const { action: deleteNewsArticles } = useAsync<{ ids: string[] }>(async (args?: { ids: string[] }) => {
-    if (args) {
-      const apiClient = await getNewsApiClient();
-      await apiClient.delete(args.ids);
-    }
-  });
+  const { loading: deletingNewsArticles, action: deleteNewsArticles } = useAsync<{ ids: string[] }>(
+    async (args?: { ids: string[] }) => {
+      if (args) {
+        const apiClient = await getNewsApiClient();
+        await apiClient.delete(args.ids);
+      }
+    },
+  );
 
   return {
     newsArticles,
@@ -42,8 +75,20 @@ export default () => {
     pagesCount,
     pageIndex,
     searchQuery,
-    searchNewsArticles,
-    loadingNewsArticles,
+    searchNewsArticlesAll,
+    searchNewsArticlesPublished,
+    searchNewsArticlesDrafts,
+    searchNewsArticlesScheduled,
+    searchNewsArticlesArchived,
+
+    loadingNewsArticles: useLoading(
+      loadingNewsArticlesAll,
+      loadingNewsArticlesPublished,
+      loadingNewsArticlesDrafts,
+      loadingNewsArticlesScheduled,
+      loadingNewsArticlesArchived,
+      deletingNewsArticles,
+    ),
 
     deleteNewsArticles,
   };

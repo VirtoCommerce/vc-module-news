@@ -1,7 +1,11 @@
 {
   "VC_NEWS": {
     "MENU": {
-      "TITLE": "すべてのニュース"
+      "ALL": "すべて",
+      "PUBLISHED": "公開済み",
+      "DRAFTS": "下書き",
+      "SCHEDULED": "予定",
+      "ARCHIVED": "アーカイブ済み"
     },
     "PAGES": {
       "LIST": {
