@@ -63,7 +63,7 @@ defineOptions({
   isWorkspace: true,
   menuItem: {
     title: "VC_NEWS.MENU.SCHEDULED",
-    icon: "lucide-file",
+    icon: "material-calendar_month",
     priority: 20,
   },
 });

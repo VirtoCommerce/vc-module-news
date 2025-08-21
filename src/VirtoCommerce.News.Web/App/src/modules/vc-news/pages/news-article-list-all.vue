@@ -63,7 +63,7 @@ defineOptions({
   isWorkspace: true,
   menuItem: {
     title: "VC_NEWS.MENU.ALL",
-    icon: "lucide-file",
+    icon: "material-unknown_document",
     priority: 50,
   },
 });
