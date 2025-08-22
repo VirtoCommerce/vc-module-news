@@ -34,17 +34,6 @@ public class NewsArticleSearchService(
             query = query.Where(x => x.Name.Contains(criteria.SearchPhrase));
         }
 
-        if (!criteria.ContentKeyword.IsNullOrEmpty())
-        {
-            query = query
-                .Where(article => article.LocalizedContents
-                    .Any(content => content.Title.Contains(criteria.ContentKeyword)
-                        || content.Content.Contains(criteria.ContentKeyword)
-                        || content.ContentPreview.Contains(criteria.ContentKeyword)
-                        || content.ListTitle.Contains(criteria.ContentKeyword)
-                        || content.ListPreview.Contains(criteria.ContentKeyword)));
-        }
-
         if (!criteria.StoreId.IsNullOrEmpty())
         {
             query = query.Where(x => x.StoreId == criteria.StoreId);
@@ -65,6 +54,11 @@ public class NewsArticleSearchService(
             query = query.Where(article => article.LocalizedTags.Any(tag => criteria.Tags.Contains(tag.Tag)));
         }
 
+        if (!criteria.ContentKeyword.IsNullOrEmpty())
+        {
+            query = BuildContentKeywordSearchCriteria(query, criteria);
+        }
+
         if (criteria.Status.HasValue)
         {
             query = BuildStatusSearchCriteria(query, criteria);
@@ -74,6 +68,19 @@ public class NewsArticleSearchService(
         {
             query = BuildPublishScopeQuery(query, criteria);
         }
+
+        return query;
+    }
+
+    protected virtual IQueryable<NewsArticleEntity> BuildContentKeywordSearchCriteria(IQueryable<NewsArticleEntity> query, NewsArticleSearchCriteria criteria)
+    {
+        query = query
+            .Where(article => article.LocalizedContents
+                .Any(content => content.Title.Contains(criteria.ContentKeyword)
+                    || content.Content.Contains(criteria.ContentKeyword)
+                    || content.ContentPreview.Contains(criteria.ContentKeyword)
+                    || content.ListTitle.Contains(criteria.ContentKeyword)
+                    || content.ListPreview.Contains(criteria.ContentKeyword)));
 
         return query;
     }
