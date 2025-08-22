@@ -117,12 +117,12 @@
             :label="$t('VC_NEWS.PAGES.DETAILS.FORM.CONTENT_TITLE.LABEL')"
             :model-value="selectedLocalizedContent.title"
             name="content-title"
-            :rules="{ required: !!selectedLocalizedContent.content || !!selectedLocalizedContent.contentPreview }"
+            :rules="{ required: !!selectedLocalizedContent.content || !!selectedLocalizedContent.contentPreview || !!selectedLocalizedContent.listTitle || !!selectedLocalizedContent.listPreview }"
           >
             <VcInput
               v-model="selectedLocalizedContent.title"
               :label="$t('VC_NEWS.PAGES.DETAILS.FORM.CONTENT_TITLE.LABEL')"
-              :required="!!selectedLocalizedContent.content || !!selectedLocalizedContent.contentPreview"
+              :required="!!selectedLocalizedContent.content || !!selectedLocalizedContent.contentPreview || !!selectedLocalizedContent.listTitle || !!selectedLocalizedContent.listPreview"
               :error="errors.length > 0"
               :error-message="errorMessage"
               multilanguage
@@ -130,6 +130,22 @@
               @update:model-value="handleChange"
             />
           </Field>
+
+          <VcInput
+            v-model="selectedLocalizedContent.listTitle"
+            :label="$t('VC_NEWS.PAGES.DETAILS.FORM.LIST_TITLE.LABEL')"
+            multilanguage
+            :current-language="currentLocale"
+          >
+            <template #append-inner>
+              <VcButton
+                :text="true"
+                @click="selectedLocalizedContent.listTitle = selectedLocalizedContent.title"
+              >
+                {{ $t('VC_NEWS.PAGES.DETAILS.FORM.ACTIONS.COPY_FROM_TITLE') }}
+              </VcButton>
+            </template>
+          </VcInput>
 
           <VcEditor
             v-model="selectedLocalizedContent.contentPreview"
@@ -139,25 +155,31 @@
             assets-folder="news-articles"
           />
 
-          <Field
-            v-slot="{ errors, errorMessage, handleChange }"
-            :label="$t('VC_NEWS.PAGES.DETAILS.FORM.CONTENT_CONTENT.LABEL')"
-            :model-value="selectedLocalizedContent.content"
-            name="content-content"
-            :rules="{ required: !!selectedLocalizedContent.title || !!selectedLocalizedContent.contentPreview }"
+          <VcEditor
+            v-model="selectedLocalizedContent.listPreview"
+            :label="$t('VC_NEWS.PAGES.DETAILS.FORM.LIST_PREVIEW.LABEL')"
+            multilanguage
+            :current-language="currentLocale"
+            assets-folder="news-articles"
           >
-            <VcEditor
-              v-model="selectedLocalizedContent.content"
-              :label="$t('VC_NEWS.PAGES.DETAILS.FORM.CONTENT_CONTENT.LABEL')"
-              :required="!!selectedLocalizedContent.title || !!selectedLocalizedContent.contentPreview"
-              :error="errors.length > 0"
-              :error-message="errorMessage"
-              multilanguage
-              :current-language="currentLocale"
-              assets-folder="news-articles"
-              @update:model-value="handleChange"
-            />
-          </Field>
+          </VcEditor>
+
+          <div class="tw-text-right">
+            <VcButton
+              :text="true"
+              @click="selectedLocalizedContent.listPreview = selectedLocalizedContent.contentPreview"
+            >
+              {{ $t('VC_NEWS.PAGES.DETAILS.FORM.ACTIONS.COPY_FROM_PREVIEW') }}
+            </VcButton>
+          </div>
+
+          <VcEditor
+            v-model="selectedLocalizedContent.content"
+            :label="$t('VC_NEWS.PAGES.DETAILS.FORM.CONTENT_CONTENT.LABEL')"
+            multilanguage
+            :current-language="currentLocale"
+            assets-folder="news-articles"
+          />
         </VcCard>
 
         <VcCard
@@ -214,13 +236,12 @@
             <VcInput
               v-model="selectedSeo.semanticUrl"
               :label="$t('VC_NEWS.PAGES.DETAILS.FORM.SEO_SEMANTIC_URL.LABEL')"
-              :required="
-                selectedSeo.isActive === true ||
+              :required="selectedSeo.isActive === true ||
                 !!selectedSeo.pageTitle ||
                 !!selectedSeo.metaDescription ||
                 !!selectedSeo.metaKeywords ||
                 !!selectedSeo.imageAltDescription
-              "
+                "
               :error="errors.length > 0"
               :error-message="errorMessage"
               multilanguage
@@ -262,7 +283,10 @@
   </VcBlade>
 </template>
 
-<script lang="ts" setup>
+<script
+  lang="ts"
+  setup
+>
 import { onMounted, ref, Ref, computed } from "vue";
 import { useI18n } from "vue-i18n";
 import { Field, useForm } from "vee-validate";

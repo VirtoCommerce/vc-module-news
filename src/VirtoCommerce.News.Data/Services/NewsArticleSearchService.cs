@@ -36,7 +36,13 @@ public class NewsArticleSearchService(
 
         if (!criteria.ContentKeyword.IsNullOrEmpty())
         {
-            query = query.Where(article => article.LocalizedContents.Any(content => content.Title.Contains(criteria.ContentKeyword) || content.Content.Contains(criteria.ContentKeyword) || content.ContentPreview.Contains(criteria.ContentKeyword)));
+            query = query
+                .Where(article => article.LocalizedContents
+                    .Any(content => content.Title.Contains(criteria.ContentKeyword)
+                        || content.Content.Contains(criteria.ContentKeyword)
+                        || content.ContentPreview.Contains(criteria.ContentKeyword)
+                        || content.ListTitle.Contains(criteria.ContentKeyword)
+                        || content.ListPreview.Contains(criteria.ContentKeyword)));
         }
 
         if (!criteria.StoreId.IsNullOrEmpty())

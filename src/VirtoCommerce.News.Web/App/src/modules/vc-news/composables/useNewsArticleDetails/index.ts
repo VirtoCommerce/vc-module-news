@@ -152,7 +152,7 @@ export default () => {
 
   const cleanupEmptyLocalizations = (newsArticleValue: NewsArticle) => {
     const notEmptyLocalizations = newsArticleValue.localizedContents?.filter(
-      (x) => x.title || x.content || x.contentPreview,
+      (x) => x.title || x.content || x.contentPreview || x.listTitle || x.listPreview,
     );
     newsArticleValue.localizedContents = notEmptyLocalizations;
   };

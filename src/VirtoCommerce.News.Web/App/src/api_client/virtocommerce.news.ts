@@ -942,6 +942,8 @@ export class NewsArticleLocalizedContent implements INewsArticleLocalizedContent
     title?: string | undefined;
     content?: string | undefined;
     contentPreview?: string | undefined;
+    listTitle?: string | undefined;
+    listPreview?: string | undefined;
     createdDate?: Date;
     modifiedDate?: Date | undefined;
     createdBy?: string | undefined;
@@ -964,6 +966,8 @@ export class NewsArticleLocalizedContent implements INewsArticleLocalizedContent
             this.title = _data["title"];
             this.content = _data["content"];
             this.contentPreview = _data["contentPreview"];
+            this.listTitle = _data["listTitle"];
+            this.listPreview = _data["listPreview"];
             this.createdDate = _data["createdDate"] ? new Date(_data["createdDate"].toString()) : <any>undefined;
             this.modifiedDate = _data["modifiedDate"] ? new Date(_data["modifiedDate"].toString()) : <any>undefined;
             this.createdBy = _data["createdBy"];
@@ -986,6 +990,8 @@ export class NewsArticleLocalizedContent implements INewsArticleLocalizedContent
         data["title"] = this.title;
         data["content"] = this.content;
         data["contentPreview"] = this.contentPreview;
+        data["listTitle"] = this.listTitle;
+        data["listPreview"] = this.listPreview;
         data["createdDate"] = this.createdDate ? this.createdDate.toISOString() : <any>undefined;
         data["modifiedDate"] = this.modifiedDate ? this.modifiedDate.toISOString() : <any>undefined;
         data["createdBy"] = this.createdBy;
@@ -1001,6 +1007,8 @@ export interface INewsArticleLocalizedContent {
     title?: string | undefined;
     content?: string | undefined;
     contentPreview?: string | undefined;
+    listTitle?: string | undefined;
+    listPreview?: string | undefined;
     createdDate?: Date;
     modifiedDate?: Date | undefined;
     createdBy?: string | undefined;
@@ -1113,11 +1121,15 @@ export interface INewsArticleOptions {
 }
 
 export class NewsArticleSearchCriteria implements INewsArticleSearchCriteria {
-    published?: boolean | undefined;
+    contentKeyword?: string | undefined;
+    status?: NewsArticleStatus | undefined;
     storeId?: string | undefined;
     userGroups?: string[] | undefined;
     languageCodes?: string[] | undefined;
     certainDate?: Date | undefined;
+    publishScope?: string | undefined;
+    authorId?: string | undefined;
+    tags?: string[] | undefined;
     responseGroup?: string | undefined;
     objectType?: string | undefined;
     objectTypes?: string[] | undefined;
@@ -1141,7 +1153,8 @@ export class NewsArticleSearchCriteria implements INewsArticleSearchCriteria {
 
     init(_data?: any) {
         if (_data) {
-            this.published = _data["published"];
+            this.contentKeyword = _data["contentKeyword"];
+            this.status = _data["status"];
             this.storeId = _data["storeId"];
             if (Array.isArray(_data["userGroups"])) {
                 this.userGroups = [] as any;
@@ -1154,6 +1167,13 @@ export class NewsArticleSearchCriteria implements INewsArticleSearchCriteria {
                     this.languageCodes!.push(item);
             }
             this.certainDate = _data["certainDate"] ? new Date(_data["certainDate"].toString()) : <any>undefined;
+            this.publishScope = _data["publishScope"];
+            this.authorId = _data["authorId"];
+            if (Array.isArray(_data["tags"])) {
+                this.tags = [] as any;
+                for (let item of _data["tags"])
+                    this.tags!.push(item);
+            }
             this.responseGroup = _data["responseGroup"];
             this.objectType = _data["objectType"];
             if (Array.isArray(_data["objectTypes"])) {
@@ -1189,7 +1209,8 @@ export class NewsArticleSearchCriteria implements INewsArticleSearchCriteria {
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
-        data["published"] = this.published;
+        data["contentKeyword"] = this.contentKeyword;
+        data["status"] = this.status;
         data["storeId"] = this.storeId;
         if (Array.isArray(this.userGroups)) {
             data["userGroups"] = [];
@@ -1202,6 +1223,13 @@ export class NewsArticleSearchCriteria implements INewsArticleSearchCriteria {
                 data["languageCodes"].push(item);
         }
         data["certainDate"] = this.certainDate ? this.certainDate.toISOString() : <any>undefined;
+        data["publishScope"] = this.publishScope;
+        data["authorId"] = this.authorId;
+        if (Array.isArray(this.tags)) {
+            data["tags"] = [];
+            for (let item of this.tags)
+                data["tags"].push(item);
+        }
         data["responseGroup"] = this.responseGroup;
         data["objectType"] = this.objectType;
         if (Array.isArray(this.objectTypes)) {
@@ -1230,11 +1258,15 @@ export class NewsArticleSearchCriteria implements INewsArticleSearchCriteria {
 }
 
 export interface INewsArticleSearchCriteria {
-    published?: boolean | undefined;
+    contentKeyword?: string | undefined;
+    status?: NewsArticleStatus | undefined;
     storeId?: string | undefined;
     userGroups?: string[] | undefined;
     languageCodes?: string[] | undefined;
     certainDate?: Date | undefined;
+    publishScope?: string | undefined;
+    authorId?: string | undefined;
+    tags?: string[] | undefined;
     responseGroup?: string | undefined;
     objectType?: string | undefined;
     objectTypes?: string[] | undefined;
@@ -1294,6 +1326,13 @@ export class NewsArticleSearchResult implements INewsArticleSearchResult {
 export interface INewsArticleSearchResult {
     totalCount?: number;
     results?: NewsArticle[] | undefined;
+}
+
+export enum NewsArticleStatus {
+    Published = "Published",
+    Draft = "Draft",
+    Scheduled = "Scheduled",
+    Archived = "Archived",
 }
 
 export class SeoInfo implements ISeoInfo {

@@ -41,6 +41,10 @@
       "DETAILS": {
         "TITLE": "Статья",
         "FORM": {
+          "ACTIONS": {
+            "COPY_FROM_TITLE": "копировать из заголовка",
+            "COPY_FROM_PREVIEW": "копировать из краткого содержания"
+          },
           "BLOCKS": {
             "PUBLISH": "Настройки публикации",
             "METADATA": "Метаданные",
@@ -78,12 +82,17 @@
           "CONTENT_TITLE": {
             "LABEL": "Заголовок"
           },
+          "LIST_TITLE": {
+            "LABEL": "Заголовок (в списке)"
+          },
           "CONTENT_CONTENT": {
             "LABEL": "Содержание"
           },
           "CONTENT_PREVIEW": {
-            "LABEL": "Краткое содержание",
-            "PLACEHOLDER": "Краткое содержание"
+            "LABEL": "Краткое содержание"
+          },
+          "LIST_PREVIEW": {
+            "LABEL": "Краткое содержание (в списке)"
           },
           "SEO_IS_ACTIVE": {
             "LABEL": "Активно"

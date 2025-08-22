@@ -89,7 +89,6 @@ namespace VirtoCommerce.News.Data.MySql.Migrations
                         .HasColumnType("varchar(128)");
 
                     b.Property<string>("Content")
-                        .IsRequired()
                         .HasColumnType("longtext");
 
                     b.Property<string>("ContentPreview")
@@ -106,6 +105,13 @@ namespace VirtoCommerce.News.Data.MySql.Migrations
                         .IsRequired()
                         .HasMaxLength(16)
                         .HasColumnType("varchar(16)");
+
+                    b.Property<string>("ListPreview")
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("ListTitle")
+                        .HasMaxLength(1024)
+                        .HasColumnType("varchar(1024)");
 
                     b.Property<string>("ModifiedBy")
                         .HasMaxLength(64)

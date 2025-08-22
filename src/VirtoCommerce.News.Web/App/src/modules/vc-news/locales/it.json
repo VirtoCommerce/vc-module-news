@@ -41,6 +41,10 @@
       "DETAILS": {
         "TITLE": "Articolo",
         "FORM": {
+          "ACTIONS": {
+            "COPY_FROM_TITLE": "copia dal titolo",
+            "COPY_FROM_PREVIEW": "copia dall'anteprima"
+          },
           "BLOCKS": {
             "PUBLISH": "Impostazioni di pubblicazione",
             "METADATA": "Metadati",
@@ -78,12 +82,17 @@
           "CONTENT_TITLE": {
             "LABEL": "Titolo"
           },
+          "LIST_TITLE": {
+            "LABEL": "Titolo (in elenco)"
+          },
           "CONTENT_CONTENT": {
             "LABEL": "Contenuto"
           },
           "CONTENT_PREVIEW": {
-            "LABEL": "Sommario",
-            "PLACEHOLDER": "Sommario"
+            "LABEL": "Sommario"
+          },
+          "LIST_PREVIEW": {
+            "LABEL": "Sommario (in elenco)"
           },
           "SEO_IS_ACTIVE": {
             "LABEL": "Attivo"

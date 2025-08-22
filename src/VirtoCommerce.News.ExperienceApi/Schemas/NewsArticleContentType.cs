@@ -22,6 +22,8 @@ public class NewsArticleContentType : ExtendableGraphType<NewsArticle>
         Field<StringGraphType>("title").Resolve(context => context.Source.LocalizedContents.FirstOrDefault()?.Title);
         Field<StringGraphType>("content").Resolve(context => context.Source.LocalizedContents.FirstOrDefault()?.Content);
         Field<StringGraphType>("contentPreview").Resolve(context => context.Source.LocalizedContents.FirstOrDefault()?.ContentPreview);
+        Field<StringGraphType>("listTitle").Resolve(context => context.Source.LocalizedContents.FirstOrDefault()?.ListTitle);
+        Field<StringGraphType>("listPreview").Resolve(context => context.Source.LocalizedContents.FirstOrDefault()?.ListPreview);
 
         Field<ListGraphType<StringGraphType>>("tags").Resolve(context => context.Source.LocalizedTags.Select(x => x.Tag));
 

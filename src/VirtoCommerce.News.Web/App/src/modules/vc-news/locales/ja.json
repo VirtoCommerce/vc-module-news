@@ -41,6 +41,10 @@
       "DETAILS": {
         "TITLE": "記事",
         "FORM": {
+          "ACTIONS": {
+            "COPY_FROM_TITLE": "タイトルからコピー",
+            "COPY_FROM_PREVIEW": "プレビューからコピー"
+          },
           "BLOCKS": {
             "PUBLISH": "公開設定",
             "METADATA": "メタデータ",
@@ -78,12 +82,17 @@
           "CONTENT_TITLE": {
             "LABEL": "タイトル"
           },
+          "LIST_TITLE": {
+            "LABEL": "タイトル (リスト内)"
+          },
           "CONTENT_CONTENT": {
             "LABEL": "コンテンツ"
           },
           "CONTENT_PREVIEW": {
-            "LABEL": "要約",
-            "PLACEHOLDER": "要約"
+            "LABEL": "要約"
+          },
+          "LIST_PREVIEW": {
+            "LABEL": "要約 (リスト内)"
           },
           "SEO_IS_ACTIVE": {
             "LABEL": "アクティブ"

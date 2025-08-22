@@ -89,7 +89,6 @@ namespace VirtoCommerce.News.Data.SqlServer.Migrations
                         .HasColumnType("nvarchar(128)");
 
                     b.Property<string>("Content")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ContentPreview")
@@ -106,6 +105,13 @@ namespace VirtoCommerce.News.Data.SqlServer.Migrations
                         .IsRequired()
                         .HasMaxLength(16)
                         .HasColumnType("nvarchar(16)");
+
+                    b.Property<string>("ListPreview")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ListTitle")
+                        .HasMaxLength(1024)
+                        .HasColumnType("nvarchar(1024)");
 
                     b.Property<string>("ModifiedBy")
                         .HasMaxLength(64)
