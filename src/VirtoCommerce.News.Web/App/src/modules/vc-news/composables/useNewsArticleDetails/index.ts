@@ -1,13 +1,15 @@
 import { computed, ref } from "vue";
 import * as _ from "lodash-es";
 import { useAsync, useApiClient, useLoading } from "@vc-shell/framework";
-import { NewsArticleClient, NewsArticle } from "../../../../api_client/virtocommerce.news";
+import { NewsArticleClient, NewsArticle, NewsArticleOptions } from "../../../../api_client/virtocommerce.news";
 
 export default () => {
   const { getApiClient: getNewsApiClient } = useApiClient(NewsArticleClient);
 
   const newsArticle = ref<NewsArticle>(new NewsArticle({ localizedContents: [], seoInfos: [] }));
   const originalNewsArticle = ref<NewsArticle>(new NewsArticle({ localizedContents: [], seoInfos: [] }));
+
+  const newsArticleOptions = ref<NewsArticleOptions>(new NewsArticleOptions({ publishScopes: [], tags: [] }));
 
   const resetNewsArticle = () => {
     if (originalNewsArticle.value) {
@@ -129,6 +131,16 @@ export default () => {
     }
   });
 
+  const { loading: loadingOptions, action: loadOptions } = useAsync<{ languageCode: string }>(
+    async (args?: { languageCode: string }) => {
+      const apiClient = await getNewsApiClient();
+      const apiResult = await apiClient.getOptions(args?.languageCode);
+      if (apiResult) {
+        newsArticleOptions.value = apiResult;
+      }
+    },
+  );
+
   const getSaveable = () => {
     const result = _.cloneDeep(newsArticle.value);
 
@@ -140,7 +152,7 @@ export default () => {
 
   const cleanupEmptyLocalizations = (newsArticleValue: NewsArticle) => {
     const notEmptyLocalizations = newsArticleValue.localizedContents?.filter(
-      (x) => x.title || x.content || x.contentPreview,
+      (x) => x.title || x.content || x.contentPreview || x.listTitle || x.listPreview,
     );
     newsArticleValue.localizedContents = notEmptyLocalizations;
   };
@@ -169,6 +181,8 @@ export default () => {
 
   return {
     newsArticle,
+    newsArticleOptions,
+
     loadNewsArticle,
     saveNewsArticle,
     loadingOrSavingNewsArticle: useLoading(
@@ -179,6 +193,7 @@ export default () => {
       archivingNewsArticle,
       unarchivingNewsArticle,
       cloningNewsArticle,
+      loadingOptions,
     ),
 
     publishNewsArticle,
@@ -195,5 +210,7 @@ export default () => {
 
     newsArticleIsDirty,
     resetNewsArticle,
+
+    loadOptions,
   };
 };

@@ -24,10 +24,14 @@ public class NewsArticleLocalizedContentEntity : AuditableEntity, IDataEntity<Ne
     [StringLength(TitleLength)]
     public string Title { get; set; }
 
-    [Required]
     public string Content { get; set; }
 
     public string ContentPreview { get; set; }
+
+    [StringLength(TitleLength)]
+    public string ListTitle { get; set; }
+
+    public string ListPreview { get; set; }
 
     public virtual NewsArticleEntity NewsArticle { get; set; }
 
@@ -46,6 +50,8 @@ public class NewsArticleLocalizedContentEntity : AuditableEntity, IDataEntity<Ne
         model.Title = Title;
         model.Content = Content;
         model.ContentPreview = ContentPreview;
+        model.ListTitle = ListTitle;
+        model.ListPreview = ListPreview;
 
         return model;
     }
@@ -66,6 +72,8 @@ public class NewsArticleLocalizedContentEntity : AuditableEntity, IDataEntity<Ne
         Title = model.Title;
         Content = model.Content;
         ContentPreview = model.ContentPreview;
+        ListTitle = model.ListTitle;
+        ListPreview = model.ListPreview;
 
         return this;
     }
@@ -78,5 +86,7 @@ public class NewsArticleLocalizedContentEntity : AuditableEntity, IDataEntity<Ne
         target.Title = Title;
         target.Content = Content;
         target.ContentPreview = ContentPreview;
+        target.ListTitle = ListTitle;
+        target.ListPreview = ListPreview;
     }
 }

@@ -41,6 +41,16 @@
       "DETAILS": {
         "TITLE": "Artykuł",
         "FORM": {
+          "ACTIONS": {
+            "COPY_FROM_TITLE": "skopiuj z tytułu",
+            "COPY_FROM_PREVIEW": "skopiuj z podglądu"
+          },
+          "BLOCKS": {
+            "PUBLISH": "Ustawienia publikacji",
+            "METADATA": "Metadane",
+            "CONTENT": "Treść",
+            "SEO": "SEO"
+          },
           "NAME": {
             "LABEL": "Nazwa"
           },
@@ -56,18 +66,33 @@
           "USER_GROUPS": {
             "LABEL": "Grupy użytkowników"
           },
+          "PUBLISH_SCOPE": {
+            "LABEL": "Zakres publikacji",
+            "VALUES": {
+              "Anonymous": "Anonimowy",
+              "Authorized": "Autoryzowany"
+            }
+          },
+          "AUTHOR": {
+            "LABEL": "Autor"
+          },
+          "TAGS": {
+            "LABEL": "Tagi"
+          },
           "CONTENT_TITLE": {
             "LABEL": "Tytuł"
+          },
+          "LIST_TITLE": {
+            "LABEL": "Tytuł (na liście)"
           },
           "CONTENT_CONTENT": {
             "LABEL": "Treść"
           },
           "CONTENT_PREVIEW": {
-            "LABEL": "Podsumowanie",
-            "PLACEHOLDER": "Podsumowanie"
+            "LABEL": "Podsumowanie"
           },
-          "SEO_HEADER": {
-            "LABEL": "SEO"
+          "LIST_PREVIEW": {
+            "LABEL": "Podsumowanie (na liście)"
           },
           "SEO_IS_ACTIVE": {
             "LABEL": "Aktywne"
