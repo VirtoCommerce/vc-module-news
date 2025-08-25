@@ -5,6 +5,7 @@ using GraphQL.Types;
 using VirtoCommerce.CustomerModule.Core.Services;
 using VirtoCommerce.News.Core.Models;
 using VirtoCommerce.News.ExperienceApi.Models;
+using VirtoCommerce.Platform.Core.Common;
 using VirtoCommerce.Xapi.Core.Schemas;
 
 namespace VirtoCommerce.News.ExperienceApi.Schemas;
@@ -38,9 +39,10 @@ public class NewsArticleContentType : ExtendableGraphType<NewsArticle>
         {
             var members = await memberService.GetByIdsAsync(ids.ToArray());
             return members
-                .Select(x => new NewsArticleAuthor() { Id = x.Id, Name = x.Name, IconUrl = x.IconUrl })
+                .Select(x => AbstractTypeFactory<NewsArticleAuthor>.TryCreateInstance().FromMember(x))
                 .ToDictionary(x => x.Id);
         });
+
         return loader.LoadAsync(context.Source.AuthorId);
     }
 }
