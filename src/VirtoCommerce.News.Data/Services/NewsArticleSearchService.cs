@@ -111,21 +111,21 @@ public class NewsArticleSearchService(
 
     protected virtual IQueryable<NewsArticleEntity> BuildPublishScopeQuery(IQueryable<NewsArticleEntity> query, NewsArticleSearchCriteria criteria)
     {
-        if (criteria.PublishScope == NewsArticlePublishScopes.Anonymous)
+        if (criteria.PublishScope == NewsArticlePublishScope.Anonymous)
         {
-            query = query.Where(x => x.PublishScope == NewsArticlePublishScopes.Anonymous);
+            query = query.Where(x => x.PublishScope == NewsArticlePublishScope.Anonymous);
         }
-        else if (criteria.PublishScope == NewsArticlePublishScopes.Authorized)
+        else if (criteria.PublishScope == NewsArticlePublishScope.Authorized)
         {
             if (criteria.UserGroups != null)
             {
                 query = query.Where(article =>
-                    (article.PublishScope == NewsArticlePublishScopes.Anonymous) ||
-                    (article.PublishScope == NewsArticlePublishScopes.Authorized && (!article.UserGroups.Any() || article.UserGroups.Any(group => criteria.UserGroups.Contains(group.Group)))));
+                    (article.PublishScope == NewsArticlePublishScope.Anonymous) ||
+                    (article.PublishScope == NewsArticlePublishScope.Authorized && (!article.UserGroups.Any() || article.UserGroups.Any(group => criteria.UserGroups.Contains(group.Group)))));
             }
             else
             {
-                query = query.Where(x => x.PublishScope == NewsArticlePublishScopes.Authorized || x.PublishScope == NewsArticlePublishScopes.Anonymous);
+                query = query.Where(x => x.PublishScope == NewsArticlePublishScope.Authorized || x.PublishScope == NewsArticlePublishScope.Anonymous);
             }
         }
 

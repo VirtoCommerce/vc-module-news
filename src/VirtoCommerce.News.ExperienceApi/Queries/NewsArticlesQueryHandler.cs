@@ -87,7 +87,7 @@ public class NewsArticlesQueryHandler(
         result.StoreId = request.StoreId;
         result.UserGroups = userGroups;
         result.Status = NewsArticleStatus.Published;
-        result.PublishScope = request.UserId.IsNullOrEmpty() ? NewsArticlePublishScopes.Anonymous : NewsArticlePublishScopes.Authorized;
+        result.PublishScope = request.UserId.IsNullOrEmpty() ? NewsArticlePublishScope.Anonymous : NewsArticlePublishScope.Authorized;
         result.AuthorId = request.AuthorId;
         result.Tags = request.Tags.IsNullOrEmpty() ? null : request.Tags;
         result.Sort = nameof(NewsArticle.PublishDate);

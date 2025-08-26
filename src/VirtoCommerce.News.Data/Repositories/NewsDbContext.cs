@@ -24,7 +24,7 @@ public class NewsDbContext : DbContextBase
         base.OnModelCreating(modelBuilder);
 
         modelBuilder.Entity<NewsArticleEntity>().ToAuditableEntityTable("NewsArticle");
-        modelBuilder.Entity<NewsArticleEntity>().Property(x => x.PublishScope).HasDefaultValueSql($"'{NewsArticlePublishScopes.Anonymous}'");
+        modelBuilder.Entity<NewsArticleEntity>().Property(x => x.PublishScope).HasDefaultValueSql($"'{NewsArticlePublishScope.Anonymous}'");
 
         modelBuilder.Entity<NewsArticleLocalizedContentEntity>().ToAuditableEntityTable("NewsArticleLocalizedContent");
         modelBuilder.Entity<NewsArticleLocalizedContentEntity>().HasOne(x => x.NewsArticle).WithMany(x => x.LocalizedContents)

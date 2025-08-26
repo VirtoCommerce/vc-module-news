@@ -166,6 +166,6 @@ public class NewsArticleService(
 
     public IList<string> GetPublishScopes()
     {
-        return new List<string>() { NewsArticlePublishScopes.Anonymous, NewsArticlePublishScopes.Authorized };
+        return new List<string>() { NewsArticlePublishScope.Anonymous, NewsArticlePublishScope.Authorized };
     }
 }
