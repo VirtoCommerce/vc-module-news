@@ -41,6 +41,16 @@
       "DETAILS": {
         "TITLE": "文章",
         "FORM": {
+          "ACTIONS": {
+            "COPY_FROM_TITLE": "从标题复制",
+            "COPY_FROM_PREVIEW": "从预览复制"
+          },
+          "BLOCKS": {
+            "PUBLISH": "发布设置",
+            "METADATA": "元数据",
+            "CONTENT": "内容",
+            "SEO": "SEO"
+          },
           "NAME": {
             "LABEL": "名称"
           },
@@ -56,18 +66,33 @@
           "USER_GROUPS": {
             "LABEL": "用户组"
           },
+          "PUBLISH_SCOPE": {
+            "LABEL": "发布范围",
+            "VALUES": {
+              "Anonymous": "匿名",
+              "Authorized": "授权"
+            }
+          },
+          "AUTHOR": {
+            "LABEL": "作者"
+          },
+          "TAGS": {
+            "LABEL": "标签"
+          },
           "CONTENT_TITLE": {
             "LABEL": "标题"
+          },
+          "LIST_TITLE": {
+            "LABEL": "标题 (在列表中)"
           },
           "CONTENT_CONTENT": {
             "LABEL": "内容"
           },
           "CONTENT_PREVIEW": {
-            "LABEL": "摘要",
-            "PLACEHOLDER": "摘要"
+            "LABEL": "摘要"
           },
-          "SEO_HEADER": {
-            "LABEL": "SEO"
+          "LIST_PREVIEW": {
+            "LABEL": "摘要 (在列表中)"
           },
           "SEO_IS_ACTIVE": {
             "LABEL": "已激活"

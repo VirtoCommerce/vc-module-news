@@ -10,6 +10,8 @@ public class NewsArticleLocalizedContent : AuditableEntity, ICloneable
     public string Title { get; set; }
     public string Content { get; set; }
     public string ContentPreview { get; set; }
+    public string ListTitle { get; set; }
+    public string ListPreview { get; set; }
 
     public object Clone() => MemberwiseClone();
 }

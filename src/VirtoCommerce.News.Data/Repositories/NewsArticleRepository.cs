@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -18,6 +19,8 @@ public class NewsArticleRepository(NewsDbContext dbContext, IUnitOfWork unitOfWo
 
     public IQueryable<NewsArticleUserGroupEntity> NewsArticleUserGroups => DbContext.Set<NewsArticleUserGroupEntity>();
 
+    public IQueryable<NewsArticleLocalizedTagEntity> NewsArticleTags => DbContext.Set<NewsArticleLocalizedTagEntity>();
+
     public virtual async Task<IList<NewsArticleEntity>> GetNewsArticlesByIdsAsync(IList<string> ids)
     {
         var result = await NewsArticles
@@ -32,6 +35,10 @@ public class NewsArticleRepository(NewsDbContext dbContext, IUnitOfWork unitOfWo
                 .Where(x => articleIds.Contains(x.NewsArticleId))
                 .LoadAsync();
 
+            await NewsArticleTags
+                .Where(x => articleIds.Contains(x.NewsArticleId))
+                .LoadAsync();
+
             await NewsArticleSeoInfos
                 .Where(x => articleIds.Contains(x.NewsArticleId))
                 .LoadAsync();
@@ -42,5 +49,28 @@ public class NewsArticleRepository(NewsDbContext dbContext, IUnitOfWork unitOfWo
         }
 
         return result;
+    }
+
+    public virtual async Task<IList<string>> GetNewsArticlesTagsAsync(string languageCode, bool publishedOnly, DateTime? certainDate)
+    {
+        var query = NewsArticleTags.AsQueryable();
+
+        if (!string.IsNullOrEmpty(languageCode))
+        {
+            query = query.Where(x => x.LanguageCode == languageCode);
+        }
+
+        if (publishedOnly)
+        {
+            var utcNow = certainDate.GetValueOrDefault(DateTime.UtcNow);
+            query = query.Where(x => x.NewsArticle.IsPublished && (x.NewsArticle.PublishDate == null || x.NewsArticle.PublishDate <= utcNow));
+        }
+
+        return await query
+            .GroupBy(x => x.Tag)
+            .Select(x => new { Tag = x.Key, Count = x.Count() })
+            .OrderByDescending(x => x.Count)
+            .Select(x => x.Tag)
+            .ToListAsync();
     }
 }

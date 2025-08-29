@@ -27,7 +27,13 @@ public class NewsArticle : AuditableEntity, ICloneable, ISeoSupport
     [JsonIgnore]
     public bool? IsArchivedValue { get; private set; }
 
+    public string AuthorId { get; set; }
+
+    public string PublishScope { get; set; }
+
     public IList<NewsArticleLocalizedContent> LocalizedContents { get; set; }
+
+    public IList<NewsArticleLocalizedTag> LocalizedTags { get; set; }
 
     public string SeoObjectType => nameof(NewsArticle);
 
@@ -41,6 +47,7 @@ public class NewsArticle : AuditableEntity, ICloneable, ISeoSupport
 
         result.SeoInfos = SeoInfos?.Select(x => x.CloneTyped()).ToList();
         result.LocalizedContents = LocalizedContents?.Select(x => x.CloneTyped()).ToList();
+        result.LocalizedTags = LocalizedTags?.Select(x => x.CloneTyped()).ToList();
 
         return result;
     }
