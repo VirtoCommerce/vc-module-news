@@ -5,11 +5,32 @@
 namespace VirtoCommerce.News.Data.SqlServer.Migrations
 {
     /// <inheritdoc />
-    public partial class News_AddAuthorTagsPublishScope : Migration
+    public partial class News_AddMetaFields : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.AlterColumn<string>(
+                name: "Content",
+                table: "NewsArticleLocalizedContent",
+                type: "nvarchar(max)",
+                nullable: true,
+                oldClrType: typeof(string),
+                oldType: "nvarchar(max)");
+
+            migrationBuilder.AddColumn<string>(
+                name: "ListPreview",
+                table: "NewsArticleLocalizedContent",
+                type: "nvarchar(max)",
+                nullable: true);
+
+            migrationBuilder.AddColumn<string>(
+                name: "ListTitle",
+                table: "NewsArticleLocalizedContent",
+                type: "nvarchar(1024)",
+                maxLength: 1024,
+                nullable: true);
+
             migrationBuilder.AddColumn<string>(
                 name: "AuthorId",
                 table: "NewsArticle",
@@ -58,12 +79,30 @@ namespace VirtoCommerce.News.Data.SqlServer.Migrations
                 name: "NewsArticleLocalizedTag");
 
             migrationBuilder.DropColumn(
+                name: "ListPreview",
+                table: "NewsArticleLocalizedContent");
+
+            migrationBuilder.DropColumn(
+                name: "ListTitle",
+                table: "NewsArticleLocalizedContent");
+
+            migrationBuilder.DropColumn(
                 name: "AuthorId",
                 table: "NewsArticle");
 
             migrationBuilder.DropColumn(
                 name: "PublishScope",
                 table: "NewsArticle");
+
+            migrationBuilder.AlterColumn<string>(
+                name: "Content",
+                table: "NewsArticleLocalizedContent",
+                type: "nvarchar(max)",
+                nullable: false,
+                defaultValue: "",
+                oldClrType: typeof(string),
+                oldType: "nvarchar(max)",
+                oldNullable: true);
         }
     }
 }

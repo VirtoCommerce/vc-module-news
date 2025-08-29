@@ -5,11 +5,32 @@
 namespace VirtoCommerce.News.Data.PostgreSql.Migrations
 {
     /// <inheritdoc />
-    public partial class News_AddAuthorTagsPublishScope : Migration
+    public partial class News_AddMetaFields : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.AlterColumn<string>(
+                name: "Content",
+                table: "NewsArticleLocalizedContent",
+                type: "text",
+                nullable: true,
+                oldClrType: typeof(string),
+                oldType: "text");
+
+            migrationBuilder.AddColumn<string>(
+                name: "ListPreview",
+                table: "NewsArticleLocalizedContent",
+                type: "text",
+                nullable: true);
+
+            migrationBuilder.AddColumn<string>(
+                name: "ListTitle",
+                table: "NewsArticleLocalizedContent",
+                type: "character varying(1024)",
+                maxLength: 1024,
+                nullable: true);
+
             migrationBuilder.AddColumn<string>(
                 name: "AuthorId",
                 table: "NewsArticle",
@@ -58,12 +79,30 @@ namespace VirtoCommerce.News.Data.PostgreSql.Migrations
                 name: "NewsArticleLocalizedTag");
 
             migrationBuilder.DropColumn(
+                name: "ListPreview",
+                table: "NewsArticleLocalizedContent");
+
+            migrationBuilder.DropColumn(
+                name: "ListTitle",
+                table: "NewsArticleLocalizedContent");
+
+            migrationBuilder.DropColumn(
                 name: "AuthorId",
                 table: "NewsArticle");
 
             migrationBuilder.DropColumn(
                 name: "PublishScope",
                 table: "NewsArticle");
+
+            migrationBuilder.AlterColumn<string>(
+                name: "Content",
+                table: "NewsArticleLocalizedContent",
+                type: "text",
+                nullable: false,
+                defaultValue: "",
+                oldClrType: typeof(string),
+                oldType: "text",
+                oldNullable: true);
         }
     }
 }

@@ -5,11 +5,36 @@
 namespace VirtoCommerce.News.Data.MySql.Migrations
 {
     /// <inheritdoc />
-    public partial class News_AddAuthorTagsPublishScope : Migration
+    public partial class News_AddMetaFields : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.AlterColumn<string>(
+                name: "Content",
+                table: "NewsArticleLocalizedContent",
+                type: "longtext",
+                nullable: true,
+                oldClrType: typeof(string),
+                oldType: "longtext")
+                .Annotation("MySql:CharSet", "utf8mb4")
+                .OldAnnotation("MySql:CharSet", "utf8mb4");
+
+            migrationBuilder.AddColumn<string>(
+                name: "ListPreview",
+                table: "NewsArticleLocalizedContent",
+                type: "longtext",
+                nullable: true)
+                .Annotation("MySql:CharSet", "utf8mb4");
+
+            migrationBuilder.AddColumn<string>(
+                name: "ListTitle",
+                table: "NewsArticleLocalizedContent",
+                type: "varchar(1024)",
+                maxLength: 1024,
+                nullable: true)
+                .Annotation("MySql:CharSet", "utf8mb4");
+
             migrationBuilder.AddColumn<string>(
                 name: "AuthorId",
                 table: "NewsArticle",
@@ -65,12 +90,38 @@ namespace VirtoCommerce.News.Data.MySql.Migrations
                 name: "NewsArticleLocalizedTag");
 
             migrationBuilder.DropColumn(
+                name: "ListPreview",
+                table: "NewsArticleLocalizedContent");
+
+            migrationBuilder.DropColumn(
+                name: "ListTitle",
+                table: "NewsArticleLocalizedContent");
+
+            migrationBuilder.DropColumn(
                 name: "AuthorId",
                 table: "NewsArticle");
 
             migrationBuilder.DropColumn(
                 name: "PublishScope",
                 table: "NewsArticle");
+
+            migrationBuilder.UpdateData(
+                table: "NewsArticleLocalizedContent",
+                keyColumn: "Content",
+                keyValue: null,
+                column: "Content",
+                value: "");
+
+            migrationBuilder.AlterColumn<string>(
+                name: "Content",
+                table: "NewsArticleLocalizedContent",
+                type: "longtext",
+                nullable: false,
+                oldClrType: typeof(string),
+                oldType: "longtext",
+                oldNullable: true)
+                .Annotation("MySql:CharSet", "utf8mb4")
+                .OldAnnotation("MySql:CharSet", "utf8mb4");
         }
     }
 }
