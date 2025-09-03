@@ -39,20 +39,48 @@ public class NewsArticleSearchService(
             query = query.Where(x => x.StoreId == criteria.StoreId);
         }
 
-        if (criteria.UserGroups != null)
-        {
-            query = query.Where(article => !article.UserGroups.Any() || article.UserGroups.Any(group => criteria.UserGroups.Contains(group.Group)));
-        }
-
         if (criteria.LanguageCodes != null)
         {
             query = query.Where(article => article.LocalizedContents.Any(content => criteria.LanguageCodes.Contains(content.LanguageCode)));
+        }
+
+        if (!criteria.AuthorId.IsNullOrEmpty())
+        {
+            query = query.Where(x => x.AuthorId == criteria.AuthorId);
+        }
+
+        if (criteria.Tags != null)
+        {
+            query = query.Where(article => article.LocalizedTags.Any(tag => criteria.Tags.Contains(tag.Tag)));
+        }
+
+        if (!criteria.ContentKeyword.IsNullOrEmpty())
+        {
+            query = BuildContentKeywordSearchCriteria(query, criteria);
         }
 
         if (criteria.Status.HasValue)
         {
             query = BuildStatusSearchCriteria(query, criteria);
         }
+
+        if (!criteria.PublishScope.IsNullOrEmpty())
+        {
+            query = BuildPublishScopeQuery(query, criteria);
+        }
+
+        return query;
+    }
+
+    protected virtual IQueryable<NewsArticleEntity> BuildContentKeywordSearchCriteria(IQueryable<NewsArticleEntity> query, NewsArticleSearchCriteria criteria)
+    {
+        query = query
+            .Where(article => article.LocalizedContents
+                .Any(content => content.Title.Contains(criteria.ContentKeyword)
+                    || content.Content.Contains(criteria.ContentKeyword)
+                    || content.ContentPreview.Contains(criteria.ContentKeyword)
+                    || content.ListTitle.Contains(criteria.ContentKeyword)
+                    || content.ListPreview.Contains(criteria.ContentKeyword)));
 
         return query;
     }
@@ -76,6 +104,29 @@ public class NewsArticleSearchService(
         else if (criteria.Status == NewsArticleStatus.Draft)
         {
             query = query.Where(x => !x.IsPublished && !x.IsArchived);
+        }
+
+        return query;
+    }
+
+    protected virtual IQueryable<NewsArticleEntity> BuildPublishScopeQuery(IQueryable<NewsArticleEntity> query, NewsArticleSearchCriteria criteria)
+    {
+        if (criteria.PublishScope == NewsArticlePublishScope.Anonymous)
+        {
+            query = query.Where(x => x.PublishScope == NewsArticlePublishScope.Anonymous);
+        }
+        else if (criteria.PublishScope == NewsArticlePublishScope.Authorized)
+        {
+            if (criteria.UserGroups != null)
+            {
+                query = query.Where(article =>
+                    (article.PublishScope == NewsArticlePublishScope.Anonymous) ||
+                    (article.PublishScope == NewsArticlePublishScope.Authorized && (!article.UserGroups.Any() || article.UserGroups.Any(group => criteria.UserGroups.Contains(group.Group)))));
+            }
+            else
+            {
+                query = query.Where(x => x.PublishScope == NewsArticlePublishScope.Authorized || x.PublishScope == NewsArticlePublishScope.Anonymous);
+            }
         }
 
         return query;

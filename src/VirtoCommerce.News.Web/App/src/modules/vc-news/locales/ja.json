@@ -41,6 +41,16 @@
       "DETAILS": {
         "TITLE": "記事",
         "FORM": {
+          "ACTIONS": {
+            "COPY_FROM_TITLE": "タイトルからコピー",
+            "COPY_FROM_PREVIEW": "プレビューからコピー"
+          },
+          "BLOCKS": {
+            "PUBLISH": "公開設定",
+            "METADATA": "メタデータ",
+            "CONTENT": "コンテンツ",
+            "SEO": "SEO"
+          },
           "NAME": {
             "LABEL": "名前"
           },
@@ -56,18 +66,33 @@
           "USER_GROUPS": {
             "LABEL": "ユーザーグループ"
           },
+          "PUBLISH_SCOPE": {
+            "LABEL": "公開範囲",
+            "VALUES": {
+              "Anonymous": "匿名",
+              "Authorized": "認証済み"
+            }
+          },
+          "AUTHOR": {
+            "LABEL": "著者"
+          },
+          "TAGS": {
+            "LABEL": "タグ"
+          },
           "CONTENT_TITLE": {
             "LABEL": "タイトル"
+          },
+          "LIST_TITLE": {
+            "LABEL": "タイトル (リスト内)"
           },
           "CONTENT_CONTENT": {
             "LABEL": "コンテンツ"
           },
           "CONTENT_PREVIEW": {
-            "LABEL": "要約",
-            "PLACEHOLDER": "要約"
+            "LABEL": "要約"
           },
-          "SEO_HEADER": {
-            "LABEL": "SEO"
+          "LIST_PREVIEW": {
+            "LABEL": "要約 (リスト内)"
           },
           "SEO_IS_ACTIVE": {
             "LABEL": "アクティブ"

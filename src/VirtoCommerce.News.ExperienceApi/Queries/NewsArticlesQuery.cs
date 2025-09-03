@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using GraphQL;
 using GraphQL.Types;
@@ -11,6 +12,8 @@ public class NewsArticlesQuery : SearchQuery<NewsArticleSearchResult>
     public string StoreId { get; set; }
     public string LanguageCode { get; set; }
     public string UserId { get; set; }
+    public string AuthorId { get; set; }
+    public IList<string> Tags { get; set; } = Array.Empty<string>();
 
     public override IEnumerable<QueryArgument> GetArguments()
     {
@@ -22,6 +25,8 @@ public class NewsArticlesQuery : SearchQuery<NewsArticleSearchResult>
         yield return Argument<NonNullGraphType<StringGraphType>>(nameof(StoreId));
         yield return Argument<NonNullGraphType<StringGraphType>>(nameof(LanguageCode));
         yield return Argument<StringGraphType>(nameof(UserId));
+        yield return Argument<StringGraphType>(nameof(AuthorId));
+        yield return Argument<ListGraphType<StringGraphType>>(nameof(Tags));
     }
 
     public override void Map(IResolveFieldContext context)
@@ -31,5 +36,7 @@ public class NewsArticlesQuery : SearchQuery<NewsArticleSearchResult>
         StoreId = context.GetArgument<string>(nameof(StoreId));
         LanguageCode = context.GetArgument<string>(nameof(LanguageCode));
         UserId = context.GetArgument<string>(nameof(UserId));
+        AuthorId = context.GetArgument<string>(nameof(AuthorId));
+        Tags = context.GetArgument<IList<string>>(nameof(Tags));
     }
 }

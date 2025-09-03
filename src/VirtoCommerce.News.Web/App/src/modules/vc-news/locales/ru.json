@@ -41,6 +41,16 @@
       "DETAILS": {
         "TITLE": "Статья",
         "FORM": {
+          "ACTIONS": {
+            "COPY_FROM_TITLE": "копировать из заголовка",
+            "COPY_FROM_PREVIEW": "копировать из краткого содержания"
+          },
+          "BLOCKS": {
+            "PUBLISH": "Настройки публикации",
+            "METADATA": "Метаданные",
+            "CONTENT": "Контент",
+            "SEO": "SEO"
+          },
           "NAME": {
             "LABEL": "Имя"
           },
@@ -56,18 +66,33 @@
           "USER_GROUPS": {
             "LABEL": "Группы пользователей"
           },
+          "PUBLISH_SCOPE": {
+            "LABEL": "Область публикации",
+            "VALUES": {
+              "Anonymous": "Анонимный",
+              "Authorized": "Авторизованный"
+            }
+          },
+          "AUTHOR": {
+            "LABEL": "Автор"
+          },
+          "TAGS": {
+            "LABEL": "Теги"
+          },
           "CONTENT_TITLE": {
             "LABEL": "Заголовок"
+          },
+          "LIST_TITLE": {
+            "LABEL": "Заголовок (в списке)"
           },
           "CONTENT_CONTENT": {
             "LABEL": "Содержание"
           },
           "CONTENT_PREVIEW": {
-            "LABEL": "Краткое содержание",
-            "PLACEHOLDER": "Краткое содержание"
+            "LABEL": "Краткое содержание"
           },
-          "SEO_HEADER": {
-            "LABEL": "SEO"
+          "LIST_PREVIEW": {
+            "LABEL": "Краткое содержание (в списке)"
           },
           "SEO_IS_ACTIVE": {
             "LABEL": "Активно"

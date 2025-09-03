@@ -35,10 +35,10 @@ public class NewsArticleService(
     protected override async Task BeforeSaveChanges(IList<NewsArticle> models)
     {
         await base.BeforeSaveChanges(models);
-        await Validate(models);
+        await ValidateAsync(models);
     }
 
-    protected virtual async Task Validate(IList<NewsArticle> newsArticles)
+    protected virtual async Task ValidateAsync(IList<NewsArticle> newsArticles)
     {
         foreach (var newsArticle in newsArticles)
         {
@@ -100,7 +100,7 @@ public class NewsArticleService(
         await SaveChangesAsync(newsArticles);
     }
 
-    public virtual async Task<NewsArticle> Clone(NewsArticle newsArticle)
+    public virtual async Task<NewsArticle> CloneAsync(NewsArticle newsArticle)
     {
         var clonedNewsArticle = newsArticle.CloneTyped();
 
@@ -116,15 +116,30 @@ public class NewsArticleService(
     {
         newsArticle.Id = null;
 
-        foreach (var localizedContent in newsArticle.LocalizedContents)
+        if (newsArticle.LocalizedContents != null)
         {
-            localizedContent.NewsArticleId = null;
-            localizedContent.Id = null;
+            foreach (var localizedContent in newsArticle.LocalizedContents)
+            {
+                localizedContent.NewsArticleId = null;
+                localizedContent.Id = null;
+            }
         }
 
-        foreach (var seoInfo in newsArticle.SeoInfos)
+        if (newsArticle.LocalizedTags != null)
         {
-            seoInfo.Id = null;
+            foreach (var localizedTag in newsArticle.LocalizedTags)
+            {
+                localizedTag.NewsArticleId = null;
+                localizedTag.Id = null;
+            }
+        }
+
+        if (newsArticle.SeoInfos != null)
+        {
+            foreach (var seoInfo in newsArticle.SeoInfos)
+            {
+                seoInfo.Id = null;
+            }
         }
     }
 
@@ -140,5 +155,17 @@ public class NewsArticleService(
         {
             seoInfo.IsActive = false;
         }
+    }
+
+    public async Task<IList<string>> GetTagsAsync(string languageCode, bool publishedOnly, DateTime? certainDate)
+    {
+        using var repository = repositoryFactory();
+
+        return await repository.GetNewsArticlesTagsAsync(languageCode, publishedOnly, certainDate);
+    }
+
+    public IList<string> GetPublishScopes()
+    {
+        return new List<string>() { NewsArticlePublishScope.Anonymous, NewsArticlePublishScope.Authorized };
     }
 }

@@ -1,4 +1,4 @@
-namespace VirtoCommerce.News.ExperienceApi.Model;
+namespace VirtoCommerce.News.ExperienceApi.Models;
 
 public class NewsArticleSettings
 {

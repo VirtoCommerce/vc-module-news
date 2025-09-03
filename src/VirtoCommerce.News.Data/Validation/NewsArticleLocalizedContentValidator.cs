@@ -10,6 +10,5 @@ public class NewsArticleLocalizedContentValidator : AbstractValidator<NewsArticl
     {
         RuleFor(x => x.LanguageCode).NotNull().NotEmpty().MaximumLength(NewsArticleLocalizedContentEntity.LanguageCodeLength);
         RuleFor(x => x.Title).NotNull().NotEmpty().MaximumLength(NewsArticleLocalizedContentEntity.TitleLength);
-        RuleFor(x => x.Content).NotNull().NotEmpty();
     }
 }

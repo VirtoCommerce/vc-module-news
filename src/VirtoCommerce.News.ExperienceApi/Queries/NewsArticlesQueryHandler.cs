@@ -7,7 +7,7 @@ using VirtoCommerce.CustomerModule.Core.Model;
 using VirtoCommerce.CustomerModule.Core.Services;
 using VirtoCommerce.News.Core.Models;
 using VirtoCommerce.News.Core.Services;
-using VirtoCommerce.News.ExperienceApi.Model;
+using VirtoCommerce.News.ExperienceApi.Models;
 using VirtoCommerce.News.ExperienceApi.Services;
 using VirtoCommerce.Platform.Core.Common;
 using VirtoCommerce.Seo.Core.Extensions;
@@ -83,10 +83,13 @@ public class NewsArticlesQueryHandler(
         var result = AbstractTypeFactory<NewsArticleSearchCriteria>.TryCreateInstance();
 
         result.LanguageCodes = languageCodes;
-        result.Keyword = request.Keyword;
+        result.ContentKeyword = request.Keyword;
         result.StoreId = request.StoreId;
         result.UserGroups = userGroups;
         result.Status = NewsArticleStatus.Published;
+        result.PublishScope = request.UserId.IsNullOrEmpty() ? NewsArticlePublishScope.Anonymous : NewsArticlePublishScope.Authorized;
+        result.AuthorId = request.AuthorId;
+        result.Tags = request.Tags.IsNullOrEmpty() ? null : request.Tags;
         result.Sort = nameof(NewsArticle.PublishDate);
         result.Skip = request.Skip;
         result.Take = request.Take;

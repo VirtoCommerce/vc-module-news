@@ -1,5 +1,5 @@
 using System.Threading.Tasks;
-using VirtoCommerce.News.ExperienceApi.Model;
+using VirtoCommerce.News.ExperienceApi.Models;
 using VirtoCommerce.Platform.Core.Common;
 using VirtoCommerce.Platform.Core.Settings;
 using VirtoCommerce.StoreModule.Core.Services;
