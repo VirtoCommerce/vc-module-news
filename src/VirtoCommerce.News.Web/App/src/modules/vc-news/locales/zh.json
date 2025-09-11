@@ -43,7 +43,7 @@
         "FORM": {
           "ACTIONS": {
             "COPY_FROM_TITLE": "从标题复制",
-            "COPY_FROM_PREVIEW": "从预览复制"
+            "COPY_FROM_PREVIEW": "从摘要中复制"
           },
           "BLOCKS": {
             "PUBLISH": "发布设置",

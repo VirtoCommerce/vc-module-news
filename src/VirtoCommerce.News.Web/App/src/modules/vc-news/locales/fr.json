@@ -43,7 +43,7 @@
         "FORM": {
           "ACTIONS": {
             "COPY_FROM_TITLE": "copier depuis le titre",
-            "COPY_FROM_PREVIEW": "copier depuis l’aperçu"
+            "COPY_FROM_PREVIEW": "copier depuis le résumé"
           },
           "BLOCKS": {
             "PUBLISH": "Paramètres de publication",

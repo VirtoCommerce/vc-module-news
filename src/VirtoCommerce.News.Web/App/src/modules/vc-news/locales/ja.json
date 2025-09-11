@@ -43,7 +43,7 @@
         "FORM": {
           "ACTIONS": {
             "COPY_FROM_TITLE": "タイトルからコピー",
-            "COPY_FROM_PREVIEW": "プレビューからコピー"
+            "COPY_FROM_PREVIEW": "概要からコピー"
           },
           "BLOCKS": {
             "PUBLISH": "公開設定",
