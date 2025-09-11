@@ -29,6 +29,11 @@ public class NewsArticleSearchService(
     {
         var query = ((INewsArticleRepository)repository).NewsArticles;
 
+        if (!criteria.ObjectIds.IsNullOrEmpty())
+        {
+            query = query.Where(x => criteria.ObjectIds.Contains(x.Id));
+        }
+
         if (!criteria.SearchPhrase.IsNullOrEmpty())
         {
             query = query.Where(x => x.Name.Contains(criteria.SearchPhrase));

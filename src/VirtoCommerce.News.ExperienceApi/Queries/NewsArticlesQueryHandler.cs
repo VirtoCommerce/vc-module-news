@@ -18,7 +18,6 @@ using VirtoCommerce.Xapi.Core.Infrastructure;
 namespace VirtoCommerce.News.ExperienceApi.Queries;
 
 public class NewsArticlesQueryHandler(
-    INewsArticleService newsArticleService,
     INewsArticleSearchService newsArticleSearchService,
     IMemberResolver memberResolver,
     IMemberService memberService,
@@ -29,26 +28,24 @@ public class NewsArticlesQueryHandler(
 {
     public async Task<NewsArticle> Handle(NewsArticleQuery request, CancellationToken cancellationToken)
     {
-        var result = await newsArticleService.GetByIdAsync(request.Id);
+        var settings = await newsArticleSettingsService.GetSettingsAsync(request.StoreId);
+        var searchCriteria = await BuildSearchCriteria(request, settings);
 
-        if (result == null)
+        var result = (await newsArticleSearchService.SearchAsync(searchCriteria))?.Results.FirstOrDefault();
+
+        if (result == null && settings.UseNewsPrefixInLinks)
         {
-            var settings = await newsArticleSettingsService.GetSettingsAsync(request.StoreId);
+            var newsArticleSeoInfo = await newsArticleSeoService.FindActiveSeoAsync([request.Id], request.StoreId, request.LanguageCode);
 
-            if (settings.UseNewsPrefixInLinks)
+            if (!newsArticleSeoInfo.IsNullOrEmpty())
             {
-                var newsArticleSeoInfo = await newsArticleSeoService.FindActiveSeoAsync([request.Id], request.StoreId, request.LanguageCode);
-
-                if (!newsArticleSeoInfo.IsNullOrEmpty())
-                {
-                    result = await newsArticleService.GetByIdAsync(newsArticleSeoInfo.First().ObjectId);
-                }
+                searchCriteria.ObjectIds = new[] { newsArticleSeoInfo.First().ObjectId };
+                result = (await newsArticleSearchService.SearchAsync(searchCriteria))?.Results.FirstOrDefault();
             }
         }
 
         if (result != null)
         {
-            var settings = await newsArticleSettingsService.GetSettingsAsync(request.StoreId);
             PostProcessResult([result], request.StoreId, request.LanguageCode, requestCertainDate: null, settings);
         }
 
@@ -69,30 +66,53 @@ public class NewsArticlesQueryHandler(
         return result;
     }
 
-    protected virtual async Task<NewsArticleSearchCriteria> BuildSearchCriteria(NewsArticlesQuery request, NewsArticleSettings settings)
+    protected virtual async Task<NewsArticleSearchCriteria> BuildSearchCriteria(NewsArticleQuery request, NewsArticleSettings settings)
     {
-        var languageCodes = new List<string>() { request.LanguageCode };
-
-        if (settings.UseStoreDefaultLanguage && !settings.StoreDefaultLanguage.IsNullOrEmpty())
-        {
-            languageCodes.Add(settings.StoreDefaultLanguage);
-        }
-
-        var userGroups = await GetUserGroups(request.UserId);
-
         var result = AbstractTypeFactory<NewsArticleSearchCriteria>.TryCreateInstance();
 
-        result.LanguageCodes = languageCodes;
-        result.ContentKeyword = request.Keyword;
+        result.ObjectIds = new[] { request.Id };
+
+        result.LanguageCodes = GetSearchLanguageCodes(request.LanguageCode, settings);
         result.StoreId = request.StoreId;
-        result.UserGroups = userGroups;
+        result.UserGroups = await GetUserGroups(request.UserId);
         result.Status = NewsArticleStatus.Published;
         result.PublishScope = request.UserId.IsNullOrEmpty() ? NewsArticlePublishScope.Anonymous : NewsArticlePublishScope.Authorized;
+
+        result.Skip = 0;
+        result.Take = 1;
+
+        return result;
+    }
+
+    protected virtual async Task<NewsArticleSearchCriteria> BuildSearchCriteria(NewsArticlesQuery request, NewsArticleSettings settings)
+    {
+        var result = AbstractTypeFactory<NewsArticleSearchCriteria>.TryCreateInstance();
+
+        result.ContentKeyword = request.Keyword;
         result.AuthorId = request.AuthorId;
         result.Tags = request.Tags.IsNullOrEmpty() ? null : request.Tags;
+
+        result.LanguageCodes = GetSearchLanguageCodes(request.LanguageCode, settings);
+        result.StoreId = request.StoreId;
+        result.UserGroups = await GetUserGroups(request.UserId);
+        result.Status = NewsArticleStatus.Published;
+        result.PublishScope = request.UserId.IsNullOrEmpty() ? NewsArticlePublishScope.Anonymous : NewsArticlePublishScope.Authorized;
+
         result.Sort = nameof(NewsArticle.PublishDate);
         result.Skip = request.Skip;
         result.Take = request.Take;
+
+        return result;
+    }
+
+    protected IList<string> GetSearchLanguageCodes(string requestLanguageCode, NewsArticleSettings settings)
+    {
+        var result = new List<string>() { requestLanguageCode };
+
+        if (settings.UseStoreDefaultLanguage && !settings.StoreDefaultLanguage.IsNullOrEmpty())
+        {
+            result.Add(settings.StoreDefaultLanguage);
+        }
 
         return result;
     }

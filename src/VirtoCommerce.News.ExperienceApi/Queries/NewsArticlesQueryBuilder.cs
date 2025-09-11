@@ -20,6 +20,7 @@ public class NewsArticlesQueryBuilder : SearchQueryBuilder<NewsArticlesQuery, Ne
     protected override async Task BeforeMediatorSend(IResolveFieldContext<object> context, NewsArticlesQuery request)
     {
         await base.BeforeMediatorSend(context, request);
+
         if (context.User.Identity.IsAuthenticated)
         {
             request.UserId = context.User.GetCurrentUserId();
