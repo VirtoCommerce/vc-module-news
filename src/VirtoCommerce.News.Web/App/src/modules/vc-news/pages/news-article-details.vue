@@ -160,18 +160,10 @@
             :label="$t('VC_NEWS.PAGES.DETAILS.FORM.LIST_PREVIEW.LABEL')"
             multilanguage
             :current-language="currentLocale"
+            :custom-buttons="listPreviewEditorButtons"
             assets-folder="news-articles"
           >
           </VcEditor>
-
-          <div class="tw-text-right">
-            <VcButton
-              :text="true"
-              @click="selectedLocalizedContent.listPreview = selectedLocalizedContent.contentPreview"
-            >
-              {{ $t('VC_NEWS.PAGES.DETAILS.FORM.ACTIONS.COPY_FROM_PREVIEW') }}
-            </VcButton>
-          </div>
 
           <VcEditor
             v-model="selectedLocalizedContent.content"
@@ -283,13 +275,11 @@
   </VcBlade>
 </template>
 
-<script
-  lang="ts"
-  setup
->
-import { onMounted, ref, Ref, computed } from "vue";
+<script lang="ts" setup>
+import { onMounted, ref, Ref, computed, defineComponent, h } from "vue";
 import { useI18n } from "vue-i18n";
 import { Field, useForm } from "vee-validate";
+import type { Editor } from "@tiptap/vue-3";
 import {
   IBladeToolbar,
   IParentCallArgs,
@@ -574,6 +564,48 @@ if (props.param) {
 }
 
 const title = computed(() => t("VC_NEWS.PAGES.DETAILS.TITLE"));
+
+const listPreviewEditorButtons = computed(() => [
+  {
+    id: "copy-from-preview",
+    label: "",
+    icon: "",
+    action: () => {},
+    component: copyFromPreviewButton,
+    isActive: () => false,
+    group: "",
+    order: 1,
+  },
+]);
+
+const copyFromPreviewButton = defineComponent({
+  props: {
+    editor: {
+      type: Object as () => Editor,
+      required: true,
+    },
+    disabled: Boolean,
+  },
+  setup(props) {
+    return () =>
+      h(
+        "button",
+        {
+          type: "button",
+          class: "vc-editor-button vc-button vc-button-primary vc-button_text",
+          disabled: props.disabled,
+          onClick: () => (selectedLocalizedContent.value.listPreview = selectedLocalizedContent.value.contentPreview),
+          style: {
+            width: "",
+            border: "none",
+            background: "transparent",
+            cursor: props.disabled ? "not-allowed" : "pointer",
+          },
+        },
+        t("VC_NEWS.PAGES.DETAILS.FORM.ACTIONS.COPY_FROM_PREVIEW"),
+      );
+  },
+});
 
 onMounted(async () => {
   await loadStores();
