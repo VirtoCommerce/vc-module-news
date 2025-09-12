@@ -596,7 +596,7 @@ const copyFromPreviewButton = defineComponent({
           disabled: props.disabled,
           onClick: () => (selectedLocalizedContent.value.listPreview = selectedLocalizedContent.value.contentPreview),
           style: {
-            width: "",
+            width: "auto",
             border: "none",
             background: "transparent",
             cursor: props.disabled ? "not-allowed" : "pointer",
