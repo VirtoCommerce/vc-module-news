@@ -185,6 +185,7 @@
             v-model="newsArticle.authorId"
             :label="$t('VC_NEWS.PAGES.DETAILS.FORM.AUTHOR.LABEL')"
             :options="authorOptions"
+            searchable
           />
 
           <VcMultivalue
