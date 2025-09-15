@@ -223,4 +223,16 @@ public class NewsArticlesQueryHandler(
             }
         }
     }
+
+    protected virtual void EnsureListContent(IList<NewsArticle> newsArticles)
+    {
+        foreach (var localizedContent in newsArticles.SelectMany(x => x.LocalizedContents))
+        {
+            if (localizedContent.ListTitle.IsNullOrEmpty() && localizedContent.ListPreview.IsNullOrEmpty())
+            {
+                localizedContent.ListTitle = localizedContent.Title;
+                localizedContent.ListPreview = localizedContent.ContentPreview;
+            }
+        }
+    }
 }
