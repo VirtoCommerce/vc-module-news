@@ -122,6 +122,7 @@ public class NewsArticlesQueryHandler(
         FilterLanguages(newsArticles, requestLanguageCode, settings);
         FilterSeoInfos(newsArticles, requestStoreId, requestLanguageCode, settings);
         ApplyIsArchived(newsArticles, requestCertainDate);
+        EnsureListContent(newsArticles);
     }
 
     protected virtual async Task<IList<string>> GetUserGroups(string userId)
