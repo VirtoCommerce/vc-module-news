@@ -184,11 +184,12 @@ export default () => {
       return value;
     }
 
-    value = value?.trimEnd();
-
-    while (value.endsWith("<p></p>")) {
-      value = value?.substring(0, value.length - "<p></p>".length);
+    const emptyParagraph = "<p></p>";
+ 
+    while (value.endsWith(emptyParagraph)) {
+      value = value?.substring(0, value.length - emptyParagraph.length);
     }
+
     return value;
   };
 
