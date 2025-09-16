@@ -146,6 +146,7 @@ export default () => {
 
     cleanupEmptyLocalizations(result);
     cleanupEmptySeoInfos(result);
+    cleanupContent(result);
 
     return result;
   };
@@ -168,6 +169,27 @@ export default () => {
         x.imageAltDescription,
     );
     newsArticleValue.seoInfos = notEmptySeoInfos;
+  };
+
+  const cleanupContent = (newsArticleValue: NewsArticle) => {
+    newsArticleValue.localizedContents?.forEach((localizedContent) => {
+      localizedContent.content = cleanupHtmlMarkup(localizedContent.content);
+      localizedContent.contentPreview = cleanupHtmlMarkup(localizedContent.contentPreview);
+      localizedContent.listPreview = cleanupHtmlMarkup(localizedContent.listPreview);
+    });
+  };
+
+  const cleanupHtmlMarkup = (value: string | undefined) => {
+    if (!value) {
+      return value;
+    }
+
+    value = value?.trimEnd();
+
+    while (value.endsWith("<p></p>")) {
+      value = value?.substring(0, value.length - "<p></p>".length);
+    }
+    return value;
   };
 
   const hasContent = (newsArticleValue: NewsArticle) => {
