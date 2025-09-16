@@ -165,6 +165,7 @@ public class NewsArticlesQueryHandler(
         foreach (var newsArticle in newsArticles)
         {
             newsArticle.LocalizedContents = GetBestMatchingContent(newsArticle.LocalizedContents, requestLanguageCode, settings.UseStoreDefaultLanguage ? settings.StoreDefaultLanguage : null);
+            newsArticle.LocalizedTags = GetBestMatchingTags(newsArticle.LocalizedTags, requestLanguageCode, settings.UseStoreDefaultLanguage ? settings.StoreDefaultLanguage : null);
         }
     }
 
@@ -210,6 +211,25 @@ public class NewsArticlesQueryHandler(
         }
 
         return result;
+    }
+
+    protected virtual IList<NewsArticleLocalizedTag> GetBestMatchingTags(IList<NewsArticleLocalizedTag> localizedTags, string languageCode, string storeDefaultLanguage)
+    {
+        var result = localizedTags
+            .Where(x => x.LanguageCode.EqualsIgnoreCase(languageCode))
+            .ToList();
+
+        if ((result.Count == 0) && !storeDefaultLanguage.IsNullOrEmpty())
+        {
+            result = localizedTags
+                .Where(x => x.LanguageCode.EqualsIgnoreCase(storeDefaultLanguage))
+                .ToList();
+        }
+
+        return result
+            .GroupBy(x => x.Tag, StringComparer.OrdinalIgnoreCase)
+            .Select(x => x.First())
+            .ToList();
     }
 
     protected void ApplyIsArchived(IList<NewsArticle> newsArticles, DateTime? certainDate)
