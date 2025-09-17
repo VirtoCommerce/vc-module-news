@@ -11,6 +11,7 @@ public class NewsArticleQuery : Query<NewsArticle>
     public string Id { get; set; }
     public string StoreId { get; set; }
     public string LanguageCode { get; set; }
+    public string UserId { get; set; }
 
     public override IEnumerable<QueryArgument> GetArguments()
     {

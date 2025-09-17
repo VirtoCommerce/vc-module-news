@@ -9,7 +9,8 @@
   "files": [
     "virtocommerce.news.ts",
     "virtocommerce.platform.ts",
-    "virtocommerce.store.ts"
+    "virtocommerce.store.ts",
+    "virtocommerce.customer.ts"
   ],
   "include": [
     "*.ts"

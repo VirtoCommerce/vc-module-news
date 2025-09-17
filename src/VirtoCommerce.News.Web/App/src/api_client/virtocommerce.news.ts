@@ -746,6 +746,58 @@ export class NewsArticleClient extends AuthApiBase {
         }
         return Promise.resolve<void>(null as any);
     }
+
+    /**
+     * @param languageCode (optional) 
+     * @return OK
+     */
+    getOptions(languageCode?: string | undefined): Promise<NewsArticleOptions> {
+        let url_ = this.baseUrl + "/api/news/get-options?";
+        if (languageCode === null)
+            throw new Error("The parameter 'languageCode' cannot be null.");
+        else if (languageCode !== undefined)
+            url_ += "languageCode=" + encodeURIComponent("" + languageCode) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_: RequestInit = {
+            method: "GET",
+            headers: {
+                "Accept": "text/plain"
+            }
+        };
+
+        return this.transformOptions(options_).then(transformedOptions_ => {
+            return this.http.fetch(url_, transformedOptions_);
+        }).then((_response: Response) => {
+            return this.processGetOptions(_response);
+        });
+    }
+
+    protected processGetOptions(response: Response): Promise<NewsArticleOptions> {
+        const status = response.status;
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        if (status === 200) {
+            return response.text().then((_responseText) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = NewsArticleOptions.fromJS(resultData200);
+            return result200;
+            });
+        } else if (status === 401) {
+            return response.text().then((_responseText) => {
+            return throwException("Unauthorized", status, _responseText, _headers);
+            });
+        } else if (status === 403) {
+            return response.text().then((_responseText) => {
+            return throwException("Forbidden", status, _responseText, _headers);
+            });
+        } else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve<NewsArticleOptions>(null as any);
+    }
 }
 
 export class NewsArticle implements INewsArticle {
@@ -755,7 +807,10 @@ export class NewsArticle implements INewsArticle {
     publishDate?: Date | undefined;
     isArchived?: boolean;
     archiveDate?: Date | undefined;
+    authorId?: string | undefined;
+    publishScope?: string | undefined;
     localizedContents?: NewsArticleLocalizedContent[] | undefined;
+    localizedTags?: NewsArticleLocalizedTag[] | undefined;
     readonly seoObjectType?: string | undefined;
     seoInfos?: SeoInfo[] | undefined;
     userGroups?: string[] | undefined;
@@ -782,10 +837,17 @@ export class NewsArticle implements INewsArticle {
             this.publishDate = _data["publishDate"] ? new Date(_data["publishDate"].toString()) : <any>undefined;
             this.isArchived = _data["isArchived"];
             this.archiveDate = _data["archiveDate"] ? new Date(_data["archiveDate"].toString()) : <any>undefined;
+            this.authorId = _data["authorId"];
+            this.publishScope = _data["publishScope"];
             if (Array.isArray(_data["localizedContents"])) {
                 this.localizedContents = [] as any;
                 for (let item of _data["localizedContents"])
                     this.localizedContents!.push(NewsArticleLocalizedContent.fromJS(item));
+            }
+            if (Array.isArray(_data["localizedTags"])) {
+                this.localizedTags = [] as any;
+                for (let item of _data["localizedTags"])
+                    this.localizedTags!.push(NewsArticleLocalizedTag.fromJS(item));
             }
             (<any>this).seoObjectType = _data["seoObjectType"];
             if (Array.isArray(_data["seoInfos"])) {
@@ -821,10 +883,17 @@ export class NewsArticle implements INewsArticle {
         data["publishDate"] = this.publishDate ? this.publishDate.toISOString() : <any>undefined;
         data["isArchived"] = this.isArchived;
         data["archiveDate"] = this.archiveDate ? this.archiveDate.toISOString() : <any>undefined;
+        data["authorId"] = this.authorId;
+        data["publishScope"] = this.publishScope;
         if (Array.isArray(this.localizedContents)) {
             data["localizedContents"] = [];
             for (let item of this.localizedContents)
                 data["localizedContents"].push(item.toJSON());
+        }
+        if (Array.isArray(this.localizedTags)) {
+            data["localizedTags"] = [];
+            for (let item of this.localizedTags)
+                data["localizedTags"].push(item.toJSON());
         }
         data["seoObjectType"] = this.seoObjectType;
         if (Array.isArray(this.seoInfos)) {
@@ -853,7 +922,10 @@ export interface INewsArticle {
     publishDate?: Date | undefined;
     isArchived?: boolean;
     archiveDate?: Date | undefined;
+    authorId?: string | undefined;
+    publishScope?: string | undefined;
     localizedContents?: NewsArticleLocalizedContent[] | undefined;
+    localizedTags?: NewsArticleLocalizedTag[] | undefined;
     seoObjectType?: string | undefined;
     seoInfos?: SeoInfo[] | undefined;
     userGroups?: string[] | undefined;
@@ -870,6 +942,8 @@ export class NewsArticleLocalizedContent implements INewsArticleLocalizedContent
     title?: string | undefined;
     content?: string | undefined;
     contentPreview?: string | undefined;
+    listTitle?: string | undefined;
+    listPreview?: string | undefined;
     createdDate?: Date;
     modifiedDate?: Date | undefined;
     createdBy?: string | undefined;
@@ -892,6 +966,8 @@ export class NewsArticleLocalizedContent implements INewsArticleLocalizedContent
             this.title = _data["title"];
             this.content = _data["content"];
             this.contentPreview = _data["contentPreview"];
+            this.listTitle = _data["listTitle"];
+            this.listPreview = _data["listPreview"];
             this.createdDate = _data["createdDate"] ? new Date(_data["createdDate"].toString()) : <any>undefined;
             this.modifiedDate = _data["modifiedDate"] ? new Date(_data["modifiedDate"].toString()) : <any>undefined;
             this.createdBy = _data["createdBy"];
@@ -914,6 +990,8 @@ export class NewsArticleLocalizedContent implements INewsArticleLocalizedContent
         data["title"] = this.title;
         data["content"] = this.content;
         data["contentPreview"] = this.contentPreview;
+        data["listTitle"] = this.listTitle;
+        data["listPreview"] = this.listPreview;
         data["createdDate"] = this.createdDate ? this.createdDate.toISOString() : <any>undefined;
         data["modifiedDate"] = this.modifiedDate ? this.modifiedDate.toISOString() : <any>undefined;
         data["createdBy"] = this.createdBy;
@@ -929,6 +1007,8 @@ export interface INewsArticleLocalizedContent {
     title?: string | undefined;
     content?: string | undefined;
     contentPreview?: string | undefined;
+    listTitle?: string | undefined;
+    listPreview?: string | undefined;
     createdDate?: Date;
     modifiedDate?: Date | undefined;
     createdBy?: string | undefined;
@@ -936,12 +1016,120 @@ export interface INewsArticleLocalizedContent {
     id?: string | undefined;
 }
 
+export class NewsArticleLocalizedTag implements INewsArticleLocalizedTag {
+    newsArticleId?: string | undefined;
+    languageCode?: string | undefined;
+    tag?: string | undefined;
+    id?: string | undefined;
+
+    constructor(data?: INewsArticleLocalizedTag) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.newsArticleId = _data["newsArticleId"];
+            this.languageCode = _data["languageCode"];
+            this.tag = _data["tag"];
+            this.id = _data["id"];
+        }
+    }
+
+    static fromJS(data: any): NewsArticleLocalizedTag {
+        data = typeof data === 'object' ? data : {};
+        let result = new NewsArticleLocalizedTag();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["newsArticleId"] = this.newsArticleId;
+        data["languageCode"] = this.languageCode;
+        data["tag"] = this.tag;
+        data["id"] = this.id;
+        return data;
+    }
+}
+
+export interface INewsArticleLocalizedTag {
+    newsArticleId?: string | undefined;
+    languageCode?: string | undefined;
+    tag?: string | undefined;
+    id?: string | undefined;
+}
+
+export class NewsArticleOptions implements INewsArticleOptions {
+    tags?: string[] | undefined;
+    publishScopes?: string[] | undefined;
+
+    constructor(data?: INewsArticleOptions) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            if (Array.isArray(_data["tags"])) {
+                this.tags = [] as any;
+                for (let item of _data["tags"])
+                    this.tags!.push(item);
+            }
+            if (Array.isArray(_data["publishScopes"])) {
+                this.publishScopes = [] as any;
+                for (let item of _data["publishScopes"])
+                    this.publishScopes!.push(item);
+            }
+        }
+    }
+
+    static fromJS(data: any): NewsArticleOptions {
+        data = typeof data === 'object' ? data : {};
+        let result = new NewsArticleOptions();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        if (Array.isArray(this.tags)) {
+            data["tags"] = [];
+            for (let item of this.tags)
+                data["tags"].push(item);
+        }
+        if (Array.isArray(this.publishScopes)) {
+            data["publishScopes"] = [];
+            for (let item of this.publishScopes)
+                data["publishScopes"].push(item);
+        }
+        return data;
+    }
+}
+
+export interface INewsArticleOptions {
+    tags?: string[] | undefined;
+    publishScopes?: string[] | undefined;
+}
+
 export class NewsArticleSearchCriteria implements INewsArticleSearchCriteria {
-    published?: boolean | undefined;
+    contentKeyword?: string | undefined;
+    status?: NewsArticleStatus | undefined;
     storeId?: string | undefined;
     userGroups?: string[] | undefined;
     languageCodes?: string[] | undefined;
     certainDate?: Date | undefined;
+    publishScope?: string | undefined;
+    authorId?: string | undefined;
+    tags?: string[] | undefined;
     responseGroup?: string | undefined;
     objectType?: string | undefined;
     objectTypes?: string[] | undefined;
@@ -965,7 +1153,8 @@ export class NewsArticleSearchCriteria implements INewsArticleSearchCriteria {
 
     init(_data?: any) {
         if (_data) {
-            this.published = _data["published"];
+            this.contentKeyword = _data["contentKeyword"];
+            this.status = _data["status"];
             this.storeId = _data["storeId"];
             if (Array.isArray(_data["userGroups"])) {
                 this.userGroups = [] as any;
@@ -978,6 +1167,13 @@ export class NewsArticleSearchCriteria implements INewsArticleSearchCriteria {
                     this.languageCodes!.push(item);
             }
             this.certainDate = _data["certainDate"] ? new Date(_data["certainDate"].toString()) : <any>undefined;
+            this.publishScope = _data["publishScope"];
+            this.authorId = _data["authorId"];
+            if (Array.isArray(_data["tags"])) {
+                this.tags = [] as any;
+                for (let item of _data["tags"])
+                    this.tags!.push(item);
+            }
             this.responseGroup = _data["responseGroup"];
             this.objectType = _data["objectType"];
             if (Array.isArray(_data["objectTypes"])) {
@@ -1013,7 +1209,8 @@ export class NewsArticleSearchCriteria implements INewsArticleSearchCriteria {
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
-        data["published"] = this.published;
+        data["contentKeyword"] = this.contentKeyword;
+        data["status"] = this.status;
         data["storeId"] = this.storeId;
         if (Array.isArray(this.userGroups)) {
             data["userGroups"] = [];
@@ -1026,6 +1223,13 @@ export class NewsArticleSearchCriteria implements INewsArticleSearchCriteria {
                 data["languageCodes"].push(item);
         }
         data["certainDate"] = this.certainDate ? this.certainDate.toISOString() : <any>undefined;
+        data["publishScope"] = this.publishScope;
+        data["authorId"] = this.authorId;
+        if (Array.isArray(this.tags)) {
+            data["tags"] = [];
+            for (let item of this.tags)
+                data["tags"].push(item);
+        }
         data["responseGroup"] = this.responseGroup;
         data["objectType"] = this.objectType;
         if (Array.isArray(this.objectTypes)) {
@@ -1054,11 +1258,15 @@ export class NewsArticleSearchCriteria implements INewsArticleSearchCriteria {
 }
 
 export interface INewsArticleSearchCriteria {
-    published?: boolean | undefined;
+    contentKeyword?: string | undefined;
+    status?: NewsArticleStatus | undefined;
     storeId?: string | undefined;
     userGroups?: string[] | undefined;
     languageCodes?: string[] | undefined;
     certainDate?: Date | undefined;
+    publishScope?: string | undefined;
+    authorId?: string | undefined;
+    tags?: string[] | undefined;
     responseGroup?: string | undefined;
     objectType?: string | undefined;
     objectTypes?: string[] | undefined;
@@ -1118,6 +1326,13 @@ export class NewsArticleSearchResult implements INewsArticleSearchResult {
 export interface INewsArticleSearchResult {
     totalCount?: number;
     results?: NewsArticle[] | undefined;
+}
+
+export enum NewsArticleStatus {
+    Published = "Published",
+    Draft = "Draft",
+    Scheduled = "Scheduled",
+    Archived = "Archived",
 }
 
 export class SeoInfo implements ISeoInfo {
