@@ -63,7 +63,7 @@ defineOptions({
   isWorkspace: true,
   menuItem: {
     title: "VC_NEWS.MENU.ARCHIVED",
-    icon: "lucide-file",
+    icon: "material-archive",
     priority: 40,
   },
 });
