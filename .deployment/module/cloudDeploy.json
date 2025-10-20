@@ -1,5 +1,5 @@
 {
-    "artifactKey": "VirtoCommerce.Orders",
+    "artifactKey": "VirtoCommerce.News",
     "deployRepo": "vc-deploy-dev",
     "cmPath": "backend/packages.json",
     "dev": {
