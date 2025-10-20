@@ -11,6 +11,7 @@ The News module enables content managers to publish news articles for selected u
 * Shedule articles publishing
 * Clone articles
 * Setup SEO data
+* Other
 
 ## Screenshots
 <img width="822" height="624" alt="image" src="https://github.com/user-attachments/assets/31e9dd00-b474-4336-b587-b14d3c8ac338" />
