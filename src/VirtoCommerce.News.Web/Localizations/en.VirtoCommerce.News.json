@@ -10,15 +10,15 @@
   "settings": {
     "News": {
       "Enabled": {
-        "title": "Enable",
-        "description": "Activating News module"
+        "title": "News",
+        "description": "Enable/ disable news pages for the store"
       },
       "UseNewsPrefixInLinks": {
-        "title": "Use \"news\" prefix in links",
-        "description": "Use \"news\" prefix in links (only for articles with active SEO)"
+        "title": "Using \"news\" prefix in links",
+        "description": "Add the \"news\" prefix to article links (only for articles with active SEO)"
       },
       "UseStoreDefaultLanguage": {
-        "title": "Use store's default language while searching articles",
+        "title": "Using store's default language while searching articles",
         "description": "Show articles in the store's default language if a localization for the user's language doesn't exist"
       }
     }
