@@ -78,13 +78,12 @@ public class Module : IModule, IExportSupport, IImportSupport, IHasConfiguration
         // Indexing
         serviceCollection.AddTransient<IndexNewsChangedEventHandler>();
 
-        // Для NewsDocumentBuilder
         serviceCollection.AddSingleton<IIndexDocumentBuilder, NewsDocumentBuilder>();
         serviceCollection.AddSingleton<IIndexSchemaBuilder, NewsDocumentBuilder>();
         serviceCollection.AddSingleton<ISearchRequestBuilder, NewsSearchRequestBuilder>();
 
         serviceCollection.AddSingleton<IIndexDocumentChangesProvider, NewsChangesProvider>();
-        serviceCollection.AddScoped<INewsArticleIndexedSearchService, NewsArticleIndexedSearchService>(); // Изменено на Scoped
+        serviceCollection.AddScoped<INewsArticleIndexedSearchService, NewsArticleIndexedSearchService>();
 
         serviceCollection.AddSingleton(provider => new IndexDocumentConfiguration
         {
