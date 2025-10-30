@@ -77,4 +77,25 @@ public class NewsArticleRepository(NewsDbContext dbContext, IUnitOfWork unitOfWo
             .Distinct(StringComparer.OrdinalIgnoreCase)
             .ToList();
     }
+
+    public async Task<IDictionary<string, string>> GetArticleIdsByContentIdsAsync(IList<string> ids)
+    {
+        return await NewsArticleLocalizedContents
+            .Where(x => ids.Contains(x.Id))
+            .ToDictionaryAsync(x => x.Id, x => x.NewsArticleId);
+    }
+
+    public async Task<IDictionary<string, string>> GetArticleIdsByTagIdsAsync(IList<string> ids)
+    {
+        return await NewsArticleTags
+            .Where(x => ids.Contains(x.Id))
+            .ToDictionaryAsync(x => x.Id, x => x.NewsArticleId);
+    }
+
+    public async Task<IDictionary<string, string>> GetArticleIdsBySeoInfoIdsAsync(IList<string> ids)
+    {
+        return await NewsArticleSeoInfos
+            .Where(x => ids.Contains(x.Id))
+            .ToDictionaryAsync(x => x.Id, x => x.NewsArticleId);
+    }
 }

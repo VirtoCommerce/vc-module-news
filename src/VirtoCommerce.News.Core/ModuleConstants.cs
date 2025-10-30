@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using VirtoCommerce.Platform.Core.Settings;
 
@@ -5,6 +6,8 @@ namespace VirtoCommerce.News.Core;
 
 public static class ModuleConstants
 {
+    public const string NewsIndexDocumentType = nameof(News);
+
     public static class Security
     {
         public static class Permissions
@@ -32,6 +35,22 @@ public static class ModuleConstants
     {
         public static class General
         {
+            public static SettingDescriptor EventBasedIndexation { get; } = new()
+            {
+                Name = "News.Search.EventBasedIndexation.Enabled",
+                GroupName = NewsIndexDocumentType,
+                ValueType = SettingValueType.Boolean,
+                DefaultValue = true,
+            };
+
+            public static SettingDescriptor NewsIndexationDate { get; } = new()
+            {
+                Name = "VirtoCommerce.Search.IndexingJobs.IndexationDate.News",
+                GroupName = NewsIndexDocumentType,
+                ValueType = SettingValueType.DateTime,
+                DefaultValue = default(DateTime),
+            };
+
             public static SettingDescriptor NewsEnabled { get; } = new()
             {
                 Name = "News.Enabled",
@@ -57,6 +76,12 @@ public static class ModuleConstants
                 ValueType = SettingValueType.Boolean,
                 DefaultValue = false,
                 IsPublic = true,
+            };
+
+            public static IEnumerable<SettingDescriptor> IndexationSettings => new[]
+            {
+                EventBasedIndexation,
+                NewsIndexationDate
             };
 
             public static IEnumerable<SettingDescriptor> AllGeneralSettings

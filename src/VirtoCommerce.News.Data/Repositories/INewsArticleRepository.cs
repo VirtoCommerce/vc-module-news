@@ -16,4 +16,7 @@ public interface INewsArticleRepository : IRepository
 
     Task<IList<NewsArticleEntity>> GetNewsArticlesByIdsAsync(IList<string> ids);
     Task<IList<string>> GetNewsArticlesTagsAsync(string languageCode, bool publishedOnly, DateTime? certainDate);
+    Task<IDictionary<string, string>> GetArticleIdsByContentIdsAsync(IList<string> ids);
+    Task<IDictionary<string, string>> GetArticleIdsByTagIdsAsync(IList<string> ids);
+    Task<IDictionary<string, string>> GetArticleIdsBySeoInfoIdsAsync(IList<string> ids);
 }

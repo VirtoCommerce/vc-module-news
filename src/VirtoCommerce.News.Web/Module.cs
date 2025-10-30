@@ -7,18 +7,22 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using VirtoCommerce.News.Core;
+using VirtoCommerce.News.Core.Events;
 using VirtoCommerce.News.Core.Models;
 using VirtoCommerce.News.Core.Services;
 using VirtoCommerce.News.Data.ExportImport;
+using VirtoCommerce.News.Data.Handlers;
 using VirtoCommerce.News.Data.MySql;
 using VirtoCommerce.News.Data.PostgreSql;
 using VirtoCommerce.News.Data.Repositories;
+using VirtoCommerce.News.Data.Search.Indexed;
 using VirtoCommerce.News.Data.Services;
 using VirtoCommerce.News.Data.SqlServer;
 using VirtoCommerce.News.Data.Validation;
 using VirtoCommerce.News.ExperienceApi;
 using VirtoCommerce.News.ExperienceApi.Extensions;
 using VirtoCommerce.Platform.Core.Common;
+using VirtoCommerce.Platform.Core.Events;
 using VirtoCommerce.Platform.Core.ExportImport;
 using VirtoCommerce.Platform.Core.Modularity;
 using VirtoCommerce.Platform.Core.Security;
@@ -26,6 +30,8 @@ using VirtoCommerce.Platform.Core.Settings;
 using VirtoCommerce.Platform.Data.MySql.Extensions;
 using VirtoCommerce.Platform.Data.PostgreSql.Extensions;
 using VirtoCommerce.Platform.Data.SqlServer.Extensions;
+using VirtoCommerce.SearchModule.Core.Model;
+using VirtoCommerce.SearchModule.Core.Services;
 using VirtoCommerce.StoreModule.Core.Model;
 using VirtoCommerce.Xapi.Core.Extensions;
 
@@ -69,6 +75,27 @@ public class Module : IModule, IExportSupport, IImportSupport, IHasConfiguration
         serviceCollection.AddTransient<AbstractValidator<NewsArticle>, NewsArticleValidator>();
         serviceCollection.AddTransient<AbstractValidator<NewsArticleLocalizedContent>, NewsArticleLocalizedContentValidator>();
 
+        // Indexing
+        serviceCollection.AddTransient<IndexNewsChangedEventHandler>();
+
+        // Для NewsDocumentBuilder
+        serviceCollection.AddSingleton<IIndexDocumentBuilder, NewsDocumentBuilder>();
+        serviceCollection.AddSingleton<IIndexSchemaBuilder, NewsDocumentBuilder>();
+        serviceCollection.AddSingleton<ISearchRequestBuilder, NewsSearchRequestBuilder>();
+
+        serviceCollection.AddSingleton<IIndexDocumentChangesProvider, NewsChangesProvider>();
+        serviceCollection.AddScoped<INewsArticleIndexedSearchService, NewsArticleIndexedSearchService>(); // Изменено на Scoped
+
+        serviceCollection.AddSingleton(provider => new IndexDocumentConfiguration
+        {
+            DocumentType = ModuleConstants.NewsIndexDocumentType,
+            DocumentSource = new IndexDocumentSource
+            {
+                ChangesProvider = provider.GetService<IIndexDocumentChangesProvider>(),
+                DocumentBuilder = provider.GetService<IIndexDocumentBuilder>(),
+            },
+        });
+
         serviceCollection.AddTransient<NewsArticlesExportImport>();
 
         // GraphQL
@@ -82,9 +109,15 @@ public class Module : IModule, IExportSupport, IImportSupport, IHasConfiguration
         var serviceProvider = appBuilder.ApplicationServices;
 
         // Register settings
+        appBuilder.RegisterEventHandler<NewsChangedEvent, IndexNewsChangedEventHandler>();
+
         var settingsRegistrar = serviceProvider.GetRequiredService<ISettingsRegistrar>();
         settingsRegistrar.RegisterSettings(ModuleConstants.Settings.AllSettings, ModuleInfo.Id);
         settingsRegistrar.RegisterSettingsForType(ModuleConstants.Settings.AllSettings, nameof(Store));
+
+        // Indexing
+        var searchRequestBuilderRegistrar = appBuilder.ApplicationServices.GetService<ISearchRequestBuilderRegistrar>();
+        searchRequestBuilderRegistrar.Register(ModuleConstants.NewsIndexDocumentType, appBuilder.ApplicationServices.GetService<ISearchRequestBuilder>); // Изменено на получение по интерфейсу
 
         // Register permissions
         var permissionsRegistrar = serviceProvider.GetRequiredService<IPermissionsRegistrar>();
