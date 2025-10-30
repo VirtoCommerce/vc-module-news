@@ -1,0 +1,26 @@
+{
+  "permissions": {
+    "news:access": "Åpne Nyhetsmeny",
+    "news:create": "Opprett nyhetsrelatert data",
+    "news:read": "Vis nyhetsrelatert data",
+    "news:update": "Oppdater nyhetsrelatert data",
+    "news:delete": "Slett nyhetsrelatert data",
+    "news:publish": "Publiser nyhetsrelatert data"
+  },
+  "settings": {
+    "News": {
+      "Enabled": {
+        "title": "Nyheter",
+        "description": "Aktiver/deaktiver nyhetssider for butikken"
+      },
+      "UseNewsPrefixInLinks": {
+        "title": "Bruk \"nyheter\"-prefiks i lenker",
+        "description": "Legg til \"nyheter\"-prefiks i artikkelenker (kun for artikler med aktiv SEO)"
+      },
+      "UseStoreDefaultLanguage": {
+        "title": "Bruk butikkens standardspråk ved søk etter artikler",
+        "description": "Vis artikler på butikkens standardspråk hvis en lokaliseringsversjon for brukerens språk ikke finnes"
+      }
+    }
+  }
+}
