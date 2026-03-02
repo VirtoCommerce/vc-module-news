@@ -1,0 +1,26 @@
+{
+  "permissions": {
+    "news:access": "Avaa Uutiset-valikko",
+    "news:create": "Luo uutisiin liittyviä tietoja",
+    "news:read": "Näytä uutisiin liittyviä tietoja",
+    "news:update": "Päivitä uutisiin liittyviä tietoja",
+    "news:delete": "Poista uutisiin liittyviä tietoja",
+    "news:publish": "Julkaise uutisiin liittyviä tietoja"
+  },
+  "settings": {
+    "News": {
+      "Enabled": {
+        "title": "Uutiset",
+        "description": "Ota käyttöön tai poista käytöstä uutissivut kaupassa"
+      },
+      "UseNewsPrefixInLinks": {
+        "title": "Käytä \"uutiset\"-etuliitettä linkeissä",
+        "description": "Lisää \"uutiset\"-etuliite artikkelilinkkeihin (vain aktiivisen SEO:n sisältäville artikkeleille)"
+      },
+      "UseStoreDefaultLanguage": {
+        "title": "Käytä kaupan oletuskieltä artikkelien haussa",
+        "description": "Näytä artikkelit kaupan oletuskielellä, jos käyttäjän kielelle ei ole saatavilla lokalisaatiota"
+      }
+    }
+  }
+}

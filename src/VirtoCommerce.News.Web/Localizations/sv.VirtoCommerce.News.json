@@ -1,0 +1,26 @@
+{
+  "permissions": {
+    "news:access": "Öppna Nyhetsmeny",
+    "news:create": "Skapa nyhetsrelaterad data",
+    "news:read": "Visa nyhetsrelaterad data",
+    "news:update": "Uppdatera nyhetsrelaterad data",
+    "news:delete": "Ta bort nyhetsrelaterad data",
+    "news:publish": "Publicera nyhetsrelaterad data"
+  },
+  "settings": {
+    "News": {
+      "Enabled": {
+        "title": "Nyheter",
+        "description": "Aktivera/inaktivera nyhetssidor för butiken"
+      },
+      "UseNewsPrefixInLinks": {
+        "title": "Använd \"nyheter\"-prefix i länkar",
+        "description": "Lägg till \"nyheter\"-prefix till artikel-länkar (endast för artiklar med aktiv SEO)"
+      },
+      "UseStoreDefaultLanguage": {
+        "title": "Använd butikens standardspråk vid sökning av artiklar",
+        "description": "Visa artiklar på butikens standardspråk om en lokaliserad version för användarens språk inte finns"
+      }
+    }
+  }
+}
