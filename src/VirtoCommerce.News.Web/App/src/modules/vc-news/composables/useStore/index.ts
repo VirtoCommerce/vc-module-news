@@ -11,8 +11,8 @@ export default () => {
     const apiClient = await getStoreApiClient();
     const apiResult = await apiClient.searchStores(new StoreSearchCriteria());
 
-    if (apiResult && apiResult.stores) {
-      stores.value = apiResult.stores;
+    if (apiResult && apiResult.results) {
+      stores.value = apiResult.results;
     }
   });
 
