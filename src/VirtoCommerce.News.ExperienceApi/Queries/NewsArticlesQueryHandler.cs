@@ -98,7 +98,7 @@ public class NewsArticlesQueryHandler(
         result.Status = NewsArticleStatus.Published;
         result.PublishScope = request.UserId.IsNullOrEmpty() ? NewsArticlePublishScope.Anonymous : NewsArticlePublishScope.Authorized;
 
-        result.Sort = nameof(NewsArticle.PublishDate);
+        result.Sort = request.Sort ?? $"{nameof(NewsArticle.PublishDate)}:desc";
         result.Skip = request.Skip;
         result.Take = request.Take;
 
