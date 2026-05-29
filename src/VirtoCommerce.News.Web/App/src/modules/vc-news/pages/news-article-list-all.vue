@@ -1,85 +1,71 @@
 <template>
   <VcBlade
-    v-loading="loadingNewsArticles"
+    :loading="loadingNewsArticles"
     :title="title"
     :toolbar-items="bladeToolbar"
-    :closable="closable"
-    :expanded="expanded"
     width="40%"
-    @close="$emit('close:blade')"
-    @expand="$emit('expand:blade')"
-    @collapse="$emit('collapse:blade')"
   >
-    <!-- @vue-generic {NewsArticle} -->
-    <VcTable
-      :total-label="$t('VC_NEWS.PAGES.LIST.TABLE.TOTALS')"
-      :search-placeholder="$t('VC_NEWS.PAGES.LIST.SEARCH.PLACEHOLDER')"
+    <VcDataTable
       :items="newsArticles"
-      :selected-item-id="selectedItemId"
-      :search-value="searchKeyword"
-      :columns="columns"
-      :sort="sortExpression"
-      :pages="pagesCount"
-      :current-page="pageIndex"
-      :total-count="newsArticlesCount"
-      :expanded="expanded"
-      column-selector="defined"
+      :total-count="pagination.totalCount"
+      :pagination="pagination"
+      :searchable="true"
+      :selection-mode="'multiple'"
+      :search-placeholder="$t('VC_NEWS.PAGES.LIST.SEARCH.PLACEHOLDER')"
       state-key="VC_NEWS"
-      multiselect
       class="tw-grow tw-basis-0"
-      @item-click="onItemClick"
-      @header-click="onHeaderClick"
-      @pagination-click="onPaginationClick"
-      @search:change="onSearchChange"
-      @selection-changed="onSelectionChanged"
+      v-model:active-item-id="selectedItemId"
+      v-model:sort-field="sortField"
+      v-model:sort-order="sortOrder"
+      v-model:selection="localSelection"
+      @row-click="onItemClick"
+      @pagination-click="pagination.goToPage"
+      @search="onSearchChange"
     >
-    </VcTable>
+      <VcColumn
+        v-for="col in columns"
+        :id="col.id"
+        :key="col.id"
+        :title="col.title"
+        :field="col.field"
+        :width="col.width"
+        :always-visible="col.alwaysVisible"
+        :visible="col.visible"
+        :sortable="col.sortable"
+        :type="col.type"
+        :mobile-position="col.mobilePosition"
+        :mobile-role="col.mobileRole"
+      />
+    </VcDataTable>
   </VcBlade>
 </template>
 
 <script lang="ts" setup>
 import { computed, ref, onMounted, watch } from "vue";
-import { IParentCallArgs, ITableColumns, useTableSort } from "@vc-shell/framework";
+import { useDataTableSort, useDataTablePagination, useBlade } from "@vc-shell/framework";
 import { useI18n } from "vue-i18n";
 import { useNewsArticleListUI, useNewsArticleList } from "../composables";
 import { NewsArticle } from "../../../api_client/virtocommerce.news";
 
-export interface Props {
-  expanded?: boolean;
-  closable?: boolean;
-  param?: string;
-}
+import { VcBlade, VcDataTable, VcColumn } from "@vc-shell/framework/ui";
 
-export interface Emits {
-  (event: "parent:call", args: IParentCallArgs): void;
-  (event: "collapse:blade"): void;
-  (event: "expand:blade"): void;
-  (event: "close:blade"): void;
-}
-
-defineOptions({
+const { param, exposeToChildren } = useBlade();
+defineBlade({
   url: "/list-all",
   name: "NewsArticleListAll",
   isWorkspace: true,
   menuItem: {
     title: "VC_NEWS.MENU.ALL",
-    icon: "material-unknown_document",
+    icon: "lucide-file-question",
     priority: 50,
   },
 });
-
-const props = withDefaults(defineProps<Props>(), {
-  expanded: true,
-  closable: true,
-});
-
-defineEmits<Emits>();
 
 const { t } = useI18n({ useScope: "global" });
 const {
   newsArticles,
   newsArticlesCount,
-  pagesCount,
+  pageSize,
   pageIndex,
   searchQuery,
   searchNewsArticlesAll,
@@ -87,14 +73,34 @@ const {
   deleteNewsArticles,
 } = useNewsArticleList();
 
-const { sortExpression, handleSortChange } = useTableSort({ initialProperty: "createdDate", initialDirection: "ASC" });
+const { sortField, sortOrder, sortExpression } = useDataTableSort({
+  initialField: "createdDate",
+  initialDirection: "ASC",
+});
 
-const searchKeyword = ref();
+const pagination = useDataTablePagination({
+  pageSize,
+  totalCount: computed(() => newsArticlesCount.value),
+  onPageChange: ({ page }) => {
+    pageIndex.value = page;
+    return searchNewsArticlesAll();
+  },
+});
+
 const selectedItemId = ref<string>();
+const localSelection = ref<NewsArticle[]>([]);
 const selectedIds = ref<string[]>([]);
 
 watch(
-  () => props.param,
+  localSelection,
+  (newSelection) => {
+    selectedIds.value = newSelection.map((item) => item.id || "").filter(Boolean);
+  },
+  { deep: true },
+);
+
+watch(
+  () => param.value,
   (newVal) => {
     selectedItemId.value = newVal;
   },
@@ -110,28 +116,13 @@ const { bladeToolbar, columns, openDetailsBlade, reOpenDetailsBlade } = useNewsA
   deleteNewsArticles,
 });
 
-const onItemClick = (item: NewsArticle) => {
-  openDetailsBlade(item.id);
+const onItemClick = (event: { data: NewsArticle }) => {
+  openDetailsBlade(event.data.id);
 };
 
 const onSearchChange = (searchKeywordValue: string | undefined) => {
   searchQuery.value.searchPhrase = searchKeywordValue;
   searchNewsArticlesAll();
-};
-
-const onPaginationClick = (page: number) => {
-  pageIndex.value = page;
-  searchNewsArticlesAll();
-};
-
-const onHeaderClick = async (column: ITableColumns) => {
-  if (column.sortable) {
-    handleSortChange(column.id);
-  }
-};
-
-const onSelectionChanged = function (selectedItems: NewsArticle[]) {
-  selectedIds.value = selectedItems.map((item) => item.id || "").filter(Boolean);
 };
 
 onMounted(async () => {
@@ -143,8 +134,7 @@ watch(sortExpression, async (newSortValue) => {
   await searchNewsArticlesAll();
 });
 
-defineExpose({
-  title,
+exposeToChildren({
   reload: searchNewsArticlesAll,
   reOpenDetailsBlade,
 });

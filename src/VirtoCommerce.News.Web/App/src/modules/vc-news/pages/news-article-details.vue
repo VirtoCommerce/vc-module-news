@@ -1,18 +1,13 @@
 <template>
   <VcBlade
-    v-loading="loading"
+    :loading="loading"
     :title="title"
     :toolbar-items="bladeToolbar"
-    :closable="closable"
-    :expanded="expanded"
     width="60%"
-    @close="$emit('close:blade')"
-    @expand="$emit('expand:blade')"
-    @collapse="$emit('collapse:blade')"
   >
     <div class="tw-absolute tw-top-2 tw-right-4 tw-z-10">
       <VcLanguageSelector
-        v-if="props.param"
+        v-if="param"
         :model-value="currentLocale"
         :options="languages"
         @update:model-value="setLocale"
@@ -107,7 +102,7 @@
         </VcCard>
 
         <VcCard
-          v-if="props.param"
+          v-if="param"
           :header="$t('VC_NEWS.PAGES.DETAILS.FORM.BLOCKS.CONTENT')"
           is-collapsable
           class="tw-flex tw-flex-col tw-gap-4 tw-p-4"
@@ -117,12 +112,23 @@
             :label="$t('VC_NEWS.PAGES.DETAILS.FORM.CONTENT_TITLE.LABEL')"
             :model-value="selectedLocalizedContent.title"
             name="content-title"
-            :rules="{ required: !!selectedLocalizedContent.content || !!selectedLocalizedContent.contentPreview || !!selectedLocalizedContent.listTitle || !!selectedLocalizedContent.listPreview }"
+            :rules="{
+              required:
+                !!selectedLocalizedContent.content ||
+                !!selectedLocalizedContent.contentPreview ||
+                !!selectedLocalizedContent.listTitle ||
+                !!selectedLocalizedContent.listPreview,
+            }"
           >
             <VcInput
               v-model="selectedLocalizedContent.title"
               :label="$t('VC_NEWS.PAGES.DETAILS.FORM.CONTENT_TITLE.LABEL')"
-              :required="!!selectedLocalizedContent.content || !!selectedLocalizedContent.contentPreview || !!selectedLocalizedContent.listTitle || !!selectedLocalizedContent.listPreview"
+              :required="
+                !!selectedLocalizedContent.content ||
+                !!selectedLocalizedContent.contentPreview ||
+                !!selectedLocalizedContent.listTitle ||
+                !!selectedLocalizedContent.listPreview
+              "
               :error="errors.length > 0"
               :error-message="errorMessage"
               multilanguage
@@ -142,7 +148,7 @@
                 :text="true"
                 @click="selectedLocalizedContent.listTitle = selectedLocalizedContent.title"
               >
-                {{ $t('VC_NEWS.PAGES.DETAILS.FORM.ACTIONS.COPY_FROM_TITLE') }}
+                {{ $t("VC_NEWS.PAGES.DETAILS.FORM.ACTIONS.COPY_FROM_TITLE") }}
               </VcButton>
             </template>
           </VcInput>
@@ -175,7 +181,7 @@
         </VcCard>
 
         <VcCard
-          v-if="props.param"
+          v-if="param"
           :header="$t('VC_NEWS.PAGES.DETAILS.FORM.BLOCKS.METADATA')"
           is-collapsable
           is-collapsed
@@ -201,7 +207,7 @@
         </VcCard>
 
         <VcCard
-          v-if="props.param"
+          v-if="param"
           :header="$t('VC_NEWS.PAGES.DETAILS.FORM.BLOCKS.SEO')"
           is-collapsable
           is-collapsed
@@ -229,12 +235,13 @@
             <VcInput
               v-model="selectedSeo.semanticUrl"
               :label="$t('VC_NEWS.PAGES.DETAILS.FORM.SEO_SEMANTIC_URL.LABEL')"
-              :required="selectedSeo.isActive === true ||
+              :required="
+                selectedSeo.isActive === true ||
                 !!selectedSeo.pageTitle ||
                 !!selectedSeo.metaDescription ||
                 !!selectedSeo.metaKeywords ||
                 !!selectedSeo.imageAltDescription
-                "
+              "
               :error="errors.length > 0"
               :error-message="errorMessage"
               multilanguage
@@ -277,19 +284,11 @@
 </template>
 
 <script lang="ts" setup>
-import { onMounted, ref, Ref, computed, defineComponent, h } from "vue";
+import { onMounted, ref, Ref, computed, watch, defineComponent, h } from "vue";
 import { useI18n } from "vue-i18n";
-import { Field, useForm } from "vee-validate";
+import { Field } from "vee-validate";
 import type { Editor } from "@tiptap/vue-3";
-import {
-  IBladeToolbar,
-  IParentCallArgs,
-  VcLanguageSelector,
-  usePermissions,
-  useBladeNavigation,
-  usePopup,
-  useLoading,
-} from "@vc-shell/framework";
+import { IBladeToolbar, usePermissions, useBlade, useLoading, useBladeForm } from "@vc-shell/framework";
 import {
   useNewsArticleDetails,
   useNewsArticlePermissions,
@@ -300,39 +299,29 @@ import {
 } from "../composables";
 import { NewsArticleLocalizedContent, NewsArticleLocalizedTag, SeoInfo } from "../../../api_client/virtocommerce.news";
 
-export interface Emits {
-  (event: "parent:call", args: IParentCallArgs): void;
-  (event: "collapse:blade"): void;
-  (event: "expand:blade"): void;
-  (event: "close:blade"): void;
-}
-
-const emit = defineEmits<Emits>();
-
-export interface Props {
-  expanded?: boolean;
-  closable?: boolean;
-  param?: string;
-}
-
-const props = withDefaults(defineProps<Props>(), {
-  expanded: true,
-  closable: true,
-  param: undefined,
-});
-
-defineOptions({
+import {
+  VcBlade,
+  VcButton,
+  VcCard,
+  VcContainer,
+  VcEditor,
+  VcForm,
+  VcInput,
+  VcLanguageSelector,
+  VcMultivalue,
+  VcSelect,
+  VcSwitch,
+  VcTextarea,
+} from "@vc-shell/framework/ui";
+defineBlade({
   url: "/details",
   name: "NewsArticleDetails",
 });
 
 const { t } = useI18n({ useScope: "global" });
 
-const { onBeforeClose } = useBladeNavigation();
+const { param, callParent, exposeToChildren } = useBlade();
 const { hasAccess } = usePermissions();
-const { showConfirmation } = usePopup();
-
-const { meta } = useForm({ validateOnMount: false });
 
 //stores
 const { stores, loadStores, loadingStores } = useStore();
@@ -362,7 +351,7 @@ const tagsSelected = computed({
   },
   set(newValue) {
     const newTags = newValue?.map(
-      (x) => new NewsArticleLocalizedTag({ tag: x.title, languageCode: currentLocale.value }),
+      (x) => ({ tag: x.title, languageCode: currentLocale.value }) as NewsArticleLocalizedTag,
     );
     newsArticle.value.localizedTags =
       newsArticle.value.localizedTags?.filter((x) => x.languageCode !== currentLocale.value) ?? [];
@@ -393,47 +382,23 @@ const setLocale = async (locale: string) => {
 const { authors, loadAuthors, loadingAuthors } = useCustomers();
 const authorOptions = computed(() => authors.value.map((x) => ({ id: x.id, title: x.name })));
 
-//content
-const selectedLocalizedContent = computed(() => {
-  if (newsArticle.value) {
-    if (!newsArticle.value.localizedContents) {
-      newsArticle.value.localizedContents = [];
-    }
-  }
-  const existingLocalizedContent = newsArticle.value?.localizedContents?.find(
-    (x) => x.languageCode === currentLocale.value,
-  );
+//content — pure find; the entry is created by ensureLocalizedEntries() below
+const selectedLocalizedContent = computed(
+  () =>
+    newsArticle.value?.localizedContents?.find((x) => x.languageCode === currentLocale.value) ??
+    ({ languageCode: currentLocale.value } as NewsArticleLocalizedContent),
+);
 
-  if (existingLocalizedContent) {
-    return existingLocalizedContent;
-  }
-
-  const newLocalizedContent = new NewsArticleLocalizedContent();
-  newLocalizedContent.languageCode = currentLocale.value;
-  newsArticle.value?.localizedContents?.push(newLocalizedContent);
-  return newLocalizedContent;
-});
-
-//seo
-const selectedSeo = computed(() => {
-  if (newsArticle.value) {
-    if (!newsArticle.value.seoInfos) {
-      newsArticle.value.seoInfos = [];
-    }
-  }
-  const existingSeoInfo = newsArticle.value?.seoInfos?.find((x) => x.languageCode === currentLocale.value);
-
-  if (existingSeoInfo) {
-    return existingSeoInfo;
-  }
-
-  const newSeoInfo = new SeoInfo();
-  newSeoInfo.isActive = false;
-  newSeoInfo.languageCode = currentLocale.value;
-  newSeoInfo.storeId = newsArticle.value.storeId;
-  newsArticle.value?.seoInfos?.push(newSeoInfo);
-  return newSeoInfo;
-});
+//seo — pure find; the entry is created by ensureLocalizedEntries() below
+const selectedSeo = computed(
+  () =>
+    newsArticle.value?.seoInfos?.find((x) => x.languageCode === currentLocale.value) ??
+    ({
+      isActive: false,
+      languageCode: currentLocale.value,
+      storeId: newsArticle.value?.storeId,
+    } as SeoInfo),
+);
 
 //news article
 const {
@@ -464,7 +429,43 @@ const {
 const { publishNewsArticlePermission, createNewsArticlePermission, updateNewsArticlePermission } =
   useNewsArticlePermissions();
 
-const saveNewsArticlePermission = props.param ? updateNewsArticlePermission : createNewsArticlePermission;
+// Ensure a localized content / seo entry exists for the current locale so the
+// v-model bindings above mutate a stable array item. Kept out of the computeds
+// to keep them side-effect free (vue/no-side-effects-in-computed-properties).
+const ensureLocalizedEntries = () => {
+  const article = newsArticle.value;
+  if (!article) {
+    return;
+  }
+
+  if (!article.localizedContents) {
+    article.localizedContents = [];
+  }
+  if (!article.localizedContents.some((x) => x.languageCode === currentLocale.value)) {
+    article.localizedContents.push({ languageCode: currentLocale.value } as NewsArticleLocalizedContent);
+  }
+
+  if (!article.seoInfos) {
+    article.seoInfos = [];
+  }
+  if (!article.seoInfos.some((x) => x.languageCode === currentLocale.value)) {
+    article.seoInfos.push({
+      isActive: false,
+      languageCode: currentLocale.value,
+      storeId: article.storeId,
+    } as SeoInfo);
+  }
+};
+
+watch([newsArticle, currentLocale], ensureLocalizedEntries, { immediate: true });
+
+const saveNewsArticlePermission = param.value ? updateNewsArticlePermission : createNewsArticlePermission;
+
+const { canSave } = useBladeForm({
+  data: newsArticle,
+  closeConfirmMessage: computed(() => t("VC_NEWS.PAGES.DETAILS.ALERTS.CLOSE_CONFIRMATION")),
+  canSaveOverride: computed(() => !!newsArticleIsDirty?.value),
+});
 
 //other
 const loading = useLoading(
@@ -479,14 +480,14 @@ const bladeToolbar = ref([]) as Ref<IBladeToolbar[]>;
 
 bladeToolbar.value.push({
   id: "save",
-  icon: "material-save",
+  icon: "lucide-save",
   title: computed(() => t("VC_NEWS.PAGES.DETAILS.TOOLBAR.SAVE")),
-  disabled: computed(() => !meta.value.valid || !newsArticleIsDirty?.value),
+  disabled: computed(() => !canSave.value),
   clickHandler: async () => {
     try {
       await saveNewsArticle();
-      emit("parent:call", { method: "reload" });
-      emit("parent:call", { method: "reOpenDetailsBlade", args: newsArticle.value!.id });
+      callParent("reload");
+      callParent("reOpenDetailsBlade", newsArticle.value!.id);
     } catch (error) {
       console.error("Failed to save news article:", error);
     }
@@ -494,10 +495,10 @@ bladeToolbar.value.push({
   isVisible: computed(() => hasAccess(saveNewsArticlePermission)),
 });
 
-if (props.param) {
+if (param.value) {
   bladeToolbar.value.push({
     id: "reset",
-    icon: "material-undo",
+    icon: "lucide-undo-2",
     title: computed(() => t("VC_NEWS.PAGES.DETAILS.TOOLBAR.RESET")),
     disabled: computed(() => !newsArticleIsDirty?.value),
     clickHandler: async () => {
@@ -506,59 +507,59 @@ if (props.param) {
   });
   bladeToolbar.value.push({
     id: "clone",
-    icon: "material-content_copy",
+    icon: "lucide-copy",
     title: computed(() => t("VC_NEWS.PAGES.DETAILS.TOOLBAR.CLONE")),
     disabled: computed(() => newsArticleIsDirty?.value),
     clickHandler: async () => {
       await cloneNewsArticle();
-      emit("parent:call", { method: "reload" });
-      emit("parent:call", { method: "reOpenDetailsBlade", args: newsArticle.value!.id });
+      callParent("reload");
+      callParent("reOpenDetailsBlade", newsArticle.value!.id);
     },
     isVisible: computed(() => hasAccess(createNewsArticlePermission)),
   });
 
   bladeToolbar.value.push({
     id: "publish",
-    icon: "material-visibility",
+    icon: "lucide-eye",
     title: computed(() => t("VC_NEWS.PAGES.DETAILS.TOOLBAR.PUBLISH")),
     clickHandler: async () => {
       await publishNewsArticle();
-      emit("parent:call", { method: "reload" });
-      emit("parent:call", { method: "reOpenDetailsBlade", args: newsArticle.value!.id });
+      callParent("reload");
+      callParent("reOpenDetailsBlade", newsArticle.value!.id);
     },
     isVisible: computed(() => hasAccess(publishNewsArticlePermission) && newsArticleCanPublish?.value),
   });
   bladeToolbar.value.push({
     id: "unpublish",
-    icon: "material-visibility_off",
+    icon: "lucide-eye-off",
     title: computed(() => t("VC_NEWS.PAGES.DETAILS.TOOLBAR.UNPUBLISH")),
     clickHandler: async () => {
       await unpublishNewsArticle();
-      emit("parent:call", { method: "reload" });
-      emit("parent:call", { method: "reOpenDetailsBlade", args: newsArticle.value!.id });
+      callParent("reload");
+      callParent("reOpenDetailsBlade", newsArticle.value!.id);
     },
     isVisible: computed(() => hasAccess(publishNewsArticlePermission) && newsArticleCanUnpublish?.value),
   });
 
   bladeToolbar.value.push({
     id: "archive",
-    icon: "material-archive",
+    icon: "lucide-archive",
     title: computed(() => t("VC_NEWS.PAGES.DETAILS.TOOLBAR.ARCHIVE")),
     clickHandler: async () => {
       await archiveNewsArticle();
-      emit("parent:call", { method: "reload" });
-      emit("parent:call", { method: "reOpenDetailsBlade", args: newsArticle.value!.id });
+      callParent("reload");
+      callParent("reOpenDetailsBlade", newsArticle.value!.id);
     },
     isVisible: computed(() => hasAccess(publishNewsArticlePermission) && newsArticleCanArchive?.value),
   });
   bladeToolbar.value.push({
     id: "unarchive",
-    icon: "material-unarchive",
+    icon: "lucide-archive-restore",
     title: computed(() => t("VC_NEWS.PAGES.DETAILS.TOOLBAR.UNARCHIVE")),
     clickHandler: async () => {
       await unarchiveNewsArticle();
-      emit("parent:call", { method: "reload" });
-      emit("parent:call", { method: "reOpenDetailsBlade", args: newsArticle.value!.id });
+      callParent("reload");
+      callParent("reOpenDetailsBlade", newsArticle.value!.id);
     },
     isVisible: computed(() => hasAccess(publishNewsArticlePermission) && newsArticleCanUnarchive?.value),
   });
@@ -614,20 +615,8 @@ onMounted(async () => {
   await loadLanguages();
   await loadAuthors();
   await loadOptions({ languageCode: currentLocale.value });
-  if (props.param) {
-    await loadNewsArticle({ id: props.param });
+  if (param.value) {
+    await loadNewsArticle({ id: param.value });
   }
-});
-
-onBeforeClose(async () => {
-  if (newsArticleIsDirty.value) {
-    const confirmed = await showConfirmation(t("VC_NEWS.PAGES.DETAILS.ALERTS.CLOSE_CONFIRMATION"));
-    return confirmed;
-  }
-  return true;
-});
-
-defineExpose({
-  title,
 });
 </script>

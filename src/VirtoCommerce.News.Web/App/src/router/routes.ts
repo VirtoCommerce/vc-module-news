@@ -1,10 +1,10 @@
 import { RouteRecordRaw } from "vue-router";
 import App from "../pages/App.vue";
-import { Invite, Login, ResetPassword, useBladeNavigation, ChangePasswordPage } from "@vc-shell/framework";
-// eslint-disable-next-line import/no-unresolved
+import { Invite, Login, ResetPassword, ChangePasswordPage, ForgotPassword } from "@vc-shell/framework";
 import whiteLogoImage from "/assets/logo-white.svg";
-// eslint-disable-next-line import/no-unresolved
 import bgImage from "/assets/background.jpg";
+
+const version = import.meta.env.PACKAGE_VERSION;
 
 export const routes: RouteRecordRaw[] = [
   {
@@ -26,6 +26,9 @@ export const routes: RouteRecordRaw[] = [
     name: "Login",
     path: "/login",
     component: Login,
+    meta: {
+      appVersion: version,
+    },
     props: () => ({
       logo: whiteLogoImage,
       background: bgImage,
@@ -42,6 +45,18 @@ export const routes: RouteRecordRaw[] = [
       userName: _route.query.userName,
       logo: whiteLogoImage,
       background: bgImage,
+    }),
+  },
+  {
+    name: "ForgotPassword",
+    path: "/forgot-password",
+    component: ForgotPassword,
+    meta: {
+      appVersion: version,
+    },
+    props: () => ({
+      logo: whiteLogoImage,
+      // background: bgImage,
     }),
   },
   {
@@ -66,13 +81,5 @@ export const routes: RouteRecordRaw[] = [
     props: (_route) => ({
       background: bgImage,
     }),
-  },
-  {
-    path: "/:pathMatch(.*)*",
-    component: App,
-    beforeEnter: async (to) => {
-      const { routeResolver } = useBladeNavigation();
-      return routeResolver(to);
-    },
   },
 ];

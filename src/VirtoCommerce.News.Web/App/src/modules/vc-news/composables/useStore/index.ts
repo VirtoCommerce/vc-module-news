@@ -9,7 +9,7 @@ export default () => {
 
   const { loading: loadingStores, action: loadStores } = useAsync(async () => {
     const apiClient = await getStoreApiClient();
-    const apiResult = await apiClient.searchStores(new StoreSearchCriteria());
+    const apiResult = await apiClient.searchStores({} as StoreSearchCriteria);
 
     if (apiResult && apiResult.results) {
       stores.value = apiResult.results;
