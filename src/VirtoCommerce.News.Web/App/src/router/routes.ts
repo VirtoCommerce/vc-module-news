@@ -31,7 +31,6 @@ export const routes: RouteRecordRaw[] = [
     },
     props: () => ({
       logo: whiteLogoImage,
-      background: bgImage,
       title: "Vc News",
     }),
   },
@@ -44,7 +43,6 @@ export const routes: RouteRecordRaw[] = [
       token: _route.query.token,
       userName: _route.query.userName,
       logo: whiteLogoImage,
-      background: bgImage,
     }),
   },
   {
@@ -56,7 +54,6 @@ export const routes: RouteRecordRaw[] = [
     },
     props: () => ({
       logo: whiteLogoImage,
-      // background: bgImage,
     }),
   },
   {
@@ -68,7 +65,6 @@ export const routes: RouteRecordRaw[] = [
       token: _route.query.token,
       userName: _route.query.userName,
       logo: whiteLogoImage,
-      background: bgImage,
     }),
   },
   {
@@ -78,8 +74,5 @@ export const routes: RouteRecordRaw[] = [
     meta: {
       forced: true,
     },
-    props: (_route) => ({
-      background: bgImage,
-    }),
   },
 ];
