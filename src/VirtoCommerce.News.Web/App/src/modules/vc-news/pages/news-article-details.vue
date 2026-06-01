@@ -55,129 +55,131 @@
         <VcCard
           :header="$t('VC_NEWS.PAGES.DETAILS.FORM.BLOCKS.PUBLISH')"
           is-collapsable
-          class="tw-flex tw-flex-col tw-gap-4 tw-p-4"
         >
-          <div class="tw-flex tw-flex-row tw-gap-4">
-            <VcInput
-              v-model="newsArticle.publishDate"
-              type="datetime-local"
-              :label="$t('VC_NEWS.PAGES.DETAILS.FORM.PUBLISH_DATE.LABEL')"
-            />
+          <div class="tw-flex tw-flex-col tw-gap-4 tw-p-4">
+            <div class="tw-flex tw-flex-row tw-gap-4">
+              <VcInput
+                v-model="newsArticle.publishDate"
+                type="datetime-local"
+                :label="$t('VC_NEWS.PAGES.DETAILS.FORM.PUBLISH_DATE.LABEL')"
+              />
 
-            <VcInput
-              v-model="newsArticle.archiveDate"
-              type="datetime-local"
-              :label="$t('VC_NEWS.PAGES.DETAILS.FORM.ARCHIVE_DATE.LABEL')"
+              <VcInput
+                v-model="newsArticle.archiveDate"
+                type="datetime-local"
+                :label="$t('VC_NEWS.PAGES.DETAILS.FORM.ARCHIVE_DATE.LABEL')"
+              />
+            </div>
+
+            <Field
+              v-slot="{ errors, errorMessage, handleChange }"
+              :label="$t('VC_NEWS.PAGES.DETAILS.FORM.PUBLISH_SCOPE.LABEL')"
+              :model-value="newsArticle.publishScope"
+              name="publishScope"
+              rules="required"
+            >
+              <VcSelect
+                v-model="newsArticle.publishScope"
+                :label="$t('VC_NEWS.PAGES.DETAILS.FORM.PUBLISH_SCOPE.LABEL')"
+                :options="publishScopeOptions"
+                required
+                :error="errors.length > 0"
+                :error-message="errorMessage"
+                @update:model-value="handleChange"
+              />
+            </Field>
+
+            <VcMultivalue
+              v-if="newsArticle.publishScope === 'Authorized'"
+              v-model="userGroupsSelected"
+              :label="$t('VC_NEWS.PAGES.DETAILS.FORM.USER_GROUPS.LABEL')"
+              :options="userGroupsOptions"
+              option-value="id"
+              option-label="title"
+              multivalue
+              class="tw-flex-auto"
             />
           </div>
-
-          <Field
-            v-slot="{ errors, errorMessage, handleChange }"
-            :label="$t('VC_NEWS.PAGES.DETAILS.FORM.PUBLISH_SCOPE.LABEL')"
-            :model-value="newsArticle.publishScope"
-            name="publishScope"
-            rules="required"
-          >
-            <VcSelect
-              v-model="newsArticle.publishScope"
-              :label="$t('VC_NEWS.PAGES.DETAILS.FORM.PUBLISH_SCOPE.LABEL')"
-              :options="publishScopeOptions"
-              required
-              :error="errors.length > 0"
-              :error-message="errorMessage"
-              @update:model-value="handleChange"
-            />
-          </Field>
-
-          <VcMultivalue
-            v-if="newsArticle.publishScope === 'Authorized'"
-            v-model="userGroupsSelected"
-            :label="$t('VC_NEWS.PAGES.DETAILS.FORM.USER_GROUPS.LABEL')"
-            :options="userGroupsOptions"
-            option-value="id"
-            option-label="title"
-            multivalue
-            class="tw-flex-auto"
-          />
         </VcCard>
 
         <VcCard
           v-if="param"
           :header="$t('VC_NEWS.PAGES.DETAILS.FORM.BLOCKS.CONTENT')"
           is-collapsable
-          class="tw-flex tw-flex-col tw-gap-4 tw-p-4"
         >
-          <Field
-            v-slot="{ errors, errorMessage, handleChange }"
-            :label="$t('VC_NEWS.PAGES.DETAILS.FORM.CONTENT_TITLE.LABEL')"
-            :model-value="selectedLocalizedContent.title"
-            name="content-title"
-            :rules="{
-              required:
-                !!selectedLocalizedContent.content ||
-                !!selectedLocalizedContent.contentPreview ||
-                !!selectedLocalizedContent.listTitle ||
-                !!selectedLocalizedContent.listPreview,
-            }"
-          >
-            <VcInput
-              v-model="selectedLocalizedContent.title"
+          <div class="tw-flex tw-flex-col tw-gap-4 tw-p-4">
+            <Field
+              v-slot="{ errors, errorMessage, handleChange }"
               :label="$t('VC_NEWS.PAGES.DETAILS.FORM.CONTENT_TITLE.LABEL')"
-              :required="
-                !!selectedLocalizedContent.content ||
-                !!selectedLocalizedContent.contentPreview ||
-                !!selectedLocalizedContent.listTitle ||
-                !!selectedLocalizedContent.listPreview
-              "
-              :error="errors.length > 0"
-              :error-message="errorMessage"
+              :model-value="selectedLocalizedContent.title"
+              name="content-title"
+              :rules="{
+                required:
+                  !!selectedLocalizedContent.content ||
+                  !!selectedLocalizedContent.contentPreview ||
+                  !!selectedLocalizedContent.listTitle ||
+                  !!selectedLocalizedContent.listPreview,
+              }"
+            >
+              <VcInput
+                v-model="selectedLocalizedContent.title"
+                :label="$t('VC_NEWS.PAGES.DETAILS.FORM.CONTENT_TITLE.LABEL')"
+                :required="
+                  !!selectedLocalizedContent.content ||
+                  !!selectedLocalizedContent.contentPreview ||
+                  !!selectedLocalizedContent.listTitle ||
+                  !!selectedLocalizedContent.listPreview
+                "
+                :error="errors.length > 0"
+                :error-message="errorMessage"
+                multilanguage
+                :current-language="currentLocale"
+                @update:model-value="handleChange"
+              />
+            </Field>
+
+            <VcInput
+              v-model="selectedLocalizedContent.listTitle"
+              :label="$t('VC_NEWS.PAGES.DETAILS.FORM.LIST_TITLE.LABEL')"
               multilanguage
               :current-language="currentLocale"
-              @update:model-value="handleChange"
+            >
+              <template #append-inner>
+                <VcButton
+                  :text="true"
+                  @click="selectedLocalizedContent.listTitle = selectedLocalizedContent.title"
+                >
+                  {{ $t("VC_NEWS.PAGES.DETAILS.FORM.ACTIONS.COPY_FROM_TITLE") }}
+                </VcButton>
+              </template>
+            </VcInput>
+
+            <VcEditor
+              v-model="selectedLocalizedContent.contentPreview"
+              :label="$t('VC_NEWS.PAGES.DETAILS.FORM.CONTENT_PREVIEW.LABEL')"
+              multilanguage
+              :current-language="currentLocale"
+              assets-folder="news-articles"
             />
-          </Field>
 
-          <VcInput
-            v-model="selectedLocalizedContent.listTitle"
-            :label="$t('VC_NEWS.PAGES.DETAILS.FORM.LIST_TITLE.LABEL')"
-            multilanguage
-            :current-language="currentLocale"
-          >
-            <template #append-inner>
-              <VcButton
-                :text="true"
-                @click="selectedLocalizedContent.listTitle = selectedLocalizedContent.title"
-              >
-                {{ $t("VC_NEWS.PAGES.DETAILS.FORM.ACTIONS.COPY_FROM_TITLE") }}
-              </VcButton>
-            </template>
-          </VcInput>
+            <VcEditor
+              v-model="selectedLocalizedContent.listPreview"
+              :label="$t('VC_NEWS.PAGES.DETAILS.FORM.LIST_PREVIEW.LABEL')"
+              multilanguage
+              :current-language="currentLocale"
+              :custom-buttons="listPreviewEditorButtons"
+              assets-folder="news-articles"
+            >
+            </VcEditor>
 
-          <VcEditor
-            v-model="selectedLocalizedContent.contentPreview"
-            :label="$t('VC_NEWS.PAGES.DETAILS.FORM.CONTENT_PREVIEW.LABEL')"
-            multilanguage
-            :current-language="currentLocale"
-            assets-folder="news-articles"
-          />
-
-          <VcEditor
-            v-model="selectedLocalizedContent.listPreview"
-            :label="$t('VC_NEWS.PAGES.DETAILS.FORM.LIST_PREVIEW.LABEL')"
-            multilanguage
-            :current-language="currentLocale"
-            :custom-buttons="listPreviewEditorButtons"
-            assets-folder="news-articles"
-          >
-          </VcEditor>
-
-          <VcEditor
-            v-model="selectedLocalizedContent.content"
-            :label="$t('VC_NEWS.PAGES.DETAILS.FORM.CONTENT_CONTENT.LABEL')"
-            multilanguage
-            :current-language="currentLocale"
-            assets-folder="news-articles"
-          />
+            <VcEditor
+              v-model="selectedLocalizedContent.content"
+              :label="$t('VC_NEWS.PAGES.DETAILS.FORM.CONTENT_CONTENT.LABEL')"
+              multilanguage
+              :current-language="currentLocale"
+              assets-folder="news-articles"
+            />
+          </div>
         </VcCard>
 
         <VcCard
@@ -185,25 +187,26 @@
           :header="$t('VC_NEWS.PAGES.DETAILS.FORM.BLOCKS.METADATA')"
           is-collapsable
           is-collapsed
-          class="tw-flex tw-flex-col tw-gap-4 tw-p-4"
         >
-          <VcSelect
-            v-model="newsArticle.authorId"
-            :label="$t('VC_NEWS.PAGES.DETAILS.FORM.AUTHOR.LABEL')"
-            :options="authorOptions"
-            searchable
-          />
+          <div class="tw-flex tw-flex-col tw-gap-4 tw-p-4">
+            <VcSelect
+              v-model="newsArticle.authorId"
+              :label="$t('VC_NEWS.PAGES.DETAILS.FORM.AUTHOR.LABEL')"
+              :options="authorOptions"
+              searchable
+            />
 
-          <VcMultivalue
-            v-model="tagsSelected"
-            :label="$t('VC_NEWS.PAGES.DETAILS.FORM.TAGS.LABEL')"
-            :options="tagsOptions"
-            option-value="id"
-            option-label="title"
-            :multivalue="false"
-            multilanguage
-            :current-language="currentLocale"
-          />
+            <VcMultivalue
+              v-model="tagsSelected"
+              :label="$t('VC_NEWS.PAGES.DETAILS.FORM.TAGS.LABEL')"
+              :options="tagsOptions"
+              option-value="id"
+              option-label="title"
+              :multivalue="false"
+              multilanguage
+              :current-language="currentLocale"
+            />
+          </div>
         </VcCard>
 
         <VcCard
@@ -211,72 +214,73 @@
           :header="$t('VC_NEWS.PAGES.DETAILS.FORM.BLOCKS.SEO')"
           is-collapsable
           is-collapsed
-          class="tw-flex tw-flex-col tw-gap-4 tw-p-4"
         >
-          <VcSwitch
-            v-model="selectedSeo.isActive"
-            :label="$t('VC_NEWS.PAGES.DETAILS.FORM.SEO_IS_ACTIVE.LABEL')"
-          />
+          <div class="tw-flex tw-flex-col tw-gap-4 tw-p-4">
+            <VcSwitch
+              v-model="selectedSeo.isActive"
+              :label="$t('VC_NEWS.PAGES.DETAILS.FORM.SEO_IS_ACTIVE.LABEL')"
+            />
 
-          <Field
-            v-slot="{ errors, errorMessage, handleChange }"
-            :label="$t('VC_NEWS.PAGES.DETAILS.FORM.SEO_SEMANTIC_URL.LABEL')"
-            :model-value="selectedSeo.semanticUrl"
-            name="seo-url"
-            :rules="{
-              required:
-                selectedSeo.isActive === true ||
-                !!selectedSeo.pageTitle ||
-                !!selectedSeo.metaDescription ||
-                !!selectedSeo.metaKeywords ||
-                !!selectedSeo.imageAltDescription,
-            }"
-          >
-            <VcInput
-              v-model="selectedSeo.semanticUrl"
+            <Field
+              v-slot="{ errors, errorMessage, handleChange }"
               :label="$t('VC_NEWS.PAGES.DETAILS.FORM.SEO_SEMANTIC_URL.LABEL')"
-              :required="
-                selectedSeo.isActive === true ||
-                !!selectedSeo.pageTitle ||
-                !!selectedSeo.metaDescription ||
-                !!selectedSeo.metaKeywords ||
-                !!selectedSeo.imageAltDescription
-              "
-              :error="errors.length > 0"
-              :error-message="errorMessage"
+              :model-value="selectedSeo.semanticUrl"
+              name="seo-url"
+              :rules="{
+                required:
+                  selectedSeo.isActive === true ||
+                  !!selectedSeo.pageTitle ||
+                  !!selectedSeo.metaDescription ||
+                  !!selectedSeo.metaKeywords ||
+                  !!selectedSeo.imageAltDescription,
+              }"
+            >
+              <VcInput
+                v-model="selectedSeo.semanticUrl"
+                :label="$t('VC_NEWS.PAGES.DETAILS.FORM.SEO_SEMANTIC_URL.LABEL')"
+                :required="
+                  selectedSeo.isActive === true ||
+                  !!selectedSeo.pageTitle ||
+                  !!selectedSeo.metaDescription ||
+                  !!selectedSeo.metaKeywords ||
+                  !!selectedSeo.imageAltDescription
+                "
+                :error="errors.length > 0"
+                :error-message="errorMessage"
+                multilanguage
+                :current-language="currentLocale"
+                @update:model-value="handleChange"
+              />
+            </Field>
+
+            <VcInput
+              v-model="selectedSeo.pageTitle"
+              :label="$t('VC_NEWS.PAGES.DETAILS.FORM.SEO_PAGE_TITLE.LABEL')"
               multilanguage
               :current-language="currentLocale"
-              @update:model-value="handleChange"
             />
-          </Field>
 
-          <VcInput
-            v-model="selectedSeo.pageTitle"
-            :label="$t('VC_NEWS.PAGES.DETAILS.FORM.SEO_PAGE_TITLE.LABEL')"
-            multilanguage
-            :current-language="currentLocale"
-          />
+            <VcTextarea
+              v-model="selectedSeo.metaDescription"
+              :label="$t('VC_NEWS.PAGES.DETAILS.FORM.SEO_META_DESCRIPTION.LABEL')"
+              multilanguage
+              :current-language="currentLocale"
+            />
 
-          <VcTextarea
-            v-model="selectedSeo.metaDescription"
-            :label="$t('VC_NEWS.PAGES.DETAILS.FORM.SEO_META_DESCRIPTION.LABEL')"
-            multilanguage
-            :current-language="currentLocale"
-          />
+            <VcInput
+              v-model="selectedSeo.metaKeywords"
+              :label="$t('VC_NEWS.PAGES.DETAILS.FORM.SEO_META_KEYWORDS.LABEL')"
+              multilanguage
+              :current-language="currentLocale"
+            />
 
-          <VcInput
-            v-model="selectedSeo.metaKeywords"
-            :label="$t('VC_NEWS.PAGES.DETAILS.FORM.SEO_META_KEYWORDS.LABEL')"
-            multilanguage
-            :current-language="currentLocale"
-          />
-
-          <VcInput
-            v-model="selectedSeo.imageAltDescription"
-            :label="$t('VC_NEWS.PAGES.DETAILS.FORM.SEO_IMAGE_ALT_TEXT.LABEL')"
-            multilanguage
-            :current-language="currentLocale"
-          />
+            <VcInput
+              v-model="selectedSeo.imageAltDescription"
+              :label="$t('VC_NEWS.PAGES.DETAILS.FORM.SEO_IMAGE_ALT_TEXT.LABEL')"
+              multilanguage
+              :current-language="currentLocale"
+            />
+          </div>
         </VcCard>
       </VcForm>
     </VcContainer>
@@ -284,7 +288,7 @@
 </template>
 
 <script lang="ts" setup>
-import { onMounted, ref, Ref, computed, watch, defineComponent, h } from "vue";
+import { onMounted, ref, computed, watch, nextTick, defineComponent, h } from "vue";
 import { useI18n } from "vue-i18n";
 import { Field } from "vee-validate";
 import type { Editor } from "@tiptap/vue-3";
@@ -461,7 +465,7 @@ watch([newsArticle, currentLocale], ensureLocalizedEntries, { immediate: true })
 
 const saveNewsArticlePermission = param.value ? updateNewsArticlePermission : createNewsArticlePermission;
 
-const { canSave } = useBladeForm({
+const { canSave, setBaseline } = useBladeForm({
   data: newsArticle,
   closeConfirmMessage: computed(() => t("VC_NEWS.PAGES.DETAILS.ALERTS.CLOSE_CONFIRMATION")),
   canSaveOverride: computed(() => !!newsArticleIsDirty?.value),
@@ -476,94 +480,96 @@ const loading = useLoading(
   loadingOrSavingNewsArticle,
 );
 
-const bladeToolbar = ref([]) as Ref<IBladeToolbar[]>;
-
-bladeToolbar.value.push({
-  id: "save",
-  icon: "lucide-save",
-  title: computed(() => t("VC_NEWS.PAGES.DETAILS.TOOLBAR.SAVE")),
-  disabled: computed(() => !canSave.value),
-  clickHandler: async () => {
-    try {
-      await saveNewsArticle();
-      callParent("reload");
-      callParent("reOpenDetailsBlade", newsArticle.value!.id);
-    } catch (error) {
-      console.error("Failed to save news article:", error);
-    }
+const bladeToolbar = computed((): IBladeToolbar[] => [
+  {
+    id: "save",
+    icon: "lucide-save",
+    title: t("VC_NEWS.PAGES.DETAILS.TOOLBAR.SAVE"),
+    disabled: !canSave.value,
+    clickHandler: async () => {
+      try {
+        await saveNewsArticle();
+        setBaseline();
+        callParent("reload");
+        callParent("reOpenDetailsBlade", newsArticle.value!.id);
+      } catch (error) {
+        console.error("Failed to save news article:", error);
+      }
+    },
+    isVisible: hasAccess(saveNewsArticlePermission),
   },
-  isVisible: computed(() => hasAccess(saveNewsArticlePermission)),
-});
-
-if (param.value) {
-  bladeToolbar.value.push({
-    id: "reset",
-    icon: "lucide-undo-2",
-    title: computed(() => t("VC_NEWS.PAGES.DETAILS.TOOLBAR.RESET")),
-    disabled: computed(() => !newsArticleIsDirty?.value),
-    clickHandler: async () => {
-      resetNewsArticle();
-    },
-  });
-  bladeToolbar.value.push({
-    id: "clone",
-    icon: "lucide-copy",
-    title: computed(() => t("VC_NEWS.PAGES.DETAILS.TOOLBAR.CLONE")),
-    disabled: computed(() => newsArticleIsDirty?.value),
-    clickHandler: async () => {
-      await cloneNewsArticle();
-      callParent("reload");
-      callParent("reOpenDetailsBlade", newsArticle.value!.id);
-    },
-    isVisible: computed(() => hasAccess(createNewsArticlePermission)),
-  });
-
-  bladeToolbar.value.push({
-    id: "publish",
-    icon: "lucide-eye",
-    title: computed(() => t("VC_NEWS.PAGES.DETAILS.TOOLBAR.PUBLISH")),
-    clickHandler: async () => {
-      await publishNewsArticle();
-      callParent("reload");
-      callParent("reOpenDetailsBlade", newsArticle.value!.id);
-    },
-    isVisible: computed(() => hasAccess(publishNewsArticlePermission) && newsArticleCanPublish?.value),
-  });
-  bladeToolbar.value.push({
-    id: "unpublish",
-    icon: "lucide-eye-off",
-    title: computed(() => t("VC_NEWS.PAGES.DETAILS.TOOLBAR.UNPUBLISH")),
-    clickHandler: async () => {
-      await unpublishNewsArticle();
-      callParent("reload");
-      callParent("reOpenDetailsBlade", newsArticle.value!.id);
-    },
-    isVisible: computed(() => hasAccess(publishNewsArticlePermission) && newsArticleCanUnpublish?.value),
-  });
-
-  bladeToolbar.value.push({
-    id: "archive",
-    icon: "lucide-archive",
-    title: computed(() => t("VC_NEWS.PAGES.DETAILS.TOOLBAR.ARCHIVE")),
-    clickHandler: async () => {
-      await archiveNewsArticle();
-      callParent("reload");
-      callParent("reOpenDetailsBlade", newsArticle.value!.id);
-    },
-    isVisible: computed(() => hasAccess(publishNewsArticlePermission) && newsArticleCanArchive?.value),
-  });
-  bladeToolbar.value.push({
-    id: "unarchive",
-    icon: "lucide-archive-restore",
-    title: computed(() => t("VC_NEWS.PAGES.DETAILS.TOOLBAR.UNARCHIVE")),
-    clickHandler: async () => {
-      await unarchiveNewsArticle();
-      callParent("reload");
-      callParent("reOpenDetailsBlade", newsArticle.value!.id);
-    },
-    isVisible: computed(() => hasAccess(publishNewsArticlePermission) && newsArticleCanUnarchive?.value),
-  });
-}
+  ...(param.value
+    ? [
+        {
+          id: "reset",
+          icon: "lucide-undo-2",
+          title: t("VC_NEWS.PAGES.DETAILS.TOOLBAR.RESET"),
+          disabled: !newsArticleIsDirty?.value,
+          clickHandler: async () => {
+            resetNewsArticle();
+            setBaseline();
+          },
+        },
+        {
+          id: "clone",
+          icon: "lucide-copy",
+          title: t("VC_NEWS.PAGES.DETAILS.TOOLBAR.CLONE"),
+          disabled: newsArticleIsDirty?.value,
+          clickHandler: async () => {
+            await cloneNewsArticle();
+            setBaseline();
+            callParent("reload");
+            callParent("reOpenDetailsBlade", newsArticle.value!.id);
+          },
+          isVisible: hasAccess(createNewsArticlePermission),
+        },
+        {
+          id: "publish",
+          icon: "lucide-eye",
+          title: t("VC_NEWS.PAGES.DETAILS.TOOLBAR.PUBLISH"),
+          clickHandler: async () => {
+            await publishNewsArticle();
+            callParent("reload");
+            callParent("reOpenDetailsBlade", newsArticle.value!.id);
+          },
+          isVisible: hasAccess(publishNewsArticlePermission) && newsArticleCanPublish?.value,
+        },
+        {
+          id: "unpublish",
+          icon: "lucide-eye-off",
+          title: t("VC_NEWS.PAGES.DETAILS.TOOLBAR.UNPUBLISH"),
+          clickHandler: async () => {
+            await unpublishNewsArticle();
+            callParent("reload");
+            callParent("reOpenDetailsBlade", newsArticle.value!.id);
+          },
+          isVisible: hasAccess(publishNewsArticlePermission) && newsArticleCanUnpublish?.value,
+        },
+        {
+          id: "archive",
+          icon: "lucide-archive",
+          title: t("VC_NEWS.PAGES.DETAILS.TOOLBAR.ARCHIVE"),
+          clickHandler: async () => {
+            await archiveNewsArticle();
+            callParent("reload");
+            callParent("reOpenDetailsBlade", newsArticle.value!.id);
+          },
+          isVisible: hasAccess(publishNewsArticlePermission) && newsArticleCanArchive?.value,
+        },
+        {
+          id: "unarchive",
+          icon: "lucide-archive-restore",
+          title: t("VC_NEWS.PAGES.DETAILS.TOOLBAR.UNARCHIVE"),
+          clickHandler: async () => {
+            await unarchiveNewsArticle();
+            callParent("reload");
+            callParent("reOpenDetailsBlade", newsArticle.value!.id);
+          },
+          isVisible: hasAccess(publishNewsArticlePermission) && newsArticleCanUnarchive?.value,
+        },
+      ]
+    : []),
+]);
 
 const title = computed(() => t("VC_NEWS.PAGES.DETAILS.TITLE"));
 
@@ -618,5 +624,11 @@ onMounted(async () => {
   if (param.value) {
     await loadNewsArticle({ id: param.value });
   }
+
+  // Wait for ensureLocalizedEntries (watcher) to flush so the pristine
+  // snapshot includes the ensured locale entries — otherwise they'd be
+  // reported as a modification right after load.
+  await nextTick();
+  setBaseline();
 });
 </script>
