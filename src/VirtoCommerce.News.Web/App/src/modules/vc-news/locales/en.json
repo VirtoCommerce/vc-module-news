@@ -1,7 +1,7 @@
 {
   "VC_NEWS": {
     "MENU": {
-      "ALL": "All",      
+      "ALL": "All",
       "PUBLISHED": "Published",
       "DRAFTS": "Drafts",
       "SCHEDULED": "Scheduled",
@@ -41,7 +41,7 @@
       "DETAILS": {
         "TITLE": "Article",
         "FORM": {
-          "ACTIONS":{
+          "ACTIONS": {
             "COPY_FROM_TITLE": "copy from title",
             "COPY_FROM_PREVIEW": "copy from summary"
           },

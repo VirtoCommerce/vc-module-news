@@ -1,7 +1,20 @@
-import { ref, Ref, computed } from "vue";
-import { ITableColumns, IBladeToolbar, useBladeNavigation, usePopup, usePermissions } from "@vc-shell/framework";
+import { ref, Ref, computed, ComputedRef } from "vue";
+import { IBladeToolbar, useBlade, usePopup, usePermissions } from "@vc-shell/framework";
 import { useI18n } from "vue-i18n";
 import useNewsArticlePermissions from "../useNewsArticlePermissions";
+
+interface INewsArticleColumn {
+  id: string;
+  title: ComputedRef<string>;
+  field?: string;
+  width?: string | number;
+  alwaysVisible?: boolean;
+  visible?: boolean;
+  sortable?: boolean;
+  type?: "datetime" | "status-icon";
+  mobilePosition?: "top-left" | "top-right" | "bottom-left" | "bottom-right";
+  mobileRole?: "title" | "image" | "field" | "status";
+}
 
 export default (options: {
   selectedItemId: Ref<string | undefined>;
@@ -11,7 +24,7 @@ export default (options: {
 }) => {
   const { t } = useI18n({ useScope: "global" });
   const { showConfirmation } = usePopup();
-  const { openBlade, closeBlade } = useBladeNavigation();
+  const { openBlade, closeChildren } = useBlade();
   const { hasAccess } = usePermissions();
   const { createNewsArticlePermission, deleteNewsArticlePermission } = useNewsArticlePermissions();
 
@@ -19,7 +32,7 @@ export default (options: {
     {
       id: "refresh",
       title: t("VC_NEWS.PAGES.LIST.TOOLBAR.REFRESH"),
-      icon: "material-refresh",
+      icon: "lucide-refresh-cw",
       async clickHandler() {
         await options.searchNewsArticles();
       },
@@ -27,7 +40,7 @@ export default (options: {
     {
       id: "add",
       title: t("VC_NEWS.PAGES.LIST.TOOLBAR.ADD"),
-      icon: "material-add",
+      icon: "lucide-plus",
       clickHandler: async () => {
         openDetailsBlade(undefined);
       },
@@ -36,7 +49,7 @@ export default (options: {
     {
       id: "delete",
       title: t("VC_NEWS.PAGES.LIST.TOOLBAR.DELETE"),
-      icon: "material-delete",
+      icon: "lucide-trash-2",
       disabled: options.selectedIds.value.length === 0,
       clickHandler: async () => {
         const confirmed = await showConfirmation(
@@ -45,7 +58,7 @@ export default (options: {
           }),
         );
         if (confirmed) {
-          closeBlade(1);
+          await closeChildren();
           await options.deleteNewsArticles({ ids: options.selectedIds.value });
           options.selectedIds.value = [];
           await options.searchNewsArticles();
@@ -55,7 +68,7 @@ export default (options: {
     },
   ]);
 
-  const columns = ref<ITableColumns[]>([
+  const columns = ref<INewsArticleColumn[]>([
     {
       id: "name",
       title: computed(() => t("VC_NEWS.PAGES.LIST.TABLE.HEADER.NAME")),
@@ -79,7 +92,7 @@ export default (options: {
       sortable: true,
       width: "10%",
       type: "status-icon",
-      mobilePosition: "status",
+      mobileRole: "status",
     },
     {
       id: "publishDate",
@@ -87,7 +100,7 @@ export default (options: {
       alwaysVisible: true,
       sortable: true,
       width: "30%",
-      type: "date-time",
+      type: "datetime",
       mobilePosition: "bottom-left",
     },
     {
@@ -103,7 +116,7 @@ export default (options: {
       alwaysVisible: false,
       sortable: true,
       width: "30%",
-      type: "date-time",
+      type: "datetime",
     },
     {
       id: "createdDate",
@@ -111,7 +124,7 @@ export default (options: {
       visible: false,
       sortable: true,
       width: "30%",
-      type: "date-time",
+      type: "datetime",
     },
     {
       id: "createdBy",
@@ -126,7 +139,7 @@ export default (options: {
       visible: false,
       sortable: true,
       width: "30%",
-      type: "date-time",
+      type: "datetime",
     },
     {
       id: "modifiedBy",
@@ -145,7 +158,7 @@ export default (options: {
 
   const openDetailsBlade = (id: string | undefined) => {
     openBlade({
-      blade: { name: "NewsArticleDetails" },
+      name: "NewsArticleDetails",
       param: id ?? undefined,
       onOpen() {
         options.selectedItemId.value = id ?? undefined;
@@ -156,8 +169,8 @@ export default (options: {
     });
   };
 
-  const reOpenDetailsBlade = (id: string) => {
-    closeBlade(1);
+  const reOpenDetailsBlade = async (id: string) => {
+    await closeChildren();
     openDetailsBlade(id);
   };
 

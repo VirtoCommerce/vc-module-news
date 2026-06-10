@@ -12,7 +12,7 @@ export default () => {
 
   const { getApiClient: getNewsApiClient } = useApiClient(NewsArticleClient);
 
-  const searchQuery = ref<NewsArticleSearchCriteria>(new NewsArticleSearchCriteria());
+  const searchQuery = ref<NewsArticleSearchCriteria>({} as NewsArticleSearchCriteria);
   const newsArticles = ref<NewsArticle[]>([]);
   const newsArticlesCount = ref(0);
   const pagesCount = ref(0);

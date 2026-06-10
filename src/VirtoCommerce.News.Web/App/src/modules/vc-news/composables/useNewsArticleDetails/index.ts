@@ -6,10 +6,10 @@ import { NewsArticleClient, NewsArticle, NewsArticleOptions } from "../../../../
 export default () => {
   const { getApiClient: getNewsApiClient } = useApiClient(NewsArticleClient);
 
-  const newsArticle = ref<NewsArticle>(new NewsArticle({ localizedContents: [], seoInfos: [] }));
-  const originalNewsArticle = ref<NewsArticle>(new NewsArticle({ localizedContents: [], seoInfos: [] }));
+  const newsArticle = ref<NewsArticle>({ localizedContents: [], seoInfos: [] } as NewsArticle);
+  const originalNewsArticle = ref<NewsArticle>({ localizedContents: [], seoInfos: [] } as NewsArticle);
 
-  const newsArticleOptions = ref<NewsArticleOptions>(new NewsArticleOptions({ publishScopes: [], tags: [] }));
+  const newsArticleOptions = ref<NewsArticleOptions>({ publishScopes: [], tags: [] } as NewsArticleOptions);
 
   const resetNewsArticle = () => {
     if (originalNewsArticle.value) {
@@ -185,7 +185,7 @@ export default () => {
     }
 
     const emptyParagraph = "<p></p>";
- 
+
     while (value.endsWith(emptyParagraph)) {
       value = value?.substring(0, value.length - emptyParagraph.length);
     }

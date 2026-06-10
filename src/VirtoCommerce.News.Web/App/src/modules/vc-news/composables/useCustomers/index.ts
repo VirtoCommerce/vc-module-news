@@ -9,7 +9,7 @@ export default () => {
 
   const { loading: loadingAuthors, action: loadAuthors } = useAsync(async () => {
     const apiClient = await getCustomerApiClient();
-    const apiResult = await apiClient.searchContacts(new MembersSearchCriteria({ take: 999, memberType: "Contact" }));
+    const apiResult = await apiClient.searchContacts({ take: 999, memberType: "Contact" } as MembersSearchCriteria);
 
     if (apiResult && apiResult.results) {
       authors.value = apiResult.results;

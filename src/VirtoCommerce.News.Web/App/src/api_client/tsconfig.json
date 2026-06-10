@@ -2,7 +2,7 @@
   "extends": "@vc-shell/ts-config/tsconfig.json",
   "compilerOptions": {
     "baseUrl": ".",
-    "declarationDir": "dist\\types",
+    "declarationDir": "dist/types",
     "outDir": "dist",
     "rootDir": "./"
   },
@@ -12,7 +12,5 @@
     "virtocommerce.store.ts",
     "virtocommerce.customer.ts"
   ],
-  "include": [
-    "*.ts"
-  ]
+  "include": ["*.ts"]
 }

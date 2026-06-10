@@ -28,7 +28,7 @@ async function startApp() {
       },
     })
     // VcNews module initialization
-    .use(VcNews, { router })
+    .use(VcNews)
     .use(router);
 
   Object.entries(locales).forEach(([key, message]) => {
