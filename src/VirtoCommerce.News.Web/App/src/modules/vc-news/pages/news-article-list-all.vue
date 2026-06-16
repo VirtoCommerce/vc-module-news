@@ -6,6 +6,10 @@
     width="40%"
   >
     <VcDataTable
+      v-model:active-item-id="selectedItemId"
+      v-model:sort-field="sortField"
+      v-model:sort-order="sortOrder"
+      v-model:selection="localSelection"
       :items="newsArticles"
       :total-count="pagination.totalCount"
       :pagination="pagination"
@@ -14,10 +18,6 @@
       :search-placeholder="$t('VC_NEWS.PAGES.LIST.SEARCH.PLACEHOLDER')"
       state-key="VC_NEWS"
       class="tw-grow tw-basis-0"
-      v-model:active-item-id="selectedItemId"
-      v-model:sort-field="sortField"
-      v-model:sort-order="sortOrder"
-      v-model:selection="localSelection"
       @row-click="onItemClick"
       @pagination-click="pagination.goToPage"
       @search="onSearchChange"
