@@ -4,8 +4,6 @@ import { Invite, Login, ResetPassword, ChangePasswordPage, ForgotPassword } from
 import whiteLogoImage from "/assets/logo-white.svg";
 import bgImage from "/assets/background.jpg";
 
-// const version = import.meta.env.PACKAGE_VERSION;
-
 export const routes: RouteRecordRaw[] = [
   {
     path: "/",
@@ -26,9 +24,6 @@ export const routes: RouteRecordRaw[] = [
     name: "Login",
     path: "/login",
     component: Login,
-    meta: {
-      // appVersion: version,
-    },
     props: () => ({
       logo: whiteLogoImage,
       title: "Vc News",
@@ -49,9 +44,6 @@ export const routes: RouteRecordRaw[] = [
     name: "ForgotPassword",
     path: "/forgot-password",
     component: ForgotPassword,
-    meta: {
-      // appVersion: version,
-    },
     props: () => ({
       logo: whiteLogoImage,
     }),
