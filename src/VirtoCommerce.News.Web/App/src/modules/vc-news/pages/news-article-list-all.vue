@@ -89,15 +89,6 @@ const pagination = useDataTablePagination({
 
 const selectedItemId = ref<string>();
 const localSelection = ref<NewsArticle[]>([]);
-const selectedIds = ref<string[]>([]);
-
-watch(
-  localSelection,
-  (newSelection) => {
-    selectedIds.value = newSelection.map((item) => item.id || "").filter(Boolean);
-  },
-  { deep: true },
-);
 
 watch(
   () => param.value,
@@ -111,7 +102,7 @@ const title = computed(() => `${t("VC_NEWS.PAGES.LIST.TITLE")}: ${t("VC_NEWS.MEN
 
 const { bladeToolbar, columns, openDetailsBlade, reOpenDetailsBlade } = useNewsArticleListUI({
   selectedItemId,
-  selectedIds,
+  selection: localSelection,
   searchNewsArticles: searchNewsArticlesAll,
   deleteNewsArticles,
 });

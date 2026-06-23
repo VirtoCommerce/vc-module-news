@@ -2,6 +2,7 @@ import { ref, Ref, computed, ComputedRef } from "vue";
 import { IBladeToolbar, useBlade, usePopup, usePermissions } from "@vc-shell/framework";
 import { useI18n } from "vue-i18n";
 import useNewsArticlePermissions from "../useNewsArticlePermissions";
+import { NewsArticle } from "../../../../api_client/virtocommerce.news";
 
 interface INewsArticleColumn {
   id: string;
@@ -18,7 +19,7 @@ interface INewsArticleColumn {
 
 export default (options: {
   selectedItemId: Ref<string | undefined>;
-  selectedIds: Ref<string[]>;
+  selection: Ref<NewsArticle[]>;
   searchNewsArticles: () => Promise<void>;
   deleteNewsArticles: (args: { ids: string[] }) => Promise<void>;
 }) => {
@@ -50,17 +51,18 @@ export default (options: {
       id: "delete",
       title: t("VC_NEWS.PAGES.LIST.TOOLBAR.DELETE"),
       icon: "lucide-trash-2",
-      disabled: options.selectedIds.value.length === 0,
+      disabled: options.selection.value.length === 0,
       clickHandler: async () => {
+        const ids = options.selection.value.map((item) => item.id ?? "").filter(Boolean);
         const confirmed = await showConfirmation(
           t("VC_NEWS.PAGES.LIST.ALERTS.DELETE_SELECTED_CONFIRMATION_MESSAGE", {
-            count: options.selectedIds.value.length,
+            count: ids.length,
           }),
         );
         if (confirmed) {
           await closeChildren();
-          await options.deleteNewsArticles({ ids: options.selectedIds.value });
-          options.selectedIds.value = [];
+          await options.deleteNewsArticles({ ids });
+          options.selection.value = [];
           await options.searchNewsArticles();
         }
       },
