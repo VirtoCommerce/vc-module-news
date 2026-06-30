@@ -6,6 +6,10 @@
     width="40%"
   >
     <VcDataTable
+      v-model:active-item-id="selectedItemId"
+      v-model:sort-field="sortField"
+      v-model:sort-order="sortOrder"
+      v-model:selection="localSelection"
       :items="newsArticles"
       :total-count="pagination.totalCount"
       :pagination="pagination"
@@ -14,10 +18,6 @@
       :search-placeholder="$t('VC_NEWS.PAGES.LIST.SEARCH.PLACEHOLDER')"
       state-key="VC_NEWS"
       class="tw-grow tw-basis-0"
-      v-model:active-item-id="selectedItemId"
-      v-model:sort-field="sortField"
-      v-model:sort-order="sortOrder"
-      v-model:selection="localSelection"
       @row-click="onItemClick"
       @pagination-click="pagination.goToPage"
       @search="onSearchChange"
@@ -89,15 +89,6 @@ const pagination = useDataTablePagination({
 
 const selectedItemId = ref<string>();
 const localSelection = ref<NewsArticle[]>([]);
-const selectedIds = ref<string[]>([]);
-
-watch(
-  localSelection,
-  (newSelection) => {
-    selectedIds.value = newSelection.map((item) => item.id || "").filter(Boolean);
-  },
-  { deep: true },
-);
 
 watch(
   () => param.value,
@@ -109,7 +100,7 @@ watch(
 
 const { bladeToolbar, columns, openDetailsBlade, reOpenDetailsBlade } = useNewsArticleListUI({
   selectedItemId,
-  selectedIds,
+  selection: localSelection,
   searchNewsArticles: searchNewsArticlesDrafts,
   deleteNewsArticles,
 });
