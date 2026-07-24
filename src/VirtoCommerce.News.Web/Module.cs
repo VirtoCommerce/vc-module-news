@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using System.Threading;
 using System.Threading.Tasks;
 using FluentValidation;
 using Microsoft.AspNetCore.Builder;
@@ -104,12 +105,12 @@ public class Module : IModule, IExportSupport, IImportSupport, IHasConfiguration
         // Nothing to do here
     }
 
-    public async Task ExportAsync(Stream outStream, ExportImportOptions options, Action<ExportImportProgressInfo> progressCallback, ICancellationToken cancellationToken)
+    public async Task ExportAsync(Stream outStream, ExportImportOptions options, Action<ExportImportProgressInfo> progressCallback, CancellationToken cancellationToken)
     {
         await _appBuilder.ApplicationServices.GetRequiredService<NewsArticlesExportImport>().DoExportAsync(outStream, progressCallback, cancellationToken);
     }
 
-    public async Task ImportAsync(Stream inputStream, ExportImportOptions options, Action<ExportImportProgressInfo> progressCallback, ICancellationToken cancellationToken)
+    public async Task ImportAsync(Stream inputStream, ExportImportOptions options, Action<ExportImportProgressInfo> progressCallback, CancellationToken cancellationToken)
     {
         await _appBuilder.ApplicationServices.GetRequiredService<NewsArticlesExportImport>().DoImportAsync(inputStream, progressCallback, cancellationToken);
     }
