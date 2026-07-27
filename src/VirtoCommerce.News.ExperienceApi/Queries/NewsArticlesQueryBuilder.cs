@@ -1,3 +1,4 @@
+using System;
 using System.Threading.Tasks;
 using GraphQL;
 using MediatR;
@@ -13,7 +14,12 @@ public class NewsArticlesQueryBuilder : SearchQueryBuilder<NewsArticlesQuery, Ne
 {
     protected override string Name => "newsArticles";
 
-    public NewsArticlesQueryBuilder(IMediator mediator, IAuthorizationService authorizationService) : base(mediator, authorizationService)
+    public NewsArticlesQueryBuilder(IAuthorizationService authorizationService) : base(authorizationService)
+    {
+    }
+
+    [Obsolete("Use the constructor without IMediator. The mediator is resolved from context.RequestServices per request.", DiagnosticId = "VC0015", UrlFormat = "https://docs.virtocommerce.org/products/products-virto3-versions")]
+    public NewsArticlesQueryBuilder(IMediator mediator, IAuthorizationService authorizationService) : this(authorizationService)
     {
     }
 

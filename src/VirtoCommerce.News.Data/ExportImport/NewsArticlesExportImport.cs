@@ -1,6 +1,7 @@
 using System;
 using System.IO;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using VirtoCommerce.News.Core.Models;
@@ -16,7 +17,7 @@ public class NewsArticlesExportImport(INewsArticleService newsArticleService, IN
 
     private const int BatchSize = 50;
 
-    public async Task DoExportAsync(Stream outStream, Action<ExportImportProgressInfo> progressCallback, ICancellationToken cancellationToken)
+    public async Task DoExportAsync(Stream outStream, Action<ExportImportProgressInfo> progressCallback, CancellationToken cancellationToken)
     {
         cancellationToken.ThrowIfCancellationRequested();
 
@@ -47,7 +48,7 @@ public class NewsArticlesExportImport(INewsArticleService newsArticleService, IN
         await writer.FlushAsync();
     }
 
-    public async Task DoImportAsync(Stream inputStream, Action<ExportImportProgressInfo> progressCallback, ICancellationToken cancellationToken)
+    public async Task DoImportAsync(Stream inputStream, Action<ExportImportProgressInfo> progressCallback, CancellationToken cancellationToken)
     {
         cancellationToken.ThrowIfCancellationRequested();
 
